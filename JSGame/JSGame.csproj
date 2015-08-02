@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>ac5dfda7-f045-40c9-9ae6-2948d0cf04e4</ProjectGuid>
+    <ProjectGuid>{517D4D4D-06CC-430D-8689-CA903796C4D8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JSGame</RootNamespace>

@@ -1,20 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokémon3D", "Pokémon3D\Pokémon3D.csproj", "{5D11A857-65E3-46BB-9550-633D5DC5973F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSGame", "JSGame\JSGame.csproj", "{517D4D4D-06CC-430D-8689-CA903796C4D8}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://kolben.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Pokémon3D\\Pokémon3D.csproj
-		SccProjectName1 = Pokémon3D
-		SccLocalPath1 = Pokémon3D
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -34,6 +27,16 @@ Global
 		{5D11A857-65E3-46BB-9550-633D5DC5973F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5D11A857-65E3-46BB-9550-633D5DC5973F}.Release|x86.ActiveCfg = Release|x86
 		{5D11A857-65E3-46BB-9550-633D5DC5973F}.Release|x86.Build.0 = Release|x86
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{517D4D4D-06CC-430D-8689-CA903796C4D8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
