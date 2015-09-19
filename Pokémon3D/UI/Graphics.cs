@@ -11,40 +11,25 @@ namespace Pokémon3D.UI
     /// <summary>
     /// A component to draw basic shapes.
     /// </summary>
-    class Graphics : DrawableGameComponent, Components.IGraphicsService
+    class Graphics
     {
         private Texture2D _pixel;
+        private SpriteBatch _batch;
 
-        /// <summary>
-        /// Creates a new instance of the Graphics class and activates the service.
-        /// </summary>
-        public Graphics(Core.MainGame game) : base(game)
+        public Graphics(SpriteBatch batch)
         {
-            game.Services.AddService(typeof(Components.IGraphicsService), this);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _pixel = new Texture2D(GraphicsDevice, 1, 1);
+            _pixel = new Texture2D(GameCore.State.Controller.GraphicsDevice, 1, 1);
             _pixel.SetData(new Color[] { Color.White });
-        }
 
-        /// <summary>
-        /// The currently active main <see cref="SpriteBatch"/>.
-        /// </summary>
-        public SpriteBatch ActiveSpriteBatch
-        {
-            get { return ((Core.MainGame)Game).SpriteBatch; }
+            _batch = batch;
         }
-
+        
         /// <summary>
         /// Draws a rectangle.
         /// </summary>
         public void DrawRectangle(Rectangle rectangle, Color color)
         {
-            ActiveSpriteBatch.Draw(_pixel, rectangle, color);
+            _batch.Draw(_pixel, rectangle, color);
         }
 
         /// <summary>
@@ -66,7 +51,7 @@ namespace Pokémon3D.UI
             double angle = Math.Atan2(end.Y - start.Y, end.X - start.X);
             double length = Vector2.Distance(start, end);
 
-            ActiveSpriteBatch.Draw(_pixel, start, null, color, (float)angle, Vector2.Zero, new Vector2((float)length, (float)thickness), SpriteEffects.None, 0f);
+            _batch.Draw(_pixel, start, null, color, (float)angle, Vector2.Zero, new Vector2((float)length, (float)thickness), SpriteEffects.None, 0f);
         }
 
         /// <summary>
@@ -112,8 +97,8 @@ namespace Pokémon3D.UI
         /// </summary>
         public void DrawShape(IShape shape, Rectangle destination, Color color)
         {
-            Texture2D texture = ShapeTextureProvider.GetTexture(GraphicsDevice, shape);
-            ActiveSpriteBatch.Draw(texture, destination, color);
+            Texture2D texture = ShapeTextureProvider.GetTexture(GameCore.State.Controller.GraphicsDevice, shape);
+            _batch.Draw(texture, destination, color);
         }
 
         /// <summary>
@@ -121,8 +106,8 @@ namespace Pokémon3D.UI
         /// </summary>
         public void DrawShape(IShape shape, Rectangle destination, Gradient gradient)
         {
-            Texture2D texture = GradientTextureProvider.GetTexture(GraphicsDevice, gradient, shape);
-            ActiveSpriteBatch.Draw(texture, destination, Color.White);
+            Texture2D texture = GradientTextureProvider.GetTexture(GameCore.State.Controller.GraphicsDevice, gradient, shape);
+            _batch.Draw(texture, destination, Color.White);
         }
     }
 }

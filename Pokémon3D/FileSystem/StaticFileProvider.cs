@@ -7,7 +7,7 @@ namespace Pokémon3D.FileSystem
     /// <summary>
     /// Provides paths to static files of the game.
     /// </summary>
-    sealed class StaticFileProvider : FileProvider
+    class StaticFileProvider : FileProvider
     {
         const string LOG_FILE_EXTENSION = ".txt";
         const string LOG_FILE_PREFIX = "log_";

@@ -10,7 +10,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
     /// <summary>
     /// The different experience types of a Pokémon.
     /// </summary>
-    public enum ExperienceType
+    enum ExperienceType
     {
         Fast,
         MediumFast,
@@ -21,7 +21,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
     /// <summary>
     /// EggGroups a Pokémon can have to define its breeding compatibility.
     /// </summary>
-    public enum EggGroup
+    enum EggGroup
     {
         Monster,
         Water1,
@@ -45,7 +45,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
     /// <summary>
     /// The conditions to test an evolution for.
     /// </summary>
-    public enum EvolutionConditionType
+    enum EvolutionConditionType
     {
         Level,
         Friendship,
@@ -66,7 +66,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
     /// <summary>
     /// The trigger for an evolution condition to activate.
     /// </summary>
-    public enum EvolutionTrigger
+    enum EvolutionTrigger
     {
         None,
         LevelUp,

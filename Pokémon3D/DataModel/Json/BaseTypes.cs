@@ -8,7 +8,7 @@ namespace Pokémon3D.DataModel.Json
     /// The data model for an RGB color.
     /// </summary>
     [DataContract]
-    sealed class ColorModel : JsonDataModel
+    class ColorModel : JsonDataModel
     {
         /// <summary>
         /// The red part of the color.
@@ -41,7 +41,7 @@ namespace Pokémon3D.DataModel.Json
     /// The data model for a rectangle definition.
     /// </summary>
     [DataContract]
-    sealed class RectangleModel : JsonDataModel
+    class RectangleModel : JsonDataModel
     {
         /// <summary>
         /// The x position of this rectangle model.
@@ -80,7 +80,7 @@ namespace Pokémon3D.DataModel.Json
     /// The data model for a <see cref="Vector3"/> definition.
     /// </summary>
     [DataContract]
-    sealed class Vector3Model : JsonDataModel
+    class Vector3Model : JsonDataModel
     {
         /// <summary>
         /// The X coordinate of this vector.
@@ -113,7 +113,7 @@ namespace Pokémon3D.DataModel.Json
     /// The data model for a <see cref="Vector2"/> definition.
     /// </summary>
     [DataContract]
-    sealed class Vector2Model : JsonDataModel
+    class Vector2Model : JsonDataModel
     {
         /// <summary>
         /// The X coordinate of this vector.
@@ -140,7 +140,7 @@ namespace Pokémon3D.DataModel.Json
     /// The data model for a range.
     /// </summary>
     [DataContract]
-    sealed class RangeModel : JsonDataModel
+    class RangeModel : JsonDataModel
     {
         /// <summary>
         /// The lower bound of the range.
@@ -159,7 +159,7 @@ namespace Pokémon3D.DataModel.Json
     /// Describes a texture source.
     /// </summary>
     [DataContract]
-    sealed class TextureSourceModel : JsonDataModel
+    class TextureSourceModel : JsonDataModel
     {
         /// <summary>
         /// The source file for this texture.

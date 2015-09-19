@@ -4,18 +4,13 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace Pokémon3D.Screens
+namespace Pokémon3D.UI.Screens
 {
     /// <summary>
     /// A screen to represent a scene in the game.
     /// </summary>
     abstract class Screen
     {
-        /// <summary>
-        /// The currently active game instance.
-        /// </summary>
-        public Core.MainGame Game { get; set; }
-
         /// <summary>
         /// Occurs when the screen closes.
         /// </summary>
@@ -36,6 +31,9 @@ namespace Pokémon3D.Screens
         /// </summary>
         public event GameFlowEventHandler Update;
 
+        /// <summary>
+        /// Event handler for game flow events.
+        /// </summary>
         public delegate void GameFlowEventHandler(object sender, GameFlowEventArgs e);
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Pokémon3D.Screens
     /// <summary>
     /// Event Arguments for game flow events.
     /// </summary>
-    sealed class GameFlowEventArgs : EventArgs
+    class GameFlowEventArgs : EventArgs
     {
         /// <summary>
         /// A snapshot of the game time.

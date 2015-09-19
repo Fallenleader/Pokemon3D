@@ -521,7 +521,8 @@ namespace birdScript
             if (_val == "")
                 return new SNumber(0D);
 
-            if (double.TryParse(_val, out double dblResult))
+            double dblResult = 0D;
+            if (double.TryParse(_val, out dblResult))
                 return new SNumber(dblResult);
             else
                 return new SNumber(double.NaN);
@@ -1483,6 +1484,7 @@ namespace birdScript
         public SObject toScriptObject(string exp)
         {
             //This converts a script identifier or value into its object representation.
+            double dblResult = 0D;
 
             if (exp == "null")
             {
@@ -1500,7 +1502,7 @@ namespace birdScript
             {
                 return new SBool(true);
             }
-            else if (double.TryParse(exp, out double dblResult))
+            else if (double.TryParse(exp, out dblResult))
             {
                 return new SNumber(dblResult);
             }
@@ -1532,7 +1534,7 @@ namespace birdScript
             {
                 return SIfStruct.parse(exp, this);
             }
-
+            
             //expression was not defined, throw error:
             throw new ReferenceErrorException(exp + " is not defined");
         }

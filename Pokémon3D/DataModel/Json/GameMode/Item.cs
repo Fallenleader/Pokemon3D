@@ -7,7 +7,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
 {
     #region Enums
 
-    public enum ItemCategory
+    enum ItemCategory
     {
         Standard,
         Medicine,
@@ -19,7 +19,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
         BattleItem
     }
 
-    public enum BattleItemCategory
+    enum BattleItemCategory
     {
         None,
         Healing,
@@ -47,7 +47,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
         public string ScriptBinding { get; set; }
     }
 
-    sealed class InventoryDefinitionModel : JsonDataModel
+    class InventoryDefinitionModel : JsonDataModel
     {
         private string _itemCategory;
 
