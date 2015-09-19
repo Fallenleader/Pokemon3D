@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
-namespace Pokémon3D.DataModel.Json.GameMode
+namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
 {
     #region Enums
 

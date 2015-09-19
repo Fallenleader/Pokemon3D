@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Microsoft.Xna.Framework;
+﻿using System.Runtime.Serialization;
 
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
@@ -27,7 +24,6 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// <summary>
         /// The name of the badge.
         /// </summary>
-        /// <returns></returns>
         [DataMember(Order = 0)]
         public string Name { get; private set; }
 
@@ -42,17 +38,11 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// </summary>
         [DataMember(Order = 2)]
         public TextureSourceModel Texture { get; private set; }
-
-        /// <summary>
-        /// The HM move this badge unlocks.
-        /// </summary>
-        [DataMember(Order = 3)]
-        public string MoveUnlock { get; private set; }
-
+        
         /// <summary>
         /// The region this badge belongs to.
         /// </summary>
-        [DataMember(Order = 4)]
+        [DataMember(Order = 3)]
         public string Region { get; private set; }
     }
 }

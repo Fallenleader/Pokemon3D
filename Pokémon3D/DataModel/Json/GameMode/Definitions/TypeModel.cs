@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Microsoft.Xna.Framework;
+﻿using System.Runtime.Serialization;
 
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
@@ -15,7 +12,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The types enumeration of the file.
         /// </summary>
         [DataMember(Order = 0)]
-        public List<TypeModel> Types { get; private set; }
+        public TypeModel[] Types { get; private set; }
     }
 
     /// <summary>
@@ -46,18 +43,18 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The list of types moves of this type are effective against.
         /// </summary>
         [DataMember(Order = 3)]
-        public List<string> Effective { get; private set; }
+        public string[] Effective { get; private set; }
 
         /// <summary>
         /// The list of types moves of this type are not effective against.
         /// </summary>
         [DataMember(Order = 4)]
-        public List<string> Ineffective { get; private set; }
+        public string[] Ineffective { get; private set; }
 
         /// <summary>
         /// The list of types moves of this type have no effect on.
         /// </summary>
         [DataMember(Order = 5)]
-        public List<string> Unaffected { get; private set; }
+        public string[] Unaffected { get; private set; }
     }
 }

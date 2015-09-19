@@ -50,19 +50,42 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataModel\Json\BaseTypes.cs" />
-    <Compile Include="DataModel\Json\GameMode\BodyStyles.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\Badge.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\Types.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\Worldmap.cs" />
-    <Compile Include="DataModel\Json\GameMode\Item.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon.cs" />
+    <Compile Include="DataModel\Json\GameMode\BodyStyleModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\FlyToModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\MapObjectModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\PlaceModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WorldmapModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\ZoneModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\ItemModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\BattleMapDataModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldPositionModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityComponentModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\MapEnvironmentModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\MapPokemonModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\OffsetMapModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
+    <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
     <Compile Include="Debug\GameLogger.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
+    <Compile Include="FileSystem\TranslationFileProvider.cs" />
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
-    <Compile Include="GameCore\State.cs" />
+    <Compile Include="GameCore\GameState.cs" />
+    <Compile Include="UI\i18n\Localization.cs" />
+    <Compile Include="UI\i18n\LocalizationManager.cs" />
+    <Compile Include="UI\i18n\Translation.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="GameCore\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,8 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\Region.cs" />
-    <Compile Include="GameCore\IStateComponent.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
