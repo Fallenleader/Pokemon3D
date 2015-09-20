@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokémon3D", "Pokémon3D\Pokémon3D.csproj", "{5D11A857-65E3-46BB-9550-633D5DC5973F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "birdScript", "JSGame\birdScript.csproj", "{517D4D4D-06CC-430D-8689-CA903796C4D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "birdScript", "birdScript\birdScript.csproj", "{517D4D4D-06CC-430D-8689-CA903796C4D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
