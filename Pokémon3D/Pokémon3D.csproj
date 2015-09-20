@@ -83,6 +83,7 @@
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameCore\GameState.cs" />
+    <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\GeometryData.cs" />
     <Compile Include="Rendering\Mesh.cs" />
     <Compile Include="Rendering\Scene.cs" />

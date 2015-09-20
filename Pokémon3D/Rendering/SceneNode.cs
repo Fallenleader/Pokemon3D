@@ -57,7 +57,7 @@ namespace Pokémon3D.Rendering
             }
         }
 
-        public void Update()
+        public virtual void Update()
         {
             WorldMatrix = Parent == null ? Matrix.Identity : Parent.WorldMatrix * CalculateWorldMatrix();
         }
