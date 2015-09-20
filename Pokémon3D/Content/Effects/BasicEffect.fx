@@ -2,19 +2,19 @@
 float4x4 View;
 float4x4 Projection;
 texture DiffuseTexture;
-float3 LightDirection = float3(1, -1, 1);
+float3 LightDirection = float3(1, -1,  -1);
 
-sampler DiffuseSampler = sampler_state
-{
-	MINFILTER = LINEAR;
-	MAGFILTER = LINEAR;
-	MIPFILTER = LINEAR;
-	Texture = <DiffuseTexture>;
+sampler2D DiffuseSampler = sampler_state {
+	Texture = (DiffuseTexture);
+	MagFilter = Linear;
+	MinFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
 };
 
 struct VertexShaderInput
 {
-	float4 Position : POSITION0;
+	float4 Position : SV_Position0;
 	float2 TexCoord : TEXCOORD0;
 	float3 Normal   : NORMAL0;
 };
@@ -33,7 +33,7 @@ VertexShaderOutput DefaultVertexShaderFunction(VertexShaderInput input)
 	float4 worldPosition = mul(input.Position, World);
 	float4 viewPosition = mul(worldPosition, View);
 	output.Position = mul(viewPosition, Projection);
-	output.Normal = mul(float4(input.Normal, 0.0f), World).xyz;
+	output.Normal = mul(input.Normal, (float3x3)World);
 	output.TexCoord = input.TexCoord;
 
 	return output;
@@ -44,7 +44,7 @@ float4 DefaultPixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float4 colorFromTexture = tex2D(DiffuseSampler, input.TexCoord);
 	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 
-	return colorFromTexture * diffuseFactor;
+	return colorFromTexture *diffuseFactor;
 }
 
 technique Default

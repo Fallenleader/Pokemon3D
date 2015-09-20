@@ -13,16 +13,16 @@ namespace Pokémon3D.Rendering
             data.Vertices = new[]
             {
                 //front
-                new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f,  0.5f), Vector3.Forward, new Vector2(0.0f,1.0f)),
-                new VertexPositionNormalTexture(new Vector3(-0.5f,  0.5f,  0.5f), Vector3.Forward, new Vector2(0.0f,0.0f)),
-                new VertexPositionNormalTexture(new Vector3( 0.5f, -0.5f,  0.5f), Vector3.Forward, new Vector2(1.0f,1.0f)),
-                new VertexPositionNormalTexture(new Vector3( 0.5f,  0.5f,  0.5f), Vector3.Forward, new Vector2(1.0f,0.0f)),
+                new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f,  0.5f), Vector3.Backward, new Vector2(0.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3(-0.5f,  0.5f,  0.5f), Vector3.Backward, new Vector2(0.0f,0.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f, -0.5f,  0.5f), Vector3.Backward, new Vector2(1.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f,  0.5f,  0.5f), Vector3.Backward, new Vector2(1.0f,0.0f)),
 
                 //back
-                new VertexPositionNormalTexture(new Vector3( 0.5f, -0.5f, -0.5f), Vector3.Backward, new Vector2(0.0f,1.0f)),
-                new VertexPositionNormalTexture(new Vector3( 0.5f,  0.5f, -0.5f), Vector3.Backward, new Vector2(0.0f,0.0f)),
-                new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), Vector3.Backward, new Vector2(1.0f,1.0f)),
-                new VertexPositionNormalTexture(new Vector3(-0.5f,  0.5f, -0.5f), Vector3.Backward, new Vector2(1.0f,0.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f, -0.5f, -0.5f), Vector3.Forward, new Vector2(0.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f,  0.5f, -0.5f), Vector3.Forward, new Vector2(0.0f,0.0f)),
+                new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), Vector3.Forward, new Vector2(1.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3(-0.5f,  0.5f, -0.5f), Vector3.Forward, new Vector2(1.0f,0.0f)),
 
                 //right
                 new VertexPositionNormalTexture(new Vector3( 0.5f, -0.5f,  0.5f), Vector3.Right, new Vector2(0.0f,1.0f)),

@@ -10,15 +10,14 @@ namespace Pokémon3D.Rendering
         private readonly List<SceneNode> _allNodes;
         private readonly List<Camera> _allCameras; 
         private readonly GraphicsDevice _device;
-        private readonly BasicEffect _defaultEffect;
+        private readonly Effect _basicEffect;
 
         public Scene(Game game)
         {
             _device = game.GraphicsDevice;
-            _defaultEffect = new BasicEffect(game.GraphicsDevice);
-            _defaultEffect.TextureEnabled = true;
             _allNodes = new List<SceneNode>();
             _allCameras = new List<Camera>();
+            _basicEffect = game.Content.Load<Effect>(ResourceNames.Effects.BasicEffect);
         }
 
         public SceneNode CreateSceneNode()
@@ -54,18 +53,18 @@ namespace Pokémon3D.Rendering
 
         private void DrawSceneForCamera(Camera camera)
         {
-            _defaultEffect.View = camera.ViewMatrix;
-            _defaultEffect.Projection = camera.ProjectionMatrix;
-            
+            _basicEffect.Parameters["View"].SetValue(camera.ViewMatrix);
+            _basicEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
+
             foreach (var sceneNode in _allNodes)
             {
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
 
-                _defaultEffect.World = sceneNode.WorldMatrix;
-                _defaultEffect.Texture = sceneNode.Material.DiffuseTexture;
+                _basicEffect.Parameters["World"].SetValue(sceneNode.WorldMatrix);
+                _basicEffect.Parameters["DiffuseTexture"].SetValue(sceneNode.Material.DiffuseTexture);
 
-                foreach (var pass in _defaultEffect.CurrentTechnique.Passes)
+                foreach(var pass in _basicEffect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();
