@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pokémon3D.GameCore
 {
@@ -47,12 +48,18 @@ namespace Pokémon3D.GameCore
         public GameController()
         {
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            
+        }
 
+        protected override void LoadContent()
+        {
             State.Initialize(this);
         }
 
         protected override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             //Update all components of the state that need to be updated here:
             State.ScreenManager.Update(gameTime);
         }
@@ -60,10 +67,12 @@ namespace Pokémon3D.GameCore
         protected override void Draw(GameTime gameTime)
         {
             //Clear the back buffer.
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
 
             //Draw all components of the state that need to be drawn here:
             State.ScreenManager.Draw(gameTime);
+
+            base.Draw(gameTime);
         }
         
     }
