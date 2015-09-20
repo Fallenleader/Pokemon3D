@@ -123,6 +123,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Effects\BasicEffect.fx" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +132,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
+    <None Include="Content\Effects\BasicEffect.xnb" />
     <None Include="ResourceNames.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ResourceNames.cs</LastGenOutput>
