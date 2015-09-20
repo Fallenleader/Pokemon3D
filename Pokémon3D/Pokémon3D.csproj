@@ -50,7 +50,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataModel\Json\BaseTypes.cs" />
-    <Compile Include="DataModel\Json\GameMode\BodyStyleModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
@@ -73,7 +72,14 @@
     <Compile Include="DataModel\Json\GameMode\Map\MapEnvironmentModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapPokemonModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\OffsetMapModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\BodyStyleModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionConditionModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\HeldItemModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\LevelUpMoveModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokedexEntryModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
     <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
@@ -83,6 +89,7 @@
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameCore\GameState.cs" />
+    <Compile Include="GameModes\GameMode.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\GeometryData.cs" />
     <Compile Include="Rendering\Material.cs" />
