@@ -89,15 +89,12 @@
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameCore\GameState.cs" />
-<<<<<<< HEAD
     <Compile Include="GameModes\GameMode.cs" />
-=======
     <Compile Include="ResourceNames.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceNames.tt</DependentUpon>
     </Compile>
->>>>>>> 7f81908205bb7cabbf4b3698b5d5e88e1458fe2e
     <Compile Include="UI\i18n\Localization.cs" />
     <Compile Include="UI\i18n\LocalizationManager.cs" />
     <Compile Include="UI\i18n\Translation.cs" />
