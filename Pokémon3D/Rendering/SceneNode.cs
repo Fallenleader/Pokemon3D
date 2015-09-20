@@ -12,6 +12,7 @@ namespace Pokémon3D.Rendering
         public SceneNode Parent { get; private set; }
         public ReadOnlyCollection<SceneNode> Children { get; private set; }
         public Mesh Mesh { get; set; }
+        public Material Material { get; set; }
 
         public Vector3 Position { get; set; }
         public Vector3 Scale { get; set; }
@@ -58,7 +59,7 @@ namespace Pokémon3D.Rendering
 
         public virtual void Update()
         {
-            WorldMatrix = Parent == null ? Matrix.Identity : Parent.WorldMatrix * CalculateWorldMatrix();
+            WorldMatrix = (Parent == null ? Matrix.Identity : Parent.WorldMatrix) * CalculateWorldMatrix();
         }
         
         public void Translate(Vector3 translation)

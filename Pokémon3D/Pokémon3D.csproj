@@ -85,7 +85,9 @@
     <Compile Include="GameCore\GameState.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\GeometryData.cs" />
+    <Compile Include="Rendering\Material.cs" />
     <Compile Include="Rendering\Mesh.cs" />
+    <Compile Include="Rendering\Primitives.cs" />
     <Compile Include="Rendering\Scene.cs" />
     <Compile Include="Rendering\SceneNode.cs" />
     <Compile Include="ResourceNames.cs">
@@ -99,6 +101,7 @@
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="GameCore\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Screens\RenderingTestScreen.cs" />
     <Compile Include="UI\Screens\Screen.cs" />
     <Compile Include="UI\Screens\ScreenManager.cs" />
     <Compile Include="UI\Ellipse.cs" />
@@ -124,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Effects\BasicEffect.fx" />
+    <Content Include="Content\Textures\bricksSample.jpg" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +136,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
-    <None Include="Content\Effects\BasicEffect.xnb" />
+    <None Include="Content\Effects\BasicEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Textures\bricksSample.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ResourceNames.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ResourceNames.cs</LastGenOutput>

@@ -8,6 +8,11 @@ namespace Pokémon3D
         {
             public const string BasicEffect = "Effects/BasicEffect";
         }
+        
+        public static class Textures
+        {
+            public const string bricksSample = "Textures/bricksSample";
+        }
     }
 }
 

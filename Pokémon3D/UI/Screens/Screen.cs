@@ -35,7 +35,7 @@ namespace Pokémon3D.UI.Screens
         /// Event handler for game flow events.
         /// </summary>
         public delegate void GameFlowEventHandler(object sender, GameFlowEventArgs e);
-
+           
         /// <summary>
         /// Raises the Draw event.
         /// </summary>
