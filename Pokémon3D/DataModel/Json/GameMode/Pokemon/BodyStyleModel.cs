@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
-namespace Pokémon3D.DataModel.Json.GameMode
+namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
 {
     /// <summary>
     /// The data model for the BodyStyles data file.

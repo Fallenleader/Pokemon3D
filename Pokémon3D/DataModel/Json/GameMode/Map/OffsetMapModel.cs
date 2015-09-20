@@ -9,9 +9,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class OffsetMapModel
     {
         [DataMember(Order = 0)]
-        public string MapFile { get; set; }
+        public string MapFile ;
 
         [DataMember(Order = 1)]
-        public Vector3Model Offset { get; set; }
+        public Vector3Model Offset ;
     }
 }

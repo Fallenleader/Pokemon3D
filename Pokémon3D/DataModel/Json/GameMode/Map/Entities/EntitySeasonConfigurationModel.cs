@@ -9,9 +9,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     class EntitySeasonPaletteModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Season { get; set; }
+        public string Season ;
 
         [DataMember(Order = 1)]
-        public string TexturePath { get; set; }
+        public string TexturePath ;
     }
 }

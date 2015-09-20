@@ -9,15 +9,15 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     class EntityFieldPositionModel
     {
         [DataMember(Order = 0)]
-        public Vector3Model Position { get; set; }
+        public Vector3Model Position ;
 
         [DataMember(Order = 1)]
-        public Vector3Model Size { get; set; }
+        public Vector3Model Size ;
 
         [DataMember(Order = 2)]
-        public bool Fill { get; set; }
+        public bool Fill ;
 
         [DataMember(Order = 3)]
-        public Vector3Model Steps { get; set; }
+        public Vector3Model Steps ;
     }
 }

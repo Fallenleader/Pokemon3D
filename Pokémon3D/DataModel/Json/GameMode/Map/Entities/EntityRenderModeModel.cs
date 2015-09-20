@@ -33,33 +33,33 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
         }
 
         [DataMember(Order = 1)]
-        public TextureSourceModel[] Textures { get; set; }
+        public TextureSourceModel[] Textures ;
 
         [DataMember(Order = 2)]
-        public int[] TextureIndex { get; set; }
+        public int[] TextureIndex ;
 
         [DataMember(Order = 3)]
-        public int PrimitiveModelId { get; set; }
+        public int PrimitiveModelId ;
 
         [DataMember(Order = 4)]
-        public bool RenderBackfaces { get; set; }
+        public bool RenderBackfaces ;
 
         [DataMember(Order = 5)]
-        public string ModelPath { get; set; }
+        public string ModelPath ;
 
         [DataMember(Order = 6)]
-        public bool Visible { get; set; }
+        public bool Visible ;
 
         [DataMember(Order = 7)]
-        public double Opacity { get; set; }
+        public double Opacity ;
 
         [DataMember(Order = 8)]
-        public Vector3Model Shading { get; set; }
+        public Vector3Model Shading ;
 
         [DataMember(Order = 9)]
-        public bool ObstructCamera { get; set; }
+        public bool ObstructCamera ;
 
         [DataMember(Order = 10)]
-        public EntitySeasonPaletteModel[] SeasonPalettes { get; set; }
+        public EntitySeasonPaletteModel[] SeasonPalettes ;
     }
 }

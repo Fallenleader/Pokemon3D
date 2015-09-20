@@ -9,9 +9,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class BattleMapDataModel : JsonDataModel
     {
         [DataMember]
-        public string BattleMapFile { get; set; }
+        public string BattleMapFile ;
 
         [DataMember]
-        public Vector3Model CameraPosition { get; set; }
+        public Vector3Model CameraPosition ;
     }
 }

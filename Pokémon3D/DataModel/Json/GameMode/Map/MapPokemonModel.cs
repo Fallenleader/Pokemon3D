@@ -6,18 +6,18 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class MapPokemonModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public bool ShowFollower { get; set; }
+        public bool ShowFollower ;
 
         [DataMember(Order = 1)]
-        public bool WildInGrass { get; set; }
+        public bool WildInGrass ;
 
         [DataMember(Order = 3)]
-        public bool WildOnFloor { get; set; }
+        public bool WildOnFloor ;
 
         [DataMember(Order = 2)]
-        public bool WildInWater { get; set; }
+        public bool WildInWater ;
 
         [DataMember(Order = 4)]
-        public int WildAbilityChance { get; set; }
+        public int WildAbilityChance ;
     }
 }

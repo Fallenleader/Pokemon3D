@@ -14,19 +14,19 @@ namespace Pokémon3D.DataModel.Json
         /// The red part of the color.
         /// </summary>
         [DataMember(Order = 0)]
-        public byte Red { get; set; }
+        public byte Red;
 
         /// <summary>
         /// The green part of the color.
         /// </summary>
         [DataMember(Order = 1)]
-        public byte Green { get; set; }
+        public byte Green;
 
         /// <summary>
         /// The blue part of the color.
         /// </summary>
         [DataMember(Order = 2)]
-        public byte Blue { get; set; }
+        public byte Blue;
 
         /// <summary>
         /// Returns the <see cref="Color"/> corresponding to this model.
@@ -47,25 +47,25 @@ namespace Pokémon3D.DataModel.Json
         /// The x position of this rectangle model.
         /// </summary>        
         [DataMember(Order = 0)]
-        public int X { get; set; }
+        public int X;
 
         /// <summary>
         /// The y position of this rectangle model.
         /// </summary>        
         [DataMember(Order = 1)]
-        public int Y { get; set; }
+        public int Y;
 
         /// <summary>
         /// The width of this rectangle model.
         /// </summary>        
         [DataMember(Order = 2)]
-        public int Width { get; set; }
+        public int Width;
 
         /// <summary>
         /// The height of this rectangle model.
         /// </summary>        
         [DataMember(Order = 3)]
-        public int Height { get; set; }
+        public int Height;
 
         /// <summary>
         /// Returns the corresponding <see cref="Rectangle"/> to this model.
@@ -86,19 +86,19 @@ namespace Pokémon3D.DataModel.Json
         /// The X coordinate of this vector.
         /// </summary>
         [DataMember(Order = 0)]
-        public float X { get; set; }
+        public float X;
 
         /// <summary>
         /// The Y coordinate of this vector.
         /// </summary>
         [DataMember(Order = 1)]
-        public float Y { get; set; }
+        public float Y;
 
         /// <summary>
         /// The Z coordinate of this vector.
         /// </summary>
         [DataMember(Order = 2)]
-        public float Z { get; set; }
+        public float Z;
 
         /// <summary>
         /// Returns the corresponding <see cref="Vector3"/> to this model.
@@ -119,13 +119,13 @@ namespace Pokémon3D.DataModel.Json
         /// The X coordinate of this vector.
         /// </summary>
         [DataMember(Order = 0)]
-        public float X { get; set; }
+        public float X;
 
         /// <summary>
         /// The Y coordinate of this vector.
         /// </summary>
         [DataMember(Order = 1)]
-        public float Y { get; set; }
+        public float Y;
 
         /// <summary>
         /// Returns the corresponding <see cref="Vector2"/> to this model.
@@ -146,13 +146,13 @@ namespace Pokémon3D.DataModel.Json
         /// The lower bound of the range.
         /// </summary>
         [DataMember(Order = 0)]
-        public double Min { get; set; }
+        public double Min;
 
         /// <summary>
         /// The upper bound of the range.
         /// </summary>
         [DataMember(Order = 1)]
-        public double Max { get; set; }
+        public double Max;
     }
 
     /// <summary>
@@ -165,12 +165,12 @@ namespace Pokémon3D.DataModel.Json
         /// The source file for this texture.
         /// </summary>
         [DataMember(Order = 0)]
-        public string Source { get; set; }
+        public string Source;
 
         /// <summary>
         /// The rectangle cut out of the source texture.
         /// </summary>
         [DataMember(Order = 1)]
-        public RectangleModel Rectangle { get; set; }
+        public RectangleModel Rectangle;
     }
 }

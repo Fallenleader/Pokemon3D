@@ -9,9 +9,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     class EntityComponentModel
     {
         [DataMember(Order = 0)]
-        public string Name { get; set; }
+        public string Name ;
 
         [DataMember(Order = 1)]
-        public string Data { get; set; }
+        public string Data ;
     }
 }
