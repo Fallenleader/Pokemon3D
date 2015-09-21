@@ -27,6 +27,8 @@ namespace Pokémon3D.UI.Screens
         public void OnOpening(object sender, EventArgs e)
         {
             _scene = new Scene(_game);
+            _scene.EnableShadows = true;
+            _scene.LightDirection = new Vector3(1, -5, -1);
 
             _camera = _scene.CreateCamera();
             _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
@@ -36,7 +38,9 @@ namespace Pokémon3D.UI.Screens
             var cubeMaterial = new Material(_game.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample));
 
             _cube = _scene.CreateSceneNode();
-            _cube.Material = cubeMaterial;
+            _cube.Material = new Material(_game.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample) ){
+                ReceiveShadow = false
+            };
             _cube.Mesh = cubeMesh;
             _cube.Position = new Vector3(0.0f, 3.0f, 0.0f);
 

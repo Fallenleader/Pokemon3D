@@ -14,9 +14,11 @@ namespace Pokémon3D.Rendering
         private readonly Effect _basicEffect;
         private readonly RenderTarget2D _shadowMap;
         private SpriteBatch _spriteBatch;
+        private Effect _shadowDepthDebugEffect;
 
         private EffectTechnique _shadowDepthTechnique;
         private EffectTechnique _defaultTechnique;
+        private EffectTechnique _defaultWithShadowsTechnique;
 
         public bool EnableShadows { get; set; }
         public Vector3 LightDirection { get; set; }
@@ -34,6 +36,10 @@ namespace Pokémon3D.Rendering
 
             _defaultTechnique = _basicEffect.Techniques["Default"];
             _shadowDepthTechnique = _basicEffect.Techniques["ShadowCaster"];
+            _defaultWithShadowsTechnique = _basicEffect.Techniques["DefaultWithShadows"];
+
+            _spriteBatch = new SpriteBatch(_device);
+            _shadowDepthDebugEffect = game.Content.Load<Effect>(ResourceNames.Effects.DebugShadowMap);
         }
 
         public SceneNode CreateSceneNode()
@@ -67,6 +73,28 @@ namespace Pokémon3D.Rendering
             {
                 DrawSceneForCamera(camera);
             }
+
+            //DrawShadowMapDebug();
+        }
+
+        private void DrawShadowMapDebug()
+        {
+            if (EnableShadows)
+            {
+                _spriteBatch.Begin(effect: _shadowDepthDebugEffect);
+                _spriteBatch.Draw(_shadowMap, new Rectangle(0, 0, 128, 128), Color.White);
+                _spriteBatch.End();
+                _device.BlendState = BlendState.Opaque;
+                _device.DepthStencilState = DepthStencilState.Default;
+            }
+        }
+
+        private Matrix BuildLightViewMatrix()
+        {
+            LightDirection.Normalize();
+            var lightProjection = Matrix.CreateOrthographic(21, 21, 1.0f, 60.0f);
+            var lightView = Matrix.CreateLookAt(-LightDirection * 10.0f, Vector3.Zero, Vector3.Up);
+            return lightView * lightProjection;
         }
 
         private void DrawShadowMap()
@@ -75,9 +103,7 @@ namespace Pokémon3D.Rendering
             _device.SetRenderTarget(_shadowMap);
             _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
 
-            LightDirection.Normalize();
-            var lightProjection = Matrix.CreateOrthographic(10, 10, 1.0f, 1000.0f);
-            var lightView = Matrix.CreateLookAt(-LightDirection * 10.0f, Vector3.Zero, Vector3.Up);
+            var lightViewProjection = BuildLightViewMatrix();
             
             _basicEffect.CurrentTechnique = _shadowDepthTechnique;
             foreach (var sceneNode in _allNodes)
@@ -86,7 +112,7 @@ namespace Pokémon3D.Rendering
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
                 if (!sceneNode.Material.CastShadow) continue;
 
-                _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.WorldMatrix * lightView * lightProjection);
+                _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.WorldMatrix * lightViewProjection);
 
                 foreach (var pass in _basicEffect.CurrentTechnique.Passes)
                 {
@@ -103,12 +129,26 @@ namespace Pokémon3D.Rendering
 
             _basicEffect.Parameters["View"].SetValue(camera.ViewMatrix);
             _basicEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
+            _basicEffect.Parameters["LightDirection"].SetValue(LightDirection);
             _basicEffect.CurrentTechnique = _defaultTechnique;
+
+            var lightView = BuildLightViewMatrix();
 
             foreach (var sceneNode in _allNodes)
             {
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
+
+                if (sceneNode.Material.ReceiveShadow)
+                {
+                    _basicEffect.CurrentTechnique = _defaultWithShadowsTechnique;
+                    _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.WorldMatrix * lightView);
+                    _basicEffect.Parameters["ShadowMap"].SetValue(_shadowMap);
+                }
+                else
+                {
+                    _basicEffect.CurrentTechnique = _defaultTechnique;
+                }
 
                 _basicEffect.Parameters["World"].SetValue(sceneNode.WorldMatrix);
                 _basicEffect.Parameters["DiffuseTexture"].SetValue(sceneNode.Material.DiffuseTexture);
