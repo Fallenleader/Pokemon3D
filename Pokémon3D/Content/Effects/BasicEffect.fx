@@ -1,6 +1,7 @@
 ﻿float4x4 World;
 float4x4 View;
 float4x4 Projection;
+float4x4 LightWorldViewProjection;
 texture DiffuseTexture;
 float3 LightDirection = float3(1, -1,  -1);
 
@@ -53,5 +54,46 @@ technique Default
 	{
 		VertexShader = compile vs_4_0 DefaultVertexShaderFunction();
 		PixelShader = compile ps_4_0 DefaultPixelShaderFunction();
+	}
+}
+
+//----------------------------------------------------------------------------------------
+//Shadow Caster Shader Code. Creates Shadow map.
+//----------------------------------------------------------------------------------------
+
+struct VSInputShadowCaster
+{
+	float4 Position : SV_POSITION;
+};
+
+struct VSOutputShadowReceiver
+{
+	float4 Position : POSITION;
+	float4 DepthPosition : TEXCOORD0;
+};
+
+VSOutputShadowReceiver DepthVertexShader(VSInputShadowCaster input)
+{
+	VSOutputShadowReceiver output;
+
+	input.Position.w = 1.0f;
+	output.Position = mul(input.Position, LightWorldViewProjection);
+	output.DepthPosition = output.Position;
+
+	return output;
+}
+
+float4 DepthPixelShader(VSOutputShadowReceiver input) : SV_TARGET
+{
+	float depthValue = input.DepthPosition.z / input.DepthPosition.w;
+	return float4(depthValue, depthValue, depthValue, 1.0f);
+}
+
+technique ShadowCaster
+{
+	pass Pass1
+	{
+		VertexShader = compile vs_4_0 DepthVertexShader();
+		PixelShader = compile ps_4_0 DepthPixelShader();
 	}
 }
