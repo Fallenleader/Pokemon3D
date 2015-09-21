@@ -28,7 +28,7 @@ namespace Pokémon3D.GameModes
             //Unload and clear all old GameModes first:
             foreach (GameMode oldGameMode in _gameModes)
             {
-                oldGameMode.Unload();
+                oldGameMode.FreeResources();
             }
             _gameModes.Clear();
 

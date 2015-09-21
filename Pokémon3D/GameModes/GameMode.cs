@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;
@@ -36,11 +37,16 @@ namespace Pokémon3D.GameModes
             return GameCore.State.GameModeManager.ActiveGameMode;
         }
 
+        /// <summary>
+        /// Creates an instance of the <see cref="GameMode"/> class and loads the data model.
+        /// </summary>
         public GameMode(string gameModeFile)
         {
             try
             {
                 _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
+                _components = new List<IGameModeComponent>();
+                _gameModeFolder = System.IO.Path.GetDirectoryName(gameModeFile);
 
                 _isValid = true;
             }
@@ -55,9 +61,43 @@ namespace Pokémon3D.GameModes
             }
         }
 
-        public void Unload()
+        private void InitializeComponents()
         {
+            // Search the assembly for types that implement the IGameModeComponent interface:
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetType().IsAssignableFrom(typeof(IGameModeComponent)));
 
+            // Create instances of those types and add those instances to the component list.
+            foreach (var type in types)
+                AddComponent((IGameModeComponent)Activator.CreateInstance(type));
+
+            _initializedComponents = true;
+        }
+
+        private void AddComponent(IGameModeComponent component)
+        {
+            _components.Add(component);
+            component.Activated(this);
+        }
+
+        /// <summary>
+        /// Returns a component of this GameMode.
+        /// </summary>
+        /// <typeparam name="T">The type of the component.</typeparam>
+        public T GetComponent<T>() where T : IGameModeComponent
+        {
+            if (!_initializedComponents)
+                InitializeComponents();
+
+            return (T)_components.Find(c => c.GetType() == typeof(T));
+        }
+
+        /// <summary>
+        /// Frees all resources consumed by this GameMode.
+        /// </summary>
+        public void FreeResources()
+        {
+            foreach (IGameModeComponent component in _components)
+                component.FreeResources();
         }
     }
 }
