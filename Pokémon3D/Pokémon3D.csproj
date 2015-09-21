@@ -61,6 +61,7 @@
     <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\WorldmapModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\ZoneModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\GameModeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\ItemModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\BattleMapDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldModel.cs" />
@@ -85,11 +86,14 @@
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
     <Compile Include="Debug\GameLogger.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
+    <Compile Include="FileSystem\GameModeFileProvider.cs" />
     <Compile Include="FileSystem\TranslationFileProvider.cs" />
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameCore\GameState.cs" />
     <Compile Include="GameModes\GameMode.cs" />
+    <Compile Include="GameModes\GameModeManager.cs" />
+    <Compile Include="GameModes\IGameModeComponent.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\GeometryData.cs" />
     <Compile Include="Rendering\Material.cs" />

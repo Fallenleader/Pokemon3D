@@ -61,10 +61,10 @@ namespace Pokémon3D.Rendering
         {
             WorldMatrix = (Parent == null ? Matrix.Identity : Parent.WorldMatrix) * CalculateWorldMatrix();
         }
-        
+
         public void Translate(Vector3 translation)
         {
-            Position += Right*translation.X + Up*translation.Y + Forward*translation.Z;
+            Position += Right * translation.X + Up * translation.Y + Forward * translation.Z;
         }
 
         public void RotateX(float angle)
