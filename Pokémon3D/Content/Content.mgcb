@@ -30,3 +30,9 @@
 /processorParam:TextureFormat=Color
 /build:Textures/bricksSample.jpg
 
+#begin Effects/DebugShadowMap.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/DebugShadowMap.fx
+
