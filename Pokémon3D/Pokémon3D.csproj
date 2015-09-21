@@ -49,6 +49,7 @@
     <StartupObject>Pokemon3D.GameCore.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataModel\IDataModelContainer.cs" />
     <Compile Include="DataModel\Json\BaseTypes.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
