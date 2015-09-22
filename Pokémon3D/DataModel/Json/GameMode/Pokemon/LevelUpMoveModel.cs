@@ -12,12 +12,12 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The level the Pokémon learns the move at.
         /// </summary>
         [DataMember(Order = 0)]
-        public int Level { get; private set; }
+        public int Level;
 
         /// <summary>
         /// The Id of the move.
         /// </summary>
         [DataMember(Order = 1)]
-        public int Id { get; private set; }
+        public int Id;
     }
 }

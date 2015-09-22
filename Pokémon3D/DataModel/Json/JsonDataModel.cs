@@ -107,6 +107,7 @@ namespace Pokémon3D.DataModel.Json
     /// <summary>
     /// An exception thrown when an error occurs while loading Json data.
     /// </summary>
+    [Serializable]
     sealed class JsonDataLoadException : Exception
     {
         /// <summary>

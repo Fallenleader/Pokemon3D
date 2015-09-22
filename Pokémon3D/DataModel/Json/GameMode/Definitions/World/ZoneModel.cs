@@ -9,9 +9,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     class ZoneModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
-        
+        public string Name;
+
         [DataMember(Order = 1)]
-        public WeatherModel[] Weather { get; private set; }
+        public WeatherModel[] Weather;
     }
 }

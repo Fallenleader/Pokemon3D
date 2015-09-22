@@ -11,7 +11,7 @@ namespace Pokémon3D.UI
     /// <summary>
     /// A component to draw basic shapes.
     /// </summary>
-    class Graphics
+    class Graphics : IDisposable
     {
         private Texture2D _pixel;
         private SpriteBatch _batch;
@@ -108,6 +108,12 @@ namespace Pokémon3D.UI
         {
             Texture2D texture = GradientTextureProvider.GetTexture(GameCore.State.Controller.GraphicsDevice, gradient, shape);
             _batch.Draw(texture, destination, Color.White);
+        }
+
+        public void Dispose()
+        {
+            _pixel.Dispose();
+            _batch.Dispose();
         }
     }
 }

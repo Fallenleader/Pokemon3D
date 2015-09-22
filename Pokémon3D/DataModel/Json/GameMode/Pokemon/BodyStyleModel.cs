@@ -15,7 +15,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The defined body styles.
         /// </summary>
         [DataMember(Order = 0)]
-        public BodyStyleModel[] BodyStyles { get; private set; }
+        public BodyStyleModel[] BodyStyles;
     }
 
     /// <summary>
@@ -28,12 +28,12 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The name of this BodyStyle.
         /// </summary>
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
+        public string Name;
 
         /// <summary>
         /// The texture of this BodyStyle.
         /// </summary>
         [DataMember(Order = 1)]
-        public TextureSourceModel Texture { get; private set; }
+        public TextureSourceModel Texture;
     }
 }

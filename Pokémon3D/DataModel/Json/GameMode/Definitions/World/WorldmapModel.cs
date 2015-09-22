@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
 {
     #region Enums
@@ -75,24 +78,24 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     class WorldmapModel
     {
         [DataMember(Order = 0)]
-        public string Region { get; private set; }
-        
+        public string Region;
+
         [DataMember(Order = 1)]
-        public TextureSourceModel Texture { get; private set; }
-        
+        public TextureSourceModel Texture;
+
         [DataMember(Order = 2)]
-        public ColorModel BackColor { get; private set; }
-        
+        public ColorModel BackColor;
+
         [DataMember(Order = 3)]
-        public RouteModel[] Routes { get; private set; }
-        
+        public RouteModel[] Routes;
+
         [DataMember(Order = 4)]
-        public CityModel[] Cities { get; private set; }
-        
+        public CityModel[] Cities;
+
         [DataMember(Order = 5)]
-        public PlaceModel[] Places { get; private set; }
-        
+        public PlaceModel[] Places;
+
         [DataMember(Order = 6)]
-        public EnvironmentMapObjectModel[] Environment { get; private set; }
+        public EnvironmentMapObjectModel[] Environment;
     }
 }

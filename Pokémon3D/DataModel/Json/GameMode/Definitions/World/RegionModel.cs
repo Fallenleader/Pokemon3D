@@ -30,7 +30,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     class RegionsModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public RegionModel[] Regions { get; private set; }
+        public RegionModel[] Regions;
     }
 
     /// <summary>
@@ -40,9 +40,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     class RegionModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
+        public string Name;
         
         [DataMember(Order = 1)]
-        public ZoneModel[] Zones { get; private set; }
+        public ZoneModel[] Zones;
     }
 }

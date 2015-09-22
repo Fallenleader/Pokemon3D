@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
     /// <summary>
@@ -12,7 +15,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The types enumeration of the file.
         /// </summary>
         [DataMember(Order = 0)]
-        public TypeModel[] Types { get; private set; }
+        public TypeModel[] Types;
     }
 
     /// <summary>
@@ -25,36 +28,36 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The name of the type.
         /// </summary>
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
+        public string Name;
 
         /// <summary>
         /// The color of this type.
         /// </summary>
         [DataMember(Order = 1)]
-        public ColorModel Color { get; private set; }
+        public ColorModel Color;
 
         /// <summary>
         /// The type texture of this type.
         /// </summary>
         [DataMember(Order = 2)]
-        public TextureSourceModel Texture { get; private set; }
+        public TextureSourceModel Texture;
 
         /// <summary>
         /// The list of types moves of this type are effective against.
         /// </summary>
         [DataMember(Order = 3)]
-        public string[] Effective { get; private set; }
+        public string[] Effective;
 
         /// <summary>
         /// The list of types moves of this type are not effective against.
         /// </summary>
         [DataMember(Order = 4)]
-        public string[] Ineffective { get; private set; }
+        public string[] Ineffective;
 
         /// <summary>
         /// The list of types moves of this type have no effect on.
         /// </summary>
         [DataMember(Order = 5)]
-        public string[] Unaffected { get; private set; }
+        public string[] Unaffected;
     }
 }

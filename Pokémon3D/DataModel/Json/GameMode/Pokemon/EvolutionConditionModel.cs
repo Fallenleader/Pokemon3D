@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
 {
     /// <summary>
@@ -55,13 +58,13 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The condition that has to be reached with the value returned from the condition type.
         /// </summary>
         [DataMember(Order = 1)]
-        public string Condition { get; private set; }
+        public string Condition;
 
         /// <summary>
         /// The Id of the Pokémon this Pokémon will evolve into.
         /// </summary>
         [DataMember(Order = 2)]
-        public int Evolution { get; private set; }
+        public int Evolution;
 
         [DataMember(Order = 3, Name = "Trigger")]
         private string _trigger;
