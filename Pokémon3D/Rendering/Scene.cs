@@ -62,7 +62,7 @@ namespace Pokémon3D.Rendering
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
 
-                _defaultEffect.World = sceneNode.WorldMatrix;
+                _defaultEffect.World = sceneNode.World;
                 _defaultEffect.Texture = sceneNode.Material.DiffuseTexture;
 
                 foreach (var pass in _defaultEffect.CurrentTechnique.Passes)
