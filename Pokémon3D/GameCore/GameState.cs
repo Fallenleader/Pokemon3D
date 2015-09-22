@@ -1,9 +1,4 @@
 ﻿using Pokémon3D.UI.Screens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pokémon3D.GameCore
 {
@@ -25,15 +20,20 @@ namespace Pokémon3D.GameCore
         /// <summary>
         /// The game's active screen manager to access and manage the currently active screen instance.
         /// </summary>
-        public static UI.Screens.ScreenManager ScreenManager { get; private set; }
+        public static ScreenManager ScreenManager { get; private set; }
+
+        /// <summary>
+        /// Object to manage loaded GameModes.
+        /// </summary>
+        public static GameModes.GameModeManager GameModeManager { get; private set; }
 
         public static void Initialize(GameController controller)
         {
             Controller = controller;
 
             Logger = new Debug.GameLogger();
-            ScreenManager = new UI.Screens.ScreenManager();
-            ScreenManager.SetScreen(new RenderingTestScreen(controller));
+            ScreenManager = new ScreenManager();
+            GameModeManager = new GameModes.GameModeManager();
         }
 
     }

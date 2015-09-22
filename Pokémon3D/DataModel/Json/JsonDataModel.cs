@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace Pokémon3D.DataModel.Json
 {
@@ -14,6 +13,18 @@ namespace Pokémon3D.DataModel.Json
     [DataContract]
     abstract class JsonDataModel
     {
+        /// <summary>
+        /// Creates a data model of a specific type, loaded from a file.
+        /// </summary>
+        /// <typeparam name="T">The return type of the data model.</typeparam>
+        public static T FromFile<T>(string fileName)
+        {
+            if (File.Exists(fileName))
+                return FromString<T>(File.ReadAllText(fileName));
+            else
+                throw new FileNotFoundException("The JSON file does not exist.", fileName);
+        }
+
         /// <summary>
         /// Creates a data model of a specific type.
         /// </summary>
@@ -107,8 +118,7 @@ namespace Pokémon3D.DataModel.Json
     /// <summary>
     /// An exception thrown when an error occurs while loading Json data.
     /// </summary>
-    [Serializable]
-    sealed class JsonDataLoadException : Exception
+    class JsonDataLoadException : Exception
     {
         /// <summary>
         /// Creates a new instance of the <see cref="JsonDataLoadException"/> class.

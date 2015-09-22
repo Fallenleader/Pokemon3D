@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace Pokémon3D.Rendering
 {
-    class SceneNode
+    class SceneNode : IWorldDataContainer
     {
         private readonly List<SceneNode> _childNodes;
         private Vector3 _rotationAxis;
@@ -14,20 +14,55 @@ namespace Pokémon3D.Rendering
         public Mesh Mesh { get; set; }
         public Material Material { get; set; }
 
-        public Vector3 Position { get; set; }
-        public Vector3 Scale { get; set; }
-        public Quaternion Rotation { get; set; }
+        private WorldCreator _worldCreator;
+
+        private Vector3 _position;
+        private Vector3 _scale;
+        private Quaternion _rotation;
+
+        public Vector3 Scale
+        {
+            get { return _scale; }
+            set
+            {
+                _scale = value;
+                _worldCreator.SetDirty(WorldDirtyFlags.Scale);
+            }
+        }
+
+        public Quaternion Rotation
+        {
+            get { return _rotation; }
+            set
+            {
+                _rotation = value;
+                _worldCreator.SetDirty(WorldDirtyFlags.Rotation);
+            }
+        }
+
+        public Vector3 Position
+        {
+            get { return _position; }
+            set
+            {
+                _position = value;
+                _worldCreator.SetDirty(WorldDirtyFlags.Position);
+            }
+        }
+        
+        public Matrix World { get; private set; }
+
         public Vector3 Right { get; private set; }
         public Vector3 Up { get; private set; }
         public Vector3 Forward { get; private set; }
-        public Matrix WorldMatrix { get; private set; }
-
+        
         public SceneNode()
         {
             _childNodes = new List<SceneNode>();
             Children = _childNodes.AsReadOnly();
-            Scale = Vector3.One;
-            Rotation = Quaternion.Identity;
+            _worldCreator = new WorldCreator(this);
+            _scale = Vector3.One;
+            _rotation = Quaternion.Identity;
             Right = Vector3.Right;
             Up = Vector3.Up;
             Forward = Vector3.Forward;
@@ -59,12 +94,15 @@ namespace Pokémon3D.Rendering
 
         public virtual void Update()
         {
-            WorldMatrix = (Parent == null ? Matrix.Identity : Parent.WorldMatrix) * CalculateWorldMatrix();
+            if (Parent == null)
+                World = _worldCreator.GetWorldMatrix();
+            else
+                World = Parent.World * _worldCreator.GetWorldMatrix();
         }
-        
+
         public void Translate(Vector3 translation)
         {
-            Position += Right*translation.X + Up*translation.Y + Forward*translation.Z;
+            Position += Right * translation.X + Up * translation.Y + Forward * translation.Z;
         }
 
         public void RotateX(float angle)
@@ -95,11 +133,6 @@ namespace Pokémon3D.Rendering
 
             Up = Vector3.Transform(Up, matrix);
             Right = Vector3.Transform(Right, matrix);
-        }
-
-        private Matrix CalculateWorldMatrix()
-        {
-            return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Rotation) * Matrix.CreateTranslation(Position);
         }
     }
 }

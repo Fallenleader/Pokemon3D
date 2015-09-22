@@ -52,11 +52,15 @@ namespace Pokémon3D.GameCore
             
         }
 
-        protected override void LoadContent()
+        protected override void Initialize()
         {
+            base.Initialize();
             State.Initialize(this);
-        }
 
+            //Set an inital screen:
+            State.ScreenManager.SetScreen(new UI.Screens.RenderingTestScreen(this));
+        }
+        
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
