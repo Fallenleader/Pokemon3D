@@ -95,6 +95,7 @@
     <Compile Include="GameModes\GameMode.cs" />
     <Compile Include="GameModes\GameModeManager.cs" />
     <Compile Include="GameModes\IGameModeComponent.cs" />
+    <Compile Include="GameModes\Maps\Entity.cs" />
     <Compile Include="Rendering\IWorldDataContainer.cs" />
     <Compile Include="Rendering\Camera.cs" />
     <Compile Include="Rendering\GeometryData.cs" />
