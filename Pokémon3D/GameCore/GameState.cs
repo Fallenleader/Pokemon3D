@@ -15,7 +15,7 @@ namespace Pokémon3D.GameCore
         /// <summary>
         /// The game's active logger instance.
         /// </summary>
-        public static Debug.GameLogger Logger { get; private set; }
+        public static Diagnostics.GameLogger Logger { get; private set; }
 
         /// <summary>
         /// The game's active screen manager to access and manage the currently active screen instance.
@@ -31,7 +31,7 @@ namespace Pokémon3D.GameCore
         {
             Controller = controller;
 
-            Logger = new Debug.GameLogger();
+            Logger = new Diagnostics.GameLogger();
             ScreenManager = new ScreenManager();
             GameModeManager = new GameModes.GameModeManager();
         }

@@ -55,7 +55,7 @@ namespace Pokémon3D.GameModes
                 //Something went wrong processing the data from a GameMode config file.
                 //Log the error and mark the instance as invalid.
 
-                GameCore.State.Logger.Log(Debug.MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
+                GameCore.State.Logger.Log(Diagnostics.MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
 
                 _isValid = false;
             }
