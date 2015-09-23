@@ -85,7 +85,7 @@
     <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
-    <Compile Include="Debug\GameLogger.cs" />
+    <Compile Include="Diagnostics\GameLogger.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
     <Compile Include="FileSystem\GameModeFileProvider.cs" />
     <Compile Include="FileSystem\TranslationFileProvider.cs" />
