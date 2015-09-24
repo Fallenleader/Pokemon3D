@@ -9,27 +9,27 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     class EntityModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public int Id ;
+        public int Id;
 
         [DataMember(Order = 1)]
-        public Vector3Model Rotation ;
+        public Vector3Model Rotation;
 
         [DataMember(Order = 2)]
-        public bool TakeFullRotation ;
+        public bool TakeFullRotation;
 
         [DataMember(Order = 3)]
-        public Vector3Model Scale ;
+        public Vector3Model Scale;
 
         [DataMember(Order = 4)]
-        public EntityRenderModeModel RenderMode ;
+        public EntityRenderModeModel RenderMode;
 
         [DataMember(Order = 5)]
-        public bool Collision ;
+        public bool Collision;
 
         [DataMember(Order = 6)]
-        public bool IsFloor ;
+        public bool IsFloor;
 
         [DataMember(Order = 7)]
-        public EntityComponentModel[] Components ;
+        public EntityComponentModel[] Components;
     }
 }
