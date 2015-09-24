@@ -9,20 +9,16 @@ using Pokémon3D.GameCore;
 /// </summary>
 namespace Pokemon3D.GameCore
 {
-    /// <summary>
-    /// The main class.
-    /// </summary>
     public static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             //Just running the game here currently:
             using (GameController game = new GameController())
+            {
                 game.Run();
+            }
         }
     }
 }
