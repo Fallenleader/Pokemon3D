@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pokémon3D.UI.Screens
 {
@@ -7,26 +10,29 @@ namespace Pokémon3D.UI.Screens
     /// </summary>
     class ScreenManager
     {
-        private Screen _currentScreen;
+        private Dictionary<Type, Screen> _screensByType = new Dictionary<Type, Screen>();
 
-        /// <summary>
-        /// The currently active screen.
-        /// </summary>
-        public Screen CurrentScreen()
+        public Screen CurrentScreen { get; private set; }
+
+        public ScreenManager()
         {
-            return _currentScreen;
+            var screenTypes = typeof(Screen).Assembly.GetTypes().Where(t => typeof(Screen).IsAssignableFrom(t) && !t.IsAbstract);
+
+            foreach(var screenType in screenTypes)
+            {
+                var screen = (Screen)Activator.CreateInstance(screenType);
+                _screensByType.Add(screenType, screen);
+            }
         }
 
         /// <summary>
         /// Sets the current screen to a new screen instance.
         /// </summary>
-        public void SetScreen(Screen newScreen)
+        public void SetScreen(Type screenType)
         {
-            _currentScreen?.OnClosing();
-
-            _currentScreen = newScreen;
-
-            newScreen.OnOpening();
+            CurrentScreen?.OnClosing();
+            CurrentScreen = _screensByType[screenType];
+            CurrentScreen.OnOpening();
         }
 
         /// <summary>
@@ -34,7 +40,7 @@ namespace Pokémon3D.UI.Screens
         /// </summary>
         public void Draw(GameTime gameTime)
         {
-            _currentScreen?.OnDraw(gameTime);
+            CurrentScreen?.OnDraw(gameTime);
         }
 
         /// <summary>
@@ -42,7 +48,7 @@ namespace Pokémon3D.UI.Screens
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            _currentScreen?.OnUpdate(gameTime);
+            CurrentScreen?.OnUpdate(gameTime);
         }
     }
 }
