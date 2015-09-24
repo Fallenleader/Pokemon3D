@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI
 {
@@ -18,7 +19,7 @@ namespace Pokémon3D.UI
 
         public Graphics(SpriteBatch batch)
         {
-            _pixel = new Texture2D(GameCore.State.Controller.GraphicsDevice, 1, 1);
+            _pixel = new Texture2D(GameController.Instance.GraphicsDevice, 1, 1);
             _pixel.SetData(new Color[] { Color.White });
 
             _batch = batch;
@@ -97,7 +98,7 @@ namespace Pokémon3D.UI
         /// </summary>
         public void DrawShape(IShape shape, Rectangle destination, Color color)
         {
-            Texture2D texture = ShapeTextureProvider.GetTexture(GameCore.State.Controller.GraphicsDevice, shape);
+            Texture2D texture = ShapeTextureProvider.GetTexture(GameController.Instance.GraphicsDevice, shape);
             _batch.Draw(texture, destination, color);
         }
 
@@ -106,7 +107,7 @@ namespace Pokémon3D.UI
         /// </summary>
         public void DrawShape(IShape shape, Rectangle destination, Gradient gradient)
         {
-            Texture2D texture = GradientTextureProvider.GetTexture(GameCore.State.Controller.GraphicsDevice, gradient, shape);
+            Texture2D texture = GradientTextureProvider.GetTexture(GameController.Instance.GraphicsDevice, gradient, shape);
             _batch.Draw(texture, destination, Color.White);
         }
 

@@ -7,6 +7,8 @@ using System.Reflection;
 using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;
+using Pokémon3D.GameCore;
+using Pokémon3D.Diagnostics;
 
 namespace Pokémon3D.GameModes
 {
@@ -34,7 +36,7 @@ namespace Pokémon3D.GameModes
         /// </summary>
         public static GameMode Active()
         {
-            return GameCore.State.GameModeManager.ActiveGameMode;
+            return GameController.Instance.GameModeManager.ActiveGameMode;
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace Pokémon3D.GameModes
                 //Something went wrong processing the data from a GameMode config file.
                 //Log the error and mark the instance as invalid.
 
-                GameCore.State.Logger.Log(Diagnostics.MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
+                GameLogger.Instance.Log(Diagnostics.MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
 
                 _isValid = false;
             }

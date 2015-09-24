@@ -1,32 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokémon3D.GameCore;
 using Pokémon3D.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pokémon3D.UI.Screens
 {
     class RenderingTestScreen : Screen
     {
-        private Game _game;
         private Scene _scene;
         private Camera _camera;
         private SceneNode _cube;
 
-        public RenderingTestScreen(Game game)
+        public void OnOpening()
         {
-            Opening += OnOpening;
-            Update += OnUpdate;
-            Draw += OnDraw;
-            _game = game;
-        }
-
-        public void OnOpening(object sender, EventArgs e)
-        {
-            _scene = new Scene(_game);
+            _scene = new Scene(GameController.Instance);
             _scene.EnableShadows = true;
             _scene.LightDirection = new Vector3(1, -5, -1);
 
@@ -34,11 +21,11 @@ namespace Pokémon3D.UI.Screens
             _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
             _camera.RotateX(-MathHelper.PiOver4);
             
-            var cubeMesh = new Mesh(_game.GraphicsDevice, Primitives.GenerateCubeData());
-            var cubeMaterial = new Material(_game.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample));
+            var cubeMesh = new Mesh(GameController.Instance.GraphicsDevice, Primitives.GenerateCubeData());
+            var cubeMaterial = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample));
 
             _cube = _scene.CreateSceneNode();
-            _cube.Material = new Material(_game.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample) ){
+            _cube.Material = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.bricksSample) ){
                 ReceiveShadow = false
             };
             _cube.Mesh = cubeMesh;
@@ -61,18 +48,22 @@ namespace Pokémon3D.UI.Screens
             sceneNode.RotateZ(rotation.Z);
         }
 
-        public void OnUpdate(object sender, GameFlowEventArgs e)
+        public void OnUpdate(GameTime gameTime)
         {
-            var elapsed = 1.0f / 60.0f;
+            var elapsed = gameTime.ElapsedGameTime.Milliseconds * 0.001f;
             _cube.RotateX(MathHelper.PiOver4 * elapsed);
             _cube.RotateY(MathHelper.Pi * elapsed);
             _cube.RotateZ(MathHelper.Pi * elapsed);
             _scene.Update(elapsed);
         }
 
-        public void OnDraw(object sender, GameFlowEventArgs e)
+        public void OnDraw(GameTime gameTime)
         {
             _scene.Draw();
+        }
+
+        public void OnClosing()
+        {
         }
     }
 }
