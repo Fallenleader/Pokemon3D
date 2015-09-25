@@ -112,7 +112,7 @@ namespace Pokémon3D.Rendering
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
                 if (!sceneNode.Material.CastShadow) continue;
 
-                _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.World * lightViewProjection);
+                _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.GetWorldMatrix(null) * lightViewProjection);
 
                 foreach (var pass in _basicEffect.CurrentTechnique.Passes)
                 {
@@ -139,10 +139,12 @@ namespace Pokémon3D.Rendering
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
 
+
+                var worldMatrix = sceneNode.GetWorldMatrix(camera);
                 if (sceneNode.Material.ReceiveShadow)
                 {
                     _basicEffect.CurrentTechnique = _defaultWithShadowsTechnique;
-                    _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.World * lightView);
+                    _basicEffect.Parameters["LightWorldViewProjection"].SetValue(worldMatrix * lightView);
                     _basicEffect.Parameters["ShadowMap"].SetValue(_shadowMap);
                 }
                 else
@@ -150,7 +152,7 @@ namespace Pokémon3D.Rendering
                     _basicEffect.CurrentTechnique = _defaultTechnique;
                 }
                 
-                _basicEffect.Parameters["World"].SetValue(sceneNode.World);
+                _basicEffect.Parameters["World"].SetValue(worldMatrix);
                 _basicEffect.Parameters["DiffuseTexture"].SetValue(sceneNode.Material.DiffuseTexture);
 
                 foreach(var pass in _basicEffect.CurrentTechnique.Passes)

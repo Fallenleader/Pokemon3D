@@ -25,7 +25,7 @@ namespace Pokémon3D.Rendering
         public override void Update()
         {
             base.Update();
-            ViewMatrix = Matrix.Invert(World);
+            ViewMatrix = Matrix.Invert(GetWorldMatrix(null));
             ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(FieldOfView, Viewport.AspectRatio, NearClipDistance, FarClipDistance);
         }
     }
