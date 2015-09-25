@@ -24,7 +24,7 @@ namespace Pokémon3D.GameModes.Maps.EntityComponents
                 case "Vector2":
                     return (T)ToVector2(data);
                 case "Single":
-
+                    return (T)ToSingle(data);
                 case "Int32[]":
                     return (T)ToArray<int>(data);
                 default:
