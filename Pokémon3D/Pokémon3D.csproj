@@ -46,7 +46,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Pokemon3D.GameCore.Program</StartupObject>
+    <StartupObject>Pokémon3D.GameCore.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataModel\IDataModelContainer.cs" />
@@ -91,7 +91,6 @@
     <Compile Include="FileSystem\TranslationFileProvider.cs" />
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameController.cs" />
-    <Compile Include="GameCore\GameState.cs" />
     <Compile Include="GameModes\GameMode.cs" />
     <Compile Include="GameModes\GameModeManager.cs" />
     <Compile Include="GameModes\IGameModeComponent.cs" />
@@ -146,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Effects\BasicEffect.fx" />
+    <Content Include="Content\Effects\DebugShadowMap.fx" />
     <Content Include="Content\Textures\bricksSample.jpg" />
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -156,6 +156,9 @@
     <None Include="app.config" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
     <None Include="Content\Effects\BasicEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Effects\DebugShadowMap.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\Textures\bricksSample.xnb">
@@ -172,6 +175,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
 {
     /// <summary>
@@ -15,7 +18,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The defined body styles.
         /// </summary>
         [DataMember(Order = 0)]
-        public BodyStyleModel[] BodyStyles { get; private set; }
+        public BodyStyleModel[] BodyStyles;
     }
 
     /// <summary>
@@ -28,12 +31,12 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The name of this BodyStyle.
         /// </summary>
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
+        public string Name;
 
         /// <summary>
         /// The texture of this BodyStyle.
         /// </summary>
         [DataMember(Order = 1)]
-        public TextureSourceModel Texture { get; private set; }
+        public TextureSourceModel Texture;
     }
 }

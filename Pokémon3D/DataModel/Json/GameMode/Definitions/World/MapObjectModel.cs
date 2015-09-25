@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
 {
     /// <summary>
@@ -9,15 +12,15 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     abstract class MapObjectModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
-        
+        public string Name;
+
         [DataMember(Order = 1)]
-        public Vector2Model Position { get; private set; }
-        
+        public Vector2Model Position;
+
         [DataMember(Order = 2)]
-        public string[] Mapfiles { get; private set; }
-        
+        public string[] Mapfiles;
+
         [DataMember(Order = 3)]
-        public FlyToModel FlyTo { get; private set; }
+        public FlyToModel FlyTo;
     }
 }

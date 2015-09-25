@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
 {
     /// <summary>
@@ -13,37 +16,37 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// </summary>
         /// <returns></returns>
         [DataMember(Order = 0)]
-        public string Text { get; private set; }
+        public string Text;
 
         /// <summary>
         /// The species of this Pokémon.
         /// </summary>
         /// <returns></returns>
         [DataMember(Order = 1)]
-        public string Species { get; private set; }
+        public string Species;
 
         /// <summary>
         /// The height of this Pokémon.
         /// </summary>
         [DataMember(Order = 2)]
-        public double Height { get; private set; }
+        public double Height;
 
         /// <summary>
         /// The weight of this Pokémon.
         /// </summary>
         [DataMember(Order = 3)]
-        public double Weight { get; private set; }
+        public double Weight;
 
         /// <summary>
         /// The color associated with this Pokémon.
         /// </summary>
         [DataMember(Order = 4)]
-        public ColorModel Color { get; private set; }
+        public ColorModel Color;
 
         /// <summary>
         /// The body style of this Pokémon. Defined BodyStyles are used.
         /// </summary>
         [DataMember(Order = 5)]
-        public string BodyStyle { get; private set; }
+        public string BodyStyle;
     }
 }

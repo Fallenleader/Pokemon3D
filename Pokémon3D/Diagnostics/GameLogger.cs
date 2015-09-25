@@ -5,6 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 using Pokémon3D.FileSystem;
+using Pokémon3D.GameCore;
 
 namespace Pokémon3D.Diagnostics
 {
@@ -23,54 +24,52 @@ namespace Pokémon3D.Diagnostics
     /// <summary>
     /// A class to log events during the game's runtime.
     /// </summary>
-    class GameLogger : IDisposable
+    class GameLogger
     {
-        StreamWriter _writer;
         bool _isDebuggerAttached;
+        private static GameLogger _gameLogger;
 
+        public static GameLogger Instance
+        {
+            get
+            {
+                if (_gameLogger == null) _gameLogger = new GameLogger();
+                return _gameLogger;
+            }
+        }
+        
         /// <summary>
         /// Initializes the logger.
         /// </summary>
-        public GameLogger()
+        private GameLogger()
         {
             //Add a handler for the game exit event:
-            GameCore.State.Controller.Exiting += new EventHandler<EventArgs>(Game_Exiting);
+            GameController.Instance.Exiting += new EventHandler<EventArgs>(Game_Exiting);
 
             _isDebuggerAttached = Debugger.IsAttached; //Check if a debugger is attached to the process.
 
-            //Check if the log directory exists:
-            if (!Directory.Exists(StaticFileProvider.LogDirectory))
-                Directory.CreateDirectory(StaticFileProvider.LogDirectory);
-
-            string logFile = StaticFileProvider.LogFile;
-
-            //If a log file for this day already exists, read the content and append:
-            if (File.Exists(logFile))
-            {
-                StreamReader reader = new StreamReader(logFile);
-                string buffer = reader.ReadToEnd();
-                reader.Close();
-
-                _writer = new StreamWriter(logFile);
-                _writer.Write(buffer);
-            }
-            else
-            {
-                _writer = new StreamWriter(logFile);
-            }
+            EnsureLogfileAndFolderExists();
 
             Log(MessageType.Message, "Game started.");
         }
 
+        private void EnsureLogfileAndFolderExists()
+        {
+            if (!Directory.Exists(StaticFileProvider.LogDirectory))
+            {
+                Directory.CreateDirectory(StaticFileProvider.LogDirectory);
+            }
+
+            if (!File.Exists(StaticFileProvider.LogFile)) File.Create(StaticFileProvider.LogFile).Close();
+        }
+
         private void Game_Exiting(object sender, EventArgs e)
         {
-            //When the writer has written any lines to the buffer, write them to the file:
-            if (_writer != null)
-            {
-                Log(MessageType.Message, "Exiting game.");
-                _writer.Close();
-            }
+            Log(MessageType.Message, "Exiting game.");
         }
+
+        private const string LoggerFileLineFormat = "{0} {1} {2}";
+        private const string LoggerVsFormat = "{0} {1} {2}";
 
         /// <summary>
         /// Stores an entry in the game's log file.
@@ -78,20 +77,14 @@ namespace Pokémon3D.Diagnostics
         public void Log(MessageType messageType, string message)
         {
             string icon = GetMessageTypeIcon(messageType);
-            string outLine = string.Concat(new string[]
-                {
-                    DateTime.Now.ToLongTimeString(),
-                    " ",
-                    icon,
-                    " ",
-                    message
-                });
 
-            _writer.WriteLine(outLine);
+            var outLine = string.Format("{0} {1} {2}",  DateTime.Now.ToLongTimeString(), icon, message);
+
+            File.AppendText(outLine);
 
             if (_isDebuggerAttached)
             {
-                System.Diagnostics.Debug.Print(DateTime.Now.ToLongTimeString() + " | " + icon + " | " + message);
+                Debug.Print(string.Format(LoggerVsFormat, DateTime.Now.ToLongTimeString(), icon, message));
             }
         }
 
@@ -111,13 +104,8 @@ namespace Pokémon3D.Diagnostics
                 case MessageType.Error:
                     return "(X)";
                 default:
-                    return "";
+                    return string.Empty;
             }
-        }
-
-        public void Dispose()
-        {
-            _writer.Dispose();
         }
     }
 }

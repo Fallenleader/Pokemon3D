@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pokémon3D.Rendering
 {
@@ -12,8 +8,14 @@ namespace Pokémon3D.Rendering
         public Material(Texture2D diffuseTexture)
         {
             DiffuseTexture = diffuseTexture;
+            Color = Color.White;
+            CastShadow = true;
+            ReceiveShadow = true;
         }
 
         public Texture2D DiffuseTexture { get; set; }
+        public Color Color { get; set; }
+        public bool CastShadow { get; set; }
+        public bool ReceiveShadow { get; set; }
     }
 }

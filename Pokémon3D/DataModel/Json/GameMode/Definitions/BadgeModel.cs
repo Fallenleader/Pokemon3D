@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
     /// <summary>
@@ -12,7 +15,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The list of badges.
         /// </summary>
         [DataMember(Order = 0)]
-        public BadgeModel[] Badges { get; private set; }
+        public BadgeModel[] Badges;
     }
 
     /// <summary>
@@ -25,24 +28,24 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         /// The name of the badge.
         /// </summary>
         [DataMember(Order = 0)]
-        public string Name { get; private set; }
+        public string Name;
 
         /// <summary>
         /// The description of the badge.
         /// </summary>
         [DataMember(Order = 1)]
-        public string Description { get; private set; }
+        public string Description;
 
         /// <summary>
         /// The texture which is the badge's visual representation.
         /// </summary>
         [DataMember(Order = 2)]
-        public TextureSourceModel Texture { get; private set; }
-        
+        public TextureSourceModel Texture;
+
         /// <summary>
         /// The region this badge belongs to.
         /// </summary>
         [DataMember(Order = 3)]
-        public string Region { get; private set; }
+        public string Region;
     }
 }

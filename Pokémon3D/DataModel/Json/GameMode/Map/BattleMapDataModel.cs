@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Map
 {
     /// <summary>
@@ -9,9 +12,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class BattleMapDataModel : JsonDataModel
     {
         [DataMember]
-        public string BattleMapFile ;
+        public string BattleMapFile;
 
         [DataMember]
-        public Vector3Model CameraPosition ;
+        public Vector3Model CameraPosition;
     }
 }

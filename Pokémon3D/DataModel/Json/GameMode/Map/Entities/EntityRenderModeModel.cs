@@ -1,5 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
+// Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
+#pragma warning disable 0649
+
 namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
 {
     /// <summary>
@@ -33,33 +36,33 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
         }
 
         [DataMember(Order = 1)]
-        public TextureSourceModel[] Textures ;
+        public TextureSourceModel[] Textures;
 
         [DataMember(Order = 2)]
-        public int[] TextureIndex ;
+        public int[] TextureIndex;
 
         [DataMember(Order = 3)]
-        public int PrimitiveModelId ;
+        public int PrimitiveModelId;
 
         [DataMember(Order = 4)]
-        public bool RenderBackfaces ;
+        public bool RenderBackfaces;
 
         [DataMember(Order = 5)]
-        public string ModelPath ;
+        public string ModelPath;
 
         [DataMember(Order = 6)]
-        public bool Visible ;
+        public bool Visible;
 
         [DataMember(Order = 7)]
-        public double Opacity ;
+        public double Opacity;
 
         [DataMember(Order = 8)]
-        public Vector3Model Shading ;
+        public Vector3Model Shading;
 
         [DataMember(Order = 9)]
-        public bool ObstructCamera ;
+        public bool ObstructCamera;
 
         [DataMember(Order = 10)]
-        public EntitySeasonPaletteModel[] SeasonPalettes ;
+        public EntitySeasonPaletteModel[] SeasonPalettes;
     }
 }
