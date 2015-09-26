@@ -13,6 +13,7 @@ namespace Pokémon3D
         public static class Textures
         {
             public const string bricksSample = "Textures/bricksSample";
+            public const string default_texture = "Textures/default_texture";
         }
     }
 }
