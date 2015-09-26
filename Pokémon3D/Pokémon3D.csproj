@@ -100,6 +100,7 @@
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponent.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentFactory.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
+    <Compile Include="GameModes\Resources\ModelManager.cs" />
     <Compile Include="GameModes\Resources\TextureManager.cs" />
     <Compile Include="Rendering\IWorldDataContainer.cs" />
     <Compile Include="Rendering\Camera.cs" />
@@ -115,6 +116,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceNames.tt</DependentUpon>
     </Compile>
+    <Compile Include="Singleton.cs" />
     <Compile Include="UI\i18n\Localization.cs" />
     <Compile Include="UI\i18n\LocalizationManager.cs" />
     <Compile Include="UI\i18n\Translation.cs" />

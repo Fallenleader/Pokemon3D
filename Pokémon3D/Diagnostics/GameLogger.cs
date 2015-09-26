@@ -24,20 +24,11 @@ namespace Pokémon3D.Diagnostics
     /// <summary>
     /// A class to log events during the game's runtime.
     /// </summary>
-    class GameLogger
+    class GameLogger : Singleton<GameLogger>
     {
         bool _isDebuggerAttached;
-        private static GameLogger _gameLogger;
+        private StreamWriter _logWriter;
 
-        public static GameLogger Instance
-        {
-            get
-            {
-                if (_gameLogger == null) _gameLogger = new GameLogger();
-                return _gameLogger;
-            }
-        }
-        
         /// <summary>
         /// Initializes the logger.
         /// </summary>
@@ -48,24 +39,23 @@ namespace Pokémon3D.Diagnostics
 
             _isDebuggerAttached = Debugger.IsAttached; //Check if a debugger is attached to the process.
 
-            EnsureLogfileAndFolderExists();
+            EnsureFolderExists();
+
+            _logWriter = File.AppendText(StaticFileProvider.LogFile);
 
             Log(MessageType.Message, "Game started.");
         }
 
-        private void EnsureLogfileAndFolderExists()
+        private void EnsureFolderExists()
         {
             if (!Directory.Exists(StaticFileProvider.LogDirectory))
-            {
                 Directory.CreateDirectory(StaticFileProvider.LogDirectory);
-            }
-
-            if (!File.Exists(StaticFileProvider.LogFile)) File.Create(StaticFileProvider.LogFile).Close();
         }
 
         private void Game_Exiting(object sender, EventArgs e)
         {
             Log(MessageType.Message, "Exiting game.");
+            _logWriter.Close();
         }
 
         private const string LoggerFileLineFormat = "{0} {1} {2}";
@@ -78,14 +68,28 @@ namespace Pokémon3D.Diagnostics
         {
             string icon = GetMessageTypeIcon(messageType);
 
-            var outLine = string.Format("{0} {1} {2}",  DateTime.Now.ToLongTimeString(), icon, message);
+            var outLine = string.Format(LoggerFileLineFormat, DateTime.Now.ToLongTimeString(), icon, message);
 
-            File.AppendText(outLine);
+            _logWriter.WriteLine(outLine);
 
+#if DEBUG
             if (_isDebuggerAttached)
             {
                 Debug.Print(string.Format(LoggerVsFormat, DateTime.Now.ToLongTimeString(), icon, message));
             }
+#endif
+        }
+
+        private const string ExceptionMessageFormat = "An exception occurred (Type: {0}): {1}";
+
+        /// <summary>
+        /// Stores an exception message in the game's log file.
+        /// </summary>
+        public void Log(Exception ex)
+        {
+            string message = string.Format(ExceptionMessageFormat, ex.GetType().Name, ex.Message);
+
+            Log(MessageType.Error, message);
         }
 
         /// <summary>

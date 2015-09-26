@@ -86,9 +86,9 @@ namespace Pokémon3D.GameModes.Resources
             {
                 try
                 {
-                    if (rectangle.HasValue && _textures.Keys.Contains(resource))
+                    if (rectangle.HasValue && _textures.Keys.Contains(resource.ToLowerInvariant()))
                     {
-                        texture = _textures[resource];
+                        texture = _textures[resource.ToLowerInvariant()];
                     }
                     else
                     {
@@ -110,7 +110,7 @@ namespace Pokémon3D.GameModes.Resources
                             }
                         }
                         
-                        _textures.Add(resource, texture);
+                        _textures.Add(resource.ToLowerInvariant(), texture);
                     }
 
                     if (rectangle.HasValue)

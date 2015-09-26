@@ -9,6 +9,9 @@ namespace Pokémon3D.GameCore
     /// </summary>
     class GameController : Game
     {
+        /// <summary>
+        /// The singleton instance of the main GameController class.
+        /// </summary>
         public static GameController Instance { get; private set; }
 
         /// <summary>
