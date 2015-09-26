@@ -122,7 +122,9 @@ namespace Pokémon3D.Rendering
 
         private Matrix CalculateBillboardMatrix(Camera currentCamera)
         {
-            return Matrix.CreateScale(Scale) * Matrix.CreateConstrainedBillboard(Position, currentCamera.Position, Vector3.Up, null, null);
+            //I don't know why, but the scaling is getting negative calculating the billboard matrix.
+            var bill = Matrix.CreateScale(-1,1,-1)* Matrix.CreateConstrainedBillboard(Position, currentCamera.Position, Vector3.UnitY, null, null);
+            return Matrix.CreateScale(Scale) * bill;
         }
 
         private Matrix CalculateLocalWorldMatrix()

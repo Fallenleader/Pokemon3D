@@ -62,5 +62,22 @@ namespace Pokémon3D.Rendering
 
             return data;
         }
+
+        public static GeometryData GenerateQuadForYBillboard()
+        {
+            var data = new GeometryData();
+
+            data.Vertices = new[]
+            {
+                new VertexPositionNormalTexture(new Vector3(-0.5f,  0.0f,  0.0f), Vector3.Backward, new Vector2(0.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3(-0.5f,  1.0f,  0.0f), Vector3.Backward, new Vector2(0.0f,0.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f,  0.0f,  0.0f), Vector3.Backward, new Vector2(1.0f,1.0f)),
+                new VertexPositionNormalTexture(new Vector3( 0.5f,  1.0f,  0.0f), Vector3.Backward, new Vector2(1.0f,0.0f)),
+            };
+
+            data.Indices = new ushort[] { 0, 1, 2, 1, 3, 2 };
+
+            return data;
+        }
     }
 }

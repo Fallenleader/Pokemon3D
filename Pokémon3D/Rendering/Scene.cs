@@ -19,6 +19,9 @@ namespace Pokémon3D.Rendering
         private EffectTechnique _shadowDepthTechnique;
         private EffectTechnique _defaultTechnique;
         private EffectTechnique _defaultWithShadowsTechnique;
+        private EffectTechnique _billboardTechnique;
+
+        
 
         public bool EnableShadows { get; set; }
         public Vector3 LightDirection { get; set; }
@@ -37,6 +40,7 @@ namespace Pokémon3D.Rendering
             _defaultTechnique = _basicEffect.Techniques["Default"];
             _shadowDepthTechnique = _basicEffect.Techniques["ShadowCaster"];
             _defaultWithShadowsTechnique = _basicEffect.Techniques["DefaultWithShadows"];
+            _billboardTechnique = _basicEffect.Techniques["DefaultBillboard"];
 
             _spriteBatch = new SpriteBatch(_device);
             _shadowDepthDebugEffect = game.Content.Load<Effect>(ResourceNames.Effects.DebugShadowMap);
@@ -48,7 +52,7 @@ namespace Pokémon3D.Rendering
             _allNodes.Add(sceneNode);
             return sceneNode;
         }
-
+        
         public Camera CreateCamera()
         {
             var camera = new Camera(_device.Viewport);
@@ -138,16 +142,19 @@ namespace Pokémon3D.Rendering
             {
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
-
-
+                
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);
-                if (sceneNode.Material.ReceiveShadow)
+                if (sceneNode.IsBillboard)
+                {
+                    _basicEffect.CurrentTechnique = _billboardTechnique;
+                }
+                else if(sceneNode.Material.ReceiveShadow)
                 {
                     _basicEffect.CurrentTechnique = _defaultWithShadowsTechnique;
                     _basicEffect.Parameters["LightWorldViewProjection"].SetValue(worldMatrix * lightView);
                     _basicEffect.Parameters["ShadowMap"].SetValue(_shadowMap);
                 }
-                else
+                else 
                 {
                     _basicEffect.CurrentTechnique = _defaultTechnique;
                 }

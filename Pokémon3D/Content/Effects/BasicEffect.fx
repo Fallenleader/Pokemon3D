@@ -166,3 +166,62 @@ technique ShadowCaster
 		PixelShader = compile ps_4_0 DepthPixelShader();
 	}
 }
+
+//-----------------------------------------------------------------------------
+// Billboard
+//-----------------------------------------------------------------------------
+
+float2 TexcoordOffset = float2(0.5625f, 0.5625f);
+float2 TexcoordScale = float2(0.0625f, 0.0625f*2.0f);
+
+sampler2D BillboardSampler = sampler_state {
+	Texture = (DiffuseTexture);
+	MagFilter = Point;
+	MinFilter = Point;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
+struct VertexShaderBillboardInput
+{
+	float4 Position : SV_Position0;
+	float2 TexCoord : TEXCOORD0;
+	float3 Normal   : NORMAL0;
+};
+
+struct VertexShaderBillboardOutput
+{
+	float4 Position : POSITION0;
+	float2 TexCoord : TEXCOORD0;
+	float3 Normal   : TEXCOORD1;
+};
+
+VertexShaderBillboardOutput VertexShaderBillboard(VertexShaderBillboardInput input)
+{
+	VertexShaderBillboardOutput output;
+
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Position = mul(viewPosition, Projection);
+	output.Normal = mul(input.Normal, (float3x3)World);
+	output.TexCoord = TexcoordOffset + float2(input.TexCoord.x * TexcoordScale.x, input.TexCoord.y * TexcoordScale.y);
+
+	return output;
+}
+
+float4 PixelShaderFunctionBillboard(VertexShaderBillboardOutput input) : COLOR0
+{
+	float4 colorFromTexture = tex2D(BillboardSampler, input.TexCoord);
+	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+
+	return colorFromTexture;
+}
+
+technique DefaultBillboard
+{
+	pass Pass1
+	{
+		VertexShader = compile vs_4_0 VertexShaderBillboard();
+		PixelShader = compile ps_4_0 PixelShaderFunctionBillboard();
+	}
+}

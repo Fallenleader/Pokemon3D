@@ -34,6 +34,14 @@ namespace Pokémon3D.UI.Screens
             GenerateCube(cubeMesh, cubeMaterial, new Vector3(15, 0.1f, 15), new Vector3(0, -0.05f, 0), Vector3.Zero);
             GenerateCube(cubeMesh, cubeMaterial, new Vector3(2, 2, 2), new Vector3(-3, 1, 5), new Vector3(0.0f, MathHelper.PiOver4, 0.0f));
             GenerateCube(cubeMesh, cubeMaterial, new Vector3(1, 4, 1), new Vector3(2, 2, -3), new Vector3(0.0f, 0.0f, 0.0f));
+
+            var billboardSceneNode = _scene.CreateSceneNode();
+            billboardSceneNode.IsBillboard = true;
+            billboardSceneNode.Mesh = new Mesh(GameController.Instance.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
+            billboardSceneNode.Material = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
+            billboardSceneNode.Material.CastShadow = false;
+            billboardSceneNode.Position = new Vector3(0, 0, 3);
+            billboardSceneNode.Scale = new Vector3(2, 4, 1);
         }
 
         private void GenerateCube(Mesh mesh, Material material, Vector3 scale, Vector3 translation, Vector3 rotation)
