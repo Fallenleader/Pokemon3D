@@ -102,15 +102,6 @@
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
     <Compile Include="GameModes\Resources\ModelManager.cs" />
     <Compile Include="GameModes\Resources\TextureManager.cs" />
-    <Compile Include="Rendering\IWorldDataContainer.cs" />
-    <Compile Include="Rendering\Camera.cs" />
-    <Compile Include="Rendering\GeometryData.cs" />
-    <Compile Include="Rendering\Material.cs" />
-    <Compile Include="Rendering\Mesh.cs" />
-    <Compile Include="Rendering\Primitives.cs" />
-    <Compile Include="Rendering\Scene.cs" />
-    <Compile Include="Rendering\SceneNode.cs" />
-    <Compile Include="Rendering\WorldCreator.cs" />
     <Compile Include="ResourceNames.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
