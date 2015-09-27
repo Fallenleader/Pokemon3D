@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class Mesh
+    /// <summary>
+    /// Holding Geometry Data uploaded to the GPU.
+    /// </summary>
+    public class Mesh
     {
         private readonly VertexBuffer _vertexBuffer;
         private readonly IndexBuffer _indexBuffer;

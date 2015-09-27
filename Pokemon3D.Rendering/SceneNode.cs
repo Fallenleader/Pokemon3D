@@ -2,9 +2,13 @@
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class SceneNode : IWorldDataContainer
+    /// <summary>
+    /// Part of a Scene with contains Transformation and Optional Rendering Attachments.
+    /// SceneNodes can be arranged in a hierarchy to allow complex transformations.
+    /// </summary>
+    public class SceneNode
     {
         private readonly List<SceneNode> _childNodes;
         private Vector3 _rotationAxis;
@@ -14,11 +18,12 @@ namespace Pokémon3D.Rendering
         public Mesh Mesh { get; set; }
         public Material Material { get; set; }
 
-        private WorldCreator _worldCreator;
-
         private Vector3 _position;
         private Vector3 _scale;
         private Quaternion _rotation;
+        private bool _isDirty;
+        private Matrix _localWorldMatrix;
+        private Matrix _world;
 
         public Vector3 Scale
         {
@@ -26,7 +31,7 @@ namespace Pokémon3D.Rendering
             set
             {
                 _scale = value;
-                _worldCreator.SetDirty(WorldDirtyFlags.Scale);
+                _isDirty = true;
             }
         }
 
@@ -36,7 +41,7 @@ namespace Pokémon3D.Rendering
             set
             {
                 _rotation = value;
-                _worldCreator.SetDirty(WorldDirtyFlags.Rotation);
+                _isDirty = true;
             }
         }
 
@@ -46,40 +51,36 @@ namespace Pokémon3D.Rendering
             set
             {
                 _position = value;
-                _worldCreator.SetDirty(WorldDirtyFlags.Position);
+                _isDirty = true;
             }
         }
         
-        public Matrix World { get; private set; }
-
         public Vector3 Right { get; private set; }
         public Vector3 Up { get; private set; }
         public Vector3 Forward { get; private set; }
+        public bool IsBillboard { get; set; }
         
-        public SceneNode()
+        internal SceneNode()
         {
             _childNodes = new List<SceneNode>();
             Children = _childNodes.AsReadOnly();
-            _worldCreator = new WorldCreator(this);
             _scale = Vector3.One;
             _rotation = Quaternion.Identity;
             Right = Vector3.Right;
             Up = Vector3.Up;
             Forward = Vector3.Forward;
+            _isDirty = true;
         }
 
         public void SetParent(SceneNode parent)
         {
-            if (Parent != null) Parent.RemoveChild(this);
+            Parent?.RemoveChild(this);
             parent.AddChild(this);
         }
 
         public void AddChild(SceneNode childElement)
         {
-            if (childElement.Parent != null)
-            {
-                childElement.Parent.RemoveChild(childElement);
-            }
+            childElement.Parent?.RemoveChild(childElement);
             _childNodes.Add(childElement);
             childElement.Parent = this;
         }
@@ -94,10 +95,41 @@ namespace Pokémon3D.Rendering
 
         public virtual void Update()
         {
+            if (IsBillboard) return;
             if (Parent == null)
-                World = _worldCreator.GetWorldMatrix();
+            {
+                _world = GetLocalWorldMatrix();
+            }
             else
-                World = Parent.World * _worldCreator.GetWorldMatrix();
+            {
+                _world = Parent._world * GetLocalWorldMatrix();
+            }
+        }
+
+        private Matrix GetLocalWorldMatrix()
+        {
+            if (_isDirty)
+            {
+                _localWorldMatrix = CalculateLocalWorldMatrix();
+            }
+            return _localWorldMatrix;
+        }
+
+        public Matrix GetWorldMatrix(Camera currentCamera)
+        {
+            return IsBillboard ? CalculateBillboardMatrix(currentCamera) : _world;
+        }
+
+        private Matrix CalculateBillboardMatrix(Camera currentCamera)
+        {
+            //I don't know why, but the scaling is getting negative calculating the billboard matrix.
+            var bill = Matrix.CreateScale(-1,1,-1)* Matrix.CreateConstrainedBillboard(Position, currentCamera.Position, Vector3.UnitY, null, null);
+            return Matrix.CreateScale(Scale) * bill;
+        }
+
+        private Matrix CalculateLocalWorldMatrix()
+        {
+            return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Rotation) * Matrix.CreateTranslation(Position);
         }
 
         public void Translate(Vector3 translation)
