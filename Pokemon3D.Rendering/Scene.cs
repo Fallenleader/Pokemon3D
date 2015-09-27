@@ -1,47 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Linq;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class Scene
+    /// <summary>
+    /// Representing a whole 3D Scene with all objects to display.
+    /// </summary>
+    public class Scene
     {
         private readonly List<SceneNode> _allNodes;
         private readonly List<Camera> _allCameras; 
         private readonly GraphicsDevice _device;
-        private readonly Effect _basicEffect;
         private readonly RenderTarget2D _shadowMap;
-        private SpriteBatch _spriteBatch;
-        private Effect _shadowDepthDebugEffect;
-
-        private EffectTechnique _shadowDepthTechnique;
-        private EffectTechnique _defaultTechnique;
-        private EffectTechnique _defaultWithShadowsTechnique;
-        private EffectTechnique _billboardTechnique;
+        private readonly SpriteBatch _spriteBatch;
+        private readonly SceneEffect _sceneEffect;
 
         public bool EnableShadows { get; set; }
         public Vector3 LightDirection { get; set; }
 
-        public Scene(Game game)
+        public Scene(Game game, SceneEffect effect)
         {
             _device = game.GraphicsDevice;
+            _sceneEffect = effect;
             _allNodes = new List<SceneNode>();
             _allCameras = new List<Camera>();
-            _basicEffect = game.Content.Load<Effect>(ResourceNames.Effects.BasicEffect);
 
             _shadowMap = new RenderTarget2D(game.GraphicsDevice, 1024, 1024,false, SurfaceFormat.Single, DepthFormat.Depth24);
 
             LightDirection = new Vector3(1, -1, -1);
-
-            _defaultTechnique = _basicEffect.Techniques["Default"];
-            _shadowDepthTechnique = _basicEffect.Techniques["ShadowCaster"];
-            _defaultWithShadowsTechnique = _basicEffect.Techniques["DefaultWithShadows"];
-            _billboardTechnique = _basicEffect.Techniques["DefaultBillboard"];
-
             _spriteBatch = new SpriteBatch(_device);
-            _shadowDepthDebugEffect = game.Content.Load<Effect>(ResourceNames.Effects.DebugShadowMap);
         }
 
         public SceneNode CreateSceneNode()
@@ -83,7 +73,7 @@ namespace Pokémon3D.Rendering
         {
             if (EnableShadows)
             {
-                _spriteBatch.Begin(effect: _shadowDepthDebugEffect);
+                _spriteBatch.Begin(effect: _sceneEffect.ShadowMapDebugEffect);
                 _spriteBatch.Draw(_shadowMap, new Rectangle(0, 0, 128, 128), Color.White);
                 _spriteBatch.End();
                 _device.BlendState = BlendState.Opaque;
@@ -107,16 +97,16 @@ namespace Pokémon3D.Rendering
 
             var lightViewProjection = BuildLightViewMatrix();
             
-            _basicEffect.CurrentTechnique = _shadowDepthTechnique;
+            _sceneEffect.ActivateShadowDepthMapPass();
             foreach (var sceneNode in _allNodes)
             {
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
                 if (!sceneNode.Material.CastShadow) continue;
 
-                _basicEffect.Parameters["LightWorldViewProjection"].SetValue(sceneNode.GetWorldMatrix(null) * lightViewProjection);
+                _sceneEffect.LightWorldViewProjection = sceneNode.GetWorldMatrix(null)*lightViewProjection;
 
-                foreach (var pass in _basicEffect.CurrentTechnique.Passes)
+                foreach (var pass in _sceneEffect.CurrentTechniquePasses)
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();
@@ -129,10 +119,9 @@ namespace Pokémon3D.Rendering
         {
             _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
 
-            _basicEffect.Parameters["View"].SetValue(camera.ViewMatrix);
-            _basicEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            _basicEffect.Parameters["LightDirection"].SetValue(LightDirection);
-            _basicEffect.CurrentTechnique = _defaultTechnique;
+            _sceneEffect.View = camera.ViewMatrix;
+            _sceneEffect.Projection = camera.ProjectionMatrix;
+            _sceneEffect.LightDirection = LightDirection;
 
             var lightView = BuildLightViewMatrix();
 
@@ -145,23 +134,23 @@ namespace Pokémon3D.Rendering
                 if (sceneNode.IsBillboard)
                 {
                     _device.BlendState = BlendState.AlphaBlend;
-                    _basicEffect.CurrentTechnique = _billboardTechnique;
+                    _sceneEffect.ActivateBillboardingTechnique();
                 }
                 else if(EnableShadows && sceneNode.Material.ReceiveShadow)
                 {
-                    _basicEffect.CurrentTechnique = _defaultWithShadowsTechnique;
-                    _basicEffect.Parameters["LightWorldViewProjection"].SetValue(worldMatrix * lightView);
-                    _basicEffect.Parameters["ShadowMap"].SetValue(_shadowMap);
+                    _sceneEffect.ActivateLightingTechnique(true);
+                    _sceneEffect.LightWorldViewProjection = worldMatrix*lightView;
+                    _sceneEffect.ShadowMap = _shadowMap;
                 }
                 else 
                 {
-                    _basicEffect.CurrentTechnique = _defaultTechnique;
+                    _sceneEffect.ActivateLightingTechnique(false);
                 }
-                
-                _basicEffect.Parameters["World"].SetValue(worldMatrix);
-                _basicEffect.Parameters["DiffuseTexture"].SetValue(sceneNode.Material.DiffuseTexture);
 
-                foreach(var pass in _basicEffect.CurrentTechnique.Passes)
+                _sceneEffect.World = worldMatrix;
+                _sceneEffect.DiffuseTexture = sceneNode.Material.DiffuseTexture;
+
+                foreach(var pass in _sceneEffect.CurrentTechniquePasses)
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();

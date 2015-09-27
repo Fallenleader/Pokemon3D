@@ -94,13 +94,6 @@
     <Compile Include="GameModes\GameMode.cs" />
     <Compile Include="GameModes\GameModeManager.cs" />
     <Compile Include="GameModes\IGameModeComponent.cs" />
-    <Compile Include="Rendering\Camera.cs" />
-    <Compile Include="Rendering\GeometryData.cs" />
-    <Compile Include="Rendering\Material.cs" />
-    <Compile Include="Rendering\Mesh.cs" />
-    <Compile Include="Rendering\Primitives.cs" />
-    <Compile Include="Rendering\Scene.cs" />
-    <Compile Include="Rendering\SceneNode.cs" />
     <Compile Include="ResourceNames.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -124,6 +117,7 @@
     <Compile Include="UI\Polygon.cs" />
     <Compile Include="UI\ShapeTextureProvider.cs" />
     <Compile Include="UI\Triangle.cs" />
+    <Compile Include="UI\WindowsSceneEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
@@ -167,7 +161,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Pokemon3D.Rendering\Pokemon3D.Rendering.csproj">
+      <Project>{d3c6ea8f-1a82-4885-849e-d83747cd8ebc}</Project>
+      <Name>Pokemon3D.Rendering</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <PropertyGroup>

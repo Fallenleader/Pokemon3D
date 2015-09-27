@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class Material
+    /// <summary>
+    /// Describing how to display a Mesh attached to a SceneNode.
+    /// </summary>
+    public class Material
     {
         public Material(Texture2D diffuseTexture)
         {

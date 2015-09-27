@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class SceneNode
+    /// <summary>
+    /// Part of a Scene with contains Transformation and Optional Rendering Attachments.
+    /// SceneNodes can be arranged in a hierarchy to allow complex transformations.
+    /// </summary>
+    public class SceneNode
     {
         private readonly List<SceneNode> _childNodes;
         private Vector3 _rotationAxis;
@@ -57,7 +60,7 @@ namespace Pokémon3D.Rendering
         public Vector3 Forward { get; private set; }
         public bool IsBillboard { get; set; }
         
-        public SceneNode()
+        internal SceneNode()
         {
             _childNodes = new List<SceneNode>();
             Children = _childNodes.AsReadOnly();
@@ -71,16 +74,13 @@ namespace Pokémon3D.Rendering
 
         public void SetParent(SceneNode parent)
         {
-            if (Parent != null) Parent.RemoveChild(this);
+            Parent?.RemoveChild(this);
             parent.AddChild(this);
         }
 
         public void AddChild(SceneNode childElement)
         {
-            if (childElement.Parent != null)
-            {
-                childElement.Parent.RemoveChild(childElement);
-            }
+            childElement.Parent?.RemoveChild(childElement);
             _childNodes.Add(childElement);
             childElement.Parent = this;
         }

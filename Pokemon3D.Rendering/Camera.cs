@@ -1,10 +1,12 @@
-﻿using System.Windows.Forms;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokémon3D.Rendering
+namespace Pokemon3D.Rendering
 {
-    class Camera : SceneNode
+    /// <summary>
+    /// Specialized Scene Node representing a camera.
+    /// </summary>
+    public class Camera : SceneNode
     {
         public float NearClipDistance { get; set; }
         public float FarClipDistance { get; set; }
@@ -13,8 +15,8 @@ namespace Pokémon3D.Rendering
 
         public Matrix ViewMatrix { get; private set; }
         public Matrix ProjectionMatrix { get; private set; }
-
-        public Camera(Viewport viewport)
+        
+        internal Camera(Viewport viewport)
         {
             Viewport = viewport;
             NearClipDistance = 1.0f;
