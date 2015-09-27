@@ -8,8 +8,8 @@ float3 LightDirection = float3(1, -1,  -1);
 
 sampler2D DiffuseSampler = sampler_state {
 	Texture = (DiffuseTexture);
-	MagFilter = Linear;
-	MinFilter = Linear;
+	MagFilter = Point;
+	MinFilter = Point;
 	AddressU = Clamp;
 	AddressV = Clamp;
 };

@@ -21,8 +21,6 @@ namespace Pokémon3D.Rendering
         private EffectTechnique _defaultWithShadowsTechnique;
         private EffectTechnique _billboardTechnique;
 
-        
-
         public bool EnableShadows { get; set; }
         public Vector3 LightDirection { get; set; }
 
@@ -138,7 +136,7 @@ namespace Pokémon3D.Rendering
 
             var lightView = BuildLightViewMatrix();
 
-            foreach (var sceneNode in _allNodes)
+            foreach (var sceneNode in _allNodes.OrderBy(n => n.IsBillboard))
             {
                 if (sceneNode.Mesh == null) continue;
                 if (sceneNode.Material == null) throw new InvalidOperationException("Render Scene Node needs a material.");
@@ -146,9 +144,10 @@ namespace Pokémon3D.Rendering
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);
                 if (sceneNode.IsBillboard)
                 {
+                    _device.BlendState = BlendState.AlphaBlend;
                     _basicEffect.CurrentTechnique = _billboardTechnique;
                 }
-                else if(sceneNode.Material.ReceiveShadow)
+                else if(EnableShadows && sceneNode.Material.ReceiveShadow)
                 {
                     _basicEffect.CurrentTechnique = _defaultWithShadowsTechnique;
                     _basicEffect.Parameters["LightWorldViewProjection"].SetValue(worldMatrix * lightView);
@@ -167,6 +166,8 @@ namespace Pokémon3D.Rendering
                     pass.Apply();
                     sceneNode.Mesh.Draw();
                 }
+
+                _device.BlendState = BlendState.Opaque;
             }
         }
     }
