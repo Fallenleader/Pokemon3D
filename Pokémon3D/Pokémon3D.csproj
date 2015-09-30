@@ -140,13 +140,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Effects\BasicEffect.fx" />
-    <Content Include="Content\Effects\DebugShadowMap.fx" />
+    <None Include="Content\Effects\BasicEffect.fx" />
+    <None Include="Content\Effects\DebugShadowMap.fx" />
     <Content Include="Content\Textures\default_texture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -179,7 +179,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>

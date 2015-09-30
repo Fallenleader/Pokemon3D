@@ -2,9 +2,9 @@
 using System.Linq;
 using Pokémon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokémon3D.GameModes.Maps.EntityComponents;
-using Pokemon3D.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Rendering;
 
 namespace Pokémon3D.GameModes.Maps
 {
