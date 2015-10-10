@@ -8,5 +8,6 @@ namespace birdScript.Types
 {
     class SString : SCustomObject
     {
+        public string Value { get; private set; }
     }
 }

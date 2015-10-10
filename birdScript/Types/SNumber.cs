@@ -8,5 +8,6 @@ namespace birdScript.Types
 {
     class SNumber : SCustomObject
     {
+        public double Value { get; private set; }
     }
 }

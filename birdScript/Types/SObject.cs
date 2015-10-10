@@ -13,7 +13,7 @@ namespace birdScript.Types
     /// <param name="processor">The script processor this call originates from.</param>
     /// <param name="This">The contextual "this" object.</param>
     /// <param name="parameters">Parameters for this method call.</param>
-    public delegate SObject DBuiltInMethod(SObject instance, ScriptProcessor processor, SObject This, SObject[] parameters);
+    public delegate SObject DBuiltInMethod(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters);
 
     /// <summary>
     /// The base script object.
@@ -23,9 +23,20 @@ namespace birdScript.Types
         /// <summary>
         /// Returns if the input object is null.
         /// </summary>
-        protected static bool IsNull(SObject obj)
+        protected internal static bool IsNull(SObject obj)
         {
             return ReferenceEquals(obj, null);
+        }
+
+        /// <summary>
+        /// Unboxes an <see cref="SVariable"/> if the passed in object is one.
+        /// </summary>
+        internal static SObject Unbox(SObject obj)
+        {
+            if (obj is SVariable)
+                return ((SVariable)obj).Data;
+
+            return obj;
         }
 
         /// <summary>
@@ -74,7 +85,7 @@ namespace birdScript.Types
             return processor.Undefined;
         }
 
-        internal virtual SObject ExecuteMethod(string methodName, SObject caller, ScriptProcessor processor, SObject This, SObject[] parameters)
+        internal virtual SObject ExecuteMethod(ScriptProcessor processor, string methodName, SObject caller, SObject This, SObject[] parameters)
         {
             return processor.Undefined;
         }

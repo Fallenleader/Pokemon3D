@@ -8,5 +8,6 @@ namespace birdScript.Types
 {
     class SBool : SCustomObject
     {
+        public bool Value { get; private set; }
     }
 }
