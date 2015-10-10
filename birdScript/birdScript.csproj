@@ -40,10 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Types\Constants.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptProcessor.cs" />
+    <Compile Include="Types\SBool.cs" />
+    <Compile Include="Types\SCustObject.cs" />
+    <Compile Include="Types\SNumber.cs" />
     <Compile Include="Types\SObject.cs" />
+    <Compile Include="Types\SString.cs" />
+    <Compile Include="Types\SUndefined.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adapters\" />
