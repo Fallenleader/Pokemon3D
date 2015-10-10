@@ -16,6 +16,7 @@ namespace Pokemon3D.Rendering
             ReceiveShadow = true;
         }
 
+        public bool UseTransparency { get; set; }
         public Texture2D DiffuseTexture { get; set; }
         public Color Color { get; set; }
         public bool CastShadow { get; set; }
