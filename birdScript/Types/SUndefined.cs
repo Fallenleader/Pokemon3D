@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace birdScript
+namespace birdScript.Types
 {
-    class Program
+    class SUndefined : SObject
     {
-        static void Main(string[] args)
-        {
-            
-        }
     }
 }
