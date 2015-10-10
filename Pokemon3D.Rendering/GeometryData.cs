@@ -8,7 +8,14 @@ namespace Pokemon3D.Rendering
     /// </summary>
     public class GeometryData
     {
+        /// <summary>
+        /// Vertex Data to manipulate or Upload to Mesh.
+        /// </summary>
         public VertexPositionNormalTexture[] Vertices;
+
+        /// <summary>
+        /// Indices to manipulate or Upload to Mesh.
+        /// </summary>
         public ushort[] Indices;
     }
 }
