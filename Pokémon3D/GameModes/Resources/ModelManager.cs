@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
+using Pokemon3D.Common.Diagnostics;
 
 namespace Pokémon3D.GameModes.Resources
 {

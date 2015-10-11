@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
+using Pokemon3D.Common.Diagnostics;
 using Pokémon3D.FileSystem;
 using Pokémon3D.UI.Screens;
 
@@ -42,7 +44,8 @@ namespace Pokémon3D.GameCore
         public const bool IS_DEBUG_ACTIVE = true;
 
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
-        public ScreenManager ScreenManager { get; private set; }
+        public ScreenManager ScreenManager { get; }
+        public SpriteBatch SpriteBatch { get; private set; }
 
         /// <summary>
         /// Object to manage loaded GameModes.
@@ -68,7 +71,9 @@ namespace Pokémon3D.GameCore
         protected override void LoadContent()
         {
             base.LoadContent();
-            ScreenManager.SetScreen(typeof(RenderingTestScreen));
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
+
+            ScreenManager.SetScreen(typeof(IntroScreen));
         }
 
         protected override void Update(GameTime gameTime)

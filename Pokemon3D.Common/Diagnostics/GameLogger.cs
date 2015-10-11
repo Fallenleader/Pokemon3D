@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 
-namespace Pokemon3D.Common
+namespace Pokemon3D.Common.Diagnostics
 {
     /// <summary>
     /// A class to log events during the game's runtime.

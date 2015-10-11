@@ -55,6 +55,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="DefaultSceneRenderer.cs" />
     <Compile Include="GeometryData.cs" />
+    <Compile Include="GUI\Sprite.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="ModelMesh.cs" />

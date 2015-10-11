@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Pokemon3D.Common
+namespace Pokemon3D.Common.Animations
 {
     /// <summary>
     /// Animation done from 0 to 1 in a specific time.
