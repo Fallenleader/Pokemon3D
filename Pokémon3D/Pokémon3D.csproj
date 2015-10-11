@@ -85,7 +85,6 @@
     <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
-    <Compile Include="Diagnostics\GameLogger.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
     <Compile Include="FileSystem\GameModeFileProvider.cs" />
     <Compile Include="FileSystem\TranslationFileProvider.cs" />
@@ -107,7 +106,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceNames.tt</DependentUpon>
     </Compile>
-    <Compile Include="Singleton.cs" />
     <Compile Include="UI\i18n\Localization.cs" />
     <Compile Include="UI\i18n\LocalizationManager.cs" />
     <Compile Include="UI\i18n\Translation.cs" />
@@ -173,11 +171,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.csproj">
+      <Project>{b29dc7f0-2a16-4585-80a2-b4030558ec35}</Project>
+      <Name>Pokemon3D.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pokemon3D.Rendering\Pokemon3D.Rendering.csproj">
       <Project>{d3c6ea8f-1a82-4885-849e-d83747cd8ebc}</Project>
       <Name>Pokemon3D.Rendering</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
