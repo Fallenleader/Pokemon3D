@@ -44,7 +44,7 @@ namespace Pokémon3D.GameCore
         public const bool IS_DEBUG_ACTIVE = true;
 
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
-        public ScreenManager ScreenManager { get; }
+        public ScreenManager ScreenManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Pokémon3D.GameCore
                 PreferredBackBufferHeight = 600
             };
             Content.RootDirectory = "Content";
-            ScreenManager = new ScreenManager();
+            
             Instance = this;
         }
 
@@ -72,6 +72,7 @@ namespace Pokémon3D.GameCore
         {
             base.LoadContent();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            ScreenManager = new ScreenManager();
 
             ScreenManager.SetScreen(typeof(IntroScreen));
         }
