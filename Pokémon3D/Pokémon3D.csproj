@@ -112,6 +112,7 @@
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="GameCore\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Screens\IntroScreen.cs" />
     <Compile Include="UI\Screens\RenderingTestScreen.cs" />
     <Compile Include="UI\Screens\Screen.cs" />
     <Compile Include="UI\Screens\ScreenManager.cs" />
@@ -140,7 +141,6 @@
   <ItemGroup>
     <None Include="Content\Effects\BasicEffect.fx" />
     <None Include="Content\Effects\DebugShadowMap.fx" />
-    <Content Include="Content\Textures\default_texture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +159,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\Textures\default_texture.xnb" />
+    <Content Include="Content\Textures\SquareLogo_256px.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\highlight.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\Textures\tileset1.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

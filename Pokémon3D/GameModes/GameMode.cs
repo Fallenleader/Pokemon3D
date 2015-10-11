@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Pokemon3D.Common;
+using Pokemon3D.Common.Diagnostics;
 using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;

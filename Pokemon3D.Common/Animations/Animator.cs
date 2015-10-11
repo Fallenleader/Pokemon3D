@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pokemon3D.Common
+namespace Pokemon3D.Common.Animations
 {
     /// <summary>
     /// Animator-class for handling animations and animation series.
@@ -71,6 +71,28 @@ namespace Pokemon3D.Common
         public void AddTransition(string sourceName, string targetName)
         {
             _transitions.Add(sourceName, targetName);
+        }
+
+        /// <summary>
+        /// Adds a list of Animations to play in a list.
+        /// </summary>
+        /// <param name="sourceName">Source Animation Name</param>
+        /// <param name="targetName">Target Animation Name</param>
+        /// <param name="additionalTargets">Following targets</param>
+        public void AddTransitionChain(string sourceName, string targetName, params string[] additionalTargets)
+        {
+            _transitions.Add(sourceName, targetName);
+            
+            if (additionalTargets != null)
+            {
+                var currentTarget = targetName;
+                foreach (var newTarget in additionalTargets)
+                {
+                    _transitions.Add(currentTarget, newTarget);
+                    currentTarget = newTarget;
+                }
+            }
+            
         }
 
         /// <summary>

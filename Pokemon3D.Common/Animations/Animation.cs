@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pokemon3D.Common
+namespace Pokemon3D.Common.Animations
 {
     /// <summary>
     /// Basic class for all animation kinds.
@@ -63,6 +63,16 @@ namespace Pokemon3D.Common
         public static Animation CreateDelta(float durationSeconds, Action<float> onUpdate)
         {
             return new DeltaAnimation(durationSeconds, onUpdate);
+        }
+
+        /// <summary>
+        /// Creates an Animation that does nothing than wait.
+        /// </summary>
+        /// <param name="durationSeconds">Time to wait</param>
+        /// <returns>Animation to add to animator</returns>
+        public static Animation CreateWait(float durationSeconds)
+        {
+            return new WaitAnimation(durationSeconds);
         }
     }
 }
