@@ -41,7 +41,6 @@ namespace Pokémon3D.UI.Screens
 
             _highlightSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.highlight))
             {
-                Position = _logoSprite.Position - _logoSprite.Size*0.5f,
                 Alpha = 0.0f
             };
 
@@ -63,25 +62,23 @@ namespace Pokémon3D.UI.Screens
         {
             if (delta <= 0.5f)
             {
-                var highlightAlpha = MathHelper.SmoothStep(0.0f, 1.0f, delta*2.0f);
-                _highlightSprite.Alpha = highlightAlpha;
-                _highlightSprite.Scale = new Vector2( 1.0f + highlightAlpha);
+                _highlightSprite.Alpha = MathHelper.SmoothStep(0.0f, 1.0f, delta*2.0f);
+                _highlightSprite.Scale = new Vector2(MathHelper.SmoothStep(1.0f, 2.0f, delta*2.0f));
             }
             else
             {
-                var highlightAlpha = MathHelper.SmoothStep(0.0f, 1.0f, (delta - 0.5f) * 2.0f);
-                _highlightSprite.Alpha = 1.0f - highlightAlpha;
-                _highlightSprite.Scale = new Vector2(1.0f + 1.0f - highlightAlpha);
+                _highlightSprite.Alpha = MathHelper.SmoothStep(1.0f, 0.0f, (delta - 0.5f) * 2.0f);
+                _highlightSprite.Scale = new Vector2(MathHelper.SmoothStep(2.0f, 1.0f, (delta - 0.5f) * 2.0f));
             }
 
-            _highlightSprite.Position = _logoSprite.Position + new Vector2(0.0f, -_logoSprite.Height *0.5f) + new Vector2(_logoSprite.Width *0.5f, 0.0f) * delta;
+            _highlightSprite.Position = _logoSprite.Position + new Vector2(0.0f, -_logoSprite.Height * 0.5f) + new Vector2(_logoSprite.Width * 0.5f, 0.0f) * delta;
         }
 
         private void OnUpdateTurningAlpha(float delta)
         {
-            _logoSprite.Rotation = MathHelper.SmoothStep(0.0f, 1.0f, delta)*MathHelper.TwoPi;
+            _logoSprite.Rotation = MathHelper.SmoothStep(0.0f, MathHelper.TwoPi, delta);
             _logoSprite.Alpha = MathHelper.SmoothStep(0.0f, 1.0f, delta);
-            _logoSprite.Scale = new Vector2( 0.5f + MathHelper.SmoothStep(0.0f, 1.0f, delta)*0.5f);
+            _logoSprite.Scale = new Vector2(MathHelper.SmoothStep(0.5f, 1.0f, delta));
         }
     }
 }
