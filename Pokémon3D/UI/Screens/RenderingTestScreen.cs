@@ -5,14 +5,14 @@ using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens
 {
-    class RenderingTestScreen : Screen
+    class RenderingTestScreen : GameContextObject, Screen
     {
         private Scene _scene;
         private Camera _camera;
 
         public void OnOpening()
         {
-            _scene = new Scene(GameController.Instance, new WindowsSceneEffect(GameController.Instance.Content))
+            _scene = new Scene(Game, new WindowsSceneEffect(Game.Content))
             {
                 EnableShadows = false,
                 LightDirection = new Vector3(0, -1, 0)
@@ -24,14 +24,14 @@ namespace Pokémon3D.UI.Screens
             
             var billboardSceneNode = _scene.CreateSceneNode();
             billboardSceneNode.IsBillboard = true;
-            billboardSceneNode.Mesh = new Mesh(GameController.Instance.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
-            billboardSceneNode.Material = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
+            billboardSceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
+            billboardSceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
             billboardSceneNode.Material.CastShadow = false;
             billboardSceneNode.Material.UseTransparency = true;
             billboardSceneNode.Position = new Vector3(0, 0, 3);
             billboardSceneNode.Scale = new Vector3(2, 4, 1);
 
-            GeometryData[] quads = new GeometryData[32*32];
+            var quads = new GeometryData[32*32];
 
             //2,1
             var tsize = 1.0f / 16.0f;
@@ -44,8 +44,8 @@ namespace Pokémon3D.UI.Screens
             }
 
             var sceneNode = _scene.CreateSceneNode();
-            sceneNode.Mesh = new Mesh(GameController.Instance.GraphicsDevice, Primitives.Merge(quads));
-            sceneNode.Material = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
+            sceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.Merge(quads));
+            sceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
         }
 
         public void OnUpdate(GameTime gameTime)

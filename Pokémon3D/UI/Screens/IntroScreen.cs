@@ -6,7 +6,7 @@ using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens
 {
-    class IntroScreen : Screen
+    class IntroScreen : GameContextObject, Screen
     {
         private Animator _logoAnimator;
 
@@ -15,14 +15,12 @@ namespace Pokémon3D.UI.Screens
 
         public void OnDraw(GameTime gameTime)
         {
-            var game = GameController.Instance;
-            
-            game.GraphicsDevice.Clear(Color.Black);
-            game.SpriteBatch.Begin();
+            Game.GraphicsDevice.Clear(Color.Black);
+            Game.SpriteBatch.Begin();
 
-            _logoSprite.Draw(game.SpriteBatch);
-            _highlightSprite.Draw(game.SpriteBatch);
-            game.SpriteBatch.End();
+            _logoSprite.Draw(Game.SpriteBatch);
+            _highlightSprite.Draw(Game.SpriteBatch);
+            Game.SpriteBatch.End();
         }
 
         public void OnUpdate(GameTime gameTime)
@@ -36,14 +34,12 @@ namespace Pokémon3D.UI.Screens
 
         public void OnOpening()
         {
-            var game = GameController.Instance;
-
-            _logoSprite = new Sprite(game.Content.Load<Texture2D>(ResourceNames.Textures.SquareLogo_256px))
+            _logoSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.SquareLogo_256px))
             {
-                Position = new Vector2(game.Window.ClientBounds.Width*0.5f, game.Window.ClientBounds.Height*0.5f)
+                Position = new Vector2(Game.Window.ClientBounds.Width*0.5f, Game.Window.ClientBounds.Height*0.5f)
             };
 
-            _highlightSprite = new Sprite(game.Content.Load<Texture2D>(ResourceNames.Textures.highlight))
+            _highlightSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.highlight))
             {
                 Position = _logoSprite.Position - _logoSprite.Size*0.5f,
                 Alpha = 0.0f
@@ -55,6 +51,12 @@ namespace Pokémon3D.UI.Screens
             _logoAnimator.AddAnimation("HighlightPass", Animation.CreateDelta(1.5f, OnUpdateHighlightPass));
             _logoAnimator.AddTransitionChain("TurningAlpha", "Wait", "HighlightPass");
             _logoAnimator.SetAnimation("TurningAlpha");
+            _logoAnimator.AnimatorFinished += OnAnimatorFinished;
+        }
+
+        private void OnAnimatorFinished()
+        {
+            Game.ScreenManager.SetScreen(typeof(RenderingTestScreen));
         }
 
         private void OnUpdateHighlightPass(float delta)
