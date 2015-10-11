@@ -37,8 +37,12 @@
       <HintPath>..\packages\AssimpNet.3.3.1\lib\net45\AssimpNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MonoGame.Framework, Version=3.4.0.456, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="System" />
+    <Reference Include="MonoGame.Framework, Version=3.4.0.456, Culture=neutral, processorArchitecture=MSIL">
+      <Aliases>global</Aliases>
+    </Reference>
+    <Reference Include="System">
+      <Aliases>global</Aliases>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="DefaultSceneRenderer.cs" />
     <Compile Include="GeometryData.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Mesh.cs" />
@@ -59,6 +64,7 @@
     <Compile Include="Scene.cs" />
     <Compile Include="SceneEffect.cs" />
     <Compile Include="SceneNode.cs" />
+    <Compile Include="SceneRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

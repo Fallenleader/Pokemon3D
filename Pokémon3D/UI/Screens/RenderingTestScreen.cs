@@ -27,6 +27,7 @@ namespace Pokémon3D.UI.Screens
             billboardSceneNode.Mesh = new Mesh(GameController.Instance.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
             billboardSceneNode.Material = new Material(GameController.Instance.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
             billboardSceneNode.Material.CastShadow = false;
+            billboardSceneNode.Material.UseTransparency = true;
             billboardSceneNode.Position = new Vector3(0, 0, 3);
             billboardSceneNode.Scale = new Vector3(2, 4, 1);
 
