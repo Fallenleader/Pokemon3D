@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Pokemon3D.Common;
+using Pokémon3D.FileSystem;
 using Pokémon3D.UI.Screens;
 
 namespace Pokémon3D.GameCore
@@ -51,9 +53,13 @@ namespace Pokémon3D.GameCore
         {
             if (Instance != null) throw new InvalidOperationException("Game is singleton and can be created just once");
 
-            GraphicsDeviceManager = new GraphicsDeviceManager(this);
-            GraphicsDeviceManager.PreferredBackBufferWidth = 1024;
-            GraphicsDeviceManager.PreferredBackBufferHeight = 600;
+            GameLogger.Instance.Initialize(this, StaticFileProvider.LogFile);
+
+            GraphicsDeviceManager = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferWidth = 1024,
+                PreferredBackBufferHeight = 600
+            };
             Content.RootDirectory = "Content";
             ScreenManager = new ScreenManager();
             Instance = this;

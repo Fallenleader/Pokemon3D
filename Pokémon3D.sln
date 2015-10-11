@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "birdScript", "birdScript\bi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon3D.Rendering", "Pokemon3D.Rendering\Pokemon3D.Rendering.csproj", "{D3C6EA8F-1A82-4885-849E-D83747CD8EBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokemon3D.Common", "Pokemon3D.Common\Pokemon3D.Common.csproj", "{B29DC7F0-2A16-4585-80A2-B4030558EC35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,18 @@ Global
 		{D3C6EA8F-1A82-4885-849E-D83747CD8EBC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D3C6EA8F-1A82-4885-849E-D83747CD8EBC}.Release|x86.ActiveCfg = Release|Any CPU
 		{D3C6EA8F-1A82-4885-849E-D83747CD8EBC}.Release|x86.Build.0 = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Debug|x86.Build.0 = Debug|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|x86.ActiveCfg = Release|Any CPU
+		{B29DC7F0-2A16-4585-80A2-B4030558EC35}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

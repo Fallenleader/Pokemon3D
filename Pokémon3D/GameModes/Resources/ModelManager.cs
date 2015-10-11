@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 
 namespace Pokémon3D.GameModes.Resources
 {
@@ -53,7 +54,7 @@ namespace Pokémon3D.GameModes.Resources
                 }
                 catch (ContentLoadException ex)
                 {
-                    Diagnostics.GameLogger.Instance.Log(ex);
+                    GameLogger.Instance.Log(ex);
                     _models.Add(identifier, null);
                 }
             }

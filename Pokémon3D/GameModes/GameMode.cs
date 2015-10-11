@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
+using Pokemon3D.Common;
 using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;
 using Pokémon3D.GameCore;
-using Pokémon3D.Diagnostics;
 
 namespace Pokémon3D.GameModes
 {
@@ -57,7 +55,7 @@ namespace Pokémon3D.GameModes
                 //Something went wrong processing the data from a GameMode config file.
                 //Log the error and mark the instance as invalid.
 
-                GameLogger.Instance.Log(Diagnostics.MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
+                GameLogger.Instance.Log(MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
 
                 _isValid = false;
             }
