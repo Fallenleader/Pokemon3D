@@ -11,6 +11,7 @@ namespace birdScript.Types
         /// <summary>
         /// Compares two objects for equality, respecting their typings.
         /// </summary>
+        /// <remarks>Used by the === and !== equality operators.</remarks>
         public static bool StrictEquals(ScriptProcessor processor, SObject left, SObject right)
         {
             left = SObject.Unbox(left);
@@ -58,7 +59,8 @@ namespace birdScript.Types
         /// <summary>
         /// Compares two objects for equality, converting types if needed.
         /// </summary>
-        public static bool Equals(ScriptProcessor processor, SObject left, SObject right)
+        /// <remarks>Used by the == and != equality operators.</remarks>
+        public static bool LooseEquals(ScriptProcessor processor, SObject left, SObject right)
         {
             left = SObject.Unbox(left);
             right = SObject.Unbox(right);
@@ -123,11 +125,11 @@ namespace birdScript.Types
             }
             else if (left.TypeOf() == SObject.LITERAL_TYPE_BOOL)
             {
-                return Equals(processor, left.ToNumber(processor), right);
+                return LooseEquals(processor, left.ToNumber(processor), right);
             }
             else if (right.TypeOf() == SObject.LITERAL_TYPE_BOOL)
             {
-                return Equals(processor, left, right.ToNumber(processor));
+                return LooseEquals(processor, left, right.ToNumber(processor));
             }
             else
             {

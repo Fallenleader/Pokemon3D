@@ -8,6 +8,14 @@ namespace birdScript.Types
 {
     class SBool : SCustomObject
     {
-        public bool Value { get; private set; }
+        internal bool Value { get; private set; }
+
+        internal static string ConvertToScriptString(bool value)
+        {
+            if (value)
+                return LITERAL_BOOL_TRUE;
+            else
+                return LITERAL_BOOL_FALSE;
+        }
     }
 }

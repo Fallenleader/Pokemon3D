@@ -11,9 +11,14 @@ namespace birdScript
     {
         #region Public interface
 
-        
+        public ScriptProcessor()
+        {
+            ErrorHandler = new ErrorHandler(this);
+        }
 
         #endregion
+
+        internal ErrorHandler ErrorHandler { get; }
 
         internal SObject Undefined
         {

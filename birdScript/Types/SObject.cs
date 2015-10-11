@@ -55,21 +55,30 @@ namespace birdScript.Types
             return ToScriptObject();
         }
 
+        /// <summary>
+        /// Returns the string representation of this object.
+        /// </summary>
         internal virtual SString ToString(ScriptProcessor processor)
         {
             return processor.CreateString(LITERAL_UNDEFINED);
         }
 
+        /// <summary>
+        /// Returns the number representation of this object.
+        /// </summary>
         internal virtual SNumber ToNumber(ScriptProcessor processor)
         {
             return processor.CreateNumber(double.NaN);
         }
 
+        /// <summary>
+        /// Returns the bool representation of this object.
+        /// </summary>
         internal virtual SBool ToBool(ScriptProcessor processor)
         {
             return processor.CreateBool(true);
         }
-
+        
         internal virtual string TypeOf()
         {
             return LITERAL_OBJECT;
@@ -96,5 +105,6 @@ namespace birdScript.Types
         {
             return false;
         }
+
     }
 }

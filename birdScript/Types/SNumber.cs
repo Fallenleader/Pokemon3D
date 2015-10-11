@@ -8,6 +8,16 @@ namespace birdScript.Types
 {
     class SNumber : SCustomObject
     {
-        public double Value { get; private set; }
+        internal double Value { get; private set; }
+
+        internal static string ConvertToScriptString(double value)
+        {
+            if (double.IsNaN(value))
+                return LITERAL_NAN;
+            else if (double.IsInfinity(value))
+                return LITERAL_INFINITY;
+
+            return value.ToString();
+        }
     }
 }
