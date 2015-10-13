@@ -13,6 +13,12 @@ namespace birdScript.Types
         public string Identifier { get; private set; }
         public bool IsReadOnly { get; set; }
 
+        public SVariable(string identifier, SObject data)
+        {
+            Identifier = identifier;
+            _data = data;
+        }
+
         public SObject Data
         {
             get
