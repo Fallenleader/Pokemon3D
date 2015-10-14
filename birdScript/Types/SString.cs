@@ -8,7 +8,7 @@ namespace birdScript.Types
 {
     class SString : SProtoObject
     {
-        private const string STRING_LENGTH_PROPERTY_NAME = "length";
+        internal const string STRING_LENGTH_PROPERTY_NAME = "length";
 
         private const string STRING_NORMAL_FORMAT = "\"{0}\"";
         private const string STRING_UNESCAPED_FORMAT = "@\"{0}\"";
@@ -117,10 +117,8 @@ namespace birdScript.Types
 
             var length = processor.CreateNumber(value.Length);
 
-            if (Members.Keys.Contains(STRING_LENGTH_PROPERTY_NAME))
-                Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
-            else
-                AddMember(new SVariable(STRING_LENGTH_PROPERTY_NAME, length));
+            //TODO: add length to prototype.
+            Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
         }
 
         internal override string ToScriptObject()
