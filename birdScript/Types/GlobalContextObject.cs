@@ -19,7 +19,7 @@ namespace birdScript.Types
             _context = context;
         }
 
-        internal override bool HasMember(string memberName)
+        internal override bool HasMember(ScriptProcessor processor, string memberName)
         {
             return _context.IsVariable(memberName);
         }
@@ -79,6 +79,11 @@ namespace birdScript.Types
                 }
             }
             return processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { methodName });
+        }
+
+        internal override double SizeOf()
+        {
+            return 1;
         }
     }
 }

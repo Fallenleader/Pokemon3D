@@ -52,7 +52,7 @@ namespace birdScript.Types
         /// </summary>
         internal virtual string ToScriptSource()
         {
-            return ToScriptObject();
+            return LITERAL_UNDEFINED;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace birdScript.Types
 
         internal virtual void SetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value) { /* Empty */ }
 
-        internal virtual bool HasMember(string memberName)
+        internal virtual bool HasMember(ScriptProcessor processor, string memberName)
         {
             return false;
         }

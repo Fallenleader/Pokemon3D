@@ -16,7 +16,7 @@ namespace birdScript.Types
         /// <summary>
         /// Creates the undefined object.
         /// </summary>
-        internal static SUndefined Create()
+        internal static SUndefined Factory()
         {
             return new SUndefined();
         }
@@ -28,7 +28,7 @@ namespace birdScript.Types
 
         internal override string TypeOf()
         {
-            return "undefined";
+            return LITERAL_UNDEFINED;
         }
     }
 }

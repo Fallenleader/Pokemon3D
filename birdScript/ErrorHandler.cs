@@ -14,7 +14,8 @@ namespace birdScript
     {
         SyntaxError,
         TypeError,
-        ReferenceError
+        ReferenceError,
+        APIError
     }
 
     /// <summary>
@@ -32,6 +33,8 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_INVALID_DECREMENT = "invalid decrement operand";
         public const string MESSAGE_SYNTAX_MISSING_FORMAL_PARAMETER = "missing formal parameter";
         public const string MESSAGE_SYNTAX_MISSING_FUNCTION_BODY = "missing function body";
+
+        public const string MESSAGE_API_NOT_SUPPORTED = "this functionality is not supported";
 
         #endregion
 

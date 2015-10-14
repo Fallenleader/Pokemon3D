@@ -9,16 +9,23 @@ namespace birdScript
 {
     public class ScriptProcessor
     {
+        internal ErrorHandler ErrorHandler { get; }
+        internal ScriptContext Context { get; }
+
         #region Public interface
 
-        public ScriptProcessor()
-        {
-            ErrorHandler = new ErrorHandler(this);
-        }
-
+        public ScriptProcessor() : this(null) { }
+        
         public ScriptProcessor(ScriptContext context)
         {
+            if (context != null && context.Parent == null)
+                Context = context;
+            else
+                Context = new ScriptContext(this, context);
             
+            Context.Initialize();
+
+            ErrorHandler = new ErrorHandler(this);
         }
 
         public SObject Run(string code)
@@ -42,9 +49,6 @@ namespace birdScript
                 !char.IsLetter(identifier[0]) || 
                 ReservedKeywords.Contains(identifier));
         }
-
-        internal ErrorHandler ErrorHandler { get; }
-        internal ScriptContext Context { get; }
 
         /// <summary>
         /// The undefined object.
