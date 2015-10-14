@@ -34,6 +34,13 @@ namespace birdScript.Types
             }
         }
 
+        /// <summary>
+        /// Sets data ignoring the Read-Only property. Only use when necessary.
+        /// </summary>
+        public void ForceSetData(SObject data)
+        {
+            _data = data;
+        }
         
     }
 }

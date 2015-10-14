@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace birdScript.Types
 {
-    class SBool : SCustomObject
+    class SBool : SProtoObject
     {
         internal bool Value { get; private set; }
 

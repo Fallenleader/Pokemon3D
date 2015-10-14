@@ -36,36 +36,59 @@ namespace birdScript
         /// <param name="identifier">The string to check.</param>
         internal static bool IsValidIdentifier(string identifier)
         {
-            // The string must not be empty string, and start with a unicode letter:
-            if (string.IsNullOrEmpty(identifier) || ReservedKeywords.Contains(identifier))
-                return false;
-            else
-                return char.IsLetter(identifier[0]);
+            // The string must not be empty string, and start with a unicode letter.
+            // Also, it cannot be a reserved keyword.
+            return !(string.IsNullOrEmpty(identifier) || 
+                !char.IsLetter(identifier[0]) || 
+                ReservedKeywords.Contains(identifier));
         }
 
         internal ErrorHandler ErrorHandler { get; }
         internal ScriptContext Context { get; }
 
+        /// <summary>
+        /// The undefined object.
+        /// </summary>
         internal SObject Undefined
         {
             get { return null; }
         }
 
+        /// <summary>
+        /// The null "object".
+        /// </summary>
         internal SObject Null
         {
             get { return null; }
         }
 
+        /// <summary>
+        /// Creates an instance of the string primitive.
+        /// </summary>
         internal SString CreateString(string value)
         {
             return null;
         }
 
+        /// <summary>
+        /// Creates an instance of the string primitive, also setting the escaped status.
+        /// </summary>
+        internal SString CreateString(string value, bool escaped)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Creates an instance of the number primitive.
+        /// </summary>
         internal SNumber CreateNumber(double value)
         {
             return null;
         }
 
+        /// <summary>
+        /// Creates an instance of the bool primitive.
+        /// </summary>
         internal SBool CreateBool(bool value)
         {
             return null;

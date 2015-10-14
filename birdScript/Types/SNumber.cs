@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace birdScript.Types
 {
-    class SNumber : SCustomObject
+    class SNumber : SProtoObject
     {
         internal double Value { get; private set; }
 
