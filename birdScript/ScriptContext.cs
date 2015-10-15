@@ -25,7 +25,7 @@ namespace birdScript
         
         private Dictionary<CallbackType, Delegate> _apiCallbacks = new Dictionary<CallbackType, Delegate>();
 
-        private List<SAPIUsing> _APIUsings = new List<SAPIUsing>();
+        private Dictionary<string, SAPIUsing> _apiUsings = new Dictionary<string, SAPIUsing>();
         private Dictionary<string, SVariable> _variables = new Dictionary<string, SVariable>();
         private Dictionary<string, Prototype> _prototypes = new Dictionary<string, Prototype>();
         private ScriptProcessor _processor;
@@ -52,6 +52,22 @@ namespace birdScript
         public void SetCallbackGetMember(DGetMember callback)
         {
             AddCallback(CallbackType.GetMember, callback);
+        }
+
+        /// <summary>
+        /// Sets the callback for setting a member of an API class.
+        /// </summary>
+        public void SetCallbackSetMember(DSetMember callback)
+        {
+            AddCallback(CallbackType.SetMember, callback);
+        }
+
+        /// <summary>
+        /// Sets the callback for executing a method of an API class.
+        /// </summary>
+        public void SetCallbackExecuteMethod(DExecuteMethod callback)
+        {
+            AddCallback(CallbackType.ExecuteMethod, callback);
         }
 
         #endregion
@@ -124,7 +140,7 @@ namespace birdScript
         /// </summary>
         internal bool IsVariable(string identifier)
         {
-            if (_variables.Keys.Contains(identifier))
+            if (_variables.ContainsKey(identifier))
             {
                 return true;
             }
@@ -140,7 +156,7 @@ namespace birdScript
 
         internal SVariable GetVariable(string identifier)
         {
-            if (_variables.Keys.Contains(identifier))
+            if (_variables.ContainsKey(identifier))
             {
                 return _variables[identifier];
             }
@@ -172,5 +188,76 @@ namespace birdScript
         {
             _variables.Add(identifier, new SVariable(identifier, value, isReadOnly));
         }
+
+        internal bool IsAPIUsing(string identifier)
+        {
+            if (_apiUsings.ContainsKey(identifier))
+            {
+                return true;
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    return Parent.IsAPIUsing(identifier);
+                }
+            }
+            return false;
+        }
+
+        internal SAPIUsing GetAPIUsing(string identifier)
+        {
+            if (_apiUsings.ContainsKey(identifier))
+            {
+                return _apiUsings[identifier];
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    return Parent.GetAPIUsing(identifier);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        internal bool IsPrototype(string identifier)
+        {
+            if (_prototypes.ContainsKey(identifier))
+            {
+                return true;
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    return Parent.IsPrototype(identifier);
+                }
+            }
+            return false;
+        }
+
+        internal Prototype GetPrototype(string identifier)
+        {
+            if (_prototypes.ContainsKey(identifier))
+            {
+                return _prototypes[identifier];
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    return Parent.GetPrototype(identifier);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        
     }
 }

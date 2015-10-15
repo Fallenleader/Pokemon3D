@@ -13,7 +13,7 @@ namespace birdScript.Types
     /// <param name="processor">The script processor this call originates from.</param>
     /// <param name="This">The contextual "this" object.</param>
     /// <param name="parameters">Parameters for this method call.</param>
-    public delegate SObject DBuiltInMethod(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters);
+    internal delegate SObject DBuiltInMethod(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters);
 
     /// <summary>
     /// The base script object.
@@ -33,8 +33,8 @@ namespace birdScript.Types
         /// </summary>
         internal static SObject Unbox(SObject obj)
         {
-            if (obj is SVariable)
-                return ((SVariable)obj).Data;
+            while (obj is SVariable)
+                obj = ((SVariable)obj).Data;
 
             return obj;
         }

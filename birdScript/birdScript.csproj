@@ -41,8 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\Delegates.cs" />
+    <Compile Include="BuiltInMethodManager.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="ScriptContext.cs" />
+    <Compile Include="ScriptException.cs" />
+    <Compile Include="ScriptStatement.cs" />
+    <Compile Include="StringEscapeHelper.cs" />
     <Compile Include="Types\Constants.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,7 +54,9 @@
     <Compile Include="Types\GlobalContextObject.cs" />
     <Compile Include="Types\ObjectComparer.cs" />
     <Compile Include="Types\ObjectOperators.cs" />
+    <Compile Include="Types\Prototypes\ObjectPrototype.cs" />
     <Compile Include="Types\Prototypes\Prototype.cs" />
+    <Compile Include="Types\Prototypes\PrototypeMember.cs" />
     <Compile Include="Types\SAPIUsing.cs" />
     <Compile Include="Types\SBool.cs" />
     <Compile Include="Types\SNull.cs" />
@@ -62,7 +68,6 @@
     <Compile Include="Types\SUndefined.cs" />
     <Compile Include="Types\SVariable.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -12,14 +12,24 @@ namespace birdScript.Types
     internal class SFunction : SObject
     {
         private string[] _parameters;
-        private string _body;
         private DBuiltInMethod _method;
 
         /// <summary>
-        /// Initializes an instance with a script code body.
+        /// The code body of the function.
+        /// </summary>
+        public string Body { get; set; }
+
+        public SFunction(string body, string[] parameters)
+        {
+            Body = body;
+            _parameters = parameters;
+        }
+
+        /// <summary>
+        /// Initializes an instance with a script code signature and body.
         /// </summary>
         /// <param name="sourceCode">The source code, format: <code>function (params) { code }</code></param>
-        public SFunction(string sourceCode, ScriptProcessor processor)
+        public SFunction(ScriptProcessor processor, string sourceCode)
         {
             sourceCode = sourceCode.Trim();
             string paramCode = sourceCode.Remove(0, "function".Length).Trim().Remove(0, 1); //Removes "function", then any spaces between "function" and "(", then removes "(".
@@ -52,7 +62,7 @@ namespace birdScript.Types
                 }
                 else
                 {
-                    _body = sourceCode.Remove(sourceCode.Length - 1, 1).Remove(0, sourceCode.IndexOf("{") + 1).Trim();
+                    Body = sourceCode.Remove(sourceCode.Length - 1, 1).Remove(0, sourceCode.IndexOf("{") + 1).Trim();
                 }
             }
         }
@@ -75,7 +85,7 @@ namespace birdScript.Types
             if (_method != null)
                 return 1;
             else
-                return _body.Length;
+                return Body.Length;
         }
 
         private const string FUNCTION_SOURCE_FORMAT = "function({0}) {{ {1} }}";
@@ -103,7 +113,7 @@ namespace birdScript.Types
             }
             else
             {
-                bodySource = _body;
+                bodySource = Body;
             }
 
             return string.Format(FUNCTION_SOURCE_FORMAT, paramSource, bodySource);
@@ -126,7 +136,7 @@ namespace birdScript.Types
         /// <param name="caller">The calling object.</param>
         /// <param name="This">The "This" reference used in the call context.</param>
         /// <param name="parameters">The parameters used in this function call.</param>
-        public SObject Call(ScriptProcessor processor, SObject caller, SObject This, SObject[] parameters) 
+        public SObject Call(ScriptProcessor processor, SObject caller, SObject This, SObject[] parameters)
         {
             ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context);
             SObject functionReturnObject;
@@ -150,7 +160,7 @@ namespace birdScript.Types
                 }
 
                 functionProcessor.Context.This = This;
-                functionReturnObject = functionProcessor.Run(_body);
+                functionReturnObject = functionProcessor.Run(Body);
             }
 
             if (functionProcessor.ErrorHandler.ThrownError)

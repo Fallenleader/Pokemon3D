@@ -7,9 +7,18 @@ using birdScript.Types;
 
 namespace birdScript
 {
+    /// <summary>
+    /// A class to process birdScript scripts.
+    /// </summary>
     public class ScriptProcessor
     {
+        /// <summary>
+        /// The <see cref="birdScript.ErrorHandler"/> associated with this <see cref="ScriptProcessor"/>.
+        /// </summary>
         internal ErrorHandler ErrorHandler { get; }
+        /// <summary>
+        /// The <see cref="ScriptContext"/> associated with this <see cref="ScriptProcessor"/>.
+        /// </summary>
         internal ScriptContext Context { get; }
 
         #region Public interface
@@ -28,6 +37,11 @@ namespace birdScript
             ErrorHandler = new ErrorHandler(this);
         }
 
+        /// <summary>
+        /// Runs raw source code and returns the result.
+        /// </summary>
+        /// <param name="code">The source code to run.</param>
+        /// <returns>Either data returned by a "return"-statement or the result of the last statement.</returns>
         public SObject Run(string code)
         {
             return null;
@@ -35,7 +49,7 @@ namespace birdScript
 
         #endregion
 
-        internal static readonly string[] ReservedKeywords = new string[] { "if", "else", "while", "for", "function", "class", "constructor", "using", "var", "static", "new", "extends", "this", "super", "link", "readonly", "break", "continue", "indexer", "get", "set", "throw", "try", "catch", "finally" };
+        internal static readonly string[] ReservedKeywords = new string[] { "if", "else", "while", "for", "function", "class", "using", "var", "static", "new", "extends", "this", "super", "link", "readonly", "break", "continue", "indexer", "get", "set", "throw", "try", "catch", "finally" };
 
         /// <summary>
         /// Returns if the given string is a valid identifier.
@@ -55,7 +69,7 @@ namespace birdScript
         /// </summary>
         internal SObject Undefined
         {
-            get { return null; }
+            get { return Context.GetVariable(SObject.LITERAL_UNDEFINED).Data; }
         }
 
         /// <summary>
@@ -63,7 +77,7 @@ namespace birdScript
         /// </summary>
         internal SObject Null
         {
-            get { return null; }
+            get { return Context.GetVariable(SObject.LITERAL_NULL).Data; }
         }
 
         /// <summary>
@@ -96,6 +110,13 @@ namespace birdScript
         internal SBool CreateBool(bool value)
         {
             return null;
+        }
+
+        internal ScriptStatement[] GetStatements(string code)
+        {
+            List<ScriptStatement> statements = new List<ScriptStatement>();
+
+            return statements.ToArray();
         }
     }
 }

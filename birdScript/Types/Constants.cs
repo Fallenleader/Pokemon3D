@@ -12,6 +12,8 @@ namespace birdScript.Types
         internal const string LITERAL_OBJECT = "object";
         internal const string LITERAL_NULL = "null";
 
+        internal const string LITERAL_PROTOTYPE = "[prototype]";
+
         internal const string LITERAL_TYPE_STRING = "string";
         internal const string LITERAL_TYPE_BOOL = "bool";
         internal const string LITERAL_TYPE_NUMBER = "number";
