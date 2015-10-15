@@ -162,7 +162,7 @@ namespace birdScript
     internal abstract class StringEscapeHelper
     {
         protected internal const char STRING_DELIMITER_SINGLE = '\'';
-        protected internal const char STRING_DELIMITER_DOUBLE = '\'';
+        protected internal const char STRING_DELIMITER_DOUBLE = '\"';
 
         protected bool _isString = false;
         protected string _expression;
