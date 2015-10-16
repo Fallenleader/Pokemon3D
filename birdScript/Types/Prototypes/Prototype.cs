@@ -12,9 +12,6 @@ namespace birdScript.Types.Prototypes
     /// </summary>
     internal class Prototype : SProtoObject
     {
-        private const string MEMBER_NAME_PROTOTYPE = "prototype";
-        private const string MEMBER_NAME_SUPER = "super";
-
         internal string Name { get; private set; }
         internal bool IsAbstract { get; private set; }
         internal PrototypeMember Constructor { get; private set; }
@@ -268,8 +265,8 @@ namespace birdScript.Types.Prototypes
             {
                 List<string> signature = code.Remove(code.IndexOf("{")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                string extends = "";
-                string identifier = "";
+                string extends = string.Empty;
+                string identifier = string.Empty;
                 bool isAbstract = false;
 
                 // Read extends:
@@ -330,8 +327,8 @@ namespace birdScript.Types.Prototypes
                 string body = code.Remove(0, code.IndexOf("{") + 1);
                 body = body.Remove(body.Length - 1, 1).Trim();
 
-                string additionalCtorCode = "";
-                string staticCtorCode = "";
+                string additionalCtorCode = string.Empty;
+                string staticCtorCode = string.Empty;
 
                 ScriptStatement[] statements = processor.GetStatements(body);
 
@@ -399,7 +396,7 @@ namespace birdScript.Types.Prototypes
                     if (prototype.Constructor == null)
                     {
                         // Create new ctor if no one has been defined:
-                        prototype.Constructor = new PrototypeMember(CLASS_METHOD_CTOR, new SFunction("", new string[] { }), false, true, false, false);
+                        prototype.Constructor = new PrototypeMember(CLASS_METHOD_CTOR, new SFunction(string.Empty, new string[] { }), false, true, false, false);
                     }
 
                     prototype.Constructor.ToFunction().Body = additionalCtorCode + prototype.Constructor.ToFunction().Body;

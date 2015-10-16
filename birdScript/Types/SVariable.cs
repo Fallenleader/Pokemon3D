@@ -10,7 +10,13 @@ namespace birdScript.Types
     {
         private SObject _data;
 
+        /// <summary>
+        /// The identifier associated with this variable.
+        /// </summary>
         public string Identifier { get; private set; }
+        /// <summary>
+        /// If the data of this variable cannot be set via script statements.
+        /// </summary>
         public bool IsReadOnly { get; set; }
 
         public SVariable(string identifier, SObject data)
@@ -26,6 +32,9 @@ namespace birdScript.Types
             _data = data;
         }
 
+        /// <summary>
+        /// The data this variable holds.
+        /// </summary>
         public SObject Data
         {
             get
@@ -48,6 +57,64 @@ namespace birdScript.Types
         {
             _data = data;
         }
-        
+
+        internal override string ToScriptObject()
+        {
+            return ObjectBuffer.GetObjectId(this).ToString();
+        }
+
+        #region Data proxy method overrides
+
+        internal override SObject ExecuteMethod(ScriptProcessor processor, string methodName, SObject caller, SObject This, SObject[] parameters)
+        {
+            return Data.ExecuteMethod(processor, methodName, caller, This, parameters);
+        }
+
+        internal override SObject GetMember(ScriptProcessor processor, SObject accessor, bool isIndexer)
+        {
+            return Data.GetMember(processor, accessor, isIndexer);
+        }
+
+        internal override bool HasMember(ScriptProcessor processor, string memberName)
+        {
+            return Data.HasMember(processor, memberName);
+        }
+
+        internal override void SetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value)
+        {
+            Data.SetMember(processor, accessor, isIndexer, value);
+        }
+
+        internal override double SizeOf()
+        {
+            return Data.SizeOf();
+        }
+
+        internal override SBool ToBool(ScriptProcessor processor)
+        {
+            return Data.ToBool(processor);
+        }
+
+        internal override SNumber ToNumber(ScriptProcessor processor)
+        {
+            return Data.ToNumber(processor);
+        }
+
+        internal override SString ToString(ScriptProcessor processor)
+        {
+            return Data.ToString(processor);
+        }
+
+        internal override string TypeOf()
+        {
+            return Data.TypeOf();
+        }
+
+        internal override string ToScriptSource()
+        {
+            return Data.ToScriptSource();
+        }
+
+        #endregion
     }
 }
