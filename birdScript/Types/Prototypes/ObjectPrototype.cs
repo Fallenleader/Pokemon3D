@@ -8,5 +8,9 @@ namespace birdScript.Types.Prototypes
 {
     class ObjectPrototype : Prototype
     {
+        public ObjectPrototype() : base("Object")
+        {
+
+        }
     }
 }

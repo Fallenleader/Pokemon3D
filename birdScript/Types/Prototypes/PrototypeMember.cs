@@ -6,7 +6,7 @@
     class PrototypeMember
     {
         public string Identifier { get; }
-        
+
         public SObject Data { get; set; }
 
         /// <summary>
@@ -19,6 +19,8 @@
                 return (Data != null && Data is SFunction);
             }
         }
+
+        public PrototypeMember(string identifier, SObject data) : this(identifier, data, false, false, false, false) { }
 
         public PrototypeMember(string identifier, SObject data, bool isStatic, bool isReadOnly, bool isIndexerGet, bool isIndexerSet)
         {

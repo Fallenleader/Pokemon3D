@@ -7,7 +7,7 @@ using birdScript.Types;
 
 namespace birdScript
 {
-    internal enum StatementType
+    public enum StatementType
     {
         Executable,
         If,
@@ -30,73 +30,23 @@ namespace birdScript
         Finally
     }
 
-    internal class ScriptStatement
+    public class ScriptStatement
     {
         public string Code { get; }
         public StatementType StatementType { get; }
 
-        public SObject StatementResult;
+        internal SObject StatementResult;
+
+        public ScriptStatement(string code)
+        {
+            Code = code.Trim();
+            StatementType = StatementProcessor.GetStatementType(Code, true, false);
+        }
 
         public ScriptStatement(string code, StatementType statementType)
         {
-            Code = code.Trim();
-
-            if (statementType == StatementType.Executable)
-            {
-                if (Code.StartsWith("var "))
-                {
-                    StatementType = StatementType.Var;
-                }
-                else if (Code.StartsWith("using "))
-                {
-                    StatementType = StatementType.Using;
-                }
-                else if (Code.StartsWith("link "))
-                {
-                    StatementType = StatementType.Link;
-                }
-                else if (Code.StartsWith("return ") || Code == "return")
-                {
-                    StatementType = StatementType.Return;
-                }
-                else if (Code == "continue")
-                {
-                    StatementType = StatementType.Continue;
-                }
-                else if (Code == "break")
-                {
-                    StatementType = StatementType.Break;
-                }
-                else if (Code.StartsWith("throw "))
-                {
-                    StatementType = StatementType.Throw;
-                }
-                else if (IsAssignment(Code))
-                {
-                    StatementType = StatementType.Assignment;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns if the expression is an assignment statement.
-        /// </summary>
-        private static bool IsAssignment(string code)
-        {
-            if (!StringEscapeHelper.ContainsWithoutStrings(code, "="))
-            {
-                return false;
-            }
-            else
-            {
-                code = code.Replace("===", "---");
-                code = code.Replace("!==", "---");
-                code = code.Replace("==", "--");
-                code = code.Replace("!=", "--");
-                code = code.Replace("=>", "--");
-
-                return StringEscapeHelper.ContainsWithoutStrings(code, "=");
-            }
+            Code = code;
+            StatementType = statementType;
         }
     }
 }

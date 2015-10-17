@@ -10,16 +10,25 @@ namespace birdScript
     {
         bool _isEscaped;
 
-        internal LeftToRightStringEscapeHelper(string expression, int startIndex) : base(expression)
+        internal LeftToRightStringEscapeHelper(string expression, int startIndex, bool ignoreStart) : base(expression)
         {
-            if (_hasStrings)
+            if (ignoreStart)
             {
-                while (startIndex > _index)
+                _index = startIndex;
+            }
+            else
+            {
+                if (_hasStrings)
                 {
-                    CheckNext();
+                    while (startIndex > _index)
+                    {
+                        CheckNext();
+                    }
                 }
             }
         }
+
+        internal LeftToRightStringEscapeHelper(string expression, int startIndex) : this(expression, startIndex, false) { }
 
         internal override void CheckStartAt(int startIndex)
         {
@@ -41,7 +50,7 @@ namespace birdScript
             }
         }
 
-        protected internal override void CheckNext()
+        protected override void CheckNext()
         {
             char t = _expression[_index];
 
@@ -86,16 +95,26 @@ namespace birdScript
 
     internal class RightToLeftStringEscapeHelper : StringEscapeHelper
     {
-        internal RightToLeftStringEscapeHelper(string expression, int startIndex) : base(expression)
+
+        internal RightToLeftStringEscapeHelper(string expression, int startIndex, bool ignoreStart) : base(expression)
         {
-            if (_hasStrings)
+            if (ignoreStart)
             {
-                while (startIndex < _index)
+                _index = startIndex;
+            }
+            else
+            {
+                if (_hasStrings)
                 {
-                    CheckNext();
+                    while (startIndex < _index)
+                    {
+                        CheckNext();
+                    }
                 }
             }
         }
+
+        internal RightToLeftStringEscapeHelper(string expression, int startIndex) : this(expression, startIndex, false) { }
 
         internal override void CheckStartAt(int startIndex)
         {
@@ -117,7 +136,7 @@ namespace birdScript
             }
         }
 
-        protected internal override void CheckNext()
+        protected override void CheckNext()
         {
             char t = _expression[_index];
 
@@ -157,7 +176,7 @@ namespace birdScript
     }
 
     /// <summary>
-    /// A base class for classes to implement searches for string delimiters.
+    /// A base class for classes to implement searches for string delimiters and wrappers.
     /// </summary>
     internal abstract class StringEscapeHelper
     {
@@ -186,12 +205,12 @@ namespace birdScript
         }
 
         /// <summary>
-        /// Starts to check for string delimiters at the given index.
+        /// Checks for string delimiters at the given index.
         /// </summary>
         internal abstract void CheckStartAt(int startIndex);
-        protected internal abstract void CheckNext();
+        protected abstract void CheckNext();
 
-        protected internal static bool HasStrings(string expression)
+        protected static bool HasStrings(string expression)
         {
             return expression.Contains(STRING_DELIMITER_SINGLE) || expression.Contains(STRING_DELIMITER_DOUBLE);
         }

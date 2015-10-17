@@ -2,7 +2,7 @@
 using System.Linq;
 using Pokémon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokémon3D.GameModes.Maps.EntityComponents;
-using Pokémon3D.Rendering;
+using Pokemon3D.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -107,7 +107,7 @@ namespace Pokémon3D.GameModes.Maps
         {
             _dataModel = dataModel;
 
-            _sceneNode = new SceneNode(); //TODO: Factory?
+            //_sceneNode = new SceneNode(); //TODO: Factory?
 
             Position = position;
             Scale = dataModel.Scale.GetVector3();

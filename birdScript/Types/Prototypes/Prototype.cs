@@ -12,7 +12,7 @@ namespace birdScript.Types.Prototypes
     /// </summary>
     internal class Prototype : SProtoObject
     {
-        internal string Name { get; private set; }
+        internal string Name { get; }
         internal bool IsAbstract { get; private set; }
         internal PrototypeMember Constructor { get; private set; }
         internal Prototype Extends { get; private set; }
@@ -22,13 +22,14 @@ namespace birdScript.Types.Prototypes
         private SFunction _staticConstructor;
         private ScriptProcessor _staticConstructorProcessor;
 
-        internal Prototype()
+        internal Prototype(string name)
         {
+            Name = name;
+
             var methods = BuiltInMethodManager.GetMethods(GetType());
             foreach (var methodData in methods)
             {
-                _prototypeMembers.Add(methodData.Item1,
-                    new PrototypeMember(
+                _prototypeMembers.Add(methodData.Item1, new PrototypeMember(
                         identifier: methodData.Item1,
                         data: new SFunction(methodData.Item3),
                         isStatic: methodData.Item2.IsStatic,
@@ -142,7 +143,7 @@ namespace birdScript.Types.Prototypes
         /// <summary>
         /// Creates the base object for this <see cref="Prototype"/>'s instantiation method.
         /// </summary>
-        protected internal virtual SProtoObject CreateBaseObject()
+        protected virtual SProtoObject CreateBaseObject()
         {
             return new SProtoObject();
         }
@@ -249,6 +250,14 @@ namespace birdScript.Types.Prototypes
             return false;
         }
 
+        internal void AddMember(ScriptProcessor processor, PrototypeMember member)
+        {
+            if (_prototypeMembers.ContainsKey(member.Identifier))
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, new object[] { member.Identifier, Name });
+
+            _prototypeMembers.Add(member.Identifier, member);
+        }
+
         private const string REGEX_CLASS_SIGNATURE = @"^class(([ ]+abstract)|([ ]+extends[ ]+[a-zA-Z]\w*)|([ ]+[a-zA-Z]\w*))+[ ]+{.*}$";
 
         private const string CLASS_SIGNATURE_EXTENDS = "extends";
@@ -257,7 +266,7 @@ namespace birdScript.Types.Prototypes
 
         private const string FORMAT_VAR_ASSIGNMENT = "{0}={1};\n";
 
-        internal static SObject Parse(ScriptProcessor processor, string code)
+        internal new static SObject Parse(ScriptProcessor processor, string code)
         {
             code = code.Trim();
 
@@ -299,9 +308,8 @@ namespace birdScript.Types.Prototypes
                     processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING);
 
                 // Create instance:
-                Prototype prototype = new Prototype()
+                Prototype prototype = new Prototype(identifier)
                 {
-                    Name = identifier,
                     IsAbstract = isAbstract
                 };
 
@@ -330,7 +338,7 @@ namespace birdScript.Types.Prototypes
                 string additionalCtorCode = string.Empty;
                 string staticCtorCode = string.Empty;
 
-                ScriptStatement[] statements = processor.GetStatements(body);
+                ScriptStatement[] statements = StatementProcessor.GetStatements(body);
 
                 foreach (ScriptStatement statement in statements)
                 {
@@ -340,11 +348,8 @@ namespace birdScript.Types.Prototypes
 
                         if (parsed.Item1.Identifier == CLASS_METHOD_CTOR)
                             processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
-
-                        if (prototype._prototypeMembers.ContainsKey(parsed.Item1.Identifier))
-                            processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, new object[] { parsed.Item1.Identifier, identifier });
-
-                        prototype._prototypeMembers.Add(parsed.Item1.Identifier, parsed.Item1);
+                        
+                        prototype.AddMember(processor, parsed.Item1);
 
                         if (parsed.Item2.Length > 0)
                         {
@@ -362,9 +367,6 @@ namespace birdScript.Types.Prototypes
                     {
                         PrototypeMember parsed = ParseFunctionStatement(processor, statement);
 
-                        if (prototype._prototypeMembers.ContainsKey(parsed.Identifier))
-                            processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, new object[] { parsed.Identifier, identifier });
-
                         if (parsed.Identifier == CLASS_METHOD_CTOR)
                         {
                             if (prototype.Constructor != null)
@@ -374,7 +376,7 @@ namespace birdScript.Types.Prototypes
                         }
                         else
                         {
-                            prototype._prototypeMembers.Add(parsed.Identifier, parsed);
+                            prototype.AddMember(processor, parsed);
                         }
                     }
                     else
@@ -412,7 +414,7 @@ namespace birdScript.Types.Prototypes
 
         private const string VAR_SIGNATURE_STATIC = "static";
         private const string VAR_SIGNATURE_READONLY = "readonly";
-        
+
         private static Tuple<PrototypeMember, string> ParseVarStatement(ScriptProcessor processor, ScriptStatement statement)
         {
             string code = statement.Code;
@@ -441,7 +443,7 @@ namespace birdScript.Types.Prototypes
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_INVALID_VAR_DECLARATION);
 
             identifier = signature[1];
-            
+
             if (!ScriptProcessor.IsValidIdentifier(identifier))
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
 

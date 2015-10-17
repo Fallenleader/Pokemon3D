@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using birdScript.Types.Prototypes;
+using System.Text.RegularExpressions;
 
 namespace birdScript.Types
 {
@@ -81,7 +82,7 @@ namespace birdScript.Types
                 }
                 else
                 {
-                    return processor.Undefined;   
+                    return processor.Undefined;
                 }
             }
 
@@ -165,7 +166,7 @@ namespace birdScript.Types
                 return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
             }
         }
-        
+
         internal override string ToScriptObject()
         {
             return ObjectBuffer.GetObjectId(this).ToString();
@@ -212,6 +213,95 @@ namespace birdScript.Types
         internal override SString ToString(ScriptProcessor processor)
         {
             return processor.CreateString(LITERAL_OBJECT_STR);
+        }
+        
+        internal static SProtoObject Parse(ScriptProcessor processor, string source)
+        {
+            Prototype prototype = new Prototype(LITERAL_OBJECT);
+
+            source = source.Trim();
+
+            // Format: { member1 : content1, member2 : content2 }
+
+            // Remove "{" and "}":
+            source = source.Remove(source.Length - 1, 1).Remove(0, 1).Trim();
+
+            if (source.Length == 0)
+                return prototype.CreateInstance(processor, null, false);
+
+            int index = 0;
+            string identifier = "";
+            string content = "";
+            SObject contentObj = null;
+
+            while (index < source.Length)
+            {
+                int nextSeperatorIndex = source.IndexOf(",", index);
+                if (nextSeperatorIndex == -1)
+                {
+                    nextSeperatorIndex = source.Length - 1;
+                }
+                else
+                {
+                    //Let's find the correct ",":
+
+                    nextSeperatorIndex = index;
+                       
+                    int depth = 0;
+                    StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(source, nextSeperatorIndex, true);
+                    bool foundSeperator = false;
+
+                    while (!foundSeperator && nextSeperatorIndex < source.Length)
+                    {
+                        char t = source[nextSeperatorIndex];
+
+                        escaper.CheckStartAt(nextSeperatorIndex);
+
+                        if (!escaper.IsString)
+                        {
+                            if (t == '{' || t == '[' || t == '(')
+                            {
+                                depth++;
+                            }
+                            else if (t == '}' || t == ']' || t == ')')
+                            {
+                                depth--;
+                            }
+                            else if (t == ',' && depth == 0)
+                            {
+                                foundSeperator = true;
+                                nextSeperatorIndex--; // it adds one to the index at the end of the while loop, but we need the index where we stopped searching, so we subtract 1 here to accommodate for that.
+                            }
+                        }
+
+                        nextSeperatorIndex++;
+                    }
+                }
+
+                string member = source.Substring(index, nextSeperatorIndex - index);
+
+                if (member.Contains(":"))
+                {
+                    identifier = member.Remove(member.IndexOf(":")).Trim();
+                    content = member.Remove(0, member.IndexOf(":") + 1).Trim();
+
+                    //TODO: EXECUTE STATEMENT TO SET CONTENT OBJ
+                }
+                else
+                {
+                    identifier = member.Trim();
+                    contentObj = processor.Undefined;
+                }
+
+                if (!ScriptProcessor.IsValidIdentifier(identifier))
+                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
+
+                prototype.AddMember(processor, new PrototypeMember(identifier, contentObj));
+
+                index = nextSeperatorIndex + 1;
+            }
+
+            return prototype.CreateInstance(processor, null, false);
         }
     }
 }

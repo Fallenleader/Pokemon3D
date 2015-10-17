@@ -24,14 +24,14 @@ namespace birdScript
         #region Public interface
 
         public ScriptProcessor() : this(null) { }
-        
+
         public ScriptProcessor(ScriptContext context)
         {
             if (context != null && context.Parent == null)
                 Context = context;
             else
                 Context = new ScriptContext(this, context);
-            
+
             Context.Initialize();
 
             ErrorHandler = new ErrorHandler(this);
@@ -59,8 +59,8 @@ namespace birdScript
         {
             // The string must not be empty string, and start with a unicode letter.
             // Also, it cannot be a reserved keyword.
-            return !(string.IsNullOrEmpty(identifier) || 
-                !char.IsLetter(identifier[0]) || 
+            return !(string.IsNullOrEmpty(identifier) ||
+                !char.IsLetter(identifier[0]) ||
                 ReservedKeywords.Contains(identifier));
         }
 
@@ -112,11 +112,5 @@ namespace birdScript
             return null;
         }
 
-        internal ScriptStatement[] GetStatements(string code)
-        {
-            List<ScriptStatement> statements = new List<ScriptStatement>();
-
-            return statements.ToArray();
-        }
     }
 }

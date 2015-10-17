@@ -46,6 +46,7 @@
     <Compile Include="ScriptContext.cs" />
     <Compile Include="ScriptException.cs" />
     <Compile Include="ScriptStatement.cs" />
+    <Compile Include="StatementProcessor.cs" />
     <Compile Include="StringEscapeHelper.cs" />
     <Compile Include="Types\Constants.cs" />
     <Compile Include="ObjectBuffer.cs" />
