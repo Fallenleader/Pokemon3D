@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace birdScript
 {
+    /// <summary>
+    /// A string escaper searching an expression from left to right.
+    /// </summary>
     internal class LeftToRightStringEscapeHelper : StringEscapeHelper
     {
         bool _isEscaped;
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="LeftToRightStringEscapeHelper"/> class, setting it to an index within the expression and ignoring every char in front of that index.
+        /// </summary>
         internal LeftToRightStringEscapeHelper(string expression, int startIndex, bool ignoreStart) : base(expression)
         {
             if (ignoreStart)
@@ -28,6 +34,9 @@ namespace birdScript
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="LeftToRightStringEscapeHelper"/> class, setting searching up to a specific index in the expression.
+        /// </summary>
         internal LeftToRightStringEscapeHelper(string expression, int startIndex) : this(expression, startIndex, false) { }
 
         internal override void CheckStartAt(int startIndex)
@@ -93,9 +102,15 @@ namespace birdScript
         }
     }
 
+    /// <summary>
+    /// A string escaper searching an expression from right to left.
+    /// </summary>
     internal class RightToLeftStringEscapeHelper : StringEscapeHelper
     {
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="RightToLeftStringEscapeHelper"/> class, setting it to an index within the expression and ignoring every char before that index.
+        /// </summary>
         internal RightToLeftStringEscapeHelper(string expression, int startIndex, bool ignoreStart) : base(expression)
         {
             if (ignoreStart)
@@ -114,6 +129,9 @@ namespace birdScript
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="RightToLeftStringEscapeHelper"/> class, setting searching up to a specific index in the expression.
+        /// </summary>
         internal RightToLeftStringEscapeHelper(string expression, int startIndex) : this(expression, startIndex, false) { }
 
         internal override void CheckStartAt(int startIndex)

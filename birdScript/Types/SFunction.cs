@@ -93,7 +93,7 @@ namespace birdScript.Types
 
         internal override string ToScriptSource()
         {
-            string paramSource = string.Empty;
+            string paramSource = "";
             if (_parameters != null)
             {
                 foreach (string par in _parameters)
@@ -106,7 +106,7 @@ namespace birdScript.Types
                 }
             }
 
-            string bodySource = string.Empty;
+            string bodySource = "";
             if (_method != null)
             {
                 bodySource = FUNCTION_NATIVE_CODE_SOURCE;

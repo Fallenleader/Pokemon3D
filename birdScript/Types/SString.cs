@@ -62,7 +62,7 @@ namespace birdScript.Types
                                 break;
 
                             default:
-                                insert = string.Empty;
+                                insert = "";
                                 break;
                         }
 
@@ -141,12 +141,12 @@ namespace birdScript.Types
 
         internal override SBool ToBool(ScriptProcessor processor)
         {
-            return processor.CreateBool(Value != string.Empty);
+            return processor.CreateBool(Value != "");
         }
 
         internal override SNumber ToNumber(ScriptProcessor processor)
         {
-            if (Value.Trim() == string.Empty)
+            if (Value.Trim() == "")
             {
                 return processor.CreateNumber(0);
             }

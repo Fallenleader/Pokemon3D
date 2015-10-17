@@ -130,7 +130,7 @@ namespace birdScript.Types
             else
             {
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_INCREMENT);
-                return string.Empty;
+                return "";
             }
         }
 
@@ -147,7 +147,7 @@ namespace birdScript.Types
             else
             {
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_DECREMENT);
-                return string.Empty;
+                return "";
             }
         }
 

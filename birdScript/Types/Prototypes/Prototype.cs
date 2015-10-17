@@ -274,8 +274,8 @@ namespace birdScript.Types.Prototypes
             {
                 List<string> signature = code.Remove(code.IndexOf("{")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                string extends = string.Empty;
-                string identifier = string.Empty;
+                string extends = "";
+                string identifier = "";
                 bool isAbstract = false;
 
                 // Read extends:
@@ -335,8 +335,8 @@ namespace birdScript.Types.Prototypes
                 string body = code.Remove(0, code.IndexOf("{") + 1);
                 body = body.Remove(body.Length - 1, 1).Trim();
 
-                string additionalCtorCode = string.Empty;
-                string staticCtorCode = string.Empty;
+                string additionalCtorCode = "";
+                string staticCtorCode = "";
 
                 ScriptStatement[] statements = StatementProcessor.GetStatements(processor, body);
 
@@ -398,7 +398,7 @@ namespace birdScript.Types.Prototypes
                     if (prototype.Constructor == null)
                     {
                         // Create new ctor if no one has been defined:
-                        prototype.Constructor = new PrototypeMember(CLASS_METHOD_CTOR, new SFunction(string.Empty, new string[] { }), false, true, false, false);
+                        prototype.Constructor = new PrototypeMember(CLASS_METHOD_CTOR, new SFunction("", new string[] { }), false, true, false, false);
                     }
 
                     prototype.Constructor.ToFunction().Body = additionalCtorCode + prototype.Constructor.ToFunction().Body;
@@ -421,7 +421,7 @@ namespace birdScript.Types.Prototypes
             List<string> signature = code.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             string identifier;
-            string assignment = string.Empty;
+            string assignment = "";
             bool isReadOnly = false;
             bool isStatic = false;
 

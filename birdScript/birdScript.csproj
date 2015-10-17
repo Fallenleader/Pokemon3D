@@ -49,6 +49,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ScriptContext.cs" />
     <Compile Include="ScriptException.cs" />
+    <Compile Include="ScriptProcessorRegexCollection.cs" />
     <Compile Include="ScriptStatement.cs" />
     <Compile Include="StatementProcessor.cs" />
     <Compile Include="StringEscapeHelper.cs" />

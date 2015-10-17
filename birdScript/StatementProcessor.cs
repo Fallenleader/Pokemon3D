@@ -8,7 +8,7 @@ namespace birdScript
 {
     class StatementProcessor
     {
-        private static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
+        internal static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
 
         internal static ScriptStatement[] GetStatements(ScriptProcessor processor, string code)
         {
