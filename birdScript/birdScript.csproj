@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{517D4D4D-06CC-430D-8689-CA903796C4D8}</ProjectGuid>
+    <ProjectGuid>{7C228BB5-E710-4170-9C70-8A588040E405}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JSGame</RootNamespace>
-    <AssemblyName>JSGame</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>birdScript</RootNamespace>
+    <AssemblyName>birdScript</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,13 +22,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>birdScript.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -39,14 +39,40 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\Delegates.cs" />
+    <Compile Include="BuiltInMethodManager.cs" />
+    <Compile Include="ErrorHandler.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ScriptContext.cs" />
+    <Compile Include="ScriptException.cs" />
+    <Compile Include="ScriptProcessorRegexCollection.cs" />
+    <Compile Include="ScriptStatement.cs" />
+    <Compile Include="StatementProcessor.cs" />
+    <Compile Include="StringEscapeHelper.cs" />
+    <Compile Include="Types\Constants.cs" />
+    <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="ScriptProcessor.cs" />
+    <Compile Include="Types\GlobalContextObject.cs" />
+    <Compile Include="Types\ObjectComparer.cs" />
+    <Compile Include="Types\ObjectOperators.cs" />
+    <Compile Include="Types\Prototypes\ObjectPrototype.cs" />
+    <Compile Include="Types\Prototypes\Prototype.cs" />
+    <Compile Include="Types\Prototypes\PrototypeMember.cs" />
+    <Compile Include="Types\SAPIUsing.cs" />
+    <Compile Include="Types\SBool.cs" />
+    <Compile Include="Types\SNull.cs" />
+    <Compile Include="Types\SProtoObject.cs" />
+    <Compile Include="Types\SFunction.cs" />
+    <Compile Include="Types\SNumber.cs" />
+    <Compile Include="Types\SObject.cs" />
+    <Compile Include="Types\SString.cs" />
+    <Compile Include="Types\SUndefined.cs" />
+    <Compile Include="Types\SVariable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
