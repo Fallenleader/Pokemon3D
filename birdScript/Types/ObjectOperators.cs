@@ -85,6 +85,20 @@ namespace birdScript.Types
             return SNumber.ConvertToScriptString(numbers.Item1 * numbers.Item2);
         }
 
+        /// <summary>
+        /// Multiplies an object with -1.
+        /// </summary>
+        internal static SObject NegateNumber(ScriptProcessor processor, SObject obj)
+        {
+            double number;
+            if (obj is SNumber)
+                number = ((SNumber)obj).Value;
+            else
+                number = obj.ToNumber(processor).Value;
+
+            return processor.CreateNumber(number * -1);
+        }
+
         internal static string DivideOperator(ScriptProcessor processor, SObject left, SObject right)
         {
             var numbers = GetNumericOperatorParameters(processor, left, right);

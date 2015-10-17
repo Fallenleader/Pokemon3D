@@ -11,6 +11,7 @@ namespace birdScript.Types
         internal const string LITERAL_UNDEFINED = "undefined";
         internal const string LITERAL_OBJECT = "object";
         internal const string LITERAL_NULL = "null";
+        internal const string LITERAL_THIS = "this";
 
         internal const string LITERAL_PROTOTYPE = "[prototype]";
         internal const string LITERAL_OBJECT_STR = "[object Object]";

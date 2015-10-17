@@ -89,18 +89,30 @@ namespace birdScript.Types
             return 0;
         }
 
+        /// <summary>
+        /// Returns a member variable of this object.
+        /// </summary>
         internal virtual SObject GetMember(ScriptProcessor processor, SObject accessor, bool isIndexer)
         {
             return processor.Undefined;
         }
 
+        /// <summary>
+        /// Executes a member function of this object.
+        /// </summary>
         internal virtual SObject ExecuteMethod(ScriptProcessor processor, string methodName, SObject caller, SObject This, SObject[] parameters)
         {
             return processor.Undefined;
         }
 
+        /// <summary>
+        /// Sets a member variable of this objec to a new value.
+        /// </summary>
         internal virtual void SetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value) { /* Empty */ }
 
+        /// <summary>
+        /// Returns if this object has a specific member.
+        /// </summary>
         internal virtual bool HasMember(ScriptProcessor processor, string memberName)
         {
             return false;

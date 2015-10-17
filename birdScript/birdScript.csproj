@@ -64,6 +64,7 @@
     <Compile Include="Types\Prototypes\Prototype.cs" />
     <Compile Include="Types\Prototypes\PrototypeMember.cs" />
     <Compile Include="Types\SAPIUsing.cs" />
+    <Compile Include="Types\SArray.cs" />
     <Compile Include="Types\SBool.cs" />
     <Compile Include="Types\SNull.cs" />
     <Compile Include="Types\SProtoObject.cs" />

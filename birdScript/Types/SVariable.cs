@@ -60,7 +60,7 @@ namespace birdScript.Types
 
         internal override string ToScriptObject()
         {
-            return ObjectBuffer.GetObjectId(this).ToString();
+            return "$" + ObjectBuffer.GetObjectId(this).ToString();
         }
 
         #region Data proxy method overrides

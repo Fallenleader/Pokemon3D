@@ -22,6 +22,55 @@ namespace birdScript.Types
         }
 
         /// <summary>
+        /// Tries to parse a numeric input to a <see cref="double"/>. Returns true for success.
+        /// </summary>
+        internal static bool TryParse(string input, out double result)
+        {
+            int numBase = 10;
+            char baseChar = 'd'; //Standard -> decimal
+
+            if (input.StartsWith("0b") ||
+                input.StartsWith("0o") ||
+                input.StartsWith("0x"))
+            {
+                baseChar = input[1];
+                input = input.Remove(0, 2);
+            }
+
+            switch (baseChar)
+            {
+                case 'b': //b -> Binary
+                    numBase = 2;
+                    break;
+                case 'o': //o -> Octal
+                    numBase = 8;
+                    break;
+                case 'x': //x -> Hexadecimal
+                    numBase = 16;
+                    break;
+            }
+
+            if (baseChar != 'd')
+            {
+                int parseResult = 0;
+                if (int.TryParse(input, out parseResult))
+                {
+                    result = Convert.ToInt32(input, numBase);
+                    return true;
+                }
+                else
+                {
+                    result = 0;
+                    return false;
+                }
+            }
+            else
+            {
+                return double.TryParse(input, out result);
+            }
+        }
+
+        /// <summary>
         /// The value of this instance.
         /// </summary>
         internal double Value { get; set; }

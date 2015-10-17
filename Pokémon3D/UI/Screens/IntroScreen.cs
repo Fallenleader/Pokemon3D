@@ -36,7 +36,7 @@ namespace Pokémon3D.UI.Screens
         {
             _logoSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.SquareLogo_256px))
             {
-                Position = new Vector2(Game.Window.ClientBounds.Width*0.5f, Game.Window.ClientBounds.Height*0.5f)
+                Position = new Vector2(Game.Window.ClientBounds.Width * 0.5f, Game.Window.ClientBounds.Height * 0.5f)
             };
 
             _highlightSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.highlight))
@@ -62,8 +62,8 @@ namespace Pokémon3D.UI.Screens
         {
             if (delta <= 0.5f)
             {
-                _highlightSprite.Alpha = MathHelper.SmoothStep(0.0f, 1.0f, delta*2.0f);
-                _highlightSprite.Scale = new Vector2(MathHelper.SmoothStep(1.0f, 2.0f, delta*2.0f));
+                _highlightSprite.Alpha = MathHelper.SmoothStep(0.0f, 1.0f, delta * 2.0f);
+                _highlightSprite.Scale = new Vector2(MathHelper.SmoothStep(1.0f, 2.0f, delta * 2.0f));
             }
             else
             {

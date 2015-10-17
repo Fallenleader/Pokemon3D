@@ -14,7 +14,7 @@ namespace birdScript
         private static object _syncRoot = new object();
 
         private static List<object> _buffer = new List<object>();
-
+        
         internal static int GetObjectId(object obj)
         {
             int objId;

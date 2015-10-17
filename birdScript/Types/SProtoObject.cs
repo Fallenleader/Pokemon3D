@@ -169,7 +169,7 @@ namespace birdScript.Types
 
         internal override string ToScriptObject()
         {
-            return ObjectBuffer.GetObjectId(this).ToString();
+            return "$" + ObjectBuffer.GetObjectId(this).ToString();
         }
 
         private const string FORMAT_SOURCE_MEMBER = "{0}:{1}";
@@ -215,6 +215,9 @@ namespace birdScript.Types
             return processor.CreateString(LITERAL_OBJECT_STR);
         }
         
+        /// <summary>
+        /// Parses an anonymous object.
+        /// </summary>
         internal static SProtoObject Parse(ScriptProcessor processor, string source)
         {
             Prototype prototype = new Prototype(LITERAL_OBJECT);
@@ -283,9 +286,9 @@ namespace birdScript.Types
                 if (member.Contains(":"))
                 {
                     identifier = member.Remove(member.IndexOf(":")).Trim();
-                    content = member.Remove(0, member.IndexOf(":") + 1).Trim();
+                    content = member.Remove(0, member.IndexOf(":") + 1);
 
-                    //TODO: EXECUTE STATEMENT TO SET CONTENT OBJ
+                    contentObj = processor.ExecuteStatement(new ScriptStatement(content));
                 }
                 else
                 {

@@ -258,5 +258,45 @@ namespace birdScript
                 }
             }
         }
+
+        /// <summary>
+        /// Creates an instance with the given prototype name.
+        /// </summary>
+        internal SObject CreateInstance(string prototypeName, SObject[] parameters)
+        {
+            return CreateInstance(GetPrototype(prototypeName), parameters);
+        }
+
+        /// <summary>
+        /// Creates an instance of the given prototype.
+        /// </summary>
+        internal SObject CreateInstance(Prototype prototype, SObject[] parameters)
+        {
+            if (!prototype.IsAbstract)
+                return prototype.CreateInstance(_processor, parameters, true);
+            else
+                return _processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_ABSTRACT_NO_INSTANCE);
+        }
+
+        /// <summary>
+        /// Creates an instance from a "new" operator.
+        /// </summary>
+        internal SObject CreateInstance(string exp)
+        {
+            exp = exp.Remove(0, "new ".Length).Trim();
+
+            string prototypeName = exp.Remove(exp.IndexOf("("));
+            Prototype prototype = GetPrototype(prototypeName);
+
+            if (prototype == null)
+                _processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { prototypeName });
+
+            string argCode = exp.Remove(0, exp.IndexOf("(") + 1);
+            argCode = argCode.Remove(argCode.Length - 1, 1);
+
+            SObject[] parameters = null; //TODO: PARSE PARAMETER LIST
+
+            return CreateInstance(prototypeName, parameters);
+        }
     }
 }

@@ -247,15 +247,443 @@ namespace birdScript
             }
             else
             {
+                string exp = ResolveParentheses(statement.Code).Trim();
 
+                #region QuickConvert
+
+                // have quick conversions for small statements here
+                // parameter statements are much faster that way:
+                if (exp == SObject.LITERAL_BOOL_TRUE)
+                {
+                    return CreateBool(true);
+                }
+                else if (exp == SObject.LITERAL_BOOL_FALSE)
+                {
+                    return CreateBool(false);
+                }
+                else if (exp == SObject.LITERAL_UNDEFINED)
+                {
+                    return Undefined;
+                }
+                else if (exp == SObject.LITERAL_NULL)
+                {
+                    return Null;
+                }
+                else if (exp.StartsWith("\"") && exp.EndsWith("\"") && !exp.Remove(exp.Length - 1, 1).Remove(0, 1).Contains("\""))
+                {
+                    return CreateString(exp.Remove(exp.Length - 1, 1).Remove(0, 1));
+                }
+
+                #endregion
+
+                if (exp.Contains("."))
+                    exp = EvaluateOperatorLeftToRight(exp, ".");
+                if (exp.Contains("++"))
+                    exp = EvaluateOperatorLeftToRight(exp, "++");
+                if (exp.Contains("--"))
+                    exp = EvaluateOperatorLeftToRight(exp, "--");
+                if (exp.Contains("**"))
+                    exp = EvaluateOperatorLeftToRight(exp, "**");
+                if (exp.Contains("*"))
+                    exp = EvaluateOperatorLeftToRight(exp, "*");
+                if (exp.Contains("/"))
+                    exp = EvaluateOperatorLeftToRight(exp, "/");
+                if (exp.Contains("%"))
+                    exp = EvaluateOperatorLeftToRight(exp, "%");
+                if (exp.Contains("+"))
+                    exp = EvaluateOperatorLeftToRight(exp, "+");
+                if (exp.Contains("-"))
+                    exp = EvaluateOperatorLeftToRight(exp, "-");
+                if (exp.Contains("<="))
+                    exp = EvaluateOperatorLeftToRight(exp, "<=");
+                if (exp.Contains(">="))
+                    exp = EvaluateOperatorLeftToRight(exp, ">=");
+                if (exp.Contains("<"))
+                    exp = EvaluateOperatorLeftToRight(exp, "<");
+                if (exp.Contains(">"))
+                    exp = EvaluateOperatorLeftToRight(exp, ">");
+                if (exp.Contains("==="))
+                    exp = EvaluateOperatorLeftToRight(exp, "===");
+                if (exp.Contains("!=="))
+                    exp = EvaluateOperatorLeftToRight(exp, "!==");
+                if (exp.Contains("=="))
+                    exp = EvaluateOperatorLeftToRight(exp, "==");
+                if (exp.Contains("!="))
+                    exp = EvaluateOperatorLeftToRight(exp, "!=");
+                if (exp.Contains("&&"))
+                    exp = EvaluateOperatorLeftToRight(exp, "&&");
+                if (exp.Contains("||"))
+                    exp = EvaluateOperatorLeftToRight(exp, "||");
+
+                return ToScriptObject(exp);
             }
-            return null; //TO AVOID ERRORS FOR NOW
+        }
+
+        #endregion
+
+        #region Operators
+
+        private string EvaluateOperatorRightToLeft()
+        {
+            return null;
+        }
+
+        private string EvaluateOperatorLeftToRight(string exp, string op)
+        {
+            int[] ops = GetOperatorPositions(exp, op);
+
+            for (int i = 0; i < ops.Length; i++)
+            {
+                var cOp = ops[i];
+
+                bool needRight = true;
+
+                if (op == "++" || op == "--")
+                {
+                    needRight = false;
+                }
+
+                ElementCapture captureLeft = CaptureLeft(exp, cOp - 1);
+                string elementLeft = captureLeft.Identifier;
+
+                if (!(op == "-" && elementLeft.Length == 0))
+                {
+                    string result = "";
+
+                    SObject objectLeft = ToScriptObject(elementLeft);
+
+                    ElementCapture captureRight;
+                    string elementRight;
+                    SObject objectRight = null;
+
+                    if (needRight)
+                    {
+                        captureRight = CaptureRight(exp, cOp + op.Length);
+                        elementRight = captureRight.Identifier;
+
+                        if (op != ".")
+                            objectRight = ToScriptObject(elementRight);
+                    }
+                    else
+                    {
+                        elementRight = "";
+                        captureRight = new ElementCapture() { Length = 0 };
+                    }
+
+                    if (op != "." || IsDotOperatorDecimalSeperator(elementLeft, elementRight))
+                    {
+                        switch (op)
+                        {
+                            case ".":
+                                //TODO: call member invoke.
+                                break;
+                            case "+":
+                                result = ObjectOperators.AddOperator(this, objectLeft, objectRight);
+                                break;
+                            case "-":
+                                result = ObjectOperators.SubtractOperator(this, objectLeft, objectRight);
+                                break;
+                            case "*":
+                                result = ObjectOperators.MultiplyOperator(this, objectLeft, objectRight);
+                                break;
+                            case "/":
+                                result = ObjectOperators.DivideOperator(this, objectLeft, objectRight);
+                                break;
+                            case "%":
+                                result = ObjectOperators.ModulusOperator(this, objectLeft, objectRight);
+                                break;
+                            case "**":
+                                result = ObjectOperators.ExponentOperator(this, objectLeft, objectRight);
+                                break;
+                            case "==":
+                                result = ObjectOperators.EqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case "===":
+                                result = ObjectOperators.TypeEqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case "!=":
+                                result = ObjectOperators.NotEqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case "!==":
+                                result = ObjectOperators.TypeNotEqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case "<=":
+                                result = ObjectOperators.SmallerOrEqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case "<":
+                                result = ObjectOperators.SmallerOperator(this, objectLeft, objectRight);
+                                break;
+                            case ">=":
+                                result = ObjectOperators.LargerOrEqualsOperator(this, objectLeft, objectRight);
+                                break;
+                            case ">":
+                                result = ObjectOperators.LargerOperator(this, objectLeft, objectRight);
+                                break;
+                            case "&&":
+                                result = ObjectOperators.AndOperator(this, objectLeft, objectRight);
+                                break;
+                            case "||":
+                                result = ObjectOperators.OrOperator(this, objectLeft, objectRight);
+                                break;
+                            case "++":
+                                result = ObjectOperators.IncrementOperator(this, objectLeft);
+                                break;
+                            case "--":
+                                result = ObjectOperators.DecrementOperator(this, objectLeft);
+                                break;
+                        }
+
+                        exp = exp.Remove(captureLeft.StartIndex, op.Length + captureLeft.Length + captureRight.Length);
+                        exp = exp.Insert(captureLeft.StartIndex, result);
+
+                        var offset = result.Length - (op.Length + captureLeft.Length + captureRight.Length);
+                        for (int j = i + 1; j < ops.Length; j++)
+                        {
+                            ops[j] += offset;
+                        }
+                    }
+                }
+            }
+
+            return exp;
         }
 
         #endregion
 
         #region Helpers
 
+        private SObject ToScriptObject(string exp)
+        {
+            exp = exp.Trim();
+
+            // This means it's either an indexer or an array
+            if (exp.EndsWith("]"))
+            {
+                if (!(exp.StartsWith("[") && !exp.Remove(0, 1).Contains("["))) // When there's no "[" besides the start, and it starts with [, then it is an array. Otherwise, do real check.
+                {
+                    // It is possible that we are having a simple array declaration here.
+                    // We check that by looking if we can find a "[" before the expression ends:
+
+                    int depth = 0;
+                    int index = exp.Length - 2;
+                    int indexerStartIndex = 0;
+                    bool hasIndexer = false;
+                    StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(exp, index);
+
+                    while (index > 0 && !hasIndexer)
+                    {
+                        char t = exp[index];
+                        escaper.CheckStartAt(index);
+
+                        if (!escaper.IsString)
+                        {
+                            if (t == ')' || t == '}' || t == ']')
+                            {
+                                depth++;
+                            }
+                            else if (t == '(' || t == '{')
+                            {
+                                depth--;
+                            }
+                            else if (t == '[')
+                            {
+                                if (depth == 0)
+                                {
+                                    if (index > 0)
+                                    {
+                                        indexerStartIndex = index;
+                                        hasIndexer = true;
+                                    }
+                                }
+                                else
+                                {
+                                    depth--;
+                                }
+                            }
+                        }
+                    }
+
+                    if (hasIndexer)
+                    {
+                        string indexerCode = exp.Remove(0, indexerStartIndex + 1);
+                        indexerCode = indexerCode.Remove(indexerCode.Length - 1, 1);
+
+                        string identifier = exp.Remove(indexerStartIndex);
+
+                        SObject statementResult = ExecuteStatement(new ScriptStatement(indexerCode));
+                        return ToScriptObject(identifier).GetMember(this, statementResult, true);
+                    }
+                }
+            }
+
+            // Normal object return procedure:
+
+            // Negative number:
+            bool isNegative = false;
+            if (exp.StartsWith("-"))
+            {
+                exp = exp.Remove(0, 1);
+                isNegative = true;
+            }
+
+            double dblResult;
+            SObject returnObject;
+
+            if (exp == SObject.LITERAL_NULL)
+            {
+                returnObject = Null;
+            }
+            else if (exp == SObject.LITERAL_UNDEFINED)
+            {
+                returnObject = Undefined;
+            }
+            else if (exp == SObject.LITERAL_BOOL_FALSE)
+            {
+                returnObject = CreateBool(false);
+            }
+            else if (exp == SObject.LITERAL_BOOL_TRUE)
+            {
+                returnObject = CreateBool(true);
+            }
+            else if (exp == SObject.LITERAL_NAN)
+            {
+                returnObject = CreateNumber(double.NaN);
+            }
+            else if (exp == SObject.LITERAL_THIS)
+            {
+                returnObject = Context.This;
+            }
+            else if (SNumber.TryParse(exp, out dblResult))
+            {
+                returnObject = CreateNumber(dblResult);
+            }
+            else if (exp.StartsWith("\"") && exp.EndsWith("\"") || exp.StartsWith("\'") && exp.EndsWith("\'"))
+            {
+                returnObject = CreateString(exp.Remove(exp.Length - 1, 1).Remove(0, 1), true);
+            }
+            else if (exp.StartsWith("@\"") && exp.EndsWith("\"") || exp.StartsWith("@\'") && exp.EndsWith("\'"))
+            {
+                returnObject = CreateString(exp.Remove(exp.Length - 1, 1).Remove(0, 2), false);
+            }
+            else if (exp.StartsWith("{") && exp.EndsWith("}"))
+            {
+                returnObject = SProtoObject.Parse(this, exp);
+            }
+            else if (exp.StartsWith("[") && exp.EndsWith("]"))
+            {
+                returnObject = SArray.Parse(this, exp);
+            }
+            else if (exp.StartsWith("function") && Regex.IsMatch(exp, REGEX_FUNCTION))
+            {
+                returnObject = new SFunction(this, exp);
+            }
+            else if (Context.IsAPIUsing(exp))
+            {
+                returnObject = Context.GetAPIUsing(exp);
+            }
+            else if (Context.IsVariable(exp))
+            {
+                returnObject = Context.GetVariable(exp);
+            }
+            else if (Context.This.HasMember(this, exp))
+            {
+                returnObject = Context.This.GetMember(this, CreateString(exp), false);
+            }
+            else if (Context.IsPrototype(exp))
+            {
+                returnObject = Context.GetPrototype(exp);
+            }
+            else if (exp.StartsWith("new "))
+            {
+                returnObject = Context.CreateInstance(exp);
+            }
+            else if (exp.StartsWith("$"))
+            {
+                string strId = exp.Remove(0, 1);
+                int id = 0;
+
+                if (int.TryParse(strId, out id) && ObjectBuffer.HasObject(id))
+                {
+                    returnObject = (SObject)ObjectBuffer.GetObject(id);
+                }
+                else
+                {
+                    returnObject = ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_TOKEN, new object[] { exp });
+                }
+            }
+            else
+            {
+                returnObject = ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { exp });
+            }
+
+            if (isNegative)
+                returnObject = ObjectOperators.NegateNumber(this, returnObject);
+
+            return returnObject;
+        }
+
+        private bool IsDotOperatorDecimalSeperator(string elementLeft, string elementRight)
+        {
+            return Regex.IsMatch(elementLeft.Trim(), REGEX_NUMLEFTDOT) &&
+                   Regex.IsMatch(elementRight.Trim(), REGEX_NUMRIGHTDOT);
+        }
+
+        /// <summary>
+        /// Returns positions of the given operator in the expression, sorted from left to right.
+        /// </summary>
+        private int[] GetOperatorPositions(string exp, string op)
+        {
+            List<int> operators = new List<int>();
+
+            StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(exp, 0);
+            int depth = 0;
+            int index = 0;
+
+            while (index < exp.Length)
+            {
+                char t = exp[index];
+                escaper.CheckStartAt(index);
+
+                if (!escaper.IsString)
+                {
+                    if (t == '(' || t == '[' || t == '{')
+                    {
+                        depth--;
+                    }
+                    else if (t == ')' || t == ']' || t == '}')
+                    {
+                        depth++;
+                    }
+
+                    if (t == op[0] && depth == 0)
+                    {
+                        if (op.Length > 1 && index + op.Length - 1 < exp.Length)
+                        {
+                            bool correctOperator = true;
+                            for (int i = 1; i < op.Length; i++)
+                            {
+                                if (exp[index + i] != op[i])
+                                    correctOperator = false;
+                            }
+
+                            if (correctOperator)
+                                operators.Add(index);
+                        }
+                        else if (op.Length == 1)
+                        {
+                            operators.Add(index);
+                        }
+                    }
+                }
+                index++;
+            }
+
+            return operators.ToArray();
+        }
+
+        /// <summary>
+        /// Resolves parentheses and adds ".call" to direct function calls on variables.
+        /// </summary>
         private string ResolveParentheses(string exp)
         {
             if (exp.Contains("(") && exp.Contains(")"))
@@ -374,10 +802,30 @@ namespace birdScript
             return exp;
         }
 
+        /// <summary>
+        /// Builds a function() {} from a lambda statement.
+        /// </summary>
         private string BuildLambdaFunction(string lambdaCode)
         {
             string signatureCode = lambdaCode.Remove(lambdaCode.IndexOf("=>")).Trim();
-            return null; //TO AVOID ERRORS FOR NOW
+            StringBuilder signatureBuilder = new StringBuilder();
+
+            if (signatureCode != "()")
+            {
+                string[] signature = signatureCode.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                for (int i = 0; i < signature.Length; i++)
+                {
+                    if (signatureBuilder.Length > 0)
+                        signatureBuilder.Append(',');
+
+                    signatureBuilder.Append(signature[i]);
+                }
+            }
+
+            string code = lambdaCode.Remove(0, lambdaCode.IndexOf("=>") + 2).Trim();
+
+            return string.Format("function({0}){{return {1};}}", signatureBuilder.ToString(), code);
         }
 
         /// <summary>
@@ -509,7 +957,7 @@ namespace birdScript
 
                 index--;
             }
-            
+
             // Check for a minus in front of the identifier to indicate a negative number:
             if (index >= -1 && exp[index + 1] == '-' && !string.IsNullOrWhiteSpace(identifier))
             {

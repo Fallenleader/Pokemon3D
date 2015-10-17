@@ -121,7 +121,7 @@ namespace birdScript.Types
 
         internal override string ToScriptObject()
         {
-            return ObjectBuffer.GetObjectId(this).ToString();
+            return "$" + ObjectBuffer.GetObjectId(this).ToString();
         }
 
         internal override SObject ExecuteMethod(ScriptProcessor processor, string methodName, SObject caller, SObject This, SObject[] parameters)
