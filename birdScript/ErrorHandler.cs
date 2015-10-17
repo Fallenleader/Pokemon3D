@@ -37,6 +37,9 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_MISSING_FUNCTION_BODY = "missing function body";
         public const string MESSAGE_SYNTAX_INVALID_CLASS_SIGNATURE = "invalid class signature";
         public const string MESSAGE_SYNTAX_MISSING_VAR_NAME = "missing variable name";
+        public const string MESSAGE_SYNTAX_EXPECTED_EXPRESSION = "expected expression, got {0}";
+        public const string MESSAGE_SYNTAX_UNTERMINATED_COMMENT = "unterminated comment";
+        public const string MESSAGE_SYNTAX_MISSING_END_OF_COMPOUND_STATEMENT = "missing } in compound statement";
 
         public const string MESSAGE_SYNTAX_CLASS_EXTENDS_MISSING = "expected identifier after \"extends\" keyword";
         public const string MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING = "expected class identifier";

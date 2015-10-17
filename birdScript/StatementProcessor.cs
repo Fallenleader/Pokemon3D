@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 
 namespace birdScript
 {
-    public class StatementProcessor
+    class StatementProcessor
     {
-        private static readonly string[] blockControlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
-        private const int longestBlockControlStatement = 8; //"function"
-        private const string blockStatementFirstChars = "iewfct";
+        private static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
 
-        public static ScriptStatement[] GetStatements(string code)
+        internal static ScriptStatement[] GetStatements(ScriptProcessor processor, string code)
         {
             List<ScriptStatement> statements = new List<ScriptStatement>();
 
+            StringBuilder statement = new StringBuilder();
+
             int index = 0;
             int depth = 0;
-            int statementStart = 0;
-            bool isStatementFinished = false;
             bool isComment = false;
-            bool isBlockStatement = false;
-            bool isBlockControlStatement = false;
-            bool canBeBlockControlStatement = true;
+            bool isControlStatement = false; // If the current statement is a control statement.
+            bool isCompoundStatement = false; // If the current statement is bunch of statements wrapped in { ... }
 
             StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(code, 0);
 
@@ -31,7 +28,10 @@ namespace birdScript
             {
                 char t = code[index];
 
-                escaper.CheckStartAt(index);
+                if (!isComment)
+                    escaper.CheckStartAt(index);
+                else
+                    escaper.JumpTo(index);
 
                 if (!escaper.IsString)
                 {
@@ -45,7 +45,6 @@ namespace birdScript
                     if (!isComment)
                     {
                         // Check if a line comment is starting (//):
-
                         if (t == '/' && index + 1 < code.Length && code[index + 1] == '/')
                         {
                             // We jump to the end of the line and ignore everything between the current index and the end of the line:
@@ -57,75 +56,97 @@ namespace birdScript
                             continue;
                         }
 
+                        statement.Append(t);
+
                         if (t == '(')
                         {
                             depth++;
-                            canBeBlockControlStatement = false;
                         }
                         else if (t == ')')
                         {
                             depth--;
+
+                            if (isControlStatement)
+                            {
+                                string s = statement.ToString().Trim();
+                                if (s.StartsWith("if") || s.StartsWith("else if") || s.StartsWith("function") || s.StartsWith("for") || s.StartsWith("while") || s.StartsWith("catch"))
+                                {
+                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
+                                    statement.Clear();
+
+                                    isControlStatement = false;
+                                }
+                            }
                         }
                         else if (t == '{')
                         {
                             depth++;
-                            canBeBlockControlStatement = false;
-                            if (depth == 1 && string.IsNullOrWhiteSpace(code.Substring(statementStart, index - statementStart)))
+
+                            if (depth == 1)
                             {
-                                isBlockStatement = true;
-                            }
-                            else if (depth == 1 && isBlockControlStatement)
-                            {
-                                isStatementFinished = true;
-                                index--; //let this char get evaluated again
-                                depth = 0; //also reset depth to 0, because we don't go into the statement yet.
+                                string s = statement.ToString().Trim();
+                                if (isControlStatement)
+                                {
+                                    s = s.Remove(s.Length - 1, 1);
+                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
+                                    
+                                    statement.Clear();
+                                    statement.Append('{');
+                                }
+                                else
+                                {
+                                    if (s == "{")
+                                    {
+                                        isCompoundStatement = true;
+                                    }
+                                }
                             }
                         }
                         else if (t == '}')
                         {
                             depth--;
-                            if (depth == 0 && isBlockStatement)
+                            if (depth == 0 && isCompoundStatement)
                             {
-                                isStatementFinished = true;
+                                string s = statement.ToString();
+                                statements.Add(new ScriptStatement(s, StatementType.Executable) { IsCompoundStatement = true });
+                                statement.Clear();
+
+                                isCompoundStatement = false;
                             }
                         }
-                        else if (t == ';' && depth == 0 && !isBlockControlStatement && !isBlockStatement)
+                        else if (t == ';' && depth == 0)
                         {
-                            isStatementFinished = true;
-                        }
-                        else if (canBeBlockControlStatement && !isBlockControlStatement && !isBlockStatement)
-                        {
-                            string startOfStatement = code.Substring(statementStart, index - statementStart + 1).TrimStart();
+                            string s = statement.ToString().Trim().TrimEnd(new char[] { ';' });
+                            statements.Add(new ScriptStatement(s, GetStatementType(s, false)));
+                            statement.Clear();
 
-                            if (startOfStatement.Length > 0)
+                        }
+                        else if (!isCompoundStatement && !isControlStatement)
+                        {
+                            string s = statement.ToString().TrimStart();
+                            if (controlStatements.Contains(s))
                             {
-                                if (blockStatementFirstChars.Contains(startOfStatement[0]))
+                                isControlStatement = true;
+                                if (s.StartsWith("else"))
                                 {
-                                    if (blockControlStatements.Contains(startOfStatement))
+                                    if (index + 3 < code.Length)
                                     {
-                                        isBlockControlStatement = true;
-                                    }
-                                    else
-                                    {
-                                        // If the current statement is already longer than the longest possible block control statement, do not look for it anymore.
-                                        // This saves us doing the substring and trim checks.
-                                        if (startOfStatement.Length >= longestBlockControlStatement)
+                                        string check = code.Substring(index + 1, 3);
+                                        if (check != " if")
                                         {
-                                            canBeBlockControlStatement = false;
+                                            statements.Add(new ScriptStatement("else", StatementType.Else));
+                                            statement.Clear();
+                                            isControlStatement = false;
                                         }
                                     }
-                                }
-                                else
-                                {
-                                    canBeBlockControlStatement = false;
                                 }
                             }
                         }
 
                     }
                     else
-                    {
-                        // check if the block comment is ending (*/):
+                    { 
+                        // Check if a block comment is ending (/*):
                         if (t == '*' && index + 1 < code.Length && code[index + 1] == '/')
                         {
                             isComment = false;
@@ -133,34 +154,28 @@ namespace birdScript
                         }
                     }
                 }
-
-                if (isStatementFinished)
+                else
                 {
-                    string statement = code.Substring(statementStart, index - statementStart + 1).Trim();
-                    if (statement.Length > 0)
-                    {
-                        statement = statement.TrimEnd(new char[] { ';' });
-                        statements.Add(new ScriptStatement(statement, GetStatementType(statement, isBlockControlStatement, isBlockStatement)));
-                    }
-
-                    isStatementFinished = false;
-                    isBlockStatement = false;
-                    isBlockControlStatement = false;
-                    canBeBlockControlStatement = true;
-
-                    statementStart = index + 1;
+                    statement.Append(t);
                 }
 
                 index++;
             }
 
-            if (index != statementStart)
+            if (isCompoundStatement)
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_END_OF_COMPOUND_STATEMENT);
+
+            if (isComment)
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_UNTERMINATED_COMMENT);
+
+            if (isControlStatement)
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+
+            // an executable statement not closed with ";" is getting added here:
+            string leftOver = statement.ToString().Trim();
+            if (leftOver.Length > 0)
             {
-                string statement = code.Substring(statementStart, index - statementStart).Trim();
-                if (statement.Length > 0)
-                {
-                    statements.Add(new ScriptStatement(statement, GetStatementType(statement, false, false)));
-                }
+                statements.Add(new ScriptStatement(leftOver, GetStatementType(leftOver, false)));
             }
 
             return statements.ToArray();
@@ -169,9 +184,9 @@ namespace birdScript
         /// <summary>
         /// Returns the correct statement type for an expression.
         /// </summary>
-        internal static StatementType GetStatementType(string code, bool canBeBlockControlStatement, bool isBlockStatement)
+        internal static StatementType GetStatementType(string code, bool isControlStatement)
         {
-            if (canBeBlockControlStatement)
+            if (isControlStatement)
             {
                 if (code.StartsWith("if"))
                 {
@@ -210,8 +225,7 @@ namespace birdScript
                     return StatementType.Catch;
                 }
             }
-
-            if (!isBlockStatement)
+            else
             {
                 if (code.StartsWith("var "))
                 {
@@ -250,11 +264,7 @@ namespace birdScript
                     return StatementType.Executable;
                 }
             }
-            else
-            {
-                // For block statements:
-                return StatementType.Executable;
-            }
+            return StatementType.Executable;
         }
 
         /// <summary>

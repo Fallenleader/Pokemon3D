@@ -205,6 +205,14 @@ namespace birdScript
         }
 
         /// <summary>
+        /// Jumps to the given index, ignoring all chars in between the current index and the new one.
+        /// </summary>
+        internal void JumpTo(int index)
+        {
+            _index = index;
+        }
+
+        /// <summary>
         /// Checks for string delimiters at the given index.
         /// </summary>
         internal abstract void CheckStartAt(int startIndex);

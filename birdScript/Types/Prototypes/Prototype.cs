@@ -338,7 +338,7 @@ namespace birdScript.Types.Prototypes
                 string additionalCtorCode = string.Empty;
                 string staticCtorCode = string.Empty;
 
-                ScriptStatement[] statements = StatementProcessor.GetStatements(body);
+                ScriptStatement[] statements = StatementProcessor.GetStatements(processor, body);
 
                 foreach (ScriptStatement statement in statements)
                 {

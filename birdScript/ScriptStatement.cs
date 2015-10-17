@@ -7,7 +7,7 @@ using birdScript.Types;
 
 namespace birdScript
 {
-    public enum StatementType
+    internal enum StatementType
     {
         Executable,
         If,
@@ -30,20 +30,22 @@ namespace birdScript
         Finally
     }
 
-    public class ScriptStatement
+    internal class ScriptStatement
     {
-        public string Code { get; }
-        public StatementType StatementType { get; }
+        internal string Code { get; }
+        internal StatementType StatementType { get; }
 
         internal SObject StatementResult;
 
-        public ScriptStatement(string code)
+        internal bool IsCompoundStatement { get; set; }
+
+        internal ScriptStatement(string code)
         {
             Code = code.Trim();
-            StatementType = StatementProcessor.GetStatementType(Code, true, false);
+            StatementType = StatementProcessor.GetStatementType(Code, false);
         }
 
-        public ScriptStatement(string code, StatementType statementType)
+        internal ScriptStatement(string code, StatementType statementType)
         {
             Code = code;
             StatementType = statementType;
