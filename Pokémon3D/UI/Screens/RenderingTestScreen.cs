@@ -25,11 +25,23 @@ namespace Pokémon3D.UI.Screens
             var billboardSceneNode = _scene.CreateSceneNode();
             billboardSceneNode.IsBillboard = true;
             billboardSceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
-            billboardSceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
-            billboardSceneNode.Material.CastShadow = false;
-            billboardSceneNode.Material.UseTransparency = true;
-            billboardSceneNode.Position = new Vector3(0, 0, 3);
+            billboardSceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1))
+            {
+                CastShadow = false,
+                UseTransparency = true
+            };
+            billboardSceneNode.Position = new Vector3(-5, 0, -5);
             billboardSceneNode.Scale = new Vector3(2, 4, 1);
+
+            for (var x = 0; x < 5; x++)
+            {
+                for(var z = 0; z < 5; z++)
+                {
+                    if (x == 0 && z == 0) continue;
+                    var cloned = _scene.CloneNode(billboardSceneNode);
+                    cloned.Position = new Vector3(x*2-5, 0, z * 2-5);
+                }
+            }
 
             var quads = new GeometryData[32*32];
 

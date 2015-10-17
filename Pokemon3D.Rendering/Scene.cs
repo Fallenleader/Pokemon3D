@@ -61,5 +61,32 @@ namespace Pokemon3D.Rendering
             if (EnableShadows) _sceneRenderer.DrawDebugShadowMap(_spriteBatch, new Rectangle(0,0,128,128));
 #endif
         }
+
+        /// <summary>
+        /// Clones a Scene node with its children and all attached Properties.
+        /// Meshes will only be cloned when <see cref="cloneMeshs"/> is true.
+        /// </summary>
+        /// <param name="nodeToClone">Node to clone</param>
+        /// <param name="cloneMeshs">Force cloning mesh data.</param>
+        /// <returns>SceneNode cloned.</returns>
+        public SceneNode CloneNode(SceneNode nodeToClone, bool cloneMeshs = false)
+        {
+            var cloned = nodeToClone.Clone(cloneMeshs);
+            _allNodes.Add(cloned);
+            CloneChildren(cloned, nodeToClone, cloneMeshs);
+            return cloned;
+        }
+
+        private void CloneChildren(SceneNode parentCloned, SceneNode parentOriginal, bool cloneMeshs)
+        {
+            foreach (var childNode in parentOriginal.Children)
+            {
+                var clonedChild = childNode.Clone(cloneMeshs);
+                _allNodes.Add(clonedChild);
+                parentCloned.AddChild(clonedChild);
+
+                CloneChildren(clonedChild, childNode, cloneMeshs);
+            }
+        }
     }
 }

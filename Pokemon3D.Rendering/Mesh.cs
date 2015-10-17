@@ -28,5 +28,19 @@ namespace Pokemon3D.Rendering
             var primitiveCount = _indexBuffer.IndexCount / 3;
             device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,0,_vertexBuffer.VertexCount, 0, primitiveCount);
         }
+
+        internal Mesh Clone()
+        {
+            var geometryData = new GeometryData
+            {
+                Vertices = new VertexPositionNormalTexture[_vertexBuffer.VertexCount],
+                Indices = new ushort[_indexBuffer.IndexCount],
+            };
+            
+            _vertexBuffer.GetData(geometryData.Vertices);
+            _indexBuffer.GetData(geometryData.Indices);
+
+            return new Mesh(_vertexBuffer.GraphicsDevice, geometryData);
+        }
     }
 }
