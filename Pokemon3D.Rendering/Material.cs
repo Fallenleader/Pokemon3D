@@ -21,5 +21,16 @@ namespace Pokemon3D.Rendering
         public Color Color { get; set; }
         public bool CastShadow { get; set; }
         public bool ReceiveShadow { get; set; }
+
+        internal Material Clone()
+        {
+            return new Material(DiffuseTexture)
+            {
+                Color = Color,
+                UseTransparency = UseTransparency,
+                CastShadow = CastShadow,
+                ReceiveShadow = ReceiveShadow
+            };
+        }
     }
 }

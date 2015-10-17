@@ -75,7 +75,7 @@ namespace Pokemon3D.Rendering
         public void SetParent(SceneNode parent)
         {
             Parent?.RemoveChild(this);
-            parent.AddChild(this);
+            parent?.AddChild(this);
         }
 
         public void AddChild(SceneNode childElement)
@@ -165,6 +165,24 @@ namespace Pokemon3D.Rendering
 
             Up = Vector3.Transform(Up, matrix);
             Right = Vector3.Transform(Right, matrix);
+        }
+
+        internal SceneNode Clone(bool cloneMesh)
+        {
+            var sceneNode = new SceneNode
+            {
+                Mesh = cloneMesh ? Mesh?.Clone() : Mesh,
+                Material = Material.Clone(),
+                Position = Position,
+                IsBillboard = IsBillboard,
+                Scale = Scale,
+                Forward = Forward,
+                Right = Right,
+                Rotation = Rotation,
+                Up = Up
+            };
+            sceneNode.SetParent(Parent);
+            return sceneNode;
         }
     }
 }
