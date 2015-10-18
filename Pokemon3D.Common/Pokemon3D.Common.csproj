@@ -42,12 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animations\ActionTimer.cs" />
     <Compile Include="Animations\Animation.cs" />
     <Compile Include="Animations\Animator.cs" />
     <Compile Include="Animations\DeltaAnimation.cs" />
     <Compile Include="Diagnostics\GameLogger.cs" />
     <Compile Include="Diagnostics\MessageType.cs" />
+    <Compile Include="Extensions\PointExtension.cs" />
+    <Compile Include="Extensions\RectangleExtension.cs" />
+    <Compile Include="Extensions\StringParseExtension.cs" />
+    <Compile Include="Extensions\TextureExtensions.cs" />
+    <Compile Include="Extensions\Vector2Extension.cs" />
+    <Compile Include="GameContext.cs" />
+    <Compile Include="Interaction\InputType.cs" />
+    <Compile Include="Interaction\StringInputController.cs" />
+    <Compile Include="KeyboardEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShapeRenderer.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Animations\WaitAnimation.cs" />
   </ItemGroup>
