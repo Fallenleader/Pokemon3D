@@ -21,7 +21,7 @@ namespace birdScript
             public int Depth;
         }
 
-        private const string IDENTIFIER_SEPERATORS = "-+*/=!%&|<>,";
+        private const string IDENTIFIER_SEPARATORS = "-+*/=!%&|<>,";
 
         /// <summary>
         /// The <see cref="birdScript.ErrorHandler"/> associated with this <see cref="ScriptProcessor"/>.
@@ -370,7 +370,7 @@ namespace birdScript
                         captureRight = new ElementCapture() { Length = 0 };
                     }
 
-                    if (op != "." || IsDotOperatorDecimalSeperator(elementLeft, elementRight))
+                    if (op != "." || IsDotOperatorDecimalSeparator(elementLeft, elementRight))
                     {
                         switch (op)
                         {
@@ -622,7 +622,7 @@ namespace birdScript
             return returnObject;
         }
 
-        private bool IsDotOperatorDecimalSeperator(string elementLeft, string elementRight)
+        private bool IsDotOperatorDecimalSeparator(string elementLeft, string elementRight)
         {
             return Regex.IsMatch(elementLeft.Trim(), REGEX_NUMLEFTDOT) &&
                    Regex.IsMatch(elementRight.Trim(), REGEX_NUMRIGHTDOT);
@@ -837,11 +837,11 @@ namespace birdScript
                 return new ElementCapture() { Length = 0, StartIndex = 0, Identifier = "", Depth = 0 };
 
             string identifier = "";
-            bool foundSeperatorChar = false;
+            bool foundSeparatorChar = false;
             int depth = 0;
             StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(exp, index);
 
-            while (index < exp.Length && !foundSeperatorChar)
+            while (index < exp.Length && !foundSeparatorChar)
             {
                 char t = exp[index];
                 escaper.CheckStartAt(index);
@@ -867,20 +867,20 @@ namespace birdScript
                     {
                         if (t == '.')
                         {
-                            // Check if the '.' is not a decimal seperator:
+                            // Check if the '.' is not a decimal separator:
                             if (!Regex.IsMatch(identifier.Trim(), REGEX_NUMLEFTDOT))
                             {
-                                foundSeperatorChar = true;
+                                foundSeparatorChar = true;
                             }
                         }
-                        else if (IDENTIFIER_SEPERATORS.Contains(t))
+                        else if (IDENTIFIER_SEPARATORS.Contains(t))
                         {
-                            foundSeperatorChar = true;
+                            foundSeparatorChar = true;
                         }
                     }
 
                     // Append the char to the identifier:
-                    if (!foundSeperatorChar)
+                    if (!foundSeparatorChar)
                     {
                         identifier += t;
                     }
@@ -889,7 +889,7 @@ namespace birdScript
                 index++;
             }
 
-            if (foundSeperatorChar)
+            if (foundSeparatorChar)
                 return new ElementCapture() { StartIndex = index - 1 - identifier.Length, Length = identifier.Length, Identifier = identifier.Trim(), Depth = depth };
             else
                 return new ElementCapture() { StartIndex = index - identifier.Length, Length = identifier.Length, Identifier = identifier.Trim(), Depth = depth };
@@ -904,11 +904,11 @@ namespace birdScript
                 return new ElementCapture() { Length = 0, StartIndex = 0, Identifier = "", Depth = 0 };
 
             string identifier = "";
-            bool foundSeperatorChar = false;
+            bool foundSeparatorChar = false;
             int depth = 0;
             StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(exp, index);
 
-            while (index >= 0 && !foundSeperatorChar)
+            while (index >= 0 && !foundSeparatorChar)
             {
                 char t = exp[index];
                 escaper.CheckStartAt(index);
@@ -928,7 +928,7 @@ namespace birdScript
                 if (depth < 0)
                 {
                     // this is when we walk out of the capture area because we are inside some area and a )]} appeared.
-                    foundSeperatorChar = true;
+                    foundSeparatorChar = true;
                 }
                 else
                 {
@@ -936,20 +936,20 @@ namespace birdScript
                     {
                         if (t == '.')
                         {
-                            // Check if the '.' is not a decimal seperator:
+                            // Check if the '.' is not a decimal separator:
                             if (!Regex.IsMatch(identifier.Trim(), REGEX_NUMRIGHTDOT))
                             {
-                                foundSeperatorChar = true;
+                                foundSeparatorChar = true;
                             }
                         }
-                        else if (IDENTIFIER_SEPERATORS.Contains(t))
+                        else if (IDENTIFIER_SEPARATORS.Contains(t))
                         {
-                            foundSeperatorChar = true;
+                            foundSeparatorChar = true;
                         }
                     }
 
                     // Append the char to the identifier:
-                    if (!foundSeperatorChar)
+                    if (!foundSeparatorChar)
                     {
                         identifier = t + identifier;
                     }
@@ -965,7 +965,7 @@ namespace birdScript
                 index--;
             }
 
-            if (foundSeperatorChar)
+            if (foundSeparatorChar)
                 return new ElementCapture() { StartIndex = index + 2, Length = identifier.Length, Identifier = identifier, Depth = depth };
             else
                 return new ElementCapture() { StartIndex = index + 1, Length = identifier.Length, Identifier = identifier, Depth = depth };
