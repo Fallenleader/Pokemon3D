@@ -14,18 +14,13 @@ namespace birdScript
     /// </summary>
     internal static class BuiltInMethodManager
     {
-        private static bool IsPrototype(Type t)
-        {
-            return t == typeof(Prototype) || t.IsSubclassOf(typeof(Prototype));
-        }
-
         /// <summary>
         /// Returns a list of methods with: Methodname, Method Attribute and Method Delegate.
         /// </summary>
         internal static List<Tuple<string, BuiltInMethodAttribute, DBuiltInMethod>> GetMethods(Type t)
         {
             var list = new List<Tuple<string, BuiltInMethodAttribute, DBuiltInMethod>>();
-            bool isPrototype = IsPrototype(t);
+            bool isPrototype = Prototype.IsPrototype(t);
 
             var methods = t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
 

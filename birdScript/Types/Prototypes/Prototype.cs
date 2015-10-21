@@ -14,13 +14,18 @@ namespace birdScript.Types.Prototypes
     {
         internal string Name { get; }
         internal bool IsAbstract { get; private set; }
-        internal PrototypeMember Constructor { get; private set; }
+        internal PrototypeMember Constructor { get; set; }
         internal Prototype Extends { get; private set; }
 
         private Dictionary<string, PrototypeMember> _prototypeMembers = new Dictionary<string, PrototypeMember>();
         private bool _initializedStatic;
         private SFunction _staticConstructor;
         private ScriptProcessor _staticConstructorProcessor;
+
+        internal static bool IsPrototype(Type t)
+        {
+            return t == typeof(Prototype) || t.IsSubclassOf(typeof(Prototype));
+        }
 
         internal Prototype(string name)
         {

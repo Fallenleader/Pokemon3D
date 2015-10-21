@@ -36,7 +36,10 @@ namespace birdScript
         /// <summary>
         /// Creates a new instance of the <see cref="ScriptContext"/> class.
         /// </summary>
-        public ScriptContext() { }
+        public ScriptContext()
+        {
+            This = new GlobalContextObject(this);
+        }
 
         /// <summary>
         /// Sets the callback for checking if an API class has a member.
@@ -72,7 +75,7 @@ namespace birdScript
 
         #endregion
 
-        internal ScriptContext(ScriptProcessor processor, ScriptContext parent)
+        internal ScriptContext(ScriptProcessor processor, ScriptContext parent) : this()
         {
             _processor = processor;
             Parent = parent;
@@ -80,10 +83,15 @@ namespace birdScript
 
         internal void Initialize()
         {
-            if (Parent != null)
+            if (Parent == null)
             {
                 AddVariable(SObject.LITERAL_UNDEFINED, SUndefined.Factory(), true);
                 AddVariable(SObject.LITERAL_NULL, SNull.Factory(), true);
+
+                AddPrototype(new ObjectPrototype());
+                AddPrototype(new BooleanPrototype());
+                AddPrototype(new StringPrototype());
+                AddPrototype(new ErrorPrototype(_processor));
             }
         }
 
@@ -178,7 +186,14 @@ namespace birdScript
         /// </summary>
         internal void AddVariable(string identifier, SObject value)
         {
-            _variables.Add(identifier, new SVariable(identifier, value));
+            if (_variables.ContainsKey(identifier))
+            {
+                _variables[identifier] = new SVariable(identifier, value);
+            }
+            else
+            {
+                _variables.Add(identifier, new SVariable(identifier, value));
+            }
         }
 
         /// <summary>
@@ -186,7 +201,14 @@ namespace birdScript
         /// </summary>
         internal void AddVariable(string identifier, SObject value, bool isReadOnly)
         {
-            _variables.Add(identifier, new SVariable(identifier, value, isReadOnly));
+            if (_variables.ContainsKey(identifier))
+            {
+                _variables[identifier] = new SVariable(identifier, value, isReadOnly);
+            }
+            else
+            {
+                _variables.Add(identifier, new SVariable(identifier, value, isReadOnly));
+            }
         }
 
         internal bool IsAPIUsing(string identifier)
@@ -259,6 +281,14 @@ namespace birdScript
             }
         }
 
+        internal void AddPrototype(Prototype prototype)
+        {
+            if (_prototypes.ContainsKey(prototype.Name))
+                _prototypes[prototype.Name] = prototype;
+            else
+                _prototypes.Add(prototype.Name, prototype);
+        }
+
         /// <summary>
         /// Creates an instance with the given prototype name.
         /// </summary>
@@ -294,7 +324,7 @@ namespace birdScript
             string argCode = exp.Remove(0, exp.IndexOf("(") + 1);
             argCode = argCode.Remove(argCode.Length - 1, 1);
 
-            SObject[] parameters = null; //TODO: PARSE PARAMETER LIST
+            SObject[] parameters = _processor.ParseParameters(argCode);
 
             return CreateInstance(prototypeName, parameters);
         }

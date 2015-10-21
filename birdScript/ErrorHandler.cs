@@ -96,9 +96,9 @@ namespace birdScript
         {
             string strErrorType = errorType.ToString();
 
-            //TODO: Create error object here and put it as argument in the method call.
-            
-            return ThrowError(null);
+            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()) });
+
+            return ThrowError(errorObject);
         }
 
         /// <summary>

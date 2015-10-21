@@ -33,6 +33,7 @@ namespace birdScript
         internal ScriptContext Context { get; }
 
         private ScriptStatement[] _statements;
+        private int _index;
         private string _source;
         private bool _hasParent = false;
 
@@ -42,17 +43,13 @@ namespace birdScript
 
         #region Public interface
 
-        public ScriptProcessor() : this(null) { }
+        public ScriptProcessor() : this(null) { _hasParent = false; }
 
         public ScriptProcessor(ScriptContext context)
         {
             _hasParent = true;
 
-            if (context != null && context.Parent == null)
-                Context = context;
-            else
-                Context = new ScriptContext(this, context);
-
+            Context = new ScriptContext(this, context);
             Context.Initialize();
 
             ErrorHandler = new ErrorHandler(this);
@@ -126,7 +123,7 @@ namespace birdScript
         /// </summary>
         internal SString CreateString(string value)
         {
-            return null;
+            return CreateString(value, true);
         }
 
         /// <summary>
@@ -134,7 +131,7 @@ namespace birdScript
         /// </summary>
         internal SString CreateString(string value, bool escaped)
         {
-            return null;
+            return (SString)Context.CreateInstance("String", new SObject[] { SString.Factory(this, value, escaped) });
         }
 
         /// <summary>
@@ -142,7 +139,7 @@ namespace birdScript
         /// </summary>
         internal SNumber CreateNumber(double value)
         {
-            return null;
+            return (SNumber)Context.CreateInstance("Number", new SObject[] { SNumber.Factory(value) });
         }
 
         /// <summary>
@@ -150,7 +147,7 @@ namespace birdScript
         /// </summary>
         internal SBool CreateBool(bool value)
         {
-            return null;
+            return (SBool)Context.CreateInstance("Boolean", new SObject[] { SBool.Factory(value) });
         }
 
         #region Statement processing
@@ -161,18 +158,18 @@ namespace birdScript
 
             _statements = StatementProcessor.GetStatements(this, _source);
 
-            int index = 0;
+            _index = 0;
 
-            while (index < _statements.Length)
+            while (_index < _statements.Length)
             {
-                returnObject = ExecuteStatement(_statements[index]);
+                returnObject = ExecuteStatement(_statements[_index]);
                 if (_continueIssued || _breakIssued || _returnIssued)
                 {
                     returnObject = SObject.Unbox(returnObject);
                     return returnObject;
                 }
 
-                index++;
+                _index++;
             }
 
             return SObject.Unbox(returnObject);
@@ -185,9 +182,9 @@ namespace birdScript
                 case StatementType.Executable:
                     return ExecuteExecutable(statement);
                 case StatementType.If:
-                    break;
+                    return ExecuteIf(statement);
                 case StatementType.Else:
-                    break;
+                    return ExecuteElse(statement);
                 case StatementType.ElseIf:
                     break;
                 case StatementType.Using:
@@ -319,6 +316,99 @@ namespace birdScript
             }
         }
 
+        private SObject ExecuteIf(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            string condition = exp.Remove(0, "if".Length).Trim().Remove(0, 1); // Remove "if" and "(".
+            condition = condition.Remove(condition.Length - 1, 1); // Remove ")".
+
+            SObject conditionResult = ExecuteStatement(new ScriptStatement(condition));
+            statement.StatementResult = conditionResult;
+
+            bool conditionEval;
+            if (conditionResult is SBool)
+                conditionEval = ((SBool)conditionResult).Value;
+            else
+                conditionEval = conditionResult.ToBool(this).Value;
+
+            _index++;
+
+            if (_statements.Length > _index)
+            {
+                var executeStatement = _statements[_index];
+
+                if (conditionEval)
+                {
+                    return ExecuteStatement(executeStatement);
+                }
+                else
+                {
+                    return Undefined;
+                }
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
+        }
+
+        private SObject ExecuteElse(ScriptStatement statement)
+        {
+            // Attempt to grab If or ElseIf statement:
+
+            int searchIndex = _index - 2;
+            bool doEnter = true;
+            bool foundIf = false;
+
+            while (searchIndex >= 0 && !foundIf && doEnter)
+            {
+                var sStatement = _statements[searchIndex];
+                switch (sStatement.StatementType)
+                {
+                    case StatementType.If:
+                        foundIf = true;
+                        doEnter = !sStatement.StatementResult.ToBool(this).Value;
+                        break;
+                    case StatementType.ElseIf:
+                        if (sStatement.StatementResult.ToBool(this).Value)
+                        {
+                            doEnter = false;
+                            foundIf = true;
+                        }
+                        break;
+
+                    default:
+                        doEnter = false;
+                        break;
+                }
+
+                searchIndex -= 2;
+            }
+
+            if (!foundIf)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "keyword \'else\'" });
+
+            _index++;
+
+            if (_statements.Length > _index)
+            {
+                if (doEnter)
+                {
+                    var executeStatement = _statements[_index];
+                    return ExecuteStatement(executeStatement);
+                }
+                else
+                {
+                    return Undefined;
+                }
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
+        }
+
         #endregion
 
         #region Operators
@@ -370,12 +460,12 @@ namespace birdScript
                         captureRight = new ElementCapture() { Length = 0 };
                     }
 
-                    if (op != "." || IsDotOperatorDecimalSeperator(elementLeft, elementRight))
+                    if (op != "." || !IsDotOperatorDecimalSeperator(elementLeft, elementRight))
                     {
                         switch (op)
                         {
                             case ".":
-                                //TODO: call member invoke.
+                                result = InvokeMemberOrMethod(objectLeft, elementRight).ToScriptObject();
                                 break;
                             case "+":
                                 result = ObjectOperators.AddOperator(this, objectLeft, objectRight);
@@ -452,6 +542,9 @@ namespace birdScript
 
         #region Helpers
 
+        /// <summary>
+        /// Converts a string expression into a script object.
+        /// </summary>
         private SObject ToScriptObject(string exp)
         {
             exp = exp.Trim();
@@ -467,10 +560,10 @@ namespace birdScript
                     int depth = 0;
                     int index = exp.Length - 2;
                     int indexerStartIndex = 0;
-                    bool hasIndexer = false;
+                    bool foundIndexer = false;
                     StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(exp, index);
 
-                    while (index > 0 && !hasIndexer)
+                    while (index > 0 && !foundIndexer)
                     {
                         char t = exp[index];
                         escaper.CheckStartAt(index);
@@ -492,7 +585,7 @@ namespace birdScript
                                     if (index > 0)
                                     {
                                         indexerStartIndex = index;
-                                        hasIndexer = true;
+                                        foundIndexer = true;
                                     }
                                 }
                                 else
@@ -503,10 +596,9 @@ namespace birdScript
                         }
                     }
 
-                    if (hasIndexer)
+                    if (foundIndexer)
                     {
-                        string indexerCode = exp.Remove(0, indexerStartIndex + 1);
-                        indexerCode = indexerCode.Remove(indexerCode.Length - 1, 1);
+                        string indexerCode = exp.Substring(indexerStartIndex + 1, exp.Length - indexerStartIndex - 2);
 
                         string identifier = exp.Remove(indexerStartIndex);
 
@@ -969,6 +1061,211 @@ namespace birdScript
                 return new ElementCapture() { StartIndex = index + 2, Length = identifier.Length, Identifier = identifier, Depth = depth };
             else
                 return new ElementCapture() { StartIndex = index + 1, Length = identifier.Length, Identifier = identifier, Depth = depth };
+        }
+
+        /// <summary>
+        /// Parses a list of parameters into a list of script objects.
+        /// </summary>
+        internal SObject[] ParseParameters(string exp)
+        {
+            List<SObject> parameters = new List<SObject>();
+
+            int index = 0;
+            int depth = 0;
+            string parameter;
+            SObject parameterObject;
+            int parameterStartIndex = 0;
+            StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(exp, 0);
+
+            while (index < exp.Length)
+            {
+                char t = exp[index];
+                escaper.CheckStartAt(index);
+
+                if (!escaper.IsString)
+                {
+                    if (t == '(' || t == '[' || t == '{')
+                    {
+                        depth++;
+                    }
+                    else if (t == ')' || t == ']' || t == '}')
+                    {
+                        depth--;
+                    }
+                    else if (t == ',' && depth == 0)
+                    {
+                        parameter = exp.Substring(parameterStartIndex, index - parameterStartIndex);
+                        parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
+                        parameters.Add(parameterObject);
+
+                        parameterStartIndex = index + 1;
+                    }
+                }
+
+                index++;
+            }
+
+            parameter = exp.Substring(parameterStartIndex, index - parameterStartIndex);
+            parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
+            parameters.Add(parameterObject);
+
+            return parameters.ToArray();
+        }
+
+        /// <summary>
+        /// Invokes a member or method on an <see cref="SObject"/> and returns the result.
+        /// </summary>
+        private SObject InvokeMemberOrMethod(SObject owner, string memberOrMethod)
+        {
+            owner = SObject.Unbox(owner);
+            memberOrMethod = memberOrMethod.Trim();
+
+            bool isMethod = memberOrMethod.EndsWith(")");
+
+            if (isMethod)
+                return InvokeMethod(owner, memberOrMethod);
+            else
+                return InvokeMember(owner, memberOrMethod);
+        }
+
+        private SObject InvokeMember(SObject owner, string memberName)
+        {
+            // When we have an indexer at the end of the member name, we get the member variable, then apply the indexer:
+
+            if (memberName.Last() == ']')
+            {
+                string exp = memberName;
+
+                int depth = 0;
+                int index = exp.Length - 2;
+                int indexerStartIndex = 0;
+                bool foundIndexer = false;
+                StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(exp, index);
+
+                while (index > 0 && !foundIndexer)
+                {
+                    char t = exp[index];
+                    escaper.CheckStartAt(index);
+
+                    if (!escaper.IsString)
+                    {
+                        if (t == ')' || t == ']' || t == '}')
+                        {
+                            depth++;
+                        }
+                        else if (t == '(' || t == '{')
+                        {
+                            depth--;
+                        }
+                        else if (t == '[')
+                        {
+                            if (depth == 0)
+                            {
+                                if (index > 0)
+                                {
+                                    indexerStartIndex = index;
+                                    foundIndexer = true;
+                                }
+                            }
+                            else
+                            {
+                                depth--;
+                            }
+                        }
+                    }
+                }
+
+                if (foundIndexer)
+                {
+                    string indexerCode = exp.Substring(indexerStartIndex + 1, exp.Length - indexerStartIndex - 2);
+                    string identifier = exp.Remove(indexerStartIndex);
+
+                    var indexerObject = ExecuteStatement(new ScriptStatement(indexerCode));
+
+                    return InvokeMemberOrMethod(owner, identifier).GetMember(this, indexerObject, true);
+                }
+                else
+                {
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of string" });
+                }
+            }
+            else
+            {
+                return owner.GetMember(this, CreateString(memberName), false);
+            }
+        }
+
+        private SObject InvokeMethod(SObject owner, string methodName)
+        {
+            string exp = methodName;
+            int index = exp.Length - 1;
+            int argumentStartIndex = -1;
+
+            if (exp.EndsWith("()"))
+            {
+                argumentStartIndex = exp.Length - 2;
+                index = argumentStartIndex - 1;
+            }
+            else
+            {
+                int depth = 0;
+                bool foundArguments = false;
+                StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(exp, index);
+
+                while (index > 0 && !foundArguments)
+                {
+                    char t = exp[index];
+                    escaper.CheckStartAt(index);
+
+                    if (!escaper.IsString)
+                    {
+                        if (t == ')' || t == '}' || t == ']')
+                        {
+                            depth++;
+                        }
+                        else if (t == '(' || t == '{' || t == '[')
+                        {
+                            depth--;
+                        }
+
+                        if (depth == 0)
+                        {
+                            if (index > 0)
+                            {
+                                foundArguments = true;
+                                argumentStartIndex = index;
+                            }
+                        }
+
+                    }
+
+                    index--;
+                }
+            }
+
+            methodName = exp.Remove(argumentStartIndex);
+            string argumentCode = exp.Remove(0, argumentStartIndex + 1);
+            argumentCode = argumentCode.Remove(argumentCode.Length - 1, 1);
+            SObject[] parameters = ParseParameters(argumentCode);
+
+            // If it has an indexer, parse it again:
+            if (index > 0 && exp[index] == ']')
+            {
+                SObject member = InvokeMemberOrMethod(owner, methodName);
+
+                if (member is SVariable && ((SVariable)member).Data is SFunction)
+                {
+                    return owner.ExecuteMethod(this, ((SVariable)member).Identifier, owner, owner, parameters);
+                }
+                else
+                {
+                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                }
+            }
+            else
+            {
+                return owner.ExecuteMethod(this, methodName, owner, owner, parameters);
+            }
         }
 
         #endregion

@@ -83,7 +83,7 @@ namespace birdScript.Types
         /// <summary>
         /// If this instance has escaped characters or not. If not, the script representation will have an "@" in front of the " or '.
         /// </summary>
-        internal bool Escaped { get; }
+        internal bool Escaped { get; set; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="SString"/> class without setting a default value.
@@ -115,12 +115,12 @@ namespace birdScript.Types
         {
             Value = value;
 
-            var length = processor.CreateNumber(value.Length);
+            //var length = processor.CreateNumber(value.Length);
 
             //TODO: add length to prototype.
-            Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
+            //Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
         }
-
+        
         internal override string ToScriptObject()
         {
             if (Escaped)

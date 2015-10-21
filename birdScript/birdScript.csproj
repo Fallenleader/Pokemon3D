@@ -60,12 +60,15 @@
     <Compile Include="Types\GlobalContextObject.cs" />
     <Compile Include="Types\ObjectComparer.cs" />
     <Compile Include="Types\ObjectOperators.cs" />
+    <Compile Include="Types\Prototypes\BooleanPrototype.cs" />
+    <Compile Include="Types\Prototypes\ErrorPrototype.cs" />
     <Compile Include="Types\Prototypes\ObjectPrototype.cs" />
     <Compile Include="Types\Prototypes\Prototype.cs" />
     <Compile Include="Types\Prototypes\PrototypeMember.cs" />
     <Compile Include="Types\SAPIUsing.cs" />
     <Compile Include="Types\SArray.cs" />
     <Compile Include="Types\SBool.cs" />
+    <Compile Include="Types\SError.cs" />
     <Compile Include="Types\SNull.cs" />
     <Compile Include="Types\SProtoObject.cs" />
     <Compile Include="Types\SFunction.cs" />
@@ -74,6 +77,9 @@
     <Compile Include="Types\SString.cs" />
     <Compile Include="Types\SUndefined.cs" />
     <Compile Include="Types\SVariable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Types\Prototypes\StringPrototype.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

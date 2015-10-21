@@ -20,6 +20,7 @@ namespace birdScript.Types
         internal const string LITERAL_TYPE_BOOL = "bool";
         internal const string LITERAL_TYPE_NUMBER = "number";
         internal const string LITERAL_TYPE_FUNCTION = "function";
+        internal const string LITERAL_TYPE_ERROR = "error";
 
         internal const string LITERAL_NAN = "NaN";
         internal const string LITERAL_INFINITY = "Infinity";

@@ -10,10 +10,13 @@ namespace birdScript
     {
         static void Main(string[] args)
         {
-            string source = "if(someshit) cw; else cw";
+            string source = System.IO.File.ReadAllText(@"C:\Users\Nils\Desktop\script.js");
 
             var processor = new ScriptProcessor();
-            var statements = StatementProcessor.GetStatements(processor, source);
+            var test = processor.Run(source);
+
+            Console.WriteLine(test.ToScriptSource());
+            Console.ReadKey();
         }
     }
 }

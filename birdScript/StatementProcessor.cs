@@ -87,7 +87,7 @@ namespace birdScript
                                 string s = statement.ToString().Trim();
                                 if (isControlStatement)
                                 {
-                                    s = s.Remove(s.Length - 1, 1);
+                                    s = s.Remove(s.Length - 1, 1).Trim();
                                     statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
                                     
                                     statement.Clear();
@@ -107,7 +107,7 @@ namespace birdScript
                             depth--;
                             if (depth == 0 && isCompoundStatement)
                             {
-                                string s = statement.ToString();
+                                string s = statement.ToString().Trim();
                                 statements.Add(new ScriptStatement(s, StatementType.Executable) { IsCompoundStatement = true });
                                 statement.Clear();
 
