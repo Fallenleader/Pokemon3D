@@ -49,6 +49,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ScriptContext.cs" />
     <Compile Include="ScriptException.cs" />
+    <Compile Include="ScriptProcessorExecution.cs" />
     <Compile Include="ScriptProcessorRegexCollection.cs" />
     <Compile Include="ScriptStatement.cs" />
     <Compile Include="StatementProcessor.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Types\ObjectOperators.cs" />
     <Compile Include="Types\Prototypes\BooleanPrototype.cs" />
     <Compile Include="Types\Prototypes\ErrorPrototype.cs" />
+    <Compile Include="Types\Prototypes\NumberPrototype.cs" />
     <Compile Include="Types\Prototypes\ObjectPrototype.cs" />
     <Compile Include="Types\Prototypes\Prototype.cs" />
     <Compile Include="Types\Prototypes\PrototypeMember.cs" />

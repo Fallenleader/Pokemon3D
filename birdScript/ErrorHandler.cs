@@ -79,6 +79,11 @@ namespace birdScript
             _processor = processor;
         }
 
+        internal void Clean()
+        {
+            _errorObject = null;
+        }
+
         /// <summary>
         /// Throws an error with the given error object.
         /// </summary>

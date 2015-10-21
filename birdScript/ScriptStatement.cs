@@ -30,6 +30,9 @@ namespace birdScript
         Finally
     }
 
+    /// <summary>
+    /// A statement for the <see cref="ScriptProcessor"/> to execute.
+    /// </summary>
     internal class ScriptStatement
     {
         internal string Code { get; }

@@ -21,7 +21,7 @@ namespace birdScript
             public int Depth;
         }
 
-        private const string IDENTIFIER_SEPERATORS = "-+*/=!%&|<>,";
+        private const string IDENTIFIER_SEPARATORS = "-+*/=!%&|<>,";
 
         /// <summary>
         /// The <see cref="birdScript.ErrorHandler"/> associated with this <see cref="ScriptProcessor"/>.
@@ -65,6 +65,7 @@ namespace birdScript
             _source = code;
 
             SObject returnObject = Undefined;
+            ErrorHandler.Clean();
 
             if (_hasParent)
             {
@@ -173,240 +174,6 @@ namespace birdScript
             }
 
             return SObject.Unbox(returnObject);
-        }
-
-        internal SObject ExecuteStatement(ScriptStatement statement)
-        {
-            switch (statement.StatementType)
-            {
-                case StatementType.Executable:
-                    return ExecuteExecutable(statement);
-                case StatementType.If:
-                    return ExecuteIf(statement);
-                case StatementType.Else:
-                    return ExecuteElse(statement);
-                case StatementType.ElseIf:
-                    break;
-                case StatementType.Using:
-                    break;
-                case StatementType.Var:
-                    break;
-                case StatementType.While:
-                    break;
-                case StatementType.Return:
-                    break;
-                case StatementType.Assignment:
-                    break;
-                case StatementType.For:
-                    break;
-                case StatementType.Function:
-                    break;
-                case StatementType.Class:
-                    break;
-                case StatementType.Link:
-                    break;
-                case StatementType.Continue:
-                    break;
-                case StatementType.Break:
-                    break;
-                case StatementType.Throw:
-                    break;
-                case StatementType.Try:
-                    break;
-                case StatementType.Catch:
-                    break;
-                case StatementType.Finally:
-                    break;
-                default:
-                    break;
-            }
-
-            return null;
-        }
-
-        private SObject ExecuteExecutable(ScriptStatement statement)
-        {
-            if (statement.IsCompoundStatement)
-            {
-                ScriptProcessor processor = new ScriptProcessor(Context);
-
-                // Remove { and }:
-                string code = statement.Code.Remove(0, 1);
-                code = code.Remove(code.Length - 1, 1);
-
-                var returnObject = processor.Run(code);
-
-                _breakIssued = processor._breakIssued;
-                _continueIssued = processor._continueIssued;
-                _returnIssued = processor._returnIssued;
-
-                return returnObject;
-            }
-            else
-            {
-                string exp = ResolveParentheses(statement.Code).Trim();
-
-                #region QuickConvert
-
-                // have quick conversions for small statements here
-                // parameter statements are much faster that way:
-                if (exp == SObject.LITERAL_BOOL_TRUE)
-                {
-                    return CreateBool(true);
-                }
-                else if (exp == SObject.LITERAL_BOOL_FALSE)
-                {
-                    return CreateBool(false);
-                }
-                else if (exp == SObject.LITERAL_UNDEFINED)
-                {
-                    return Undefined;
-                }
-                else if (exp == SObject.LITERAL_NULL)
-                {
-                    return Null;
-                }
-                else if (exp.StartsWith("\"") && exp.EndsWith("\"") && !exp.Remove(exp.Length - 1, 1).Remove(0, 1).Contains("\""))
-                {
-                    return CreateString(exp.Remove(exp.Length - 1, 1).Remove(0, 1));
-                }
-
-                #endregion
-
-                if (exp.Contains("."))
-                    exp = EvaluateOperatorLeftToRight(exp, ".");
-                if (exp.Contains("++"))
-                    exp = EvaluateOperatorLeftToRight(exp, "++");
-                if (exp.Contains("--"))
-                    exp = EvaluateOperatorLeftToRight(exp, "--");
-                if (exp.Contains("**"))
-                    exp = EvaluateOperatorLeftToRight(exp, "**");
-                if (exp.Contains("*"))
-                    exp = EvaluateOperatorLeftToRight(exp, "*");
-                if (exp.Contains("/"))
-                    exp = EvaluateOperatorLeftToRight(exp, "/");
-                if (exp.Contains("%"))
-                    exp = EvaluateOperatorLeftToRight(exp, "%");
-                if (exp.Contains("+"))
-                    exp = EvaluateOperatorLeftToRight(exp, "+");
-                if (exp.Contains("-"))
-                    exp = EvaluateOperatorLeftToRight(exp, "-");
-                if (exp.Contains("<="))
-                    exp = EvaluateOperatorLeftToRight(exp, "<=");
-                if (exp.Contains(">="))
-                    exp = EvaluateOperatorLeftToRight(exp, ">=");
-                if (exp.Contains("<"))
-                    exp = EvaluateOperatorLeftToRight(exp, "<");
-                if (exp.Contains(">"))
-                    exp = EvaluateOperatorLeftToRight(exp, ">");
-                if (exp.Contains("==="))
-                    exp = EvaluateOperatorLeftToRight(exp, "===");
-                if (exp.Contains("!=="))
-                    exp = EvaluateOperatorLeftToRight(exp, "!==");
-                if (exp.Contains("=="))
-                    exp = EvaluateOperatorLeftToRight(exp, "==");
-                if (exp.Contains("!="))
-                    exp = EvaluateOperatorLeftToRight(exp, "!=");
-                if (exp.Contains("&&"))
-                    exp = EvaluateOperatorLeftToRight(exp, "&&");
-                if (exp.Contains("||"))
-                    exp = EvaluateOperatorLeftToRight(exp, "||");
-
-                return ToScriptObject(exp);
-            }
-        }
-
-        private SObject ExecuteIf(ScriptStatement statement)
-        {
-            string exp = statement.Code;
-
-            string condition = exp.Remove(0, "if".Length).Trim().Remove(0, 1); // Remove "if" and "(".
-            condition = condition.Remove(condition.Length - 1, 1); // Remove ")".
-
-            SObject conditionResult = ExecuteStatement(new ScriptStatement(condition));
-            statement.StatementResult = conditionResult;
-
-            bool conditionEval;
-            if (conditionResult is SBool)
-                conditionEval = ((SBool)conditionResult).Value;
-            else
-                conditionEval = conditionResult.ToBool(this).Value;
-
-            _index++;
-
-            if (_statements.Length > _index)
-            {
-                var executeStatement = _statements[_index];
-
-                if (conditionEval)
-                {
-                    return ExecuteStatement(executeStatement);
-                }
-                else
-                {
-                    return Undefined;
-                }
-            }
-            else
-            {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
-            }
-        }
-
-        private SObject ExecuteElse(ScriptStatement statement)
-        {
-            // Attempt to grab If or ElseIf statement:
-
-            int searchIndex = _index - 2;
-            bool doEnter = true;
-            bool foundIf = false;
-
-            while (searchIndex >= 0 && !foundIf && doEnter)
-            {
-                var sStatement = _statements[searchIndex];
-                switch (sStatement.StatementType)
-                {
-                    case StatementType.If:
-                        foundIf = true;
-                        doEnter = !sStatement.StatementResult.ToBool(this).Value;
-                        break;
-                    case StatementType.ElseIf:
-                        if (sStatement.StatementResult.ToBool(this).Value)
-                        {
-                            doEnter = false;
-                            foundIf = true;
-                        }
-                        break;
-
-                    default:
-                        doEnter = false;
-                        break;
-                }
-
-                searchIndex -= 2;
-            }
-
-            if (!foundIf)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "keyword \'else\'" });
-
-            _index++;
-
-            if (_statements.Length > _index)
-            {
-                if (doEnter)
-                {
-                    var executeStatement = _statements[_index];
-                    return ExecuteStatement(executeStatement);
-                }
-                else
-                {
-                    return Undefined;
-                }
-            }
-            else
-            {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
-            }
         }
 
         #endregion
@@ -965,7 +732,7 @@ namespace birdScript
                                 foundSeperatorChar = true;
                             }
                         }
-                        else if (IDENTIFIER_SEPERATORS.Contains(t))
+                        else if (IDENTIFIER_SEPARATORS.Contains(t))
                         {
                             foundSeperatorChar = true;
                         }
@@ -1034,7 +801,7 @@ namespace birdScript
                                 foundSeperatorChar = true;
                             }
                         }
-                        else if (IDENTIFIER_SEPERATORS.Contains(t))
+                        else if (IDENTIFIER_SEPARATORS.Contains(t))
                         {
                             foundSeperatorChar = true;
                         }

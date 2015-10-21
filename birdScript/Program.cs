@@ -10,13 +10,33 @@ namespace birdScript
     {
         static void Main(string[] args)
         {
-            string source = System.IO.File.ReadAllText(@"C:\Users\Nils\Desktop\script.js");
-
+            bool exit = true;
             var processor = new ScriptProcessor();
-            var test = processor.Run(source);
 
-            Console.WriteLine(test.ToScriptSource());
-            Console.ReadKey();
+            while (!exit)
+            {
+                Console.Write("< ");
+                string input = Console.ReadLine();
+                
+                var result = processor.Run(input);
+
+                if (result.TypeOf() == Types.SObject.LITERAL_TYPE_ERROR)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Types.SError error = (Types.SError)result;
+
+                    Console.WriteLine("x " + ((Types.SString)error.Members["type"].Data).Value + ": " +
+                                      ((Types.SString)error.Members["message"].Data).Value);
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("> " + result.ToScriptSource());
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
         }
     }
 }

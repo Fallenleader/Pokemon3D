@@ -90,6 +90,7 @@ namespace birdScript
 
                 AddPrototype(new ObjectPrototype());
                 AddPrototype(new BooleanPrototype());
+                AddPrototype(new NumberPrototype());
                 AddPrototype(new StringPrototype());
                 AddPrototype(new ErrorPrototype(_processor));
             }
@@ -184,30 +185,31 @@ namespace birdScript
         /// <summary>
         /// Adds a variable to the context.
         /// </summary>
-        internal void AddVariable(string identifier, SObject value)
+        internal void AddVariable(string identifier, SObject data)
         {
-            if (_variables.ContainsKey(identifier))
-            {
-                _variables[identifier] = new SVariable(identifier, value);
-            }
-            else
-            {
-                _variables.Add(identifier, new SVariable(identifier, value));
-            }
+            AddVariable(new SVariable(identifier, data));
         }
 
         /// <summary>
         /// Adds a variable to the context and sets the readonly property.
         /// </summary>
-        internal void AddVariable(string identifier, SObject value, bool isReadOnly)
+        internal void AddVariable(string identifier, SObject data, bool isReadOnly)
         {
-            if (_variables.ContainsKey(identifier))
+            AddVariable(new SVariable(identifier, data, isReadOnly));
+        }
+
+        /// <summary>
+        /// Adds a variable to the context.
+        /// </summary>
+        internal void AddVariable(SVariable variable)
+        {
+            if (_variables.ContainsKey(variable.Identifier))
             {
-                _variables[identifier] = new SVariable(identifier, value, isReadOnly);
+                _variables[variable.Identifier] = variable;
             }
             else
             {
-                _variables.Add(identifier, new SVariable(identifier, value, isReadOnly));
+                _variables.Add(variable.Identifier, variable);
             }
         }
 
@@ -244,6 +246,12 @@ namespace birdScript
                     return null;
                 }
             }
+        }
+
+        internal void AddAPIUsing(SAPIUsing apiUsing)
+        {
+            if (!_apiUsings.ContainsKey(apiUsing.APIClass))
+                _apiUsings.Add(apiUsing.APIClass, apiUsing);
         }
 
         internal bool IsPrototype(string identifier)
