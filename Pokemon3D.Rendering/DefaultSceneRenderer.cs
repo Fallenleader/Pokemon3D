@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering
 {
@@ -12,11 +13,11 @@ namespace Pokemon3D.Rendering
         private readonly List<SceneNode> _solidObjects = new List<SceneNode>();
         private readonly List<SceneNode> _transparentObjects = new List<SceneNode>();
 
-        public DefaultSceneRenderer(Game game, SceneEffect effect)
+        public DefaultSceneRenderer(GameContext context, SceneEffect effect)
         {
-            _device = game.GraphicsDevice;
+            _device = context.GraphicsDevice;
             _sceneEffect = effect;
-            _shadowMap = new RenderTarget2D(game.GraphicsDevice, 1024, 1024, false, SurfaceFormat.Single, DepthFormat.Depth24);
+            _shadowMap = new RenderTarget2D(context.GraphicsDevice, 1024, 1024, false, SurfaceFormat.Single, DepthFormat.Depth24);
         }
         public void Draw(IList<SceneNode> allNodes, IList<Camera> cameras, Vector3 lightDirection, bool enableShadows)
         {

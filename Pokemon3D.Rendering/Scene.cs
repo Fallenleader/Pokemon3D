@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering
 {
@@ -20,10 +21,10 @@ namespace Pokemon3D.Rendering
         public bool EnableShadows { get; set; }
         public Vector3 LightDirection { get; set; }
 
-        public Scene(Game game, SceneEffect effect)
+        public Scene(GameContext context, SceneEffect effect)
         {
-            _device = game.GraphicsDevice;
-            _sceneRenderer = new DefaultSceneRenderer(game, effect);
+            _device = context.GraphicsDevice;
+            _sceneRenderer = new DefaultSceneRenderer(context, effect);
             _allNodes = new List<SceneNode>();
             _allCameras = new List<Camera>();
             LightDirection = new Vector3(1, -1, -1);

@@ -8,7 +8,6 @@ namespace Pokemon3D.Rendering.GUI
     public class NinePatchSprite : Sprite
     {
         private readonly List<Tuple<Rectangle, Rectangle>> _patchFields = new List<Tuple<Rectangle, Rectangle>>();
-        private readonly Texture2D _texture;
         private readonly Rectangle _sourceTextureRectangle;
         private readonly int _leftBorder;
         private readonly int _rightBorder;
@@ -44,7 +43,7 @@ namespace Pokemon3D.Rendering.GUI
         public NinePatchSprite(Texture2D texture, Rectangle? sourceRectangle, int leftBorder, int rightBorder, int topBorder, int bottomBorder):
             base(texture)
         {
-            _sourceTextureRectangle = sourceRectangle ?? new Rectangle(0, 0, _texture.Width, _texture.Height);
+            _sourceTextureRectangle = sourceRectangle ?? new Rectangle(0, 0, texture.Width, texture.Height);
             _leftBorder = leftBorder;
             _rightBorder = rightBorder;
             _topBorder = topBorder;
@@ -141,7 +140,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            _patchFields.ForEach(n => spriteBatch.Draw(_texture, n.Item2, n.Item1, Color));
+            _patchFields.ForEach(n => spriteBatch.Draw(Texture, n.Item2, n.Item1, Color));
         }
     }
 }

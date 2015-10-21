@@ -1,17 +1,17 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pokemon3D.Common;
-using Pokemon3D.Common.Diagnostics;
 using Pokémon3D.FileSystem;
 using Pokémon3D.UI.Screens;
+using Pokemon3D.Common;
+using Pokemon3D.Common.Diagnostics;
 
 namespace Pokémon3D.GameCore
 {
     /// <summary>
     /// Wraps around the MonoGame <see cref="Game"/> class.
     /// </summary>
-    class GameController : Game
+    class GameController : Game, GameContext
     {
         /// <summary>
         /// The singleton instance of the main GameController class.
@@ -51,6 +51,30 @@ namespace Pokémon3D.GameCore
         /// Object to manage loaded GameModes.
         /// </summary>
         public GameModes.GameModeManager GameModeManager { get; private set; }
+
+        public KeyboardEx Keyboard
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Rectangle ScreenBounds
+        {
+            get
+            {
+                return Window.ClientBounds;
+            }
+        }
+
+        public ShapeRenderer ShapeRenderer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public GameController()
         {
