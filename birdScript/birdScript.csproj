@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\CallbackType.cs" />
     <Compile Include="Adapters\Delegates.cs" />
     <Compile Include="BuiltInMethodManager.cs" />
     <Compile Include="ErrorHandler.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="ScriptProcessorRegexCollection.cs" />
     <Compile Include="ScriptStatement.cs" />
     <Compile Include="StatementProcessor.cs" />
+    <Compile Include="StatementType.cs" />
     <Compile Include="StringEscapeHelper.cs" />
     <Compile Include="Types\Constants.cs" />
     <Compile Include="ObjectBuffer.cs" />
