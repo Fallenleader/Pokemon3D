@@ -110,33 +110,32 @@ namespace birdScript.Types
 
         internal override void SetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value)
         {
-            if (isIndexer && accessor.TypeOf() == LITERAL_TYPE_NUMBER)
+            if (isIndexer && accessor.TypeOf() == LITERAL_TYPE_NUMBER && IndexerSetFunction != null)
             {
-                if (IndexerSetFunction != null)
-                {
-                    IndexerSetFunction.Call(processor, this, this, new SObject[] { accessor, value });
-                }
+                IndexerSetFunction.Call(processor, this, this, new SObject[] { accessor, value });
             }
-
-            string memberName;
-            if (accessor is SString)
-                memberName = ((SString)accessor).Value;
             else
-                memberName = accessor.ToString(processor).Value;
+            {
+                string memberName;
+                if (accessor is SString)
+                    memberName = ((SString)accessor).Value;
+                else
+                    memberName = accessor.ToString(processor).Value;
 
-            if (Members.ContainsKey(memberName))
-            {
-                Members[memberName].Data = value;
-            }
-            else if (Prototype != null && Prototype.HasMember(processor, memberName) && !Prototype.IsStaticMember(memberName))
-            {
-                // This is the case when new members got added to the prototype, and we haven't copied them over to the instance yet.
-                // So we do that now, and then set the value of that member:
-                AddMember(memberName, value);
-            }
-            else if (SuperClass != null)
-            {
-                SuperClass.SetMember(processor, accessor, isIndexer, value);
+                if (Members.ContainsKey(memberName))
+                {
+                    Members[memberName].Data = value;
+                }
+                else if (Prototype != null && Prototype.HasMember(processor, memberName) && !Prototype.IsStaticMember(memberName))
+                {
+                    // This is the case when new members got added to the prototype, and we haven't copied them over to the instance yet.
+                    // So we do that now, and then set the value of that member:
+                    AddMember(memberName, value);
+                }
+                else if (SuperClass != null)
+                {
+                    SuperClass.SetMember(processor, accessor, isIndexer, value);
+                }
             }
         }
 
@@ -214,7 +213,7 @@ namespace birdScript.Types
         {
             return processor.CreateString(LITERAL_OBJECT_STR);
         }
-        
+
         /// <summary>
         /// Parses an anonymous object.
         /// </summary>
@@ -242,14 +241,14 @@ namespace birdScript.Types
                 int nextSeperatorIndex = source.IndexOf(",", index);
                 if (nextSeperatorIndex == -1)
                 {
-                    nextSeperatorIndex = source.Length - 1;
+                    nextSeperatorIndex = source.Length;
                 }
                 else
                 {
                     //Let's find the correct ",":
 
                     nextSeperatorIndex = index;
-                       
+
                     int depth = 0;
                     StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(source, nextSeperatorIndex, true);
                     bool foundSeperator = false;

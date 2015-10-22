@@ -199,12 +199,12 @@ namespace birdScript.Types.Prototypes
 
         private IEnumerable<PrototypeMember> GetInstanceMembers()
         {
-            return _prototypeMembers.Where(x => !x.Value.IsStatic).Select(x => x.Value);
+            return _prototypeMembers.Where(x => !x.Value.IsStatic && !x.Value.IsIndexerGet && !x.Value.IsIndexerSet).Select(x => x.Value);
         }
 
         private IEnumerable<PrototypeMember> GetReadOnlyInstanceMembers()
         {
-            return _prototypeMembers.Where(x => !x.Value.IsStatic && x.Value.IsReadOnly).Select(x => x.Value);
+            return _prototypeMembers.Where(x => !x.Value.IsStatic && x.Value.IsReadOnly && !x.Value.IsIndexerGet && !x.Value.IsIndexerSet).Select(x => x.Value);
         }
 
         private PrototypeMember GetIndexerGetFunction()

@@ -31,6 +31,7 @@ namespace birdScript
 
         public const string MESSAGE_REFERENCE_NOT_DEFINED = "{0} is not defined";
         public const string MESSAGE_REFERENCE_NO_PROTOTYPE = "{0} is not defined or not a prototype";
+        public const string MESSAGE_REFERENCE_INVALID_ASSIGNMENT_LEFT = "invalid assignment left-hand side";
 
         public const string MESSAGE_SYNTAX_INVALID_INCREMENT = "invalid increment operand";
         public const string MESSAGE_SYNTAX_INVALID_DECREMENT = "invalid decrement operand";

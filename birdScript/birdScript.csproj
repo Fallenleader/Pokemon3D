@@ -61,6 +61,7 @@
     <Compile Include="Types\GlobalContextObject.cs" />
     <Compile Include="Types\ObjectComparer.cs" />
     <Compile Include="Types\ObjectOperators.cs" />
+    <Compile Include="Types\Prototypes\ArrayPrototype.cs" />
     <Compile Include="Types\Prototypes\BooleanPrototype.cs" />
     <Compile Include="Types\Prototypes\ErrorPrototype.cs" />
     <Compile Include="Types\Prototypes\NumberPrototype.cs" />

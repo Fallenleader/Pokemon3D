@@ -361,6 +361,8 @@ namespace birdScript
                                 }
                             }
                         }
+
+                        index--;
                     }
 
                     if (foundIndexer)

@@ -92,6 +92,7 @@ namespace birdScript
                 AddPrototype(new BooleanPrototype());
                 AddPrototype(new NumberPrototype());
                 AddPrototype(new StringPrototype());
+                AddPrototype(new ArrayPrototype());
                 AddPrototype(new ErrorPrototype(_processor));
             }
         }

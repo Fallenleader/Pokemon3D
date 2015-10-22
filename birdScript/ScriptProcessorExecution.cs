@@ -31,7 +31,7 @@ namespace birdScript
                 case StatementType.Return:
                     return ExecuteReturn(statement);
                 case StatementType.Assignment:
-                    break;
+                    return ExecuteAssignment(statement);
                 case StatementType.For:
                     break;
                 case StatementType.Function:
@@ -57,6 +57,207 @@ namespace birdScript
             }
 
             return null;
+        }
+
+        private SObject ExecuteAssignment(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            string leftSide = "";
+            string rightSide = "";
+            string assignmentOperator = "";
+
+            // Get left and right side of the assignment:
+            {
+                int depth = 0;
+                int index = 0;
+                StringEscapeHelper escaper = new LeftToRightStringEscapeHelper(exp, 0);
+
+                while (index < exp.Length && assignmentOperator.Length == 0)
+                {
+                    char t = exp[index];
+                    escaper.CheckStartAt(index);
+
+                    if (!escaper.IsString)
+                    {
+                        if (t == '(' || t == '[' || t == '{')
+                        {
+                            depth++;
+                        }
+                        else if (t == ')' || t == ']' || t == '}')
+                        {
+                            depth--;
+                        }
+                        else if (t == '=' && depth == 0)
+                        {
+                            char previous = ' ';
+                            if (index > 0)
+                                previous = exp[index - 1];
+
+                            if (previous == '+' || previous == '-' || previous == '/' || previous == '*')
+                            {
+                                assignmentOperator = previous.ToString();
+                                leftSide = exp.Substring(0, index - 1).TrimEnd();
+                            }
+                            else
+                            {
+                                assignmentOperator = "=";
+                                leftSide = exp.Substring(0, index).TrimEnd();
+                            }
+
+                            rightSide = exp.Substring(index + 1).TrimStart();
+                        }
+                    }
+
+                    index++;
+                }
+            }
+
+            // This means it's a function call, which cannot be assigned to:
+            if (leftSide.EndsWith(")") || leftSide.Length == 0)
+                return ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_INVALID_ASSIGNMENT_LEFT);
+
+            SObject memberHost = null;
+            SObject accessor = null;
+            SObject value = null;
+            bool isIndexer = false;
+            string host = "";
+            string member = "";
+
+            if (leftSide.EndsWith("]"))
+            {
+                int indexerStartIndex = 0;
+                int index = leftSide.Length - 1;
+                int depth = 0;
+
+                StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(leftSide, index);
+                while (index > 0 && !isIndexer)
+                {
+                    char t = leftSide[index];
+                    escaper.CheckStartAt(index);
+
+                    if (!escaper.IsString)
+                    {
+                        if (t == '(' || t == '{')
+                        {
+                            depth--;
+                        }
+                        else if (t == ')' || t == ']' || t == '}')
+                        {
+                            depth++;
+                        }
+                        else if (t == '[')
+                        {
+                            depth--;
+                            if (depth == 0 && index > 0)
+                            {
+                                isIndexer = true;
+                                indexerStartIndex = index;
+                            }
+                        }
+                    }
+
+                    index--;
+                }
+
+                if (isIndexer)
+                {
+                    member = leftSide.Substring(indexerStartIndex + 1);
+                    member = member.Remove(member.Length - 1, 1);
+                    host = leftSide.Remove(indexerStartIndex);
+                }
+            }
+            else
+            {
+                bool foundMember = false;
+
+                if (leftSide.Contains("."))
+                {
+                    int index = leftSide.Length - 1;
+                    int depth = 0;
+                    StringEscapeHelper escaper = new RightToLeftStringEscapeHelper(leftSide, index);
+
+                    while (index > 0 && !foundMember)
+                    {
+                        char t = leftSide[index];
+                        escaper.CheckStartAt(index);
+
+                        if (!escaper.IsString)
+                        {
+                            if (t == '(' || t == '[' || t == '{')
+                            {
+                                depth--;
+                            }
+                            else if (t == ')' || t == ']' || t == '}')
+                            {
+                                depth++;
+                            }
+                            else if (t == '.' && depth == 0)
+                            {
+                                foundMember = true;
+                                host = leftSide.Substring(0, index);
+                                member = leftSide.Substring(0, index + 1);
+                            }
+                        }
+
+                        index--;
+                    }
+                }
+                
+                if (!foundMember)
+                {
+                    host = SObject.LITERAL_THIS;
+                    member = leftSide;
+                }
+            }
+
+            // When it's an indexer, try to parse the accessor as number:
+            if (isIndexer)
+            {
+                double dblResult = 0;
+                if (SNumber.TryParse(member, out dblResult))
+                    accessor = CreateNumber(dblResult);
+                else
+                    accessor = CreateString(member);
+            }
+            else
+            {
+                accessor = CreateString(member);
+            }
+
+            memberHost = ExecuteStatement(new ScriptStatement(host));
+            value = SObject.Unbox(ExecuteStatement(new ScriptStatement(rightSide)));
+
+            if (assignmentOperator == "=")
+            {
+                memberHost.SetMember(this, accessor, isIndexer, value);
+            }
+            else
+            {
+                var memberContent = memberHost.GetMember(this, accessor, isIndexer);
+
+                string result = "";
+
+                switch (assignmentOperator)
+                {
+                    case "+":
+                        result = ObjectOperators.AddOperator(this, memberContent, value);
+                        break;
+                    case "-":
+                        result = ObjectOperators.SubtractOperator(this, memberContent, value);
+                        break;
+                    case "*":
+                        result = ObjectOperators.MultiplyOperator(this, memberContent, value);
+                        break;
+                    case "/":
+                        result = ObjectOperators.DivideOperator(this, memberContent, value);
+                        break;
+                }
+
+                memberHost.SetMember(this, accessor, isIndexer, ToScriptObject(result));
+            }
+            
+            return value;
         }
 
         private SObject ExecuteExecutable(ScriptStatement statement)

@@ -10,7 +10,7 @@ namespace birdScript
     {
         static void Main(string[] args)
         {
-            bool exit = true;
+            bool exit = false;
             var processor = new ScriptProcessor();
 
             while (!exit)
