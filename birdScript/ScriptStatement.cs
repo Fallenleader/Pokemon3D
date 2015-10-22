@@ -7,29 +7,6 @@ using birdScript.Types;
 
 namespace birdScript
 {
-    internal enum StatementType
-    {
-        Executable,
-        If,
-        Else,
-        ElseIf,
-        Using,
-        Var,
-        While,
-        Return,
-        Assignment,
-        For,
-        Function,
-        Class,
-        Link,
-        Continue,
-        Break,
-        Throw,
-        Try,
-        Catch,
-        Finally
-    }
-
     /// <summary>
     /// A statement for the <see cref="ScriptProcessor"/> to execute.
     /// </summary>

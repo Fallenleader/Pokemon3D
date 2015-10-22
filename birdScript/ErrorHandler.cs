@@ -8,17 +8,6 @@ using birdScript.Types;
 namespace birdScript
 {
     /// <summary>
-    /// Different error types for hard coded error messages.
-    /// </summary>
-    internal enum ErrorType
-    {
-        SyntaxError,
-        TypeError,
-        ReferenceError,
-        APIError
-    }
-
-    /// <summary>
     /// Handles <see cref="ScriptProcessor"/> errors.
     /// </summary>
     internal class ErrorHandler
