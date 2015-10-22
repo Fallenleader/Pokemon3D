@@ -32,6 +32,9 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_UNTERMINATED_COMMENT = "unterminated comment";
         public const string MESSAGE_SYNTAX_MISSING_END_OF_COMPOUND_STATEMENT = "missing } in compound statement";
         public const string MESSAGE_SYNTAX_INVALID_TOKEN = "invalid token \"{0}\"";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_INITIALIZER = "missing ; after for-loop initializer";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_CONDITION = "missing ; after for-loop condition";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_CONTROL = "missing ) after for-loop control";
 
         public const string MESSAGE_SYNTAX_CLASS_EXTENDS_MISSING = "expected identifier after \"extends\" keyword";
         public const string MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING = "expected class identifier";

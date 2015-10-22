@@ -33,7 +33,7 @@ namespace birdScript
                 case StatementType.Assignment:
                     return ExecuteAssignment(statement);
                 case StatementType.For:
-                    break;
+                    return ExecuteFor(statement);
                 case StatementType.Function:
                     break;
                 case StatementType.Class:
@@ -57,6 +57,78 @@ namespace birdScript
             }
 
             return null;
+        }
+
+        private SObject ExecuteFor(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            string forCode = exp.Remove(0, exp.IndexOf("for") + "for".Length).Trim().Remove(0, 1); // Remove "for" and "(".
+            forCode = forCode.Remove(forCode.Length - 1, 1); // Remove ")".
+
+            ScriptStatement[] forStatements = StatementProcessor.GetStatements(this, forCode);
+
+            if (forStatements.Length == 0)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
+            else if (forStatements.Length == 1)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FOR_INITIALIZER);
+            else if (forStatements.Length == 2)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FOR_CONDITION);
+            else if (forStatements.Length > 3)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FOR_CONTROL);
+
+            var processor = new ScriptProcessor(Context);
+
+            ScriptStatement forInitializer = forStatements[0];
+            ScriptStatement forCondition = forStatements[1];
+            ScriptStatement forControl = forStatements[2];
+
+            if (forInitializer.Code.Length > 0)
+                processor.ExecuteStatement(forInitializer);
+
+            _index++;
+
+            if (_statements.Length > _index)
+            {
+                bool stayInFor = true;
+                var executeStatement = _statements[_index];
+                var returnObject = Undefined;
+
+                while (stayInFor)
+                {
+                    if (forCondition.Code.Length > 0)
+                    {
+                        SObject conditionResult = processor.ExecuteStatement(forCondition);
+
+                        if (conditionResult is SBool)
+                            stayInFor = ((SBool)conditionResult).Value;
+                        else
+                            stayInFor = conditionResult.ToBool(this).Value;
+                    }
+
+                    if (stayInFor)
+                    {
+                        returnObject = processor.ExecuteStatement(executeStatement);
+
+                        if (processor._returnIssued || processor._breakIssued)
+                        {
+                            _breakIssued = false;
+                            _returnIssued = processor._returnIssued;
+                            stayInFor = false;
+                        }
+                        else if (forControl.Code.Length > 0)
+                        {
+                            processor.ExecuteStatement(forControl);
+                        }
+                    }
+                }
+
+                return returnObject;
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
         }
 
         private SObject ExecuteAssignment(ScriptStatement statement)
@@ -203,7 +275,7 @@ namespace birdScript
                         index--;
                     }
                 }
-                
+
                 if (!foundMember)
                 {
                     host = SObject.LITERAL_THIS;
@@ -256,7 +328,7 @@ namespace birdScript
 
                 memberHost.SetMember(this, accessor, isIndexer, ToScriptObject(result));
             }
-            
+
             return value;
         }
 
@@ -357,7 +429,10 @@ namespace birdScript
             string exp = statement.Code;
 
             string condition = exp.Remove(0, exp.IndexOf("if") + "if".Length).Trim().Remove(0, 1); // Remove "if" and "(".
-            condition = condition.Remove(condition.Length - 1, 1); // Remove ")".
+            condition = condition.Remove(condition.Length - 1, 1).Trim(); // Remove ")".
+
+            if (condition.Length == 0)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
 
             SObject conditionResult = ExecuteStatement(new ScriptStatement(condition));
             statement.StatementResult = conditionResult;
@@ -500,14 +575,16 @@ namespace birdScript
             string exp = statement.Code;
 
             string condition = exp.Remove(0, exp.IndexOf("while") + "while".Length).Trim().Remove(0, 1); // Remove "while" and "(".
-            condition = condition.Remove(condition.Length - 1, 1); // Remove ")".
+            condition = condition.Remove(condition.Length - 1, 1).Trim(); // Remove ")".
 
-            bool stayInWhile = true;
+            if (condition.Length == 0)
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
 
             _index++;
 
             if (_statements.Length > _index)
             {
+                bool stayInWhile = true;
                 var executeStatement = _statements[_index];
                 var returnObject = Undefined;
 
