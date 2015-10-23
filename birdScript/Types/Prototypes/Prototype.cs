@@ -263,7 +263,7 @@ namespace birdScript.Types.Prototypes
             _prototypeMembers.Add(member.Identifier, member);
         }
 
-        private const string REGEX_CLASS_SIGNATURE = @"^class(([ ]+abstract)|([ ]+extends[ ]+[a-zA-Z]\w*)|([ ]+[a-zA-Z]\w*))+[ ]+{.*}$";
+        private const string REGEX_CLASS_SIGNATURE = @"^class(([ ]+abstract)|([ ]+extends[ ]+[a-zA-Z]\w*)|([ ]+[a-zA-Z]\w*))+[ ]*{.*}$";
 
         private const string CLASS_SIGNATURE_EXTENDS = "extends";
         private const string CLASS_SIGNATURE_ABSTRACT = "abstract";
@@ -275,7 +275,7 @@ namespace birdScript.Types.Prototypes
         {
             code = code.Trim();
 
-            if (Regex.IsMatch(code, REGEX_CLASS_SIGNATURE))
+            if (Regex.IsMatch(code, REGEX_CLASS_SIGNATURE, RegexOptions.Singleline))
             {
                 List<string> signature = code.Remove(code.IndexOf("{")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 

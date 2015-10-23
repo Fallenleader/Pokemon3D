@@ -42,7 +42,7 @@ namespace birdScript
                 case StatementType.Function:
                     return ExecuteFunction(statement);
                 case StatementType.Class:
-                    break;
+                    return ExecuteClass(statement);
                 case StatementType.Link:
                     break;
                 case StatementType.Continue:
@@ -62,6 +62,38 @@ namespace birdScript
             }
 
             return null;
+        }
+
+        private SObject ExecuteClass(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            // The function's body is the next statement:
+
+            _index++;
+
+            if (_index < _statements.Length)
+            {
+                ScriptStatement classBodyStatement = _statements[_index];
+
+                if (classBodyStatement.IsCompoundStatement)
+                {
+                    exp += classBodyStatement.Code;
+
+                    Prototype prototype = (Prototype)Prototype.Parse(this, exp);
+                    Context.AddPrototype(prototype);
+
+                    return prototype;
+                }
+                else
+                {
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_COMPOUND, new object[] { classBodyStatement.Code[0] });
+                }
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
         }
 
         private SObject ExecuteFunction(ScriptStatement statement)
@@ -310,7 +342,7 @@ namespace birdScript
                             {
                                 foundMember = true;
                                 host = leftSide.Substring(0, index);
-                                member = leftSide.Substring(0, index + 1);
+                                member = leftSide.Remove(0, index + 1);
                             }
                         }
 

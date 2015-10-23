@@ -873,8 +873,7 @@ namespace birdScript
                             parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
                             parameters.Add(parameterObject);
                         }
-
-
+                        
                         parameterStartIndex = index + 1;
                     }
                 }

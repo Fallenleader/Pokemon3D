@@ -36,6 +36,7 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_MISSING_FOR_CONDITION = "missing ; after for-loop condition";
         public const string MESSAGE_SYNTAX_MISSING_FOR_CONTROL = "missing ) after for-loop control";
         public const string MESSAGE_SYNTAX_BREAK_OUTSIDE_LOOP = "break must be inside loop or switch";
+        public const string MESSAGE_SYNTAX_EXPECTED_COMPOUND = "expected compound statement, got {0}";
 
         public const string MESSAGE_SYNTAX_CLASS_EXTENDS_MISSING = "expected identifier after \"extends\" keyword";
         public const string MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING = "expected class identifier";

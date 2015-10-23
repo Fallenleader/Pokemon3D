@@ -10,6 +10,8 @@ namespace birdScript
     {
         internal static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
 
+        private const string OBJECT_DISCOVER_TOKEN = "+*-/&|<>.[(;";
+
         internal static ScriptStatement[] GetStatements(ScriptProcessor processor, string code)
         {
             List<ScriptStatement> statements = new List<ScriptStatement>();
@@ -89,9 +91,11 @@ namespace birdScript
                                 {
                                     s = s.Remove(s.Length - 1, 1).Trim();
                                     statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
-                                    
+
                                     statement.Clear();
                                     statement.Append('{');
+                                    isCompoundStatement = true;
+                                    isControlStatement = false;
                                 }
                                 else
                                 {
@@ -107,9 +111,36 @@ namespace birdScript
                             depth--;
                             if (depth == 0 && isCompoundStatement)
                             {
-                                string s = statement.ToString().Trim();
-                                statements.Add(new ScriptStatement(s, StatementType.Executable) { IsCompoundStatement = true });
-                                statement.Clear();
+                                // This could also be an object declaration...
+                                // In the case that the statement started with "{" (example statement: {} + []), this will happen.
+                                // To check if this is in fact an object, we look right and see if there is:
+                                //   - an operator => object ("+*-/&|<>.[(")
+                                //   - nothing => statement
+
+                                bool foundOperator = false;
+                                int charFindIndex = index + 1;
+
+                                while (!foundOperator && charFindIndex < code.Length)
+                                {
+                                    char testChar = code[charFindIndex];
+                                    if (OBJECT_DISCOVER_TOKEN.Contains(testChar))
+                                    {
+                                        foundOperator = true;
+                                    }
+                                    else if (!char.IsWhiteSpace(testChar)) // We found something that is not an operator or whitespace, so this is the end of a compound statement.
+                                    {
+                                        charFindIndex = code.Length;
+                                    }
+                                    
+                                    charFindIndex++;
+                                }
+
+                                if (!foundOperator)
+                                {
+                                    string s = statement.ToString().Trim();
+                                    statements.Add(new ScriptStatement(s, StatementType.Executable) { IsCompoundStatement = true });
+                                    statement.Clear();
+                                }
 
                                 isCompoundStatement = false;
                             }
@@ -145,7 +176,7 @@ namespace birdScript
 
                     }
                     else
-                    { 
+                    {
                         // Check if a block comment is ending (/*):
                         if (t == '*' && index + 1 < code.Length && code[index + 1] == '/')
                         {
