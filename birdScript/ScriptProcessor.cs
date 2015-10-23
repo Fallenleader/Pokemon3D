@@ -837,6 +837,10 @@ namespace birdScript
         /// </summary>
         internal SObject[] ParseParameters(string exp)
         {
+            // When there is only empty space in the parameter expression, we can save the search and just return an empty array:
+            if (string.IsNullOrWhiteSpace(exp))
+                return new SObject[] { };
+
             List<SObject> parameters = new List<SObject>();
 
             int index = 0;
@@ -864,8 +868,12 @@ namespace birdScript
                     else if (t == ',' && depth == 0)
                     {
                         parameter = exp.Substring(parameterStartIndex, index - parameterStartIndex);
-                        parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
-                        parameters.Add(parameterObject);
+                        if (!string.IsNullOrWhiteSpace(parameter))
+                        {
+                            parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
+                            parameters.Add(parameterObject);
+                        }
+
 
                         parameterStartIndex = index + 1;
                     }
@@ -875,8 +883,11 @@ namespace birdScript
             }
 
             parameter = exp.Substring(parameterStartIndex, index - parameterStartIndex);
-            parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
-            parameters.Add(parameterObject);
+            if (!string.IsNullOrWhiteSpace(parameter))
+            {
+                parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
+                parameters.Add(parameterObject);
+            }
 
             return parameters.ToArray();
         }
@@ -1014,7 +1025,7 @@ namespace birdScript
 
             methodName = exp.Remove(argumentStartIndex);
             string argumentCode = exp.Remove(0, argumentStartIndex + 1);
-            argumentCode = argumentCode.Remove(argumentCode.Length - 1, 1);
+            argumentCode = argumentCode.Remove(argumentCode.Length - 1, 1).Trim();
             SObject[] parameters = ParseParameters(argumentCode);
 
             // If it has an indexer, parse it again:

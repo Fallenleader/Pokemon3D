@@ -12,6 +12,11 @@ namespace birdScript
     {
         internal SObject ExecuteStatement(ScriptStatement statement)
         {
+            if (_breakIssued) // When breakIssued is true, it has been issued outside of a loop, so it couldn't get set to false afterwards.
+            {
+                ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_BREAK_OUTSIDE_LOOP);
+            }
+
             switch (statement.StatementType)
             {
                 case StatementType.Executable:
@@ -35,7 +40,7 @@ namespace birdScript
                 case StatementType.For:
                     return ExecuteFor(statement);
                 case StatementType.Function:
-                    break;
+                    return ExecuteFunction(statement);
                 case StatementType.Class:
                     break;
                 case StatementType.Link:
@@ -57,6 +62,43 @@ namespace birdScript
             }
 
             return null;
+        }
+
+        private SObject ExecuteFunction(ScriptStatement statement)
+        {
+            // function <name> ()
+            string exp = statement.Code;
+            exp = exp.Remove(0, "function".Length).Trim();
+            string functionName = exp.Remove(exp.IndexOf("("));
+
+            if (!IsValidIdentifier(functionName))
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
+
+            string functionExpression = "function " + exp.Remove(0, exp.IndexOf("("));
+
+            // The function's body is the next statement:
+
+            _index++;
+
+            if (_index < _statements.Length)
+            {
+                ScriptStatement functionBodyStatement = _statements[_index];
+
+                string functionBody = functionBodyStatement.Code;
+                if (!functionBodyStatement.IsCompoundStatement)
+                    functionBody = "{" + functionBody + "}";
+
+                functionExpression += functionBody;
+
+                var function = new SFunction(this, functionExpression);
+                Context.AddVariable(functionName, function);
+
+                return function;
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
         }
 
         private SObject ExecuteFor(ScriptStatement statement)
@@ -366,7 +408,7 @@ namespace birdScript
                 {
                     return CreateBool(false);
                 }
-                else if (exp == SObject.LITERAL_UNDEFINED)
+                else if (exp == SObject.LITERAL_UNDEFINED || exp == "")
                 {
                     return Undefined;
                 }
