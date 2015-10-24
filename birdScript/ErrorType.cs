@@ -8,6 +8,7 @@
         SyntaxError,
         TypeError,
         ReferenceError,
-        APIError
+        APIError,
+        UserError
     }
 }

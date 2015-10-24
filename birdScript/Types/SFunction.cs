@@ -138,7 +138,7 @@ namespace birdScript.Types
         /// <param name="parameters">The parameters used in this function call.</param>
         public SObject Call(ScriptProcessor processor, SObject caller, SObject This, SObject[] parameters)
         {
-            ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context);
+            ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context, processor.GetLineNumber());
             SObject functionReturnObject;
 
             if (_method != null)

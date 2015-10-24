@@ -14,6 +14,7 @@ namespace birdScript
     {
         internal string Code { get; }
         internal StatementType StatementType { get; }
+        internal int LineNumber { get; }
 
         internal SObject StatementResult;
 
@@ -25,10 +26,13 @@ namespace birdScript
             StatementType = StatementProcessor.GetStatementType(Code, false);
         }
 
-        internal ScriptStatement(string code, StatementType statementType)
+        internal ScriptStatement(string code, StatementType statementType) : this(code, statementType, -1) { }
+
+        internal ScriptStatement(string code, StatementType statementType, int lineNumber)
         {
             Code = code;
             StatementType = statementType;
+            LineNumber = lineNumber;
         }
     }
 }

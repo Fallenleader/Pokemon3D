@@ -31,6 +31,11 @@ namespace birdScript.Types
             Members.Add(idenfifier, new SVariable(idenfifier, data));
         }
 
+        internal void SetMember(string identifier, SObject data)
+        {
+            Members[identifier].Data = data;
+        }
+
         internal SProtoObject SuperClass
         {
             get

@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 
 namespace birdScript.Types.Prototypes
 {
-    class ErrorPrototype : Prototype
+    internal class ErrorPrototype : Prototype
     {
+        internal const string MEMBER_NAME_MESSAGE = "message";
+        internal const string MEMBER_NAME_TYPE = "type";
+        internal const string MEMBER_NAME_LINE = "line";
+
         public ErrorPrototype(ScriptProcessor processor) : base("Error")
         {
-            Constructor = new PrototypeMember("constructor", new SFunction(constructor));
+            Constructor = new PrototypeMember(CLASS_METHOD_CTOR, new SFunction(constructor));
 
-            AddMember(processor, new PrototypeMember("message", processor.Undefined));
-            AddMember(processor, new PrototypeMember("type", processor.Undefined));
+            AddMember(processor, new PrototypeMember(MEMBER_NAME_MESSAGE, processor.Undefined));
+            AddMember(processor, new PrototypeMember(MEMBER_NAME_TYPE, processor.Undefined));
+            AddMember(processor, new PrototypeMember(MEMBER_NAME_LINE, processor.Undefined));
         }
 
         protected override SProtoObject CreateBaseObject()
@@ -34,7 +39,7 @@ namespace birdScript.Types.Prototypes
                 else
                     message = parameters[0].ToString(processor);
 
-                obj.Members["message"].Data = message;
+                obj.Members[MEMBER_NAME_MESSAGE].Data = message;
             }
 
             if (parameters.Length > 1)
@@ -46,7 +51,22 @@ namespace birdScript.Types.Prototypes
                 else
                     errorType = parameters[1].ToString(processor);
 
-                obj.Members["type"].Data = errorType;
+                obj.Members[MEMBER_NAME_TYPE].Data = errorType;
+            }
+
+            if (parameters.Length > 2)
+            {
+                SNumber errorLine;
+                if (parameters[2] is SNumber)
+                    errorLine = (SNumber)parameters[2];
+                else
+                    errorLine = parameters[2].ToNumber(processor);
+
+                obj.Members[MEMBER_NAME_LINE].Data = errorLine;
+            }
+            else
+            {
+                obj.Members[MEMBER_NAME_LINE].Data = processor.CreateNumber(-1);
             }
 
             return obj;

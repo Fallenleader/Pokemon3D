@@ -21,9 +21,30 @@ namespace birdScript.Types.Prototypes
         private static SObject constructor(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
         {
             SArray arr = (SArray)instance;
-            arr.ArrayMembers = parameters;
-            arr.UpdateLength(processor);
-            return arr;
+            if (parameters.Length == 1 && parameters[0].TypeOf() == LITERAL_TYPE_NUMBER)
+            {
+                int length = (int)((SNumber)parameters[0]).Value;
+
+                if (length >= 0)
+                {
+                    arr.ArrayMembers = new SObject[length];
+                    for (int i = 0; i < length; i++)
+                    {
+                        arr.ArrayMembers[i] = processor.Undefined;
+                    }
+                }
+                else
+                {
+                    arr.ArrayMembers = new SObject[0];
+                }
+                return arr;
+            }
+            else
+            {
+                arr.ArrayMembers = parameters;
+                arr.UpdateLength(processor);
+                return arr;
+            }
         }
 
         [BuiltInMethod(IsIndexerSet = true)]

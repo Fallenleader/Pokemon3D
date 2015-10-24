@@ -8,7 +8,7 @@ namespace birdScript
 {
     class StatementProcessor
     {
-        internal static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch" };
+        internal static readonly string[] controlStatements = new string[] { "if", "else", "else if", "while", "for", "function", "class", "try", "catch", "finally" };
 
         private const string OBJECT_DISCOVER_TOKEN = "+*-/&|<>.[(;";
 
@@ -20,6 +20,8 @@ namespace birdScript
 
             int index = 0;
             int depth = 0;
+            int lineNumber = 1;
+            int lineNumberBuffer = 0; // buffers line counts from the start of a statement.
             bool isComment = false;
             bool isControlStatement = false; // If the current statement is a control statement.
             bool isCompoundStatement = false; // If the current statement is bunch of statements wrapped in { ... }
@@ -73,8 +75,10 @@ namespace birdScript
                                 string s = statement.ToString().Trim();
                                 if (s.StartsWith("if") || s.StartsWith("else if") || s.StartsWith("function") || s.StartsWith("for") || s.StartsWith("while") || s.StartsWith("catch"))
                                 {
-                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
+                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true), lineNumber));
                                     statement.Clear();
+                                    lineNumber += lineNumberBuffer;
+                                    lineNumberBuffer = 0;
 
                                     isControlStatement = false;
                                 }
@@ -90,7 +94,10 @@ namespace birdScript
                                 if (isControlStatement)
                                 {
                                     s = s.Remove(s.Length - 1, 1).Trim();
-                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true)));
+                                    statements.Add(new ScriptStatement(s, GetStatementType(s, true), lineNumber));
+
+                                    lineNumber += lineNumberBuffer;
+                                    lineNumberBuffer = 0;
 
                                     statement.Clear();
                                     statement.Append('{');
@@ -131,15 +138,17 @@ namespace birdScript
                                     {
                                         charFindIndex = code.Length;
                                     }
-                                    
+
                                     charFindIndex++;
                                 }
 
                                 if (!foundOperator)
                                 {
                                     string s = statement.ToString().Trim();
-                                    statements.Add(new ScriptStatement(s, StatementType.Executable) { IsCompoundStatement = true });
+                                    statements.Add(new ScriptStatement(s, StatementType.Executable, lineNumber) { IsCompoundStatement = true });
                                     statement.Clear();
+                                    lineNumber += lineNumberBuffer;
+                                    lineNumberBuffer = 0;
                                 }
 
                                 isCompoundStatement = false;
@@ -148,14 +157,21 @@ namespace birdScript
                         else if (t == ';' && depth == 0)
                         {
                             string s = statement.ToString().Trim().TrimEnd(new char[] { ';' });
-                            statements.Add(new ScriptStatement(s, GetStatementType(s, false)));
+                            statements.Add(new ScriptStatement(s, GetStatementType(s, false), lineNumber));
                             statement.Clear();
-
+                            lineNumber += lineNumberBuffer;
+                            lineNumberBuffer = 0;
                         }
                         else if (!isCompoundStatement && !isControlStatement)
                         {
                             string s = statement.ToString().TrimStart();
-                            if (controlStatements.Contains(s))
+
+                            char nextChar = 'X'; // Set to something that is not matching with the condition below.
+                            if (code.Length > index + 1)
+                                nextChar = code[index + 1];
+
+                            // Check if it's actually a control statement by looking if the next char matches (whitespace, ";" or "(")
+                            if ((char.IsWhiteSpace(nextChar) || nextChar == ';' || nextChar == '(') && controlStatements.Contains(s))
                             {
                                 isControlStatement = true;
                                 if (s.StartsWith("else"))
@@ -165,8 +181,10 @@ namespace birdScript
                                         string check = code.Substring(index + 1, 3);
                                         if (check != " if")
                                         {
-                                            statements.Add(new ScriptStatement("else", StatementType.Else));
+                                            statements.Add(new ScriptStatement("else", StatementType.Else, lineNumber));
                                             statement.Clear();
+                                            lineNumber += lineNumberBuffer;
+                                            lineNumberBuffer = 0;
                                             isControlStatement = false;
                                         }
                                     }
@@ -189,6 +207,9 @@ namespace birdScript
                 {
                     statement.Append(t);
                 }
+                
+                if (t == '\n')
+                    lineNumberBuffer++;
 
                 index++;
             }
@@ -206,7 +227,7 @@ namespace birdScript
             string leftOver = statement.ToString().Trim();
             if (leftOver.Length > 0)
             {
-                statements.Add(new ScriptStatement(leftOver, GetStatementType(leftOver, false)));
+                statements.Add(new ScriptStatement(leftOver, GetStatementType(leftOver, false), lineNumber));
             }
 
             return statements.ToArray();
@@ -255,6 +276,10 @@ namespace birdScript
                 {
                     return StatementType.Catch;
                 }
+                else if (code.StartsWith("finally"))
+                {
+                    return StatementType.Finally;
+                }
             }
             else
             {
@@ -282,7 +307,7 @@ namespace birdScript
                 {
                     return StatementType.Break;
                 }
-                else if (code.StartsWith("throw "))
+                else if (code.StartsWith("throw"))
                 {
                     return StatementType.Throw;
                 }

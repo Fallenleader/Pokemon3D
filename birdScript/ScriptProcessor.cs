@@ -32,10 +32,38 @@ namespace birdScript
         /// </summary>
         internal ScriptContext Context { get; }
 
+        /// <summary>
+        /// Returns the line number of the currently active statement.
+        /// </summary>
+        internal int GetLineNumber()
+        {
+            int lineNumber = -1;
+            if (_statements != null)
+            {
+                if (_index >= _statements.Length)
+                {
+                    lineNumber = _statements.Last().LineNumber;
+                }
+                else
+                {
+                    lineNumber = _statements[_index].LineNumber;
+                }
+            }
+            if (_hasParent)
+            {
+                if (lineNumber == -1)
+                    lineNumber = 0;
+
+                lineNumber += _parentLineNumber;
+            }
+            return lineNumber;
+        }
+
         private ScriptStatement[] _statements;
         private int _index;
         private string _source;
         private bool _hasParent = false;
+        private int _parentLineNumber = 0;
 
         private bool _returnIssued = false;
         private bool _continueIssued = false;
@@ -43,18 +71,18 @@ namespace birdScript
 
         #region Public interface
 
-        public ScriptProcessor() : this(null) { _hasParent = false; }
+        public ScriptProcessor() : this(null, 0) { _hasParent = false; }
 
-        public ScriptProcessor(ScriptContext context)
+        public ScriptProcessor(ScriptContext context, int parentLineNumber)
         {
             _hasParent = true;
+            _parentLineNumber = parentLineNumber;
+            ErrorHandler = new ErrorHandler(this);
 
             Context = new ScriptContext(this, context);
             Context.Initialize();
-
-            ErrorHandler = new ErrorHandler(this);
         }
-
+        
         /// <summary>
         /// Runs raw source code and returns the result.
         /// </summary>

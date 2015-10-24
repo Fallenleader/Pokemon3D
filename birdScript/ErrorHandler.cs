@@ -37,6 +37,8 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_MISSING_FOR_CONTROL = "missing ) after for-loop control";
         public const string MESSAGE_SYNTAX_BREAK_OUTSIDE_LOOP = "break must be inside loop or switch";
         public const string MESSAGE_SYNTAX_EXPECTED_COMPOUND = "expected compound statement, got {0}";
+        public const string MESSAGE_SYNTAX_MISSING_BEFORE_TRY = "missing { before try block";
+        public const string MESSAGE_SYNTAX_MISSING_CATCH_OR_FINALLY = "missing catch or finally after try";
 
         public const string MESSAGE_SYNTAX_CLASS_EXTENDS_MISSING = "expected identifier after \"extends\" keyword";
         public const string MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING = "expected class identifier";
@@ -48,6 +50,8 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_CLASS_INVALID_FUNCTION_SIGNATURE = "invalid function signature";
 
         public const string MESSAGE_API_NOT_SUPPORTED = "this functionality is not supported";
+
+        public const string MESSAGE_USER_ERROR = "throw statement executed";
 
         #endregion
 
@@ -95,8 +99,8 @@ namespace birdScript
         public SObject ThrowError(ErrorType errorType, string message)
         {
             string strErrorType = errorType.ToString();
-
-            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()) });
+            
+            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
 
             return ThrowError(errorObject);
         }

@@ -267,7 +267,7 @@ namespace birdScript.Types.Prototypes
 
         private const string CLASS_SIGNATURE_EXTENDS = "extends";
         private const string CLASS_SIGNATURE_ABSTRACT = "abstract";
-        private const string CLASS_METHOD_CTOR = "constructor";
+        protected const string CLASS_METHOD_CTOR = "constructor";
 
         private const string FORMAT_VAR_ASSIGNMENT = "{0}={1};\n";
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using birdScript.Types;
 using birdScript.Types.Prototypes;
@@ -13,11 +14,6 @@ namespace birdScript
     {
         internal SObject ExecuteStatement(ScriptStatement statement)
         {
-            if (_breakIssued) // When breakIssued is true, it has been issued outside of a loop, so it couldn't get set to false afterwards.
-            {
-                ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_BREAK_OUTSIDE_LOOP);
-            }
-
             switch (statement.StatementType)
             {
                 case StatementType.Executable:
@@ -47,13 +43,13 @@ namespace birdScript
                 case StatementType.Link:
                     return ExecuteLink(statement);
                 case StatementType.Continue:
-                    break;
+                    return ExecuteContinue(statement);
                 case StatementType.Break:
-                    break;
+                    return ExecuteBreak(statement);
                 case StatementType.Throw:
-                    break;
+                    return ExecuteThrow(statement);
                 case StatementType.Try:
-                    break;
+                    return ExecuteTry(statement);
                 case StatementType.Catch:
                     break;
                 case StatementType.Finally:
@@ -64,14 +60,206 @@ namespace birdScript
 
             return null;
         }
-        
+
+        private SObject ExecuteTry(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            if (exp != "try")
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_BEFORE_TRY);
+
+            _index++;
+            if (_statements.Length > _index)
+            {
+                ScriptStatement executeStatement = _statements[_index];
+                bool encounteredError = false;
+                bool foundCatch = false;
+                bool foundFinally = false;
+                bool foundMatchingCatch = false;
+                SObject errorObject = null;
+                SObject returnObject = Undefined;
+
+                try
+                {
+                    returnObject = ExecuteStatement(executeStatement);
+                }
+                catch (ScriptException ex)
+                {
+                    encounteredError = true;
+                    errorObject = ex.ErrorObject;
+                }
+                
+                if (encounteredError)
+                {
+                    bool endedCatchSearch = false;
+                    int findCatchIndex = _index + 1;
+                    while (findCatchIndex < _statements.Length && !endedCatchSearch)
+                    {
+                        if (_statements[findCatchIndex].StatementType == StatementType.Catch)
+                        {
+                            _index = findCatchIndex + 1;
+
+                            if (_statements.Length > _index)
+                            {
+                                if (!foundMatchingCatch)
+                                {
+                                    ScriptStatement catchExecuteStatement = _statements[_index];
+                                    foundCatch = true;
+
+                                    string catchCode = _statements[findCatchIndex].Code;
+                                    string errorVarName = "";
+
+                                    if (catchCode != "catch")
+                                    {
+                                        catchCode = catchCode.Remove(0, "catch".Length).Trim().Remove(0, 1);
+                                        catchCode = catchCode.Remove(catchCode.Length - 1, 1);
+                                        errorVarName = catchCode.Trim();
+                                    }
+
+                                    if (Regex.IsMatch(catchCode, REGEX_CATCHCONDITION))
+                                    {
+                                        errorVarName = catchCode.Remove(catchCode.IndexOf(" "));
+                                        string conditionCode = catchCode.Remove(0, catchCode.IndexOf("if") + 3);
+
+                                        ScriptProcessor processor = new ScriptProcessor(Context, GetLineNumber());
+                                        processor.Context.AddVariable(errorVarName, errorObject);
+
+                                        SObject conditionResult = processor.ExecuteStatement(new ScriptStatement(conditionCode));
+
+                                        if (conditionResult is SBool)
+                                            foundMatchingCatch = ((SBool)conditionResult).Value;
+                                        else
+                                            foundMatchingCatch = conditionResult.ToBool(this).Value;
+
+                                        if (foundMatchingCatch)
+                                            returnObject = processor.ExecuteStatement(catchExecuteStatement);
+                                    }
+                                    else
+                                    {
+                                        foundMatchingCatch = true;
+                                        ScriptProcessor processor = new ScriptProcessor(Context, GetLineNumber());
+                                        processor.Context.AddVariable(errorVarName, errorObject);
+                                        returnObject = processor.ExecuteStatement(catchExecuteStatement);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                            }
+                        }
+                        else
+                        {
+                            // end search if different statement type appears:
+                            endedCatchSearch = true;
+                        }
+
+                        findCatchIndex += 2;
+                    }
+                }
+                else
+                {
+                    int findCatchIndex = _index + 1;
+                    while (findCatchIndex < _statements.Length)
+                    {
+                        if (_statements[findCatchIndex].StatementType == StatementType.Catch)
+                        {
+                            foundCatch = true;
+                            _index = findCatchIndex + 1;
+                        }
+                        else
+                        {
+                            findCatchIndex = _statements.Length;
+                        }
+
+                        findCatchIndex += 2;
+                    }
+                }
+
+                // if no matching catch was found when an error occurred, it was not caught: throw it!
+                if (encounteredError && !foundMatchingCatch)
+                    return ErrorHandler.ThrowError(errorObject);
+
+                // now, try to find finally statement:
+                int findFinallyIndex = _index + 1;
+                while (findFinallyIndex < _statements.Length && !foundFinally)
+                {
+                    if (_statements[findFinallyIndex].StatementType == StatementType.Finally)
+                    {
+                        _index = findFinallyIndex + 1;
+
+                        if (_statements.Length > _index)
+                        {
+                            ScriptStatement finallyExecuteStatement = _statements[_index];
+                            foundFinally = true;
+
+                            returnObject = ExecuteStatement(finallyExecuteStatement);
+                        }
+                        else
+                        {
+                            return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                        }
+                    }
+                    else
+                    {
+                        findFinallyIndex = _statements.Length;
+                    }
+
+                    findFinallyIndex += 2;
+                }
+
+                if (!foundCatch && !foundFinally) // when no catch or finally block has been found, throw an error.
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_CATCH_OR_FINALLY);
+                else
+                    return returnObject;
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+            }
+        }
+
+        private SObject ExecuteThrow(ScriptStatement statement)
+        {
+            string exp = statement.Code;
+
+            if (exp == "throw")
+            {
+                return ErrorHandler.ThrowError(ErrorType.UserError, ErrorHandler.MESSAGE_USER_ERROR);
+            }
+            else
+            {
+                exp = exp.Remove(0, "throw ".Length).Trim();
+
+                var errorObject = ExecuteStatement(new ScriptStatement(exp));
+
+                // Set the line number if the object is an error object:
+                if (errorObject.TypeOf() == SObject.LITERAL_TYPE_ERROR)
+                    ((SError)errorObject).SetMember(ErrorPrototype.MEMBER_NAME_LINE, CreateNumber(GetLineNumber()));
+
+                return ErrorHandler.ThrowError(errorObject);
+            }
+        }
+
+        private SObject ExecuteContinue(ScriptStatement statement)
+        {
+            _continueIssued = true;
+            return Undefined;
+        }
+
+        private SObject ExecuteBreak(ScriptStatement statement)
+        {
+            _breakIssued = true;
+            return Undefined;
+        }
+
         private SObject ExecuteLink(ScriptStatement statement)
         {
             if (Context.HasCallback(CallbackType.ScriptPipeline))
             {
                 string exp = statement.Code;
-                exp = exp.Remove(0, "link".Length).Trim();
-                
+                exp = exp.Remove(0, "link ".Length).Trim();
+
                 var callback = (DScriptPipeline)Context.GetCallback(CallbackType.ScriptPipeline);
                 Task<string> task = Task<string>.Factory.StartNew(() => callback(this, exp));
                 task.Wait();
@@ -87,7 +275,7 @@ namespace birdScript
 
                 // Insert class, using and link statements right after the current statement.
                 int insertIndex = _index;
-                
+
                 for (int i = 0; i < statements.Length; i++)
                 {
                     if (statements[i].StatementType == StatementType.Class)
@@ -211,7 +399,7 @@ namespace birdScript
             else if (forStatements.Length > 3)
                 return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FOR_CONTROL);
 
-            var processor = new ScriptProcessor(Context);
+            var processor = new ScriptProcessor(Context, GetLineNumber());
 
             ScriptStatement forInitializer = forStatements[0];
             ScriptStatement forCondition = forStatements[1];
@@ -417,14 +605,10 @@ namespace birdScript
                 }
             }
 
-            // When it's an indexer, try to parse the accessor as number:
+            // When it's an indexer, we parse it as statement:
             if (isIndexer)
             {
-                double dblResult = 0;
-                if (SNumber.TryParse(member, out dblResult))
-                    accessor = CreateNumber(dblResult);
-                else
-                    accessor = CreateString(member);
+                accessor = SObject.Unbox(ExecuteStatement(new ScriptStatement(member)));
             }
             else
             {
@@ -470,7 +654,7 @@ namespace birdScript
         {
             if (statement.IsCompoundStatement)
             {
-                ScriptProcessor processor = new ScriptProcessor(Context);
+                ScriptProcessor processor = new ScriptProcessor(Context, GetLineNumber());
 
                 // Remove { and }:
                 string code = statement.Code.Remove(0, 1);
@@ -669,7 +853,7 @@ namespace birdScript
         {
             string exp = statement.Code;
 
-            string identifier = exp.Remove(0, "using".Length).Trim();
+            string identifier = exp.Remove(0, "using ".Length).Trim();
 
             if (!IsValidIdentifier(identifier))
                 return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
@@ -684,7 +868,7 @@ namespace birdScript
         {
             string exp = statement.Code;
 
-            string identifier = exp.Remove(0, "var".Length).Trim();
+            string identifier = exp.Remove(0, "var ".Length).Trim();
             SObject data = Undefined;
 
             if (identifier.Contains("="))
