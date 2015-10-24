@@ -20,6 +20,10 @@
         /// <summary>
         /// For the delegate type <see cref="DExecuteMethod"/>.
         /// </summary>
-        ExecuteMethod
+        ExecuteMethod,
+        /// <summary>
+        /// For the delegate type <see cref="DScriptPipeline"/>.
+        /// </summary>
+        ScriptPipeline
     }
 }

@@ -73,6 +73,14 @@ namespace birdScript
             AddCallback(CallbackType.ExecuteMethod, callback);
         }
 
+        /// <summary>
+        /// Sets the callback for getting the content of a script file.
+        /// </summary>
+        public void SetCallbackScriptPipeline(DScriptPipeline callback)
+        {
+            AddCallback(CallbackType.ScriptPipeline, callback);
+        }
+
         #endregion
 
         internal ScriptContext(ScriptProcessor processor, ScriptContext parent) : this()

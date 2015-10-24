@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using birdScript.Types;
 using birdScript.Types.Prototypes;
+using birdScript.Adapters;
 
 namespace birdScript
 {
@@ -44,7 +45,7 @@ namespace birdScript
                 case StatementType.Class:
                     return ExecuteClass(statement);
                 case StatementType.Link:
-                    break;
+                    return ExecuteLink(statement);
                 case StatementType.Continue:
                     break;
                 case StatementType.Break:
@@ -62,6 +63,65 @@ namespace birdScript
             }
 
             return null;
+        }
+        
+        private SObject ExecuteLink(ScriptStatement statement)
+        {
+            if (Context.HasCallback(CallbackType.ScriptPipeline))
+            {
+                string exp = statement.Code;
+                exp = exp.Remove(0, "link".Length).Trim();
+                
+                var callback = (DScriptPipeline)Context.GetCallback(CallbackType.ScriptPipeline);
+                Task<string> task = Task<string>.Factory.StartNew(() => callback(this, exp));
+                task.Wait();
+
+                string code = task.Result;
+
+                ScriptStatement[] statements = StatementProcessor.GetStatements(this, code);
+
+                // Convert the current statements into a list, so we can modify them.
+                List<ScriptStatement> tempStatements = _statements.ToList();
+                // Remove the "link" statement, because we don't want to step into it again if we are in a loop.
+                tempStatements.RemoveAt(_index);
+
+                // Insert class, using and link statements right after the current statement.
+                int insertIndex = _index;
+                
+                for (int i = 0; i < statements.Length; i++)
+                {
+                    if (statements[i].StatementType == StatementType.Class)
+                    {
+                        // The class statement needs its body, so we add the class statement and the one afterwards:
+                        if (statements.Length > i + 1)
+                        {
+                            tempStatements.Insert(insertIndex, statements[i]);
+                            tempStatements.Insert(insertIndex + 1, statements[i + 1]);
+
+                            insertIndex += 2;
+                        }
+                        else
+                        {
+                            ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                        }
+                    }
+                    else if (statements[i].StatementType == StatementType.Using || statements[i].StatementType == StatementType.Link)
+                    {
+                        tempStatements.Insert(insertIndex, statements[i]);
+                        insertIndex += 1;
+                    }
+                }
+
+                // Convert the temp statement list back and reduce the index by one, because we deleted the current statement.
+                _statements = tempStatements.ToArray();
+                _index--;
+
+                return Undefined;
+            }
+            else
+            {
+                return ErrorHandler.ThrowError(ErrorType.APIError, ErrorHandler.MESSAGE_API_NOT_SUPPORTED);
+            }
         }
 
         private SObject ExecuteClass(ScriptStatement statement)
