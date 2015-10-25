@@ -10,6 +10,12 @@ namespace Pokémon3D
             public const string DebugShadowMap = "Effects/DebugShadowMap";
         }
         
+        public static class Fonts
+        {
+            public const string BigFont = "Fonts/BigFont";
+            public const string NormalFont = "Fonts/NormalFont";
+        }
+        
         public static class Textures
         {
             public const string bricksSample = "Textures/bricksSample";

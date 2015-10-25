@@ -91,3 +91,15 @@
 /processorParam:TextureFormat=Color
 /build:Textures/guiskin.png
 
+#begin Fonts/BigFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/BigFont.spritefont
+
+#begin Fonts/NormalFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/NormalFont.spritefont
+

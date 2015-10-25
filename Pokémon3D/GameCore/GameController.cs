@@ -84,6 +84,13 @@ namespace Pokémon3D.GameCore
             ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
 
+            var parameters = new GuiSystemSkinParameters
+            {
+                SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.guiskin),
+
+            };
+            GuiSystem.SetSkin(parameters);
+
             ScreenManager.SetScreen(typeof(IntroScreen));
         }
 
