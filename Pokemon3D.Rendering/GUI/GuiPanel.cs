@@ -16,10 +16,13 @@ namespace Pokemon3D.Rendering.GUI
         private MouseState _lastMouseState;
         private readonly GameContext _gameContext;
 
+        public bool IsEnabled { get; set; }
+
         public GuiPanel(GameContext gameContext)
         {
             _gameContext = gameContext;
             _lastMouseState = Mouse.GetState();
+            IsEnabled = true;
         }
 
         public void AddElement(GuiElement element)
@@ -35,6 +38,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public void Update(float elapsedTime)
         {
+            if (!IsEnabled) return;
             var newMouseState = Mouse.GetState();
 
             HandleDisabledElements();
@@ -150,6 +154,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public void Draw()
         {
+            if (!IsEnabled) return;
             foreach (var element in _elements.Where(e => e.IsActive))
             {
                 element.Draw(_gameContext.SpriteBatch);

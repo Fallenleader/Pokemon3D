@@ -17,7 +17,8 @@ namespace Pokémon3D.UI.Screens
         private readonly Dictionary<Type, Screen> _screensByType = new Dictionary<Type, Screen>();
 
         private bool _executingScreenTransition;
-        private ScreenTransition _currentTransition;
+        private bool _quitGame;
+        private readonly ScreenTransition _currentTransition;
 
         public Screen CurrentScreen { get; private set; }
 
@@ -52,6 +53,11 @@ namespace Pokémon3D.UI.Screens
             {
                 PrerenderSourceAndTargetAndMakeTransition(oldScreen, CurrentScreen);
             }
+        }
+
+        public void NotifyQuitGame()
+        {
+            _quitGame = true;
         }
 
         private void PrerenderSourceAndTargetAndMakeTransition(Screen oldScreen, Screen currentScreen)
@@ -89,7 +95,7 @@ namespace Pokémon3D.UI.Screens
         /// <summary>
         /// Updates the current screen.
         /// </summary>
-        public void Update(GameTime gameTime)
+        public bool Update(GameTime gameTime)
         {
             if (_executingScreenTransition)
             {
@@ -103,7 +109,8 @@ namespace Pokémon3D.UI.Screens
             {
                 CurrentScreen?.OnUpdate(gameTime);
             }
-            
+
+            return !_quitGame;
         }
     }
 }

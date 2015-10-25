@@ -1,6 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.GUI;
 using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens
@@ -9,6 +12,7 @@ namespace Pokémon3D.UI.Screens
     {
         private Scene _scene;
         private Camera _camera;
+        private GuiPanel _pauseMenuPanel;
 
         public void OnOpening()
         {
@@ -58,17 +62,46 @@ namespace Pokémon3D.UI.Screens
             var sceneNode = _scene.CreateSceneNode();
             sceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.Merge(quads));
             sceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1));
+
+            _pauseMenuPanel = new GuiPanel(Game)
+            {
+                IsEnabled = false
+            };
+            var root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("Content/GUI/PauseMenu.xml");
+            _pauseMenuPanel.AddElement(root);
+            root.FindGuiElementById<Button>("ContinueButton").Click += OnContinueButtonClick;
+            root.FindGuiElementById<Button>("BackToMainMenuButton").Click += OnBackToMainMenuButtonClick;
+        }
+
+        private void OnBackToMainMenuButtonClick()
+        {
+            Game.ScreenManager.SetScreen(typeof(MainMenuScreen));
+        }
+
+        private void OnContinueButtonClick()
+        {
+            _pauseMenuPanel.IsEnabled = false;
         }
 
         public void OnUpdate(GameTime gameTime)
         {
             var elapsed = gameTime.ElapsedGameTime.Milliseconds * 0.001f;
             _scene.Update(elapsed);
+            _pauseMenuPanel.Update(elapsed);
+
+            if (Game.Keyboard.IsKeyDownOnce(Keys.Escape))
+            {
+                _pauseMenuPanel.IsEnabled = !_pauseMenuPanel.IsEnabled;
+            }
         }
 
         public void OnDraw(GameTime gameTime)
         {
             _scene.Draw();
+
+            Game.SpriteBatch.Begin();
+            _pauseMenuPanel.Draw();
+            Game.SpriteBatch.End();
         }
 
         public void OnClosing()

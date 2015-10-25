@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackPanel Orientation="Vertical"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Middle">
+  <Button Margin="5" Id="ContinueButton">
+    <TextBlock Text="Continue Game" Margin="10,10" />
+  </Button>
+  <Button Margin="5" Id="BackToMainMenuButton">
+    <TextBlock Text="Back To Main Menu" Margin="10" />
+  </Button>
+</StackPanel>

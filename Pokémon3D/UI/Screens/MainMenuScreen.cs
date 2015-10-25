@@ -33,6 +33,12 @@ namespace Pokémon3D.UI.Screens
             _mainMenuPanel.AddElement(root);
 
             root.FindGuiElementById<Button>("StartButton").Click += OnStartClick;
+            root.FindGuiElementById<Button>("QuitButton").Click += OnQuitClick;
+        }
+
+        private void OnQuitClick()
+        {
+            Game.ScreenManager.NotifyQuitGame();
         }
 
         private void OnStartClick()

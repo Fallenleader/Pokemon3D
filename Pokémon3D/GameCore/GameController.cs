@@ -103,7 +103,10 @@ namespace Pokémon3D.GameCore
         {
             base.Update(gameTime);
             Keyboard.Update();
-            ScreenManager.Update(gameTime);
+            if (!ScreenManager.Update(gameTime))
+            {
+                Exit();
+            }
         }
 
         protected override void Draw(GameTime gameTime)
