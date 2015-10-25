@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Pokémon3D.GameCore;
+using Pokémon3D.UI.Transitions;
 
 namespace Pokémon3D.UI.Screens
 {

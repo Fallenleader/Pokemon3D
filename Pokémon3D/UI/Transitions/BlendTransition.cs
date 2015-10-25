@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pokémon3D.GameCore;
 
-namespace Pokémon3D.UI.Screens
+namespace Pokémon3D.UI.Transitions
 {
     class BlendTransition : GameContextObject, ScreenTransition
     {
