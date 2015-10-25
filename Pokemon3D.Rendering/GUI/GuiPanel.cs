@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Pokemon3D.Common;
 
@@ -25,6 +26,11 @@ namespace Pokemon3D.Rendering.GUI
         {
             _elements.Add(element);
             element.Arrange(_gameContext.ScreenBounds);
+        }
+
+        public void ArrangeTo(Rectangle bounds)
+        {
+            _elements.ForEach(e => e.Arrange(bounds));
         }
 
         public void Update(float elapsedTime)

@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Pokemon3D.Rendering.GUI;
+using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens
 {
-    class MainMenuScreen : Screen
+    class MainMenuScreen : GameContextObject, Screen
     {
+        private GuiPanel _mainMenuPanel;
+
         public void OnDraw(GameTime gameTime)
         {
+            Game.GraphicsDevice.Clear(Color.Black);
+            Game.SpriteBatch.Begin();
+            _mainMenuPanel.Draw();
+            Game.SpriteBatch.End();
         }
 
         public void OnUpdate(GameTime gameTime)
         {
+            _mainMenuPanel.Update(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
         }
 
         public void OnClosing()
@@ -23,6 +28,16 @@ namespace Pokémon3D.UI.Screens
 
         public void OnOpening()
         {
+            _mainMenuPanel = new GuiPanel(Game);
+            var root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("Content/Gui/MainMenu.xml");
+            _mainMenuPanel.AddElement(root);
+
+            root.FindGuiElementById<Button>("StartButton").Click += OnStartClick;
+        }
+
+        private void OnStartClick()
+        {
+            Game.ScreenManager.SetScreen(typeof(RenderingTestScreen));
         }
     }
 }

@@ -46,6 +46,7 @@ namespace Pokemon3D.Rendering.GUI
 
             _spriteText.HorizontalAlignment = HorizontalAlignment;
             _spriteText.VerticalAlignment = VerticalAlignment;
+            _spriteText.Color = Color.Black;
         }
 
         internal Rectangle GetMinSize(bool includeHeightForEmptyText)
