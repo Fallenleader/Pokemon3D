@@ -14,7 +14,7 @@ namespace birdScript.Types
         /// <summary>
         /// The members of this array.
         /// </summary>
-        public SObject[] ArrayMembers { get; private set; }
+        public SObject[] ArrayMembers { get; set; }
 
         /// <summary>
         /// Parses a string as an array.
@@ -50,7 +50,7 @@ namespace birdScript.Types
                     }
                     else if (t == ',' && depth == 0)
                     {
-                        element = exp.Substring(elementStart, index);
+                        element = exp.Substring(elementStart, index - elementStart);
                         
                         if (string.IsNullOrWhiteSpace(element))
                             elements.Add(processor.Undefined);
@@ -64,7 +64,7 @@ namespace birdScript.Types
                 index++;
             }
 
-            element = exp.Substring(elementStart, index);
+            element = exp.Substring(elementStart, index - elementStart);
 
             if (string.IsNullOrWhiteSpace(element))
                 elements.Add(processor.Undefined);
@@ -80,7 +80,7 @@ namespace birdScript.Types
         public void UpdateLength(ScriptProcessor processor)
         {
             //TODO: Add length to prototype
-            Members["length"] = new SVariable("length", processor.CreateNumber(ArrayMembers.Length)) { IsReadOnly = true };
+            //Members["length"] = new SVariable("length", processor.CreateNumber(ArrayMembers.Length)) { IsReadOnly = true };
         }
 
         internal override string ToScriptSource()

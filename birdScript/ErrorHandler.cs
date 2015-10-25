@@ -8,17 +8,6 @@ using birdScript.Types;
 namespace birdScript
 {
     /// <summary>
-    /// Different error types for hard coded error messages.
-    /// </summary>
-    internal enum ErrorType
-    {
-        SyntaxError,
-        TypeError,
-        ReferenceError,
-        APIError
-    }
-
-    /// <summary>
     /// Handles <see cref="ScriptProcessor"/> errors.
     /// </summary>
     internal class ErrorHandler
@@ -31,6 +20,7 @@ namespace birdScript
 
         public const string MESSAGE_REFERENCE_NOT_DEFINED = "{0} is not defined";
         public const string MESSAGE_REFERENCE_NO_PROTOTYPE = "{0} is not defined or not a prototype";
+        public const string MESSAGE_REFERENCE_INVALID_ASSIGNMENT_LEFT = "invalid assignment left-hand side";
 
         public const string MESSAGE_SYNTAX_INVALID_INCREMENT = "invalid increment operand";
         public const string MESSAGE_SYNTAX_INVALID_DECREMENT = "invalid decrement operand";
@@ -42,6 +32,13 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_UNTERMINATED_COMMENT = "unterminated comment";
         public const string MESSAGE_SYNTAX_MISSING_END_OF_COMPOUND_STATEMENT = "missing } in compound statement";
         public const string MESSAGE_SYNTAX_INVALID_TOKEN = "invalid token \"{0}\"";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_INITIALIZER = "missing ; after for-loop initializer";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_CONDITION = "missing ; after for-loop condition";
+        public const string MESSAGE_SYNTAX_MISSING_FOR_CONTROL = "missing ) after for-loop control";
+        public const string MESSAGE_SYNTAX_BREAK_OUTSIDE_LOOP = "break must be inside loop or switch";
+        public const string MESSAGE_SYNTAX_EXPECTED_COMPOUND = "expected compound statement, got {0}";
+        public const string MESSAGE_SYNTAX_MISSING_BEFORE_TRY = "missing { before try block";
+        public const string MESSAGE_SYNTAX_MISSING_CATCH_OR_FINALLY = "missing catch or finally after try";
 
         public const string MESSAGE_SYNTAX_CLASS_EXTENDS_MISSING = "expected identifier after \"extends\" keyword";
         public const string MESSAGE_SYNTAX_CLASS_IDENTIFIER_MISSING = "expected class identifier";
@@ -53,6 +50,8 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_CLASS_INVALID_FUNCTION_SIGNATURE = "invalid function signature";
 
         public const string MESSAGE_API_NOT_SUPPORTED = "this functionality is not supported";
+
+        public const string MESSAGE_USER_ERROR = "throw statement executed";
 
         #endregion
 
@@ -79,6 +78,11 @@ namespace birdScript
             _processor = processor;
         }
 
+        internal void Clean()
+        {
+            _errorObject = null;
+        }
+
         /// <summary>
         /// Throws an error with the given error object.
         /// </summary>
@@ -95,10 +99,10 @@ namespace birdScript
         public SObject ThrowError(ErrorType errorType, string message)
         {
             string strErrorType = errorType.ToString();
-
-            //TODO: Create error object here and put it as argument in the method call.
             
-            return ThrowError(null);
+            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
+
+            return ThrowError(errorObject);
         }
 
         /// <summary>

@@ -106,7 +106,7 @@ namespace birdScript.Types
         }
 
         /// <summary>
-        /// Sets a member variable of this objec to a new value.
+        /// Sets a member variable of this object to a new value.
         /// </summary>
         internal virtual void SetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value) { /* Empty */ }
 

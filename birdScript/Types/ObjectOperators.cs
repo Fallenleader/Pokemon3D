@@ -61,7 +61,7 @@ namespace birdScript.Types
                 else
                     strRight = right.ToString(processor).Value;
 
-                return strLeft + strRight;
+                return "\"" + strLeft + strRight + "\"";
             }
             else
             {

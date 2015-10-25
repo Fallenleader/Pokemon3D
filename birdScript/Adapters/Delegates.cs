@@ -3,29 +3,6 @@
 namespace birdScript.Adapters
 {
     /// <summary>
-    /// Different types of API callbacks.
-    /// </summary>
-    internal enum CallbackType
-    {
-        /// <summary>
-        /// For the delegate type <see cref="DHasMember"/>.
-        /// </summary>
-        HasMember,
-        /// <summary>
-        /// For the delegate type <see cref="DSetMember"/>.
-        /// </summary>
-        SetMember,
-        /// <summary>
-        /// For the delegate type <see cref="DGetMember"/>.
-        /// </summary>
-        GetMember,
-        /// <summary>
-        /// For the delegate type <see cref="DExecuteMethod"/>.
-        /// </summary>
-        ExecuteMethod
-    }
-
-    /// <summary>
     /// A callback method for the processor to check if an API class has a specific member.
     /// </summary>
     /// <param name="processor">The requesting processor.</param>
@@ -60,4 +37,11 @@ namespace birdScript.Adapters
     /// <param name="isIndexer">If the member access has been done via an index example -> class[accessor]</param>
     /// <param name="value">The value this member should be set to.</param>
     public delegate void DSetMember(ScriptProcessor processor, SObject accessor, bool isIndexer, SObject value);
+
+    /// <summary>
+    /// A callback method for the processor to get access to the source of another script file.
+    /// </summary>
+    /// <param name="processor">The source processor.</param>
+    /// <param name="link">The defined link to the file.</param>
+    public delegate string DScriptPipeline(ScriptProcessor processor, string link);
 }

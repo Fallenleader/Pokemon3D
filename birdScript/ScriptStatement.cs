@@ -7,33 +7,14 @@ using birdScript.Types;
 
 namespace birdScript
 {
-    internal enum StatementType
-    {
-        Executable,
-        If,
-        Else,
-        ElseIf,
-        Using,
-        Var,
-        While,
-        Return,
-        Assignment,
-        For,
-        Function,
-        Class,
-        Link,
-        Continue,
-        Break,
-        Throw,
-        Try,
-        Catch,
-        Finally
-    }
-
+    /// <summary>
+    /// A statement for the <see cref="ScriptProcessor"/> to execute.
+    /// </summary>
     internal class ScriptStatement
     {
         internal string Code { get; }
         internal StatementType StatementType { get; }
+        internal int LineNumber { get; }
 
         internal SObject StatementResult;
 
@@ -45,10 +26,13 @@ namespace birdScript
             StatementType = StatementProcessor.GetStatementType(Code, false);
         }
 
-        internal ScriptStatement(string code, StatementType statementType)
+        internal ScriptStatement(string code, StatementType statementType) : this(code, statementType, -1) { }
+
+        internal ScriptStatement(string code, StatementType statementType, int lineNumber)
         {
             Code = code;
             StatementType = statementType;
+            LineNumber = lineNumber;
         }
     }
 }

@@ -14,13 +14,18 @@ namespace birdScript.Types.Prototypes
     {
         internal string Name { get; }
         internal bool IsAbstract { get; private set; }
-        internal PrototypeMember Constructor { get; private set; }
+        internal PrototypeMember Constructor { get; set; }
         internal Prototype Extends { get; private set; }
 
         private Dictionary<string, PrototypeMember> _prototypeMembers = new Dictionary<string, PrototypeMember>();
         private bool _initializedStatic;
         private SFunction _staticConstructor;
         private ScriptProcessor _staticConstructorProcessor;
+
+        internal static bool IsPrototype(Type t)
+        {
+            return t == typeof(Prototype) || t.IsSubclassOf(typeof(Prototype));
+        }
 
         internal Prototype(string name)
         {
@@ -194,12 +199,12 @@ namespace birdScript.Types.Prototypes
 
         private IEnumerable<PrototypeMember> GetInstanceMembers()
         {
-            return _prototypeMembers.Where(x => !x.Value.IsStatic).Select(x => x.Value);
+            return _prototypeMembers.Where(x => !x.Value.IsStatic && !x.Value.IsIndexerGet && !x.Value.IsIndexerSet).Select(x => x.Value);
         }
 
         private IEnumerable<PrototypeMember> GetReadOnlyInstanceMembers()
         {
-            return _prototypeMembers.Where(x => !x.Value.IsStatic && x.Value.IsReadOnly).Select(x => x.Value);
+            return _prototypeMembers.Where(x => !x.Value.IsStatic && x.Value.IsReadOnly && !x.Value.IsIndexerGet && !x.Value.IsIndexerSet).Select(x => x.Value);
         }
 
         private PrototypeMember GetIndexerGetFunction()
@@ -258,11 +263,11 @@ namespace birdScript.Types.Prototypes
             _prototypeMembers.Add(member.Identifier, member);
         }
 
-        private const string REGEX_CLASS_SIGNATURE = @"^class(([ ]+abstract)|([ ]+extends[ ]+[a-zA-Z]\w*)|([ ]+[a-zA-Z]\w*))+[ ]+{.*}$";
+        private const string REGEX_CLASS_SIGNATURE = @"^class(([ ]+abstract)|([ ]+extends[ ]+[a-zA-Z]\w*)|([ ]+[a-zA-Z]\w*))+[ ]*{.*}$";
 
         private const string CLASS_SIGNATURE_EXTENDS = "extends";
         private const string CLASS_SIGNATURE_ABSTRACT = "abstract";
-        private const string CLASS_METHOD_CTOR = "constructor";
+        protected const string CLASS_METHOD_CTOR = "constructor";
 
         private const string FORMAT_VAR_ASSIGNMENT = "{0}={1};\n";
 
@@ -270,7 +275,7 @@ namespace birdScript.Types.Prototypes
         {
             code = code.Trim();
 
-            if (Regex.IsMatch(code, REGEX_CLASS_SIGNATURE))
+            if (Regex.IsMatch(code, REGEX_CLASS_SIGNATURE, RegexOptions.Singleline))
             {
                 List<string> signature = code.Remove(code.IndexOf("{")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 

@@ -35,7 +35,7 @@ namespace birdScript.Types
             string paramCode = sourceCode.Remove(0, "function".Length).Trim().Remove(0, 1); //Removes "function", then any spaces between "function" and "(", then removes "(".
             paramCode = paramCode.Remove(paramCode.IndexOf(")"));
 
-            _parameters = paramCode.Split(new char[] { ',' });
+            _parameters = paramCode.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             bool allIdentifiersValid = true;
             int i = 0;
@@ -56,7 +56,7 @@ namespace birdScript.Types
             }
             else
             {
-                if (!sourceCode.Contains("{") || sourceCode.EndsWith("}"))
+                if (!sourceCode.Contains("{") || !sourceCode.EndsWith("}"))
                 {
                     processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FUNCTION_BODY);
                 }
@@ -138,7 +138,7 @@ namespace birdScript.Types
         /// <param name="parameters">The parameters used in this function call.</param>
         public SObject Call(ScriptProcessor processor, SObject caller, SObject This, SObject[] parameters)
         {
-            ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context);
+            ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context, processor.GetLineNumber());
             SObject functionReturnObject;
 
             if (_method != null)
@@ -162,10 +162,7 @@ namespace birdScript.Types
                 functionProcessor.Context.This = This;
                 functionReturnObject = functionProcessor.Run(Body);
             }
-
-            if (functionProcessor.ErrorHandler.ThrownError)
-                processor.ErrorHandler.ThrowError(functionProcessor.ErrorHandler.ErrorObject);
-
+            
             return functionReturnObject;
         }
     }
