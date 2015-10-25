@@ -110,7 +110,6 @@
     <Compile Include="UI\i18n\Localization.cs" />
     <Compile Include="UI\i18n\LocalizationManager.cs" />
     <Compile Include="UI\i18n\Translation.cs" />
-    <Compile Include="Input\Keyboard.cs" />
     <Compile Include="GameCore\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Screens\BlendTransition.cs" />
@@ -145,6 +144,9 @@
   <ItemGroup>
     <None Include="Content\Effects\BasicEffect.fx" />
     <None Include="Content\Effects\DebugShadowMap.fx" />
+    <Content Include="Content\GUI\GuiSkin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -159,19 +161,24 @@
     <None Include="Content\Effects\DebugShadowMap.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\Textures\bricksSample.xnb">
+    <Content Include="Content\Textures\bricksSample.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Content\Textures\default_texture.xnb" />
+    </Content>
+    <Content Include="Content\Textures\default_texture.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Textures\SquareLogo_256px.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Textures\highlight.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Content\Textures\tileset1.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Content\Textures\guiskin.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\tileset1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="ResourceNames.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ResourceNames.cs</LastGenOutput>

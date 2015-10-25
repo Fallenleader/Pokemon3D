@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml;
+﻿using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -46,11 +45,11 @@ namespace Pokemon3D.Rendering.GUI
         {
             if (element.HasAttribute("CanScrollHorizontally"))
             {
-                CanScrollHorizontally = Boolean.Parse(element.GetAttribute("CanScrollHorizontally"));
+                CanScrollHorizontally =  bool.Parse(element.GetAttribute("CanScrollHorizontally"));
             }
             if (element.HasAttribute("CanScrollVertically"))
             {
-                CanScrollVertically = Boolean.Parse(element.GetAttribute("CanScrollVertically"));
+                CanScrollVertically = bool.Parse(element.GetAttribute("CanScrollVertically"));
             }
 
             InitializeDrawElements();
@@ -60,7 +59,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public override Rectangle GetMinSize()
         {
-            var childSize = Child != null ? Child.GetMinSize() : Rectangle.Empty;
+            var childSize = Child?.GetMinSize() ?? Rectangle.Empty;
 
             var size = new Rectangle
             {
@@ -75,7 +74,7 @@ namespace Pokemon3D.Rendering.GUI
         {
             Bounds = RemoveMargin(target);
 
-            var childSize = Child != null ? Child.GetMinSize() : Rectangle.Empty;
+            var childSize = Child?.GetMinSize() ?? Rectangle.Empty;
 
             var childArrange = Bounds;
             childArrange.Width = CanScrollHorizontally ? childSize.Width : Bounds.Width;
@@ -103,13 +102,13 @@ namespace Pokemon3D.Rendering.GUI
                 }
             }
 
-            if (Child != null) Child.Arrange(childArrange);
+            Child?.Arrange(childArrange);
         }
 
         public override void Translate(int x, int y)
         {
             Bounds = Bounds.Translate(x,y);
-            if (Child != null) Child.Translate(x,y);
+            Child?.Translate(x,y);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

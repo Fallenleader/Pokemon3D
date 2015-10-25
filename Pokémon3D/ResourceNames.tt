@@ -40,6 +40,7 @@ namespace <#= baseNamespace #>
 <#+
 	void ProcessFolder(ProjectItem currentProjectItem, string className, string parentPath)
 	{
+		if (!ContainsResources(currentProjectItem)) return;
 #>
 
 public static class <#= className #>
@@ -48,11 +49,11 @@ public static class <#= className #>
 		PushIndent("    ");
 		foreach(ProjectItem projectItem in currentProjectItem.ProjectItems)
 		{
-			if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFolder)
+			if (IsFolder(projectItem))
 			{
 				ProcessFolder(projectItem, projectItem.Name, System.IO.Path.Combine(parentPath, projectItem.Name));
 			}
-			else if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile && projectItem.Name.EndsWith(".xnb"))
+			else if (IsXnbResource(projectItem))
 			{
 				ProcessItem(projectItem, parentPath);
 			}
@@ -62,6 +63,24 @@ public static class <#= className #>
 }
 <#+
 }
+	bool ContainsResources(ProjectItem parentItem)
+	{
+		foreach(ProjectItem projectItem in parentItem.ProjectItems)
+		{
+			if (IsFolder(projectItem) || IsXnbResource(projectItem)) return true;
+		}
+		return false;
+	}
+
+	bool IsFolder(ProjectItem projectItem)
+	{
+		return projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFolder;
+	}
+
+	bool IsXnbResource(ProjectItem projectItem)
+	{
+		return projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile && projectItem.Name.EndsWith(".xnb");
+	}
 
 	void ProcessItem(ProjectItem currentProjectItem, string parentPath)
 	{

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GuiSkin>
+  <Frame NormalRectangle="0,0,32,32" 
+         Border="12" />
+  <Button NormalRectangle="32,0,32,32" 
+          HoverRectangle="64,0,32,32"
+          Border="12" />
+  <TextBox NormalRectangle="96,0,32,32"
+           Border="6"/>
+</GuiSkin>

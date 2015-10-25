@@ -14,6 +14,7 @@ namespace Pokémon3D
         {
             public const string bricksSample = "Textures/bricksSample";
             public const string default_texture = "Textures/default_texture";
+            public const string guiskin = "Textures/guiskin";
             public const string highlight = "Textures/highlight";
             public const string SquareLogo_256px = "Textures/SquareLogo_256px";
             public const string tileset1 = "Textures/tileset1";

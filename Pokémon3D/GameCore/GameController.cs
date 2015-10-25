@@ -5,6 +5,7 @@ using Pokémon3D.FileSystem;
 using Pokémon3D.UI.Screens;
 using Pokemon3D.Common;
 using Pokemon3D.Common.Diagnostics;
+using Pokemon3D.Rendering.GUI;
 
 namespace Pokémon3D.GameCore
 {
@@ -46,35 +47,17 @@ namespace Pokémon3D.GameCore
         public GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
         public ScreenManager ScreenManager { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
+        public GuiSystem GuiSystem { get; private set; }
+        public KeyboardEx Keyboard { get; private set; }
 
         /// <summary>
         /// Object to manage loaded GameModes.
         /// </summary>
         public GameModes.GameModeManager GameModeManager { get; private set; }
 
-        public KeyboardEx Keyboard
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Rectangle ScreenBounds => Window.ClientBounds;
 
-        public Rectangle ScreenBounds
-        {
-            get
-            {
-                return Window.ClientBounds;
-            }
-        }
-
-        public ShapeRenderer ShapeRenderer
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public ShapeRenderer ShapeRenderer { get; private set; }
 
         public GameController()
         {
@@ -96,6 +79,9 @@ namespace Pokémon3D.GameCore
         {
             base.LoadContent();
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Keyboard = new KeyboardEx();
+            GuiSystem = new GuiSystem(this);
+            ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
 
             ScreenManager.SetScreen(typeof(IntroScreen));
@@ -104,6 +90,7 @@ namespace Pokémon3D.GameCore
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Keyboard.Update();
             ScreenManager.Update(gameTime);
         }
 
