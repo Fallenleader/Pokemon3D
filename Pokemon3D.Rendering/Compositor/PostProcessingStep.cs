@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Compositor
 {
     /// <summary>
     /// Post Processing step for rendering actions after everthing done.

@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
+using Pokemon3D.Rendering.Compositor;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Scene
 {
     /// <summary>
     /// Representing a whole 3D Scene with all objects to display.

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.Compositor;
 
 namespace Pokémon3D.UI
 {

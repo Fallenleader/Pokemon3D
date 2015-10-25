@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
+using Pokemon3D.Rendering.Data;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Scene
 {
     /// <summary>
     /// Part of a Scene with contains Transformation and Optional Rendering Attachments.

@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
-    <Compile Include="DefaultSceneRenderer.cs" />
-    <Compile Include="GeometryData.cs" />
+    <Compile Include="Compositor\DefaultSceneRenderer.cs" />
+    <Compile Include="Data\GeometryData.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\ContentControl.cs" />
     <Compile Include="GUI\Frame.cs" />
@@ -81,17 +81,17 @@
     <Compile Include="GUI\TextBox.cs" />
     <Compile Include="GUI\Thickness.cs" />
     <Compile Include="GUI\VerticalAlignment.cs" />
-    <Compile Include="Material.cs" />
-    <Compile Include="Mesh.cs" />
-    <Compile Include="ModelMesh.cs" />
-    <Compile Include="PostProcessingStep.cs" />
-    <Compile Include="Primitives.cs" />
+    <Compile Include="Data\Material.cs" />
+    <Compile Include="Data\Mesh.cs" />
+    <Compile Include="Data\ModelMesh.cs" />
+    <Compile Include="Compositor\PostProcessingStep.cs" />
+    <Compile Include="Data\Primitives.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceManager.cs" />
+    <Compile Include="Data\ResourceManager.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="SceneEffect.cs" />
+    <Compile Include="Compositor\SceneEffect.cs" />
     <Compile Include="SceneNode.cs" />
-    <Compile Include="SceneRenderer.cs" />
+    <Compile Include="Compositor\SceneRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.csproj">

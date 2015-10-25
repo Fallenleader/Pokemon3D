@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
+using Pokemon3D.Rendering.Scene;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Compositor
 {
     class DefaultSceneRenderer : SceneRenderer
     {
@@ -12,6 +13,7 @@ namespace Pokemon3D.Rendering
         private readonly RenderTarget2D _shadowMap;
         private readonly List<SceneNode> _solidObjects = new List<SceneNode>();
         private readonly List<SceneNode> _transparentObjects = new List<SceneNode>();
+        private readonly List<PostProcessingStep> _postProcessingSteps = new List<PostProcessingStep>(); 
 
         public DefaultSceneRenderer(GameContext context, SceneEffect effect)
         {
@@ -26,7 +28,7 @@ namespace Pokemon3D.Rendering
 
         public void AddPostProcessingStep(PostProcessingStep step)
         {
-            throw new System.NotImplementedException();
+            _postProcessingSteps.Add(step);
         }
 
         public void Draw(IList<SceneNode> allNodes, IList<Camera> cameras)
@@ -42,6 +44,18 @@ namespace Pokemon3D.Rendering
             {
                 DrawSceneForCamera(camera);
             }
+
+            DoPostProcessing();
+        }
+
+        private void DoPostProcessing()
+        {
+            if (!EnablePostProcessing) return;
+
+            //foreach (var postProcessingStep in _postProcessingSteps)
+            //{
+            //    postProcessingStep.Process();
+            //}
         }
 
         public void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target)

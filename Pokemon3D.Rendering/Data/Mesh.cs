@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Data
 {
     /// <summary>
     /// Holding Geometry Data uploaded to the GPU.

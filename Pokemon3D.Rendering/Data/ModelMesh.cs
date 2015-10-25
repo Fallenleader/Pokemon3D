@@ -1,4 +1,4 @@
-﻿namespace Pokemon3D.Rendering
+﻿namespace Pokemon3D.Rendering.Data
 {
     public struct ModelMesh
     {

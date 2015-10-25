@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Data
 {
     /// <summary>
     /// Describing how to display a Mesh attached to a SceneNode.

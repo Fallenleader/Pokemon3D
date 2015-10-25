@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
+using Pokemon3D.Rendering.Scene;
 using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens

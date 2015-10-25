@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokemon3D.Rendering
+namespace Pokemon3D.Rendering.Compositor
 {
     /// <summary>
     /// Concrete Implementation for Effects used by the scene.
