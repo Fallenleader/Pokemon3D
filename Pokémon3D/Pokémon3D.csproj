@@ -197,6 +197,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\birdScript\birdScript.csproj">
+      <Project>{7c228bb5-e710-4170-9c70-8a588040e405}</Project>
+      <Name>birdScript</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.csproj">
       <Project>{b29dc7f0-2a16-4585-80a2-b4030558ec35}</Project>
       <Name>Pokemon3D.Common</Name>

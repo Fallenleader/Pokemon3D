@@ -27,10 +27,7 @@ namespace birdScript
         /// The <see cref="birdScript.ErrorHandler"/> associated with this <see cref="ScriptProcessor"/>.
         /// </summary>
         internal ErrorHandler ErrorHandler { get; }
-        /// <summary>
-        /// The <see cref="ScriptContext"/> associated with this <see cref="ScriptProcessor"/>.
-        /// </summary>
-        internal ScriptContext Context { get; }
+
 
         /// <summary>
         /// Returns the line number of the currently active statement.
@@ -71,18 +68,21 @@ namespace birdScript
 
         #region Public interface
 
+        /// <summary>
+        /// The <see cref="ScriptContext"/> associated with this <see cref="ScriptProcessor"/>.
+        /// </summary>
+        public ScriptContext Context { get; }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="ScriptProcessor"/>.
+        /// </summary>
         public ScriptProcessor() : this(null, 0) { _hasParent = false; }
 
-        public ScriptProcessor(ScriptContext context, int parentLineNumber)
-        {
-            _hasParent = true;
-            _parentLineNumber = parentLineNumber;
-            ErrorHandler = new ErrorHandler(this);
+        /// <summary>
+        /// Creates a new instance of the <see cref="ScriptProcessor"/> and sets a context.
+        /// </summary>
+        public ScriptProcessor(ScriptContext context) : this(context, 0) { }
 
-            Context = new ScriptContext(this, context);
-            Context.Initialize();
-        }
-        
         /// <summary>
         /// Runs raw source code and returns the result.
         /// </summary>
@@ -115,6 +115,16 @@ namespace birdScript
         }
 
         #endregion
+
+        internal ScriptProcessor(ScriptContext context, int parentLineNumber)
+        {
+            _hasParent = true;
+            _parentLineNumber = parentLineNumber;
+            ErrorHandler = new ErrorHandler(this);
+
+            Context = new ScriptContext(this, context);
+            Context.Initialize();
+        }
 
         internal static readonly string[] ReservedKeywords = new string[] { "if", "else", "while", "for", "function", "class", "using", "var", "static", "new", "extends", "this", "super", "link", "readonly", "break", "continue", "indexer", "get", "set", "throw", "try", "catch", "finally" };
 
@@ -160,7 +170,7 @@ namespace birdScript
         /// </summary>
         internal SString CreateString(string value, bool escaped)
         {
-            return (SString)Context.CreateInstance("String", new SObject[] { SString.Factory(this, value, escaped) });
+            return SString.Factory(this, value, escaped);
         }
 
         /// <summary>
@@ -168,7 +178,7 @@ namespace birdScript
         /// </summary>
         internal SNumber CreateNumber(double value)
         {
-            return (SNumber)Context.CreateInstance("Number", new SObject[] { SNumber.Factory(value) });
+            return SNumber.Factory(value);
         }
 
         /// <summary>
@@ -176,7 +186,7 @@ namespace birdScript
         /// </summary>
         internal SBool CreateBool(bool value)
         {
-            return (SBool)Context.CreateInstance("Boolean", new SObject[] { SBool.Factory(value) });
+            return SBool.Factory(value);
         }
 
         #region Statement processing

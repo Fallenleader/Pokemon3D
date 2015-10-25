@@ -16,6 +16,10 @@ namespace birdScript.Types.Prototypes
         internal bool IsAbstract { get; private set; }
         internal PrototypeMember Constructor { get; set; }
         internal Prototype Extends { get; private set; }
+        /// <summary>
+        /// The type this prototype instance was created from.
+        /// </summary>
+        internal Type MappedType { get; set; }
 
         private Dictionary<string, PrototypeMember> _prototypeMembers = new Dictionary<string, PrototypeMember>();
         private bool _initializedStatic;

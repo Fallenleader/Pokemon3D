@@ -45,6 +45,11 @@
   <ItemGroup>
     <Compile Include="Adapters\CallbackType.cs" />
     <Compile Include="Adapters\Delegates.cs" />
+    <Compile Include="Adapters\ScriptContextManipulator.cs" />
+    <Compile Include="Adapters\ScriptFunctionAttribute.cs" />
+    <Compile Include="Adapters\ScriptInAdapter.cs" />
+    <Compile Include="Adapters\ScriptOutAdapter.cs" />
+    <Compile Include="Adapters\ScriptVariableAttribute.cs" />
     <Compile Include="BuiltInMethodManager.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="ErrorType.cs" />
