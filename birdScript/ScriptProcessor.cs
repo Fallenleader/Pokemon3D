@@ -255,7 +255,7 @@ namespace birdScript
                         captureRight = new ElementCapture() { Length = 0 };
                     }
 
-                    if (op != "." || !IsDotOperatorDecimalSeperator(elementLeft, elementRight))
+                    if (op != "." || !IsDotOperatorDecimalSeparator(elementLeft, elementRight))
                     {
                         switch (op)
                         {
