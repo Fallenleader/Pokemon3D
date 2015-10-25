@@ -8,9 +8,10 @@ namespace birdScript.Types.Prototypes
 {
     class StringPrototype : Prototype
     {
-        public StringPrototype() : base("String")
+        public StringPrototype(ScriptProcessor processor) : base("String")
         {
             Constructor = new PrototypeMember("constructor", new SFunction(constructor));
+            AddMember(processor, new PrototypeMember(SString.STRING_LENGTH_PROPERTY_NAME, processor.Undefined, false, true, false, false));
         }
 
         protected override SProtoObject CreateBaseObject()

@@ -115,10 +115,11 @@ namespace birdScript.Types
         {
             Value = value;
 
-            //var length = processor.CreateNumber(value.Length);
-
-            //TODO: add length to prototype.
-            //Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
+            if (Members.ContainsKey(STRING_LENGTH_PROPERTY_NAME))
+            {
+                var length = processor.CreateNumber(value.Length);
+                Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
+            }
         }
         
         internal override string ToScriptObject()

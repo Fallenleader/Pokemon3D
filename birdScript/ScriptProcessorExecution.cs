@@ -51,14 +51,24 @@ namespace birdScript
                 case StatementType.Try:
                     return ExecuteTry(statement);
                 case StatementType.Catch:
-                    break;
+                    return ExecuteCatch(statement);
                 case StatementType.Finally:
-                    break;
-                default:
-                    break;
+                    return ExecuteFinally(statement);
             }
 
             return null;
+        }
+
+        private SObject ExecuteCatch(ScriptStatement statement)
+        {
+            // The script processor can only reach this, when a catch statement exists without a try statement:
+            return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CATCH_WITHOUT_TRY);
+        }
+
+        private SObject ExecuteFinally(ScriptStatement statement)
+        {
+            // The script processor can only reach this, when a finally statement exists without a try statement:
+            return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_FINALLY_WITHOUT_TRY);
         }
 
         private SObject ExecuteTry(ScriptStatement statement)
@@ -614,7 +624,7 @@ namespace birdScript
             {
                 accessor = CreateString(member);
             }
-
+            
             memberHost = ExecuteStatement(new ScriptStatement(host));
             value = SObject.Unbox(ExecuteStatement(new ScriptStatement(rightSide)));
 

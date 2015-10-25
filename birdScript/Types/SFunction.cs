@@ -12,12 +12,13 @@ namespace birdScript.Types
     internal class SFunction : SObject
     {
         private string[] _parameters;
-        private DBuiltInMethod _method;
 
         /// <summary>
         /// The code body of the function.
         /// </summary>
         public string Body { get; set; }
+        
+        public DBuiltInMethod Method { get; set; }
 
         public SFunction(string body, string[] parameters)
         {
@@ -72,7 +73,7 @@ namespace birdScript.Types
         /// </summary>
         public SFunction(DBuiltInMethod method)
         {
-            _method = method;
+            Method = method;
         }
 
         internal override string TypeOf()
@@ -82,7 +83,7 @@ namespace birdScript.Types
 
         internal override double SizeOf()
         {
-            if (_method != null)
+            if (Method != null)
                 return 1;
             else
                 return Body.Length;
@@ -107,7 +108,7 @@ namespace birdScript.Types
             }
 
             string bodySource = "";
-            if (_method != null)
+            if (Method != null)
             {
                 bodySource = FUNCTION_NATIVE_CODE_SOURCE;
             }
@@ -141,9 +142,9 @@ namespace birdScript.Types
             ScriptProcessor functionProcessor = new ScriptProcessor(processor.Context, processor.GetLineNumber());
             SObject functionReturnObject;
 
-            if (_method != null)
+            if (Method != null)
             {
-                functionReturnObject = _method(functionProcessor, caller, This, parameters);
+                functionReturnObject = Method(functionProcessor, caller, This, parameters);
             }
             else
             {
