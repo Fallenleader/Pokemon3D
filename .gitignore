@@ -219,3 +219,4 @@ pip-log.txt
 
 #Translations
 *.mo
+birdScript/Program.cs
