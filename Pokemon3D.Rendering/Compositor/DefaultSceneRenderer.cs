@@ -29,8 +29,8 @@ namespace Pokemon3D.Rendering.Compositor
 
             var width = context.ScreenBounds.Width;
             var height = context.ScreenBounds.Height;
-            _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
-            _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
+            _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
+            _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
         }
 
         public Vector3 LightDirection { get; set; }
@@ -39,6 +39,7 @@ namespace Pokemon3D.Rendering.Compositor
 
         public void AddPostProcessingStep(PostProcessingStep step)
         {
+            step.Initialize(_sceneEffect.PostProcessingEffect);
             _postProcessingSteps.Add(step);
         }
 
@@ -86,6 +87,9 @@ namespace Pokemon3D.Rendering.Compositor
             }
 
             _device.SetRenderTargets(_oldBindings);
+            _gameContext.SpriteBatch.Begin();
+            _gameContext.SpriteBatch.Draw(_activeRenderTarget, Vector2.Zero, Color.White);
+            _gameContext.SpriteBatch.End();
         }
 
         public void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target)

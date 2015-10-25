@@ -114,3 +114,9 @@
 /processorParam:TextureFormat=Color
 /build:Textures/P3D.png
 
+#begin Effects/PostProcessing.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/PostProcessing.fx
+

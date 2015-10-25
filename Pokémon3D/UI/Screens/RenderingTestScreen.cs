@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pokemon3D.Rendering.Compositor;
 using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
 using Pokemon3D.Rendering.Scene;
@@ -20,6 +21,7 @@ namespace Pokémon3D.UI.Screens
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
             _scene.Renderer.EnableShadows = false;
             _scene.Renderer.LightDirection = new Vector3(0, -1, 0);
+            _scene.Renderer.AddPostProcessingStep(new GaussianBlurPostProcessingStep());
 
             _camera = _scene.CreateCamera();
             _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
@@ -91,6 +93,7 @@ namespace Pokémon3D.UI.Screens
             if (Game.Keyboard.IsKeyDownOnce(Keys.Escape))
             {
                 _pauseMenuPanel.IsEnabled = !_pauseMenuPanel.IsEnabled;
+                _scene.Renderer.EnablePostProcessing = _pauseMenuPanel.IsEnabled;
             }
         }
 

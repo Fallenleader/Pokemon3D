@@ -1,6 +1,5 @@
 ﻿texture SourceMap;
-float InvScreenWidth;
-float InvScreenHeight;
+float2 InvScreenSize;
 
 sampler2D SourceMapSampler = sampler_state {
 	Texture = (SourceMap);
@@ -12,10 +11,11 @@ sampler2D SourceMapSampler = sampler_state {
 
 float4 GaussianBlurPS(float4 position : SV_Position, float4 color : COLOR0, float2 tex_coord : TEXCOORD0) : SV_Target0
 {
-	float2 offset = float2(InvScreenWidth, InvScreenHeight);
-
-	return (tex2D(SourceMapSampler, tex_coord) + tex2D(SourceMapSampler, tex_coord) + tex2D(SourceMapSampler, tex_coord) * 2.0f
-		+ tex2D(SourceMapSampler, tex_coord) * -1.0f + tex2D(SourceMapSampler, tex_coord) * -2.0f) / 5.0f;
+	return (tex2D(SourceMapSampler, tex_coord) 
+		+ tex2D(SourceMapSampler, tex_coord + InvScreenSize * 1.0f)
+		+ tex2D(SourceMapSampler, tex_coord + InvScreenSize * 2.0f)
+		+ tex2D(SourceMapSampler, tex_coord + InvScreenSize * -1.0f)
+		+ tex2D(SourceMapSampler, tex_coord + InvScreenSize * -2.0f)) / 5.0f;
 }
 technique GaussianBlur
 {

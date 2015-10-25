@@ -71,5 +71,10 @@ namespace Pokemon3D.Rendering.Compositor
         /// Texture for rendering.
         /// </summary>
         Texture2D DiffuseTexture { get; set; }
+
+        /// <summary>
+        /// Post-Processing Effects Container.
+        /// </summary>
+        Effect PostProcessingEffect { get; }
     }
 }

@@ -25,6 +25,8 @@ namespace Pokémon3D.UI
         public WindowsSceneEffect(ContentManager content)
         {
             _basicEffect = content.Load<Effect>(ResourceNames.Effects.BasicEffect);
+            PostProcessingEffect = content.Load<Effect>(ResourceNames.Effects.PostProcessing);
+
             _defaultTechnique = _basicEffect.Techniques["Default"];
             _shadowDepthTechnique = _basicEffect.Techniques["ShadowCaster"];
             _defaultWithShadowsTechnique = _basicEffect.Techniques["DefaultWithShadows"];
@@ -98,6 +100,8 @@ namespace Pokémon3D.UI
             get { return _diffuseTexture.GetValueTexture2D(); }
             set { _diffuseTexture.SetValue(value); }
         }
+
+        public Effect PostProcessingEffect { get; }
 
         public IEnumerable<EffectPass> CurrentTechniquePasses
         {
