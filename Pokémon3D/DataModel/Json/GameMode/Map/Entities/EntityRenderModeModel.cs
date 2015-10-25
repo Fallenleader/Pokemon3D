@@ -42,7 +42,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
         public int[] TextureIndex;
 
         [DataMember(Order = 3)]
-        public int PrimitiveModelId;
+        public string PrimitiveModelId;
 
         [DataMember(Order = 4)]
         public bool RenderBackfaces;
