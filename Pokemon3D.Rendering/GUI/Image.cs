@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Globalization;
+using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
@@ -10,6 +11,7 @@ namespace Pokemon3D.Rendering.GUI
         private Vector2 _position;
         public Texture2D Texture { get; set; }
         public Rectangle SourceRectangle { get; set; }
+        public float Scale { get; set; }
 
         public Image(GuiSystem guiSystem)
             : base(guiSystem)
@@ -21,23 +23,30 @@ namespace Pokemon3D.Rendering.GUI
         {
             if(element.HasAttribute("Source"))
             {
-                Texture = guiSystem.GameContext.Content.Load<Texture2D>("Textures/" + element.GetAttribute("Source"));
+                Texture = guiSystem.GameContext.Content.Load<Texture2D>(element.GetAttribute("Source"));
             }
+
+            Scale = element.HasAttribute("Scale") ? float.Parse(element.GetAttribute("Scale"), CultureInfo.InvariantCulture) : 1.0f;
 
             if(Texture != null)
             {
                 SourceRectangle = element.HasAttribute("NormalRectangle") ? element.GetAttribute("NormalRectangle").ParseRectangle() : Texture.Bounds;   
             }
+
+            Bounds = SourceRectangle.Scale(Scale);
         }
 
         public override Rectangle GetMinSize()
         {
-            return ApplyMarginAndHandleSize(SourceRectangle);
+            return ApplyMarginAndHandleSize(SourceRectangle.Scale(Scale));
         }
 
         public override void Arrange(Rectangle target)
         {
-            Bounds = RemoveMargin(target);
+            var availableSpace = RemoveMargin(target);
+            var scaledBounds = SourceRectangle.Scale(Scale);
+
+            Bounds = ArrangeToAlignments(availableSpace, scaledBounds);
             _position = Bounds.Center.ToVector2();
         }
 
@@ -51,7 +60,7 @@ namespace Pokemon3D.Rendering.GUI
         public override void Draw(SpriteBatch spriteBatch)
         {
             if(Texture == null) return;
-            spriteBatch.Draw(Texture, _position, SourceRectangle, Color.White, 0.0f, SourceRectangle.Center.ToVector2(), 1.0f, SpriteEffects.None, 0);
+            spriteBatch.Draw(Texture, _position, SourceRectangle, Color.White, 0.0f, Bounds.Center.ToVector2(), Scale, SpriteEffects.None, 0);
         }
 
         public override void Update(float elapsedTime)
