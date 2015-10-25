@@ -55,7 +55,7 @@ namespace Pokémon3D.UI.Screens
 
         private void OnAnimatorFinished()
         {
-            Game.ScreenManager.SetScreen(typeof(RenderingTestScreen));
+            Game.ScreenManager.SetScreen(typeof(MainMenuScreen));
         }
 
         private void OnUpdateHighlightPass(float delta)

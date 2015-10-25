@@ -78,6 +78,9 @@ namespace Pokémon3D.GameCore
         protected override void LoadContent()
         {
             base.LoadContent();
+
+            IsMouseVisible = true;
+
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Keyboard = new KeyboardEx();
             GuiSystem = new GuiSystem(this);
@@ -87,7 +90,9 @@ namespace Pokémon3D.GameCore
             var parameters = new GuiSystemSkinParameters
             {
                 SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.guiskin),
-
+                BigFont = Content.Load<SpriteFont>(ResourceNames.Fonts.BigFont),
+                NormalFont = Content.Load<SpriteFont>(ResourceNames.Fonts.NormalFont),
+                XmlSkinDescriptorFile = "Content/GUI/GuiSkin.xml"
             };
             GuiSystem.SetSkin(parameters);
 
