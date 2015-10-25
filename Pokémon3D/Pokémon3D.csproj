@@ -145,6 +145,7 @@
   <ItemGroup>
     <None Include="Content\Effects\BasicEffect.fx" />
     <None Include="Content\Effects\DebugShadowMap.fx" />
+    <None Include="Content\Effects\PostProcessing.fx" />
     <Content Include="Content\GUI\GuiSkin.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

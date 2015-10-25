@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
@@ -8,18 +9,28 @@ namespace Pokemon3D.Rendering.Compositor
 {
     class DefaultSceneRenderer : SceneRenderer
     {
+        private readonly GameContext _gameContext;
         private readonly GraphicsDevice _device;
         private readonly SceneEffect _sceneEffect;
         private readonly RenderTarget2D _shadowMap;
         private readonly List<SceneNode> _solidObjects = new List<SceneNode>();
         private readonly List<SceneNode> _transparentObjects = new List<SceneNode>();
-        private readonly List<PostProcessingStep> _postProcessingSteps = new List<PostProcessingStep>(); 
+        private readonly List<PostProcessingStep> _postProcessingSteps = new List<PostProcessingStep>();
+
+        private RenderTarget2D _activeInputSource;
+        private RenderTarget2D _activeRenderTarget;
 
         public DefaultSceneRenderer(GameContext context, SceneEffect effect)
         {
+            _gameContext = context;
             _device = context.GraphicsDevice;
             _sceneEffect = effect;
             _shadowMap = new RenderTarget2D(context.GraphicsDevice, 1024, 1024, false, SurfaceFormat.Single, DepthFormat.Depth24);
+
+            var width = context.ScreenBounds.Width;
+            var height = context.ScreenBounds.Height;
+            _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
+            _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
         }
 
         public Vector3 LightDirection { get; set; }
@@ -31,8 +42,20 @@ namespace Pokemon3D.Rendering.Compositor
             _postProcessingSteps.Add(step);
         }
 
+        private RenderTargetBinding[] _oldBindings;
+
+        private void PreparePostProcessing()
+        {
+            if (!EnablePostProcessing || !_postProcessingSteps.Any()) return;
+
+            _oldBindings = _device.GetRenderTargets();
+            _device.SetRenderTarget(_activeRenderTarget);
+        }
+
         public void Draw(IList<SceneNode> allNodes, IList<Camera> cameras)
         {
+            PreparePostProcessing();
+
             UpdateNodeLists(allNodes);
 
             if (EnableShadows)
@@ -52,10 +75,17 @@ namespace Pokemon3D.Rendering.Compositor
         {
             if (!EnablePostProcessing) return;
 
-            //foreach (var postProcessingStep in _postProcessingSteps)
-            //{
-            //    postProcessingStep.Process();
-            //}
+            foreach (var postProcessingStep in _postProcessingSteps)
+            {
+                var temp = _activeRenderTarget;
+                _activeRenderTarget = _activeInputSource;
+                _activeInputSource = temp;
+                _device.SetRenderTarget(_activeRenderTarget);
+
+                postProcessingStep.Process(_gameContext, _activeInputSource, _activeRenderTarget);
+            }
+
+            _device.SetRenderTargets(_oldBindings);
         }
 
         public void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target)

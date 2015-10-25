@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Compositor\DefaultSceneRenderer.cs" />
+    <Compile Include="Compositor\GaussianBlurPostProcessingStep.cs" />
     <Compile Include="Data\GeometryData.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\ContentControl.cs" />

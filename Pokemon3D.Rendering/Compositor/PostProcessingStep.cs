@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering.Compositor
 {
@@ -15,8 +16,15 @@ namespace Pokemon3D.Rendering.Compositor
         /// <summary>
         /// Render PostProcess to target texture.
         /// </summary>
+        /// <param name="gameContext">Game Context</param>
         /// <param name="source">Source Input</param>
         /// <param name="target">Rendered Output.</param>
-        void Process(Texture2D source, RenderTarget2D target);
+        void Process(GameContext gameContext, Texture2D source, RenderTarget2D target);
+
+        /// <summary>
+        /// Initialize and Bind Effect data.
+        /// </summary>
+        /// <param name="contextEffect">Effect holding data.</param>
+        void Initialize(Effect contextEffect);
     }
 }
