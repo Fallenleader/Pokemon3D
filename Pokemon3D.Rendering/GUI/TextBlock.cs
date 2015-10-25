@@ -31,6 +31,7 @@ namespace Pokemon3D.Rendering.GUI
         {
             InitializeDrawElements();
             if (element.HasAttribute("Text")) Text = element.GetAttribute("Text");
+            if (element.HasAttribute("Color")) Color = element.GetAttribute("Color").ParseColor();
         }
 
         public TextBlock(GuiSystem guiSystem)

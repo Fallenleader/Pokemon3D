@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -56,12 +57,22 @@ namespace Pokemon3D.Rendering.GUI
                 if (childElement.LocalName == "Grid.ColumnDefinitions") continue;
                 if (childElement.LocalName == "Grid.RowDefinitions") continue;
 
-                var gridRow = Math.Min(_rowDefinitions.Count-1, int.Parse(childElement.GetAttribute("Grid.Row")));
-                var gridColumn = Math.Min(_columnDefinitions.Count-1, int.Parse(childElement.GetAttribute("Grid.Column")));
+                var gridRow = Math.Min(_rowDefinitions.Count-1, GetAttachedRow(childElement));
+                var gridColumn = Math.Min(_columnDefinitions.Count-1, GetAttachedColumn(childElement));
                 var childGuiElement = CreateFromXmlType(GuiSystem, childElement);
 
                 AddChild(gridColumn, gridRow, childGuiElement);
             }
+        }
+
+        private int GetAttachedRow(XmlElement element)
+        {
+            return element.HasAttribute("Grid.Row") ? int.Parse(element.GetAttribute("Grid.Row")) : 0;
+        }
+
+        private int GetAttachedColumn(XmlElement element)
+        {
+            return element.HasAttribute("Grid.Column") ? int.Parse(element.GetAttribute("Grid.Column")) : 0;
         }
 
         private void AddChild(int column, int row, GuiElement element)

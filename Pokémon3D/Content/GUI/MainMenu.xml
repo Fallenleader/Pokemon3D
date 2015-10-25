@@ -1,13 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Middle">
-  <Image Source="Textures/P3D" Margin="10,0,10,30" Scale="0.5" />
-  <Button Margin="10" Id="StartButton">
-    <TextBlock Text="Start New Game" Margin="40,20" />
-  </Button>
-  <Button Margin="10" Id="LoadButton">
-    <TextBlock Text="Load Existing Game" Margin="40,20" />
-  </Button>
-  <Button Margin="10" Id="QuitButton">
-    <TextBlock Text="Quit Game" Margin="40,20" />
-  </Button>
-</StackPanel>
+<Grid>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="*" />
+    <RowDefinition Height="Auto" />
+  </Grid.RowDefinitions>
+
+  <Image Grid.Row="0" Source="Textures/P3D" Margin="20" Scale="0.5" />
+
+  <StackPanel Grid.Row="1"
+              Orientation="Vertical" 
+              HorizontalAlignment="Center" 
+              VerticalAlignment="Middle">
+    
+    <Button Margin="10" Id="StartButton">
+      <TextBlock Text="Start New Game" Margin="40,20" />
+    </Button>
+    <Button Margin="10" Id="LoadButton">
+      <TextBlock Text="Load Existing Game" Margin="40,20" />
+    </Button>
+    <Button Margin="10" Id="QuitButton">
+      <TextBlock Text="Quit Game" Margin="40,20" />
+    </Button>
+  </StackPanel>
+  
+  <TextBlock Grid.Row="2" 
+             Margin="5"
+             Text="Version 0.1 Alpha" 
+             Color="ffffffff" 
+             HorizontalAlignment="Right" />
+</Grid>

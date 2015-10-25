@@ -48,6 +48,7 @@
     <Compile Include="Animations\DeltaAnimation.cs" />
     <Compile Include="Diagnostics\GameLogger.cs" />
     <Compile Include="Diagnostics\MessageType.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\StringParseExtension.cs" />
