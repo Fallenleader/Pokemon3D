@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
@@ -16,18 +14,15 @@ namespace Pokemon3D.Rendering
         private readonly List<Camera> _allCameras; 
         private readonly GraphicsDevice _device;
         private readonly SpriteBatch _spriteBatch;
-        private readonly SceneRenderer _sceneRenderer;
 
-        public bool EnableShadows { get; set; }
-        public Vector3 LightDirection { get; set; }
+        public SceneRenderer Renderer { get; }
 
         public Scene(GameContext context, SceneEffect effect)
         {
             _device = context.GraphicsDevice;
-            _sceneRenderer = new DefaultSceneRenderer(context, effect);
+            Renderer = new DefaultSceneRenderer(context, effect) { LightDirection = new Vector3(1, -1, -1)};
             _allNodes = new List<SceneNode>();
             _allCameras = new List<Camera>();
-            LightDirection = new Vector3(1, -1, -1);
             _spriteBatch = new SpriteBatch(_device);
         }
 
@@ -56,10 +51,10 @@ namespace Pokemon3D.Rendering
 
         public void Draw()
         {
-            _sceneRenderer.Draw(_allNodes, _allCameras, LightDirection, EnableShadows);
+            Renderer.Draw(_allNodes, _allCameras);
 
 #if DEBUG_RENDERING
-            if (EnableShadows) _sceneRenderer.DrawDebugShadowMap(_spriteBatch, new Rectangle(0,0,128,128));
+            if (EnableShadows) Renderer.DrawDebugShadowMap(_spriteBatch, new Rectangle(0,0,128,128));
 #endif
         }
 

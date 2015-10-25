@@ -16,11 +16,9 @@ namespace Pokémon3D.UI.Screens
 
         public void OnOpening()
         {
-            _scene = new Scene(Game, new WindowsSceneEffect(Game.Content))
-            {
-                EnableShadows = false,
-                LightDirection = new Vector3(0, -1, 0)
-            };
+            _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
+            _scene.Renderer.EnableShadows = false;
+            _scene.Renderer.LightDirection = new Vector3(0, -1, 0);
 
             _camera = _scene.CreateCamera();
             _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
