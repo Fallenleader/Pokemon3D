@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Middle" Margin="250,0">
+<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Middle">
   <Button Margin="20" Id="StartButton">
-    <TextBlock Text="Start New Game" Margin="20" />
+    <TextBlock Text="Start New Game" Margin="40,20" />
   </Button>
   <Button Margin="20" Id="LoadButton">
-    <TextBlock Text="Load Existing Game" Margin="20" />
+    <TextBlock Text="Load Existing Game" Margin="40,20" />
   </Button>
   <Button Margin="20" Id="QuitButton">
-    <TextBlock Text="Quit Game" Margin="20" />
+    <TextBlock Text="Quit Game" Margin="40,20" />
   </Button>
 </StackPanel>

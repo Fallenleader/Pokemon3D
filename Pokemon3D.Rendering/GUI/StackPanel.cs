@@ -70,33 +70,23 @@ namespace Pokemon3D.Rendering.GUI
             arrangedBounds.X = startX;
             arrangedBounds.Y = startY;
 
-            if (Orientation == Orientation.Vertical)
-            {
-                arrangedBounds.Width = target.Width;
-            }
-            else
-            {
-                arrangedBounds.Height = target.Height;
-            }
-
             var childBounds = new List<Rectangle>();
-
             foreach (var guiElement in Children)
             {
                 var minSize = guiElement.GetMinSize();
-                var childArrange = Orientation == Orientation.Vertical
-                    ? new Rectangle(startX, startY, Bounds.Width, minSize.Height)
-                    : new Rectangle(startX, startY, minSize.Width, Bounds.Height);
+                var childArrange = new Rectangle(startX, startY, minSize.Width, minSize.Height);
 
                 if (Orientation == Orientation.Vertical)
                 {
                     startY += minSize.Height;
                     arrangedBounds.Height += minSize.Height;
+                    arrangedBounds.Width = Math.Max(arrangedBounds.Width, minSize.Width);
                 }
                 else
                 {
                     startX += minSize.Width;
                     arrangedBounds.Width += minSize.Width;
+                    arrangedBounds.Height = Math.Max(arrangedBounds.Height, minSize.Height);
                 }
 
                 childBounds.Add(childArrange);
@@ -106,10 +96,23 @@ namespace Pokemon3D.Rendering.GUI
             var differenceX = newBoundsAligned.X - target.X;
             var differenceY = newBoundsAligned.Y - target.Y;
 
+            var maxElementSize = Orientation == Orientation.Vertical
+                ? childBounds.Max(r => r.Width)
+                : childBounds.Max(r => r.Height);
+
             var i = 0;
             foreach (var guiElement in Children)
             {
                 var rectangle = childBounds.ElementAt(i++).Translate(differenceX, differenceY);
+                if (Orientation == Orientation.Vertical)
+                {
+                    rectangle.Width = maxElementSize;
+                }
+                else
+                {
+                    rectangle.Height = maxElementSize;
+                }
+
                 guiElement.Arrange(rectangle);
             }
         }

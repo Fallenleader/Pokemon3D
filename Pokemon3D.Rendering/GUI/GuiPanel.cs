@@ -25,12 +25,12 @@ namespace Pokemon3D.Rendering.GUI
         public void AddElement(GuiElement element)
         {
             _elements.Add(element);
-            element.Arrange(_gameContext.ScreenBounds);
+            ArrangeElement(element);
         }
 
-        public void ArrangeTo(Rectangle bounds)
+        private void ArrangeElement(GuiElement element)
         {
-            _elements.ForEach(e => e.Arrange(bounds));
+            element.Arrange(_gameContext.ScreenBounds);
         }
 
         public void Update(float elapsedTime)

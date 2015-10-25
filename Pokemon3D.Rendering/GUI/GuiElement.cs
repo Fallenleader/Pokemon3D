@@ -123,8 +123,8 @@ namespace Pokemon3D.Rendering.GUI
             return rectangle;
         }
 
-        public string Id { get; private set; }
-        public List<GuiElement> Children { get; private set; }
+        public string Id { get; }
+        public List<GuiElement> Children { get; }
         public Rectangle Bounds { get; protected set; }
         public Thickness Margin { get; set; }
 
