@@ -357,7 +357,7 @@ namespace birdScript.Types.Prototypes
 
                         if (parsed.Item1.Identifier == CLASS_METHOD_CTOR)
                             processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
-                        
+
                         prototype.AddMember(processor, parsed.Item1);
 
                         if (parsed.Item2.Length > 0)

@@ -16,5 +16,15 @@ namespace birdScript.Adapters
     /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field, AllowMultiple = false)]
     public class ScriptFunctionAttribute : ScriptMemberAttribute
-    { }
+    {
+        /// <summary>
+        /// If this function is the indexer get function of the class.
+        /// </summary>
+        public bool IndexerGet { get; set; }
+
+        /// <summary>
+        /// If this function is the indexer set function of the class.
+        /// </summary>
+        public bool IndexerSet { get; set; }
+    }
 }

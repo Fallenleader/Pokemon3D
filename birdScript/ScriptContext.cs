@@ -87,6 +87,9 @@ namespace birdScript
         {
             _processor = processor;
             Parent = parent;
+
+            if (parent != null)
+                This = parent.This;
         }
 
         internal void Initialize()

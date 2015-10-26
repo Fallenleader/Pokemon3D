@@ -117,7 +117,16 @@ namespace birdScript.Adapters
                         identifier = attr.VariableName;
 
                     SObject setValue = SObject.Unbox(obj.Members[identifier]);
-                    field.SetValue(instance, Translate(setValue));
+
+                    try
+                    {
+                        field.SetValue(instance, Translate(setValue));
+                    }
+                    catch (Exception)
+                    {
+                        // This is most likely a type binding issue: Set null if the types don't fit!
+                        field.SetValue(instance, null);
+                    }
                 }
             }
 
