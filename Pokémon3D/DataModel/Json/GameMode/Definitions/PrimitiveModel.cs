@@ -16,6 +16,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         
         [DataMember(Order = 1)]
         public VertexDeclarationModel[] Vertices;
+        
+        [DataMember(Order = 2)]
+        public int[] Indicies;
     }
     
     /// <summary>
