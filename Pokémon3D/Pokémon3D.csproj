@@ -52,6 +52,7 @@
     <Compile Include="DataModel\IDataModelContainer.cs" />
     <Compile Include="DataModel\Json\BaseTypes.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\PrimitiveModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />

@@ -15,7 +15,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
         public string Id;
         
         [DataMember(Order = 1)]
-        public VertexDeclarationModel[] Vertices;
+        public VertexModel[] Vertices;
         
         [DataMember(Order = 2)]
         public int[] Indicies;
@@ -25,7 +25,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
     /// The data model for a vertex declaration with Position, Normal and Texture Coordinate within a primitive model.
     /// </summary>
     [DataContract]
-    class VertexDeclarationModel : JsonDataModel
+    class VertexModel : JsonDataModel
     {
         [DataMember(Order = 0)]
         public Vector3Model Position;
