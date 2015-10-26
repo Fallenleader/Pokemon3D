@@ -96,6 +96,8 @@ namespace birdScript.Adapters
             
             var obj = prototype.CreateInstance(processor, null, false);
 
+            // Set the field values of the current instance:
+
             FieldInfo[] fields = objIn.GetType()
                 .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(f => f.GetCustomAttribute<CompilerGeneratedAttribute>() == null)
@@ -103,23 +105,48 @@ namespace birdScript.Adapters
 
             foreach (var field in fields)
             {
-                var attr = field.GetCustomAttribute<ScriptVariableAttribute>(false);
-                if (attr != null)
-                {
-                    string identifier = field.Name;
-                    if (!string.IsNullOrEmpty(attr.VariableName))
-                        identifier = attr.VariableName;
+                var attributes = field.GetCustomAttributes(false);
 
-                    obj.SetMember(identifier, Translate(processor, field.GetValue(objIn)));
+                foreach (var attr in attributes)
+                {
+                    if (attr.GetType() == typeof(ScriptVariableAttribute))
+                    {
+                        var memberAttr = (ScriptMemberAttribute)attr;
+
+                        string identifier = field.Name;
+                        if (!string.IsNullOrEmpty(memberAttr.VariableName))
+                            identifier = memberAttr.VariableName;
+
+                        var fieldContent = field.GetValue(objIn);
+
+                        obj.SetMember(identifier, Translate(processor, fieldContent));
+                    }
+                    else if (attr.GetType() == typeof(ScriptFunctionAttribute))
+                    {
+                        // When it's a field and a function, we have the source code of the function as value of the field.
+                        // Example: public string MyFunction = "function() { console.log('Hello World'); }";
+
+                        var memberAttr = (ScriptMemberAttribute)attr;
+
+                        string identifier = field.Name;
+                        if (!string.IsNullOrEmpty(memberAttr.VariableName))
+                            identifier = memberAttr.VariableName;
+
+                        string functionCode = field.GetValue(objIn).ToString();
+
+                        obj.SetMember(identifier, new SFunction(processor, functionCode));
+                    }
                 }
             }
-
+            
             return obj;
         }
 
         internal static Prototype TranslatePrototype(ScriptProcessor processor, Type t)
         {
             var prototype = new Prototype(t.Name);
+
+            var typeInstance = Activator.CreateInstance(t);
 
             FieldInfo[] fields = t
                 .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
@@ -128,32 +155,58 @@ namespace birdScript.Adapters
 
             foreach (var field in fields)
             {
-                var attr = field.GetCustomAttribute<ScriptVariableAttribute>(false);
-                if (attr != null)
-                {
-                    string identifier = field.Name;
-                    if (!string.IsNullOrEmpty(attr.VariableName))
-                        identifier = attr.VariableName;
+                var attributes = field.GetCustomAttributes(false);
 
-                    prototype.AddMember(processor, new PrototypeMember(identifier, processor.Undefined));
+                foreach (var attr in attributes)
+                {
+                    if (attr.GetType() == typeof(ScriptVariableAttribute))
+                    {
+                        var memberAttr = (ScriptMemberAttribute)attr;
+                        string identifier = field.Name;
+                        if (!string.IsNullOrEmpty(memberAttr.VariableName))
+                            identifier = memberAttr.VariableName;
+
+                        var fieldContent = field.GetValue(typeInstance);
+
+                        if (fieldContent == null)
+                            prototype.AddMember(processor, new PrototypeMember(identifier, processor.Undefined));
+                        else
+                            prototype.AddMember(processor, new PrototypeMember(identifier, Translate(processor, fieldContent)));
+                    }
+                    else if (attr.GetType() == typeof(ScriptFunctionAttribute))
+                    {
+                        var memberAttr = (ScriptMemberAttribute)attr;
+                        string identifier = field.Name;
+                        if (!string.IsNullOrEmpty(memberAttr.VariableName))
+                            identifier = memberAttr.VariableName;
+
+                        var fieldContent = field.GetValue(typeInstance);
+
+                        if (fieldContent == null)
+                            prototype.AddMember(processor, new PrototypeMember(identifier, processor.Undefined));
+                        else
+                            prototype.AddMember(processor, new PrototypeMember(identifier, new SFunction(processor, fieldContent.ToString())));
+                    }
                 }
             }
 
             MethodInfo[] methods = t
-                .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
                 .Where(f => f.GetCustomAttribute<CompilerGeneratedAttribute>() == null)
                 .ToArray();
 
             foreach (var method in methods)
             {
-                var attr = method.GetCustomAttribute<ScriptVariableAttribute>(false);
+                var attr = method.GetCustomAttribute<ScriptFunctionAttribute>(false);
                 if (attr != null)
                 {
                     string identifier = method.Name;
                     if (!string.IsNullOrEmpty(attr.VariableName))
                         identifier = attr.VariableName;
 
-                    prototype.AddMember(processor, new PrototypeMember(identifier, processor.Undefined));
+                    var methodDelegate = (DBuiltInMethod)Delegate.CreateDelegate(typeof(DBuiltInMethod), method);
+
+                    prototype.AddMember(processor, new PrototypeMember(identifier, new SFunction(methodDelegate)));
                 }
             }
 

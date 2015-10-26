@@ -55,7 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="birdScript\" />
+    <Folder Include="birdScript\Adapters\" />
     <Folder Include="Pokemon3D.Rendering\" />
     <Folder Include="Pokémon3D\" />
   </ItemGroup>

@@ -7,15 +7,6 @@ using System.Threading.Tasks;
 namespace birdScript.Types
 {
     /// <summary>
-    /// The delegate for hardcoded methods.
-    /// </summary>
-    /// <param name="instance">The calling instance.</param>
-    /// <param name="processor">The script processor this call originates from.</param>
-    /// <param name="This">The contextual "this" object.</param>
-    /// <param name="parameters">Parameters for this method call.</param>
-    public delegate SObject DBuiltInMethod(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters);
-
-    /// <summary>
     /// The base script object.
     /// </summary>
     public abstract partial class SObject
