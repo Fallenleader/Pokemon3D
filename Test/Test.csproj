@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="birdScript\Adapters\ScriptInAdapterTests.cs" />
+    <Compile Include="birdScript\Adapters\ScriptOutAdapterTests.cs" />
     <Compile Include="birdScript\ScriptProcessorFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
