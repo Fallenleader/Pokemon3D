@@ -105,6 +105,9 @@ namespace birdScript
                 AddPrototype(new StringPrototype(_processor));
                 AddPrototype(new ArrayPrototype());
                 AddPrototype(new ErrorPrototype(_processor));
+
+                GlobalFunctions.GetFunctions()
+                    .ForEach(x => AddVariable(x));
             }
         }
 

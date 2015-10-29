@@ -54,6 +54,7 @@
     <Compile Include="BuiltInMethodManager.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="ErrorType.cs" />
+    <Compile Include="GlobalFunctions.cs" />
     <Compile Include="InternalsVisibleTo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ScriptContext.cs" />
