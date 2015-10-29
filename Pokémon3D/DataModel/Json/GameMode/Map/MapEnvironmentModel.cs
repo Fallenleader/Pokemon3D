@@ -9,7 +9,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     /// The model defining the environment of a map.
     /// </summary>
     [DataContract]
-    class MapEnvironmentModel
+    class MapEnvironmentModel : JsonDataModel
     {
         [DataMember(Order = 0)]
         public string Name;

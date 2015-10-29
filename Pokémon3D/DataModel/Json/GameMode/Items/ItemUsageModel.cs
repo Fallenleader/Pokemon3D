@@ -3,24 +3,24 @@
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
 
-namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
+namespace Pokémon3D.DataModel.Json.GameMode.Items
 {
-    /// <summary>
-    /// The positioning of an entity field.
-    /// </summary>
     [DataContract]
-    class EntityFieldPositionModel : JsonDataModel
+    class ItemUsageModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public Vector3Model Position;
+        public bool Overworld;
 
         [DataMember(Order = 1)]
-        public Vector3Model Size;
+        public bool Trade;
 
         [DataMember(Order = 2)]
-        public bool Fill;
+        public bool Held;
 
         [DataMember(Order = 3)]
-        public Vector3Model Steps;
+        public bool InBattle;
+
+        [DataMember(Order = 4)]
+        public bool Toss;
     }
 }

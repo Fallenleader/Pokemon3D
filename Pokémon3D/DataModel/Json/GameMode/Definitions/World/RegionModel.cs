@@ -25,17 +25,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     }
 
     #endregion
-
-    /// <summary>
-    /// The data model of the regions file.
-    /// </summary>
-    [DataContract]
-    class RegionsModel : JsonDataModel
-    {
-        [DataMember(Order = 0)]
-        public RegionModel[] Regions;
-    }
-
+    
     /// <summary>
     /// The data model for a region.
     /// </summary>

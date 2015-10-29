@@ -6,19 +6,6 @@
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
     /// <summary>
-    /// The data model for the Types data file.
-    /// </summary>
-    [DataContract]
-    class TypesModel : JsonDataModel
-    {
-        /// <summary>
-        /// The types enumeration of the file.
-        /// </summary>
-        [DataMember(Order = 0)]
-        public TypeModel[] Types;
-    }
-
-    /// <summary>
     /// The data model for a Pokémon or move type in the game.
     /// </summary>
     [DataContract]

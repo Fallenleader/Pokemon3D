@@ -6,7 +6,7 @@
 namespace Pokémon3D.DataModel.Json.GameMode
 {
     [DataContract]
-    class GameModeModel
+    class GameModeModel : JsonDataModel
     {
         // Basic information data:
 
@@ -27,25 +27,5 @@ namespace Pokémon3D.DataModel.Json.GameMode
 
         [DataMember(Order = 5)]
         public GameRuleModel[] Gamerules;
-    }
-
-    [DataContract]
-    class GameModeStartConfigurationModel
-    {
-        [DataMember(Order = 0)]
-        public string Map;
-
-        [DataMember(Order = 1)]
-        public string Script;
-    }
-
-    [DataContract]
-    class GameRuleModel
-    {
-        [DataMember(Order = 0)]
-        public string Name;
-
-        [DataMember(Order = 1)]
-        public string Value;
     }
 }

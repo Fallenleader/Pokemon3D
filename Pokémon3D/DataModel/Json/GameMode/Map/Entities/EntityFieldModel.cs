@@ -9,7 +9,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     /// A field of entities, defined by a single entity definition.
     /// </summary>
     [DataContract]
-    class EntityFieldModel
+    class EntityFieldModel : JsonDataModel
     {
         /// <summary>
         /// An optional data tag, not used for anything. This can be used by map makers to store comments with their entities.

@@ -9,7 +9,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     /// A model for an additional component assigned to an entity.
     /// </summary>
     [DataContract]
-    class EntityComponentModel
+    class EntityComponentModel : JsonDataModel
     {
         [DataMember(Order = 0)]
         public string Name;

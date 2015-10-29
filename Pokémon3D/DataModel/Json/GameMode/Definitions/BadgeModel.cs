@@ -6,19 +6,6 @@
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions
 {
     /// <summary>
-    /// The data model for the badges list.
-    /// </summary>
-    [DataContract]
-    class BadgesModel : JsonDataModel
-    {
-        /// <summary>
-        /// The list of badges.
-        /// </summary>
-        [DataMember(Order = 0)]
-        public BadgeModel[] Badges;
-    }
-
-    /// <summary>
     /// The data model for a badge.
     /// </summary>
     [DataContract]

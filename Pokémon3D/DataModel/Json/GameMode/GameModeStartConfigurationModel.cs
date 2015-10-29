@@ -3,18 +3,15 @@
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
 
-namespace Pokémon3D.DataModel.Json.GameMode.Map
+namespace Pokémon3D.DataModel.Json.GameMode
 {
-    /// <summary>
-    /// A data model for an offset map.
-    /// </summary>
     [DataContract]
-    class OffsetMapModel : JsonDataModel
+    class GameModeStartConfigurationModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string MapFile;
+        public string Map;
 
         [DataMember(Order = 1)]
-        public Vector3Model Offset;
+        public string Script;
     }
 }
