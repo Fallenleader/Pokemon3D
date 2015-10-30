@@ -99,7 +99,7 @@ namespace birdScript
             else if (parameters[0] is SBool)
                 return processor.Context.CreateInstance("Boolean", new SObject[] { parameters[0] });
             else
-                return processor.Undefined;
+                return parameters[0]; // returns the input object, if no conversion was conducted.
         }
 
         /// <summary>
@@ -118,7 +118,37 @@ namespace birdScript
             else if (parameters[0] is SBool)
                 return processor.CreateBool(((SBool)parameters[0]).Value);
             else
+                return parameters[0]; // returns the input object, if no conversion was conducted.
+        }
+
+        [BuiltInMethod(MethodName = "isNaN")]
+        public static SObject isNaN(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
+        {
+            if (parameters.Length == 0)
                 return processor.Undefined;
+            
+            double dbl;
+            if (parameters[0] is SNumber)
+                dbl = ((SNumber)parameters[0]).Value;
+            else
+                dbl = parameters[0].ToNumber(processor).Value;
+
+            return processor.CreateBool(double.IsNaN(dbl));
+        }
+
+        [BuiltInMethod(MethodName = "isFinite")]
+        public static SObject isFinite(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
+        {
+            if (parameters.Length == 0)
+                return processor.Undefined;
+
+            double dbl;
+            if (parameters[0] is SNumber)
+                dbl = ((SNumber)parameters[0]).Value;
+            else
+                dbl = parameters[0].ToNumber(processor).Value;
+
+            return processor.CreateBool(!(double.IsNaN(dbl) || double.IsInfinity(dbl)));
         }
     }
 }

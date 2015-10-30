@@ -45,6 +45,9 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_EXPECTED_TYPE = "function indexer expected indexer type";
         public const string MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE = "{0} is not a valid function indexer type";
         public const string MESSAGE_SYNTAX_CLASS_INVALID_FUNCTION_SIGNATURE = "invalid function signature";
+        public const string MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_EXPECTED_TYPE = "function property expected property type";
+        public const string MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_INVALID_TYPE = "{0} is not a valid function property type";
+        public const string MESSAGE_SYNTAX_CLASS_INCOMPATIBLE_SIGNATURE = "incompatible attributes assigned to class function signature";
 
         public const string MESSAGE_API_NOT_SUPPORTED = "this functionality is not supported";
 

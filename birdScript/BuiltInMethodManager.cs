@@ -73,5 +73,7 @@ namespace birdScript
         public bool IsIndexerGet { get; set; }
 
         public bool IsIndexerSet { get; set; }
+
+        public FunctionUsageType FunctionType { get; set; }
     }
 }

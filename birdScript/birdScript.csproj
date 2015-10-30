@@ -69,6 +69,7 @@
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptProcessor.cs" />
+    <Compile Include="Types\FunctionUsageType.cs" />
     <Compile Include="Types\GlobalContextObject.cs" />
     <Compile Include="Types\ObjectComparer.cs" />
     <Compile Include="Types\ObjectOperators.cs" />

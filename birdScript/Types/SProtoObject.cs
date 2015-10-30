@@ -102,7 +102,11 @@ namespace birdScript.Types
             else
                 memberName = accessor.ToString(processor).Value;
 
-            if (Members.ContainsKey(memberName))
+            if (Members.ContainsKey("_get_" + memberName)) // getter property
+            {
+                return ((SFunction)Members["_get_" + memberName].Data).Call(processor, this, this, new SObject[] { });
+            }
+            else if (Members.ContainsKey(memberName))
             {
                 return Members[memberName];
             }
@@ -132,6 +136,10 @@ namespace birdScript.Types
                 else
                     memberName = accessor.ToString(processor).Value;
 
+                if (Members.ContainsKey("_set_" + memberName)) // setter property
+                {
+                    ((SFunction)Members["_set_" + memberName].Data).Call(processor, this, this, new SObject[] { value });
+                }
                 if (Members.ContainsKey(memberName))
                 {
                     Members[memberName].Data = value;

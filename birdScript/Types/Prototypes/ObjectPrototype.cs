@@ -8,10 +8,7 @@ namespace birdScript.Types.Prototypes
 {
     class ObjectPrototype : Prototype
     {
-        public ObjectPrototype() : base("Object")
-        {
-
-        }
+        public ObjectPrototype() : base("Object") { }
 
         [BuiltInMethod]
         public static SObject toString(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
@@ -37,7 +34,7 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  protoParam.TypeOf() );
+                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, protoParam.TypeOf());
                 }
             }
 
@@ -50,7 +47,7 @@ namespace birdScript.Types.Prototypes
             }
             else
             {
-                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  LITERAL_UNDEFINED );
+                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, LITERAL_UNDEFINED);
             }
         }
     }

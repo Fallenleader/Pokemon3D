@@ -73,16 +73,7 @@ namespace birdScript.Types
 
             return processor.Context.CreateInstance("Array", elements.ToArray());
         }
-
-        /// <summary>
-        /// Updates the "length" property of this object.
-        /// </summary>
-        public void UpdateLength(ScriptProcessor processor)
-        {
-            //TODO: Add length to prototype
-            //Members["length"] = new SVariable("length", processor.CreateNumber(ArrayMembers.Length)) { IsReadOnly = true };
-        }
-
+        
         internal override string ToScriptSource()
         {
             StringBuilder source = new StringBuilder();

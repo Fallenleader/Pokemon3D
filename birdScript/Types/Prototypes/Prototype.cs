@@ -38,9 +38,18 @@ namespace birdScript.Types.Prototypes
             var methods = BuiltInMethodManager.GetMethods(GetType());
             foreach (var methodData in methods)
             {
+                SFunction function = new SFunction(methodData.Item3);
+                string identifier = methodData.Item1;
+
+                function.FunctionUsage = methodData.Item2.FunctionType;
+                if (methodData.Item2.FunctionType == FunctionUsageType.PropertyGetter)
+                    identifier = "_get_" + identifier;
+                if (methodData.Item2.FunctionType == FunctionUsageType.PropertySetter)
+                    identifier = "_set_" + identifier;
+                
                 _prototypeMembers.Add(methodData.Item1, new PrototypeMember(
-                        identifier: methodData.Item1,
-                        data: new SFunction(methodData.Item3),
+                        identifier: identifier,
+                        data: function,
                         isStatic: methodData.Item2.IsStatic,
                         isReadOnly: false,
                         isIndexerGet: methodData.Item2.IsIndexerGet,
@@ -65,7 +74,7 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION,  methodName );
+                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, methodName);
                 }
             }
 
@@ -75,7 +84,7 @@ namespace birdScript.Types.Prototypes
                 return Extends.ExecuteMethod(processor, methodName, caller, This, parameters);
             }
 
-            return processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED,  methodName );
+            return processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, methodName);
         }
 
         internal override bool HasMember(ScriptProcessor processor, string memberName)
@@ -263,7 +272,7 @@ namespace birdScript.Types.Prototypes
         internal void AddMember(ScriptProcessor processor, PrototypeMember member)
         {
             if (_prototypeMembers.ContainsKey(member.Identifier))
-                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, member.Identifier, Name );
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, member.Identifier, Name);
 
             _prototypeMembers.Add(member.Identifier, member);
         }
@@ -332,7 +341,7 @@ namespace birdScript.Types.Prototypes
                     Prototype extendedPrototype = processor.Context.GetPrototype(extends);
 
                     if (extendedPrototype == null)
-                        processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  extends );
+                        processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, extends);
 
                     prototype.Extends = extendedPrototype;
                 }
@@ -490,6 +499,7 @@ namespace birdScript.Types.Prototypes
         private const string FUNCTION_SIGNATURE_INDEXER = "indexer";
         private const string FUNCTION_SIGNATURE_GET = "get";
         private const string FUNCTION_SIGNATURE_SET = "set";
+        private const string FUNCTION_SIGNATURE_PROPERTY = "property";
 
         private static PrototypeMember ParseFunctionStatement(ScriptProcessor processor, ScriptStatement headerStatement, ScriptStatement bodyStatement)
         {
@@ -500,6 +510,9 @@ namespace birdScript.Types.Prototypes
             bool isStatic = false;
             bool isIndexerGet = false;
             bool isIndexerSet = false;
+            FunctionUsageType functionType = FunctionUsageType.Default;
+
+            int significantCount = 0;
 
             // Read static:
             if (signature.Contains(FUNCTION_SIGNATURE_STATIC))
@@ -511,6 +524,8 @@ namespace birdScript.Types.Prototypes
             // Read indexer:
             if (signature.Contains(FUNCTION_SIGNATURE_INDEXER))
             {
+                significantCount++;
+
                 int indexerIndex = signature.IndexOf(FUNCTION_SIGNATURE_INDEXER);
 
                 if (indexerIndex + 1 == signature.Count)
@@ -529,11 +544,43 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE, indexerType );
+                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE, indexerType);
                 }
 
                 signature.Remove(FUNCTION_SIGNATURE_INDEXER);
             }
+            // Read property:
+            if (signature.Contains(FUNCTION_SIGNATURE_PROPERTY))
+            {
+                significantCount++;
+
+                int propertyIndex = signature.IndexOf(FUNCTION_SIGNATURE_PROPERTY);
+
+                if (propertyIndex + 1 == signature.Count)
+                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_EXPECTED_TYPE);
+
+                string propertyType = signature[propertyIndex + 1];
+                if (propertyType == FUNCTION_SIGNATURE_GET)
+                {
+                    functionType = FunctionUsageType.PropertyGetter;
+                    signature.RemoveAt(propertyIndex + 1);
+                }
+                else if (propertyType == FUNCTION_SIGNATURE_SET)
+                {
+                    functionType = FunctionUsageType.PropertySetter;
+                    signature.RemoveAt(propertyIndex + 1);
+                }
+                else
+                {
+                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_INVALID_TYPE, propertyType);
+                }
+
+                signature.Remove(FUNCTION_SIGNATURE_PROPERTY);
+            }
+
+            // Only one (or none) significant signature types can be added to a signature.
+            if (significantCount > 1)
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_INCOMPATIBLE_SIGNATURE);
 
             if (signature.Count != 2)
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_INVALID_FUNCTION_SIGNATURE);
@@ -543,7 +590,14 @@ namespace birdScript.Types.Prototypes
             if (!ScriptProcessor.IsValidIdentifier(identifier))
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
 
+            // After the valid identifier check is done, we add the getter/setter prefix. It wouldn't pass the test.
+            if (functionType == FunctionUsageType.PropertyGetter)
+                identifier = "_get_" + identifier;
+            if (functionType == FunctionUsageType.PropertySetter)
+                identifier = "_set_" + identifier;
+
             SFunction function = new SFunction(processor, signature[0] + " " + header.Remove(0, header.IndexOf("(")) + bodyStatement.Code);
+            function.FunctionUsage = functionType;
 
             return new PrototypeMember(identifier, function, isStatic, false, isIndexerGet, isIndexerSet);
         }
