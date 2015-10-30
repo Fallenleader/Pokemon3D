@@ -155,7 +155,7 @@ namespace birdScript
                             }
                             else
                             {
-                                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script" );
                             }
                         }
                         else
@@ -207,7 +207,7 @@ namespace birdScript
                         }
                         else
                         {
-                            return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                            return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
                         }
                     }
                     else
@@ -225,7 +225,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script" );
             }
         }
 
@@ -300,7 +300,7 @@ namespace birdScript
                         }
                         else
                         {
-                            ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                            ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
                         }
                     }
                     else if (statements[i].StatementType == StatementType.Using || statements[i].StatementType == StatementType.Link)
@@ -345,12 +345,12 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_COMPOUND, new object[] { classBodyStatement.Code[0] });
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_COMPOUND, classBodyStatement.Code[0] );
                 }
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script" );
             }
         }
 
@@ -387,7 +387,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
             }
         }
 
@@ -401,7 +401,7 @@ namespace birdScript
             ScriptStatement[] forStatements = StatementProcessor.GetStatements(this, forCode);
 
             if (forStatements.Length == 0)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  ")" );
             else if (forStatements.Length == 1)
                 return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_FOR_INITIALIZER);
             else if (forStatements.Length == 2)
@@ -459,7 +459,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
             }
         }
 
@@ -760,7 +760,7 @@ namespace birdScript
             condition = condition.Remove(condition.Length - 1, 1).Trim(); // Remove ")".
 
             if (condition.Length == 0)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, ")" );
 
             SObject conditionResult = ExecuteStatement(new ScriptStatement(condition));
             statement.StatementResult = conditionResult;
@@ -805,7 +805,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script");
             }
         }
 
@@ -824,7 +824,7 @@ namespace birdScript
             }
 
             if (!foundIf)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "keyword \'else\'" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "keyword \'else\'" );
 
             _index++;
 
@@ -835,7 +835,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
             }
         }
 
@@ -854,7 +854,7 @@ namespace birdScript
             }
 
             if (!foundIf)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "keyword \'else if\'" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "keyword \'else if\'" );
 
             return ExecuteIf(statement);
         }
@@ -906,7 +906,7 @@ namespace birdScript
             condition = condition.Remove(condition.Length - 1, 1).Trim(); // Remove ")".
 
             if (condition.Length == 0)
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { ")" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, ")" );
 
             _index++;
 
@@ -941,7 +941,7 @@ namespace birdScript
             }
             else
             {
-                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,  "end of script" );
             }
         }
 

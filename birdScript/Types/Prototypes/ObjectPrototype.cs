@@ -37,7 +37,7 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, new object[] { protoParam.TypeOf() });
+                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  protoParam.TypeOf() );
                 }
             }
 
@@ -50,7 +50,7 @@ namespace birdScript.Types.Prototypes
             }
             else
             {
-                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, new object[] { LITERAL_UNDEFINED });
+                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  LITERAL_UNDEFINED );
             }
         }
     }

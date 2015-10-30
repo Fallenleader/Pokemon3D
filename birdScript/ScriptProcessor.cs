@@ -507,12 +507,12 @@ namespace birdScript
                 }
                 else
                 {
-                    returnObject = ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_TOKEN, new object[] { exp });
+                    returnObject = ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_TOKEN, exp);
                 }
             }
             else
             {
-                returnObject = ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { exp });
+                returnObject = ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, exp);
             }
 
             if (isNegative)
@@ -911,7 +911,7 @@ namespace birdScript
                             parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
                             parameters.Add(parameterObject);
                         }
-                        
+
                         parameterStartIndex = index + 1;
                     }
                 }
@@ -1003,7 +1003,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of string" });
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,"end of string" );
                 }
             }
             else
@@ -1076,7 +1076,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION,  methodName);
                 }
             }
             else

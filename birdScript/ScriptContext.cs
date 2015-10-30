@@ -22,7 +22,7 @@ namespace birdScript
         /// The object that gets returned when the script references "this".
         /// </summary>
         internal SObject This { get; set; }
-        
+
         private Dictionary<CallbackType, Delegate> _apiCallbacks = new Dictionary<CallbackType, Delegate>();
 
         private Dictionary<string, SAPIUsing> _apiUsings = new Dictionary<string, SAPIUsing>();
@@ -342,7 +342,7 @@ namespace birdScript
             Prototype prototype = GetPrototype(prototypeName);
 
             if (prototype == null)
-                _processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { prototypeName });
+                _processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, prototypeName);
 
             string argCode = exp.Remove(0, exp.IndexOf("(") + 1);
             argCode = argCode.Remove(argCode.Length - 1, 1);

@@ -65,7 +65,7 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION,  methodName );
                 }
             }
 
@@ -75,7 +75,7 @@ namespace birdScript.Types.Prototypes
                 return Extends.ExecuteMethod(processor, methodName, caller, This, parameters);
             }
 
-            return processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { methodName });
+            return processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED,  methodName );
         }
 
         internal override bool HasMember(ScriptProcessor processor, string memberName)
@@ -262,7 +262,7 @@ namespace birdScript.Types.Prototypes
         internal void AddMember(ScriptProcessor processor, PrototypeMember member)
         {
             if (_prototypeMembers.ContainsKey(member.Identifier))
-                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, new object[] { member.Identifier, Name });
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, member.Identifier, Name );
 
             _prototypeMembers.Add(member.Identifier, member);
         }
@@ -331,7 +331,7 @@ namespace birdScript.Types.Prototypes
                     Prototype extendedPrototype = processor.Context.GetPrototype(extends);
 
                     if (extendedPrototype == null)
-                        processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, new object[] { extends });
+                        processor.ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE,  extends );
 
                     prototype.Extends = extendedPrototype;
                 }
@@ -379,7 +379,7 @@ namespace birdScript.Types.Prototypes
                         if (parsed.Identifier == CLASS_METHOD_CTOR)
                         {
                             if (prototype.Constructor != null)
-                                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, new object[] { parsed.Identifier, identifier });
+                                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION,  parsed.Identifier, identifier );
 
                             prototype.Constructor = parsed;
                         }
@@ -516,7 +516,7 @@ namespace birdScript.Types.Prototypes
                 }
                 else
                 {
-                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE, new object[] { indexerType });
+                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE, indexerType );
                 }
 
                 signature.Remove(FUNCTION_SIGNATURE_INDEXER);

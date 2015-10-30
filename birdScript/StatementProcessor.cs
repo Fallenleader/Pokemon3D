@@ -221,7 +221,7 @@ namespace birdScript
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_UNTERMINATED_COMMENT);
 
             if (isControlStatement)
-                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of script" });
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script" );
 
             // an executable statement not closed with ";" is getting added here:
             string leftOver = statement.ToString().Trim();
