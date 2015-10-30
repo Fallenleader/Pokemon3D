@@ -349,8 +349,10 @@ namespace birdScript.Types.Prototypes
 
                 ScriptStatement[] statements = StatementProcessor.GetStatements(processor, body);
 
-                foreach (ScriptStatement statement in statements)
+                for (int i = 0; i < statements.Length; i++)
                 {
+                    ScriptStatement statement = statements[i];
+
                     if (statement.StatementType == StatementType.Var)
                     {
                         var parsed = ParseVarStatement(processor, statement);
@@ -374,18 +376,28 @@ namespace birdScript.Types.Prototypes
                     }
                     else if (statement.StatementType == StatementType.Function)
                     {
-                        PrototypeMember parsed = ParseFunctionStatement(processor, statement);
+                        i++;
 
-                        if (parsed.Identifier == CLASS_METHOD_CTOR)
+                        if (statements.Length > i)
                         {
-                            if (prototype.Constructor != null)
-                                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION,  parsed.Identifier, identifier );
+                            var bodyStatement = statements[i];
+                            PrototypeMember parsed = ParseFunctionStatement(processor, statement, bodyStatement);
 
-                            prototype.Constructor = parsed;
+                            if (parsed.Identifier == CLASS_METHOD_CTOR)
+                            {
+                                if (prototype.Constructor != null)
+                                    processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_CLASS_DUPLICATE_DEFINITION, parsed.Identifier, identifier);
+
+                                prototype.Constructor = parsed;
+                            }
+                            else
+                            {
+                                prototype.AddMember(processor, parsed);
+                            }
                         }
                         else
                         {
-                            prototype.AddMember(processor, parsed);
+                            return processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script");
                         }
                     }
                     else
@@ -478,10 +490,10 @@ namespace birdScript.Types.Prototypes
         private const string FUNCTION_SIGNATURE_GET = "get";
         private const string FUNCTION_SIGNATURE_SET = "set";
 
-        private static PrototypeMember ParseFunctionStatement(ScriptProcessor processor, ScriptStatement statement)
+        private static PrototypeMember ParseFunctionStatement(ScriptProcessor processor, ScriptStatement headerStatement, ScriptStatement bodyStatement)
         {
-            string code = statement.Code;
-            List<string> signature = code.Remove(code.IndexOf("(")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            string header = headerStatement.Code;
+            List<string> signature = header.Remove(header.IndexOf("(")).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             string identifier;
             bool isStatic = false;
@@ -530,7 +542,7 @@ namespace birdScript.Types.Prototypes
             if (!ScriptProcessor.IsValidIdentifier(identifier))
                 processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
 
-            SFunction function = new SFunction(processor, signature[0] + code.Remove(0, code.IndexOf("(")));
+            SFunction function = new SFunction(processor, signature[0] + " " + header.Remove(0, header.IndexOf("(")) + bodyStatement.Code);
 
             return new PrototypeMember(identifier, function, isStatic, false, isIndexerGet, isIndexerSet);
         }
