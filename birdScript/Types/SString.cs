@@ -121,18 +121,21 @@ namespace birdScript.Types
                 Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
             }
         }
-        
+
         internal override string ToScriptObject()
+        {
+            if (Prototype == null)
+                return ToScriptSource();
+            else
+                return base.ToScriptObject();
+        }
+
+        internal override string ToScriptSource()
         {
             if (Escaped)
                 return string.Format(STRING_NORMAL_FORMAT, Value);
             else
                 return string.Format(STRING_UNESCAPED_FORMAT, Value);
-        }
-
-        internal override string ToScriptSource()
-        {
-            return ToScriptObject();
         }
 
         internal override SString ToString(ScriptProcessor processor)
@@ -167,7 +170,10 @@ namespace birdScript.Types
 
         internal override string TypeOf()
         {
-            return LITERAL_TYPE_STRING;
+            if (Prototype == null)
+                return LITERAL_TYPE_STRING;
+            else
+                return base.TypeOf();
         }
 
         internal override double SizeOf()

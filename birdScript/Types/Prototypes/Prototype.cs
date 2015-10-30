@@ -163,6 +163,7 @@ namespace birdScript.Types.Prototypes
         internal SProtoObject CreateInstance(ScriptProcessor processor, SObject[] parameters, bool executeCtor)
         {
             SProtoObject obj = CreateBaseObject();
+            obj.IsProtoInstance = true;
 
             obj.AddMember(MEMBER_NAME_PROTOTYPE, this);
 

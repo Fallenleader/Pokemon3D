@@ -16,6 +16,11 @@ namespace birdScript.Types
         internal protected const string MEMBER_NAME_PROTOTYPE = "prototype";
         internal protected const string MEMBER_NAME_SUPER = "super";
 
+        /// <summary>
+        /// Determines if this object actually was instantiated through a prototype.
+        /// </summary>
+        internal bool IsProtoInstance { get; set; }
+
         internal Dictionary<string, SVariable> Members { get; } = new Dictionary<string, SVariable>();
 
         internal SFunction IndexerGetFunction { get; set; }
