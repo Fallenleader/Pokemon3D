@@ -13,6 +13,9 @@ namespace birdScript
     /// </summary>
     public partial class ScriptProcessor
     {
+        // Set this to true to have script exceptions crash the application.
+        internal const bool DEBUG_CRASH_MODE = false;
+
         private struct ElementCapture
         {
             public int StartIndex;
@@ -95,7 +98,7 @@ namespace birdScript
             SObject returnObject = Undefined;
             ErrorHandler.Clean();
 
-            if (_hasParent)
+            if (_hasParent || DEBUG_CRASH_MODE)
             {
                 returnObject = ProcessStatements();
             }
@@ -218,12 +221,33 @@ namespace birdScript
 
         #region Operators
 
-        private string EvaluateOperatorRightToLeft()
+        private string EvaluateReverseBool(string exp)
         {
-            return null;
+            // The reverse bool operator ("!") gets evaluated from right to left, instead of left to right.
+            // So the list of operators gets reversed.
+
+            string op = "!";
+
+            int[] ops = GetOperatorPositions(exp, op).Reverse().ToArray();
+
+            for (int i = 0; i < ops.Length; i++)
+            {
+                var cOp = ops[i];
+
+                ElementCapture captureRight = CaptureRight(exp, cOp + op.Length);
+                string elementRight = captureRight.Identifier;
+                SObject objRight = ToScriptObject(elementRight);
+
+                string result = ObjectOperators.NotOperator(this, objRight);
+
+                exp = exp.Remove(cOp, elementRight.Length + op.Length);
+                exp = exp.Insert(cOp, result);
+            }
+
+            return exp;
         }
 
-        private string EvaluateOperatorLeftToRight(string exp, string op)
+        private string EvaluateOperator(string exp, string op)
         {
             int[] ops = GetOperatorPositions(exp, op);
 
@@ -245,6 +269,9 @@ namespace birdScript
                 {
                     string result = "";
 
+                    if (string.IsNullOrWhiteSpace(elementLeft))
+                        ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, op);
+
                     SObject objectLeft = ToScriptObject(elementLeft);
 
                     ElementCapture captureRight;
@@ -255,6 +282,9 @@ namespace birdScript
                     {
                         captureRight = CaptureRight(exp, cOp + op.Length);
                         elementRight = captureRight.Identifier;
+
+                        if (string.IsNullOrWhiteSpace(elementRight))
+                            ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script");
 
                         if (op != ".")
                             objectRight = ToScriptObject(elementRight);
@@ -1003,7 +1033,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION,"end of string" );
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of string");
                 }
             }
             else
@@ -1076,7 +1106,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION,  methodName);
+                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, methodName);
                 }
             }
             else

@@ -710,43 +710,45 @@ namespace birdScript
                 #endregion
 
                 if (exp.Contains("."))
-                    exp = EvaluateOperatorLeftToRight(exp, ".");
+                    exp = EvaluateOperator(exp, ".");
                 if (exp.Contains("++"))
-                    exp = EvaluateOperatorLeftToRight(exp, "++");
+                    exp = EvaluateOperator(exp, "++");
                 if (exp.Contains("--"))
-                    exp = EvaluateOperatorLeftToRight(exp, "--");
+                    exp = EvaluateOperator(exp, "--");
+                if (exp.Contains("!"))
+                    exp = EvaluateReverseBool(exp);
                 if (exp.Contains("**"))
-                    exp = EvaluateOperatorLeftToRight(exp, "**");
+                    exp = EvaluateOperator(exp, "**");
                 if (exp.Contains("*"))
-                    exp = EvaluateOperatorLeftToRight(exp, "*");
+                    exp = EvaluateOperator(exp, "*");
                 if (exp.Contains("/"))
-                    exp = EvaluateOperatorLeftToRight(exp, "/");
+                    exp = EvaluateOperator(exp, "/");
                 if (exp.Contains("%"))
-                    exp = EvaluateOperatorLeftToRight(exp, "%");
+                    exp = EvaluateOperator(exp, "%");
                 if (exp.Contains("+"))
-                    exp = EvaluateOperatorLeftToRight(exp, "+");
+                    exp = EvaluateOperator(exp, "+");
                 if (exp.Contains("-"))
-                    exp = EvaluateOperatorLeftToRight(exp, "-");
+                    exp = EvaluateOperator(exp, "-");
                 if (exp.Contains("<="))
-                    exp = EvaluateOperatorLeftToRight(exp, "<=");
+                    exp = EvaluateOperator(exp, "<=");
                 if (exp.Contains(">="))
-                    exp = EvaluateOperatorLeftToRight(exp, ">=");
+                    exp = EvaluateOperator(exp, ">=");
                 if (exp.Contains("<"))
-                    exp = EvaluateOperatorLeftToRight(exp, "<");
+                    exp = EvaluateOperator(exp, "<");
                 if (exp.Contains(">"))
-                    exp = EvaluateOperatorLeftToRight(exp, ">");
+                    exp = EvaluateOperator(exp, ">");
                 if (exp.Contains("==="))
-                    exp = EvaluateOperatorLeftToRight(exp, "===");
+                    exp = EvaluateOperator(exp, "===");
                 if (exp.Contains("!=="))
-                    exp = EvaluateOperatorLeftToRight(exp, "!==");
+                    exp = EvaluateOperator(exp, "!==");
                 if (exp.Contains("=="))
-                    exp = EvaluateOperatorLeftToRight(exp, "==");
+                    exp = EvaluateOperator(exp, "==");
                 if (exp.Contains("!="))
-                    exp = EvaluateOperatorLeftToRight(exp, "!=");
+                    exp = EvaluateOperator(exp, "!=");
                 if (exp.Contains("&&"))
-                    exp = EvaluateOperatorLeftToRight(exp, "&&");
+                    exp = EvaluateOperator(exp, "&&");
                 if (exp.Contains("||"))
-                    exp = EvaluateOperatorLeftToRight(exp, "||");
+                    exp = EvaluateOperator(exp, "||");
 
                 return ToScriptObject(exp);
             }
