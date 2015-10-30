@@ -93,21 +93,14 @@ namespace birdScript
         /// <summary>
         /// Throws an error with the given <see cref="ErrorType"/> and error message.
         /// </summary>
-        public SObject ThrowError(ErrorType errorType, string message)
+        public SObject ThrowError(ErrorType errorType, string message, params object[] messageArgs)
         {
             string strErrorType = errorType.ToString();
+            string formattedMessage = string.Format(message, messageArgs);
             
-            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
+            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(formattedMessage), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
 
             return ThrowError(errorObject);
-        }
-
-        /// <summary>
-        /// Throws an error with the given <see cref="ErrorType"/> and message, adding formating options via message arguments.
-        /// </summary>
-        public SObject ThrowError(ErrorType errorType, string message, object[] messageArgs)
-        {
-            return ThrowError(errorType, string.Format(message, messageArgs));
         }
     }
 }
