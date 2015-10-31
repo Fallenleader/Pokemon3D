@@ -53,10 +53,15 @@ namespace birdScript.Types.Prototypes
 
                 obj.Members[MEMBER_NAME_TYPE].Data = errorType;
             }
+            else
+            {
+                obj.Members[MEMBER_NAME_TYPE].Data = processor.CreateString("UserError");
+            }
 
             if (parameters.Length > 2)
             {
                 SNumber errorLine;
+
                 if (parameters[2] is SNumber)
                     errorLine = (SNumber)parameters[2];
                 else
