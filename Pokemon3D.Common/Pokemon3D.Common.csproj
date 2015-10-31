@@ -51,7 +51,6 @@
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\PointExtension.cs" />
     <Compile Include="Extensions\RectangleExtension.cs" />
-    <Compile Include="Extensions\StringParseExtension.cs" />
     <Compile Include="Extensions\TextureExtensions.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="GameContext.cs" />
@@ -62,6 +61,7 @@
     <Compile Include="ShapeRenderer.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Animations\WaitAnimation.cs" />
+    <Compile Include="StringParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

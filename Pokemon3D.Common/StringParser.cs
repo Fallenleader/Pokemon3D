@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace Pokemon3D.Common.Extensions
+namespace Pokemon3D.Common
 {
-    public static class StringParseExtension
+    public static class StringParser
     {
-        public static Rectangle ParseRectangle(this string value)
+        public static Rectangle ParseRectangle(string value)
         {
             var token = value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             if (token.Length < 4) return new Rectangle();

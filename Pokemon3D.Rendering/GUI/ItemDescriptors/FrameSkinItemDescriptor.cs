@@ -1,6 +1,7 @@
 ﻿using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 using Pokemon3D.Common.Extensions;
 
 namespace Pokemon3D.Rendering.GUI.ItemDescriptors
@@ -15,7 +16,7 @@ namespace Pokemon3D.Rendering.GUI.ItemDescriptors
         public void Deserialize(XmlElement element)
         {
             FrameBorder = Thickness.Parse(element.GetAttribute("Border"));
-            SourceRectangle = element.GetAttribute("NormalRectangle").ParseRectangle();
+            SourceRectangle = StringParser.ParseRectangle(element.GetAttribute("NormalRectangle"));
         }
 
         public Thickness FrameBorder { get; set; }

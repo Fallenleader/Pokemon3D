@@ -2,6 +2,7 @@
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 using Pokemon3D.Common.Extensions;
 
 namespace Pokemon3D.Rendering.GUI
@@ -30,7 +31,7 @@ namespace Pokemon3D.Rendering.GUI
 
             if(Texture != null)
             {
-                SourceRectangle = element.HasAttribute("NormalRectangle") ? element.GetAttribute("NormalRectangle").ParseRectangle() : Texture.Bounds;   
+                SourceRectangle = element.HasAttribute("NormalRectangle") ? StringParser.ParseRectangle(element.GetAttribute("NormalRectangle")) : Texture.Bounds;   
             }
 
             Bounds = SourceRectangle.Scale(Scale);
