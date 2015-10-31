@@ -44,7 +44,10 @@ namespace birdScript.Types
 
         internal override string ToScriptObject()
         {
-            return ConvertToScriptString(Value);
+            if (Prototype == null)
+                return ToScriptSource();
+            else
+                return base.ToScriptObject();
         }
 
         internal override string ToScriptSource()
@@ -72,7 +75,10 @@ namespace birdScript.Types
 
         internal override string TypeOf()
         {
-            return LITERAL_TYPE_BOOL;
+            if (Prototype == null)
+                return LITERAL_TYPE_BOOL;
+            else
+                return base.TypeOf();
         }
 
         internal override double SizeOf()

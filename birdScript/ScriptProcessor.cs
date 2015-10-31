@@ -13,6 +13,9 @@ namespace birdScript
     /// </summary>
     public partial class ScriptProcessor
     {
+        // Set this to true to have script exceptions crash the application.
+        internal const bool DEBUG_CRASH_MODE = false;
+
         private struct ElementCapture
         {
             public int StartIndex;
@@ -95,7 +98,7 @@ namespace birdScript
             SObject returnObject = Undefined;
             ErrorHandler.Clean();
 
-            if (_hasParent)
+            if (_hasParent || DEBUG_CRASH_MODE)
             {
                 returnObject = ProcessStatements();
             }
@@ -126,7 +129,7 @@ namespace birdScript
             Context.Initialize();
         }
 
-        internal static readonly string[] ReservedKeywords = new string[] { "if", "else", "while", "for", "function", "class", "using", "var", "static", "new", "extends", "this", "super", "link", "readonly", "break", "continue", "indexer", "get", "set", "throw", "try", "catch", "finally" };
+        internal static readonly string[] ReservedKeywords = new string[] { "if", "else", "while", "for", "function", "class", "using", "var", "static", "new", "extends", "this", "super", "link", "readonly", "break", "continue", "indexer", "get", "set", "throw", "try", "catch", "finally", "property" };
 
         /// <summary>
         /// Returns if the given string is a valid identifier.
@@ -218,12 +221,33 @@ namespace birdScript
 
         #region Operators
 
-        private string EvaluateOperatorRightToLeft()
+        private string EvaluateReverseBool(string exp)
         {
-            return null;
+            // The reverse bool operator ("!") gets evaluated from right to left, instead of left to right.
+            // So the list of operators gets reversed.
+
+            string op = "!";
+
+            int[] ops = GetOperatorPositions(exp, op).Reverse().ToArray();
+
+            for (int i = 0; i < ops.Length; i++)
+            {
+                var cOp = ops[i];
+
+                ElementCapture captureRight = CaptureRight(exp, cOp + op.Length);
+                string elementRight = captureRight.Identifier;
+                SObject objRight = ToScriptObject(elementRight);
+
+                string result = ObjectOperators.NotOperator(this, objRight);
+
+                exp = exp.Remove(cOp, elementRight.Length + op.Length);
+                exp = exp.Insert(cOp, result);
+            }
+
+            return exp;
         }
 
-        private string EvaluateOperatorLeftToRight(string exp, string op)
+        private string EvaluateOperator(string exp, string op)
         {
             int[] ops = GetOperatorPositions(exp, op);
 
@@ -245,6 +269,9 @@ namespace birdScript
                 {
                     string result = "";
 
+                    if (string.IsNullOrWhiteSpace(elementLeft))
+                        ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, op);
+
                     SObject objectLeft = ToScriptObject(elementLeft);
 
                     ElementCapture captureRight;
@@ -255,6 +282,9 @@ namespace birdScript
                     {
                         captureRight = CaptureRight(exp, cOp + op.Length);
                         elementRight = captureRight.Identifier;
+
+                        if (string.IsNullOrWhiteSpace(elementRight))
+                            ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of script");
 
                         if (op != ".")
                             objectRight = ToScriptObject(elementRight);
@@ -507,12 +537,12 @@ namespace birdScript
                 }
                 else
                 {
-                    returnObject = ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_TOKEN, new object[] { exp });
+                    returnObject = ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_INVALID_TOKEN, exp);
                 }
             }
             else
             {
-                returnObject = ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, new object[] { exp });
+                returnObject = ErrorHandler.ThrowError(ErrorType.ReferenceError, ErrorHandler.MESSAGE_REFERENCE_NOT_DEFINED, exp);
             }
 
             if (isNegative)
@@ -911,7 +941,7 @@ namespace birdScript
                             parameterObject = SObject.Unbox(ExecuteStatement(new ScriptStatement(parameter)));
                             parameters.Add(parameterObject);
                         }
-                        
+
                         parameterStartIndex = index + 1;
                     }
                 }
@@ -1003,7 +1033,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, new object[] { "end of string" });
+                    return ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_EXPECTED_EXPRESSION, "end of string");
                 }
             }
             else
@@ -1076,7 +1106,7 @@ namespace birdScript
                 }
                 else
                 {
-                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                    return ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, methodName);
                 }
             }
             else

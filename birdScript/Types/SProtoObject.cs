@@ -16,6 +16,11 @@ namespace birdScript.Types
         internal protected const string MEMBER_NAME_PROTOTYPE = "prototype";
         internal protected const string MEMBER_NAME_SUPER = "super";
 
+        /// <summary>
+        /// Determines if this object actually was instantiated through a prototype.
+        /// </summary>
+        internal bool IsProtoInstance { get; set; }
+
         internal Dictionary<string, SVariable> Members { get; } = new Dictionary<string, SVariable>();
 
         internal SFunction IndexerGetFunction { get; set; }
@@ -97,7 +102,11 @@ namespace birdScript.Types
             else
                 memberName = accessor.ToString(processor).Value;
 
-            if (Members.ContainsKey(memberName))
+            if (Members.ContainsKey("_get_" + memberName)) // getter property
+            {
+                return ((SFunction)Members["_get_" + memberName].Data).Call(processor, this, this, new SObject[] { });
+            }
+            else if (Members.ContainsKey(memberName))
             {
                 return Members[memberName];
             }
@@ -127,6 +136,10 @@ namespace birdScript.Types
                 else
                     memberName = accessor.ToString(processor).Value;
 
+                if (Members.ContainsKey("_set_" + memberName)) // setter property
+                {
+                    ((SFunction)Members["_set_" + memberName].Data).Call(processor, this, this, new SObject[] { value });
+                }
                 if (Members.ContainsKey(memberName))
                 {
                     Members[memberName].Data = value;
@@ -154,7 +167,7 @@ namespace birdScript.Types
                 }
                 else
                 {
-                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                    return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION,  methodName );
                 }
             }
             else if (Prototype != null && Prototype.HasMember(processor, methodName))
@@ -167,7 +180,7 @@ namespace birdScript.Types
             }
             else
             {
-                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, new object[] { methodName });
+                return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_TYPE_NOT_A_FUNCTION, methodName );
             }
         }
 

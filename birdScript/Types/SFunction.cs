@@ -18,6 +18,8 @@ namespace birdScript.Types
         /// </summary>
         public string Body { get; set; }
         
+        public FunctionUsageType FunctionUsage { get; set; }
+
         public DBuiltInMethod Method { get; set; }
 
         public SFunction(string body, string[] parameters)

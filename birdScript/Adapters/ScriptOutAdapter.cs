@@ -108,8 +108,26 @@ namespace birdScript.Adapters
 
             foreach (var field in fields)
             {
-                SObject setValue = SObject.Unbox(obj.Members[field.Name]);
-                field.SetValue(instance, Translate(setValue));
+                var attr = field.GetCustomAttribute<ScriptVariableAttribute>(false);
+
+                if (attr != null)
+                {
+                    string identifier = field.Name;
+                    if (!string.IsNullOrEmpty(attr.VariableName))
+                        identifier = attr.VariableName;
+
+                    SObject setValue = SObject.Unbox(obj.Members[identifier]);
+
+                    try
+                    {
+                        field.SetValue(instance, Translate(setValue));
+                    }
+                    catch (Exception)
+                    {
+                        // This is most likely a type binding issue: Set null if the types don't fit!
+                        field.SetValue(instance, null);
+                    }
+                }
             }
 
             return instance;

@@ -10,6 +10,15 @@ using System.Reflection;
 namespace birdScript
 {
     /// <summary>
+    /// The delegate for hardcoded methods.
+    /// </summary>
+    /// <param name="instance">The calling instance.</param>
+    /// <param name="processor">The script processor this call originates from.</param>
+    /// <param name="This">The contextual "this" object.</param>
+    /// <param name="parameters">Parameters for this method call.</param>
+    public delegate SObject DBuiltInMethod(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters);
+
+    /// <summary>
     /// Searches for and creates built in method delegates.
     /// </summary>
     internal static class BuiltInMethodManager
@@ -64,5 +73,7 @@ namespace birdScript
         public bool IsIndexerGet { get; set; }
 
         public bool IsIndexerSet { get; set; }
+
+        public FunctionUsageType FunctionType { get; set; }
     }
 }

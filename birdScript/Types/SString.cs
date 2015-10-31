@@ -78,7 +78,7 @@ namespace birdScript.Types
         /// <summary>
         /// The value of this instance.
         /// </summary>
-        internal string Value { get; private set; }
+        internal string Value { get; set; }
 
         /// <summary>
         /// If this instance has escaped characters or not. If not, the script representation will have an "@" in front of the " or '.
@@ -93,11 +93,11 @@ namespace birdScript.Types
         private SString(ScriptProcessor processor, string value, bool escaped)
         {
             Escaped = escaped;
-
+            
             if (escaped)
-                SetValue(processor, Unescape(value));
+                Value = Unescape(value);
             else
-                SetValue(processor, value);
+                Value = value; 
         }
 
         /// <summary>
@@ -107,32 +107,21 @@ namespace birdScript.Types
         {
             return new SString(processor, value, escaped);
         }
-
-        /// <summary>
-        /// Sets the value and updates the length property.
-        /// </summary>
-        internal void SetValue(ScriptProcessor processor, string value)
-        {
-            Value = value;
-
-            if (Members.ContainsKey(STRING_LENGTH_PROPERTY_NAME))
-            {
-                var length = processor.CreateNumber(value.Length);
-                Members[STRING_LENGTH_PROPERTY_NAME].ForceSetData(length);
-            }
-        }
         
         internal override string ToScriptObject()
+        {
+            if (Prototype == null)
+                return ToScriptSource();
+            else
+                return base.ToScriptObject();
+        }
+
+        internal override string ToScriptSource()
         {
             if (Escaped)
                 return string.Format(STRING_NORMAL_FORMAT, Value);
             else
                 return string.Format(STRING_UNESCAPED_FORMAT, Value);
-        }
-
-        internal override string ToScriptSource()
-        {
-            return ToScriptObject();
         }
 
         internal override SString ToString(ScriptProcessor processor)
@@ -167,7 +156,10 @@ namespace birdScript.Types
 
         internal override string TypeOf()
         {
-            return LITERAL_TYPE_STRING;
+            if (Prototype == null)
+                return LITERAL_TYPE_STRING;
+            else
+                return base.TypeOf();
         }
 
         internal override double SizeOf()

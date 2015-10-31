@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using birdScript.Types;
+﻿using birdScript.Types;
 
 namespace birdScript
 {
@@ -50,6 +45,9 @@ namespace birdScript
         public const string MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_EXPECTED_TYPE = "function indexer expected indexer type";
         public const string MESSAGE_SYNTAX_CLASS_FUNCTION_INDEXER_INVALID_TYPE = "{0} is not a valid function indexer type";
         public const string MESSAGE_SYNTAX_CLASS_INVALID_FUNCTION_SIGNATURE = "invalid function signature";
+        public const string MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_EXPECTED_TYPE = "function property expected property type";
+        public const string MESSAGE_SYNTAX_CLASS_FUNCTION_PROPERTY_INVALID_TYPE = "{0} is not a valid function property type";
+        public const string MESSAGE_SYNTAX_CLASS_INCOMPATIBLE_SIGNATURE = "incompatible attributes assigned to class function signature";
 
         public const string MESSAGE_API_NOT_SUPPORTED = "this functionality is not supported";
 
@@ -98,21 +96,14 @@ namespace birdScript
         /// <summary>
         /// Throws an error with the given <see cref="ErrorType"/> and error message.
         /// </summary>
-        public SObject ThrowError(ErrorType errorType, string message)
+        public SObject ThrowError(ErrorType errorType, string message, params object[] messageArgs)
         {
             string strErrorType = errorType.ToString();
+            string formattedMessage = string.Format(message, messageArgs);
             
-            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(message), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
+            SObject errorObject = _processor.Context.CreateInstance("Error", new SObject[] { _processor.CreateString(formattedMessage), _processor.CreateString(errorType.ToString()), _processor.CreateNumber(_processor.GetLineNumber()) });
 
             return ThrowError(errorObject);
-        }
-
-        /// <summary>
-        /// Throws an error with the given <see cref="ErrorType"/> and message, adding formating options via message arguments.
-        /// </summary>
-        public SObject ThrowError(ErrorType errorType, string message, object[] messageArgs)
-        {
-            return ThrowError(errorType, string.Format(message, messageArgs));
         }
     }
 }

@@ -42,7 +42,6 @@ namespace birdScript.Types.Prototypes
             else
             {
                 arr.ArrayMembers = parameters;
-                arr.UpdateLength(processor);
                 return arr;
             }
         }
@@ -81,6 +80,13 @@ namespace birdScript.Types.Prototypes
             }
 
             return processor.Undefined;
+        }
+
+        [BuiltInMethod(FunctionType = FunctionUsageType.PropertyGetter)]
+        public static SObject length(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
+        {
+            SArray arr = (SArray)instance;
+            return processor.CreateNumber(arr.ArrayMembers.Length);
         }
     }
 }
