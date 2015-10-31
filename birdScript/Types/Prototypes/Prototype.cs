@@ -34,7 +34,7 @@ namespace birdScript.Types.Prototypes
         internal Prototype(string name)
         {
             Name = name;
-
+            
             var methods = BuiltInMethodManager.GetMethods(GetType());
             foreach (var methodData in methods)
             {
@@ -43,11 +43,11 @@ namespace birdScript.Types.Prototypes
 
                 function.FunctionUsage = methodData.Item2.FunctionType;
                 if (methodData.Item2.FunctionType == FunctionUsageType.PropertyGetter)
-                    identifier = "_get_" + identifier;
-                if (methodData.Item2.FunctionType == FunctionUsageType.PropertySetter)
-                    identifier = "_set_" + identifier;
+                    identifier = PROPERTY_GET_PREFIX + identifier;
+                else if (methodData.Item2.FunctionType == FunctionUsageType.PropertySetter)
+                    identifier = PROPERTY_SET_PREFIX + identifier;
                 
-                _prototypeMembers.Add(methodData.Item1, new PrototypeMember(
+                _prototypeMembers.Add(identifier, new PrototypeMember(
                         identifier: identifier,
                         data: function,
                         isStatic: methodData.Item2.IsStatic,
@@ -62,15 +62,17 @@ namespace birdScript.Types.Prototypes
         {
             InitializeStatic();
 
+            AddObjectPrototypeAsExtends(processor);
+
             bool isStaticCall = ReferenceEquals(caller, this);
 
             // Call any static function defined in this prototype:
-            if (_prototypeMembers.ContainsKey(methodName))
+            if (_prototypeMembers.ContainsKey(methodName) && _prototypeMembers[methodName].IsStatic)
             {
-                if (_prototypeMembers[methodName].IsStatic && _prototypeMembers[methodName].IsFunction)
+                if (_prototypeMembers[methodName].IsFunction)
                 {
                     var cFunction = (SFunction)_prototypeMembers[methodName].Data;
-                    return cFunction.Call(processor, caller, This, parameters);
+                    return cFunction.Call(processor, caller, this, parameters); // For a static method, the "This" attribute is the prototype.
                 }
                 else
                 {
@@ -89,6 +91,8 @@ namespace birdScript.Types.Prototypes
 
         internal override bool HasMember(ScriptProcessor processor, string memberName)
         {
+            AddObjectPrototypeAsExtends(processor);
+
             if (_prototypeMembers.ContainsKey(memberName))
                 return true;
             else
@@ -99,13 +103,19 @@ namespace birdScript.Types.Prototypes
         {
             InitializeStatic();
 
+            AddObjectPrototypeAsExtends(processor);
+
             string memberName;
             if (accessor is SString)
                 memberName = ((SString)accessor).Value;
             else
                 memberName = accessor.ToString(processor).Value;
 
-            if (_prototypeMembers.ContainsKey(memberName))
+            if (_prototypeMembers.ContainsKey(PROPERTY_GET_PREFIX + memberName))
+            {
+                return ((SFunction)_prototypeMembers[PROPERTY_GET_PREFIX + memberName].Data).Call(processor, this, this, new SObject[] { });
+            }
+            else if (_prototypeMembers.ContainsKey(memberName))
             {
                 return _prototypeMembers[memberName].Data;
             }
@@ -119,15 +129,17 @@ namespace birdScript.Types.Prototypes
         {
             InitializeStatic();
 
+            AddObjectPrototypeAsExtends(processor);
+
             string memberName;
             if (accessor is SString)
                 memberName = ((SString)accessor).Value;
             else
                 memberName = accessor.ToString(processor).Value;
 
-            if (_prototypeMembers.ContainsKey(memberName))
+            if (_prototypeMembers.ContainsKey(memberName) && _prototypeMembers[memberName].IsStatic)
             {
-                if (_prototypeMembers[memberName].IsStatic && !_prototypeMembers[memberName].IsReadOnly)
+                if (!_prototypeMembers[memberName].IsReadOnly)
                 {
                     _prototypeMembers[memberName].Data = Unbox(value);
                 }
@@ -156,6 +168,13 @@ namespace birdScript.Types.Prototypes
                     _staticConstructor.Call(_staticConstructorProcessor, this, this, new SObject[] { });
                 }
             }
+        }
+
+        private void AddObjectPrototypeAsExtends(ScriptProcessor processor)
+        {
+            // If this prototype is not the object prototype, but has no extends prototype, set the object prototype.
+            if (Extends == null && GetType() != typeof(ObjectPrototype))
+                Extends = processor.Context.GetPrototype("Object");
         }
 
         /// <summary>
@@ -592,9 +611,9 @@ namespace birdScript.Types.Prototypes
 
             // After the valid identifier check is done, we add the getter/setter prefix. It wouldn't pass the test.
             if (functionType == FunctionUsageType.PropertyGetter)
-                identifier = "_get_" + identifier;
+                identifier = PROPERTY_GET_PREFIX + identifier;
             if (functionType == FunctionUsageType.PropertySetter)
-                identifier = "_set_" + identifier;
+                identifier = PROPERTY_SET_PREFIX + identifier;
 
             SFunction function = new SFunction(processor, signature[0] + " " + header.Remove(0, header.IndexOf("(")) + bodyStatement.Code);
             function.FunctionUsage = functionType;

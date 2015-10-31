@@ -13,6 +13,8 @@ namespace birdScript.Types
     /// </summary>
     public class SProtoObject : SObject
     {
+        protected const string PROPERTY_GET_PREFIX = "_get_";
+        protected const string PROPERTY_SET_PREFIX = "_set_";
         internal protected const string MEMBER_NAME_PROTOTYPE = "prototype";
         internal protected const string MEMBER_NAME_SUPER = "super";
 
@@ -102,9 +104,9 @@ namespace birdScript.Types
             else
                 memberName = accessor.ToString(processor).Value;
 
-            if (Members.ContainsKey("_get_" + memberName)) // getter property
+            if (Members.ContainsKey(PROPERTY_GET_PREFIX + memberName)) // getter property
             {
-                return ((SFunction)Members["_get_" + memberName].Data).Call(processor, this, this, new SObject[] { });
+                return ((SFunction)Members[PROPERTY_GET_PREFIX + memberName].Data).Call(processor, this, this, new SObject[] { });
             }
             else if (Members.ContainsKey(memberName))
             {
@@ -136,9 +138,9 @@ namespace birdScript.Types
                 else
                     memberName = accessor.ToString(processor).Value;
 
-                if (Members.ContainsKey("_set_" + memberName)) // setter property
+                if (Members.ContainsKey(PROPERTY_SET_PREFIX + memberName)) // setter property
                 {
-                    ((SFunction)Members["_set_" + memberName].Data).Call(processor, this, this, new SObject[] { value });
+                    ((SFunction)Members[PROPERTY_SET_PREFIX + memberName].Data).Call(processor, this, this, new SObject[] { value });
                 }
                 if (Members.ContainsKey(memberName))
                 {
