@@ -6,9 +6,11 @@
 namespace Pokémon3D.DataModel.Json.i18n
 {
     [DataContract]
-    class LocalizationModel : JsonDataModel
+    class TokenModel : JsonDataModel
     {
         [DataMember]
-        public TokenModel[] Tokens;
+        public string Id;
+        [DataMember]
+        public string Val;
     }
 }

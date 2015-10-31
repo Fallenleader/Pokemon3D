@@ -50,14 +50,4 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         [DataMember(Order = 13)]
         public int[] TutorMoves;
     }
-
-    [DataContract]
-    class PokemonFormActivationModel : JsonDataModel
-    {
-        [DataMember(Order = 0)]
-        public string Type;
-
-        [DataMember(Order = 1)]
-        public string Value;
-    }
 }

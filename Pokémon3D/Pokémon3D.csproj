@@ -50,10 +50,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DataModel\IDataModelContainer.cs" />
-    <Compile Include="DataModel\Json\BaseTypes.cs" />
+    <Compile Include="DataModel\Json\ColorModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\PrimitiveModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\VertexModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\CitySize.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityComponentModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\RenderMethod.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapEnvironmentModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapPokemonModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\OffsetMapModel.cs" />
@@ -100,12 +102,20 @@
     <Compile Include="DataModel\Json\GameMode\Pokemon\HeldItemModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\LevelUpMoveModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokedexEntryModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormActivationModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
     <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
+    <Compile Include="DataModel\Json\i18n\TokenModel.cs" />
+    <Compile Include="DataModel\Json\JsonDataLoadException.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
+    <Compile Include="DataModel\Json\RangeModel.cs" />
+    <Compile Include="DataModel\Json\RectangleModel.cs" />
+    <Compile Include="DataModel\Json\TextureSourceModel.cs" />
+    <Compile Include="DataModel\Json\Vector2Model.cs" />
+    <Compile Include="DataModel\Json\Vector3Model.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
     <Compile Include="FileSystem\GameModeFileProvider.cs" />
     <Compile Include="FileSystem\TranslationFileProvider.cs" />
