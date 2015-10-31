@@ -8,6 +8,7 @@ using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;
 using Pokémon3D.GameCore;
+using Pokémon3D.GameModes.Maps;
 
 namespace Pokémon3D.GameModes
 {
@@ -35,6 +36,8 @@ namespace Pokémon3D.GameModes
         /// </summary>
         public GameMode(string gameModeFile)
         {
+            MapManager = new MapManager();
+
             try
             {
                 _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
@@ -53,6 +56,10 @@ namespace Pokémon3D.GameModes
                 _isValid = false;
             }
         }
+
+        public string StartMap => _dataModel.StartConfiguration.Map;
+
+        public MapManager MapManager { get; private set; }
 
         private void InitializeComponents()
         {
