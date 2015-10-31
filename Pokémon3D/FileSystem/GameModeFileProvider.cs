@@ -10,7 +10,7 @@ namespace Pokémon3D.FileSystem
     class GameModeFileProvider : FileProvider
     {
         private const string PATH_GAMEMODES = "GameModes";
-        private const string FILE_GAMEMODE_MAIN = "GameMode.dat";
+        private const string FILE_GAMEMODE_MAIN = "GameMode.json";
 
         /// <summary>
         /// The path to the base GameMode folder.
@@ -19,7 +19,7 @@ namespace Pokémon3D.FileSystem
         {
             get
             {
-                return Path.Combine(new string[] { StartupPath, PATH_GAMEMODES });
+                return Path.Combine( StartupPath, PATH_GAMEMODES);
             }
         }
 

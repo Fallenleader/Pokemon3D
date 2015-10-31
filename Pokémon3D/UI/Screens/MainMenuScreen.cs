@@ -14,7 +14,13 @@ namespace Pokémon3D.UI.Screens
             _mainMenuPanel.AddElement(root);
 
             root.FindGuiElementById<Button>("StartButton").Click += OnStartClick;
+            root.FindGuiElementById<Button>("LoadButton").Click += OnLoadClick;
             root.FindGuiElementById<Button>("QuitButton").Click += OnQuitClick;
+        }
+
+        private void OnLoadClick()
+        {
+            Game.ScreenManager.SetScreen(typeof(OverworldScreen));
         }
 
         public override void OnDraw(GameTime gameTime)

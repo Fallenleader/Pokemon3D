@@ -31,14 +31,6 @@ namespace Pokémon3D.GameModes
         }
 
         /// <summary>
-        /// A shortcut to the active GameMode instance.
-        /// </summary>
-        public static GameMode Active()
-        {
-            return GameController.Instance.GameModeManager.ActiveGameMode;
-        }
-
-        /// <summary>
         /// Creates an instance of the <see cref="GameMode"/> class and loads the data model.
         /// </summary>
         public GameMode(string gameModeFile)
