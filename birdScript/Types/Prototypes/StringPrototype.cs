@@ -40,11 +40,5 @@ namespace birdScript.Types.Prototypes
 
             return processor.CreateNumber(obj.Value.Length);
         }
-
-        [BuiltInMethod(FunctionType = FunctionUsageType.PropertyGetter, IsStatic = true)]
-        public static SObject empty(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
-        {
-            return processor.CreateString("");
-        }
     }
 }
