@@ -50,5 +50,54 @@ namespace birdScript.Types.Prototypes
                 return processor.ErrorHandler.ThrowError(ErrorType.TypeError, ErrorHandler.MESSAGE_REFERENCE_NO_PROTOTYPE, LITERAL_UNDEFINED);
             }
         }
+
+        [BuiltInMethod(IsStatic = true)]
+        public static SObject addMember(ScriptProcessor processor, SObject instance, SObject This, SObject[] parameters)
+        {
+            // Parameter #1: (String)Name of the new member
+            // [Parameter #2: Default value of the new member ] / Undefined
+            // [Parameter #3: Signature config of the new member] / instance member, no special settings
+
+            if (parameters.Length == 0)
+                return processor.Undefined;
+
+            Prototype prototype;
+
+            if (IsPrototype(instance.GetType()))
+            {
+                prototype = (Prototype)instance;
+            }
+            else
+            {
+                // The instance will be a prototype instance, so get its prototype from there:
+                var protoObj = (SProtoObject)instance;
+                prototype = protoObj.Prototype;
+            }
+
+            string memberName;
+            if (parameters[0] is SString)
+                memberName = ((SString)parameters[0]).Value;
+            else
+                memberName = parameters[0].ToString(processor).Value;
+
+            SObject defaultValue = processor.Undefined;
+
+            if (parameters.Length > 1)
+            {
+                defaultValue = parameters[1];
+            }
+
+            //if (parameters.Length > 2)
+            //{
+
+            //}
+
+            if (!ScriptProcessor.IsValidIdentifier(memberName))
+                processor.ErrorHandler.ThrowError(ErrorType.SyntaxError, ErrorHandler.MESSAGE_SYNTAX_MISSING_VAR_NAME);
+
+            prototype.AddMember(processor, new PrototypeMember(memberName, defaultValue));
+
+            return processor.Undefined;
+        }
     }
 }
