@@ -5,27 +5,6 @@
 
 namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
 {
-    #region Enums
-
-    /// <summary>
-    /// The types of weather.
-    /// </summary>
-    public enum WeatherType
-    {
-        Clear,
-        Rain,
-        Snow,
-        Underwater,
-        Sunny,
-        Fog,
-        Thunderstorm,
-        Sandstorm,
-        Ash,
-        Blizzard
-    }
-
-    #endregion
-    
     /// <summary>
     /// The data model for a region.
     /// </summary>

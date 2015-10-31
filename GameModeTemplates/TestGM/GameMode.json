@@ -1,0 +1,11 @@
+{
+	"Name" : "Test GameMode",
+	"Author" : "nilllzz",
+	"Description" : "This is a test GameMode.",
+	"Version" : "1.0",
+	"StartConfiguration" : {
+		"Map" : "testmap",
+		"Script" : "testscript"
+	},
+	"Gamerules" : []
+}

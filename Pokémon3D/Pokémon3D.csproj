@@ -65,6 +65,7 @@
     <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteType.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherType.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\WorldmapModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Definitions\World\ZoneModel.cs" />
     <Compile Include="DataModel\Json\GameMode\GameModeModel.cs" />

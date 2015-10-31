@@ -24,15 +24,18 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
         public string MapScript;
 
         [DataMember(Order = 4)]
-        public MapEnvironmentModel Environment;
+        public string Environment;
 
         [DataMember(Order = 5)]
-        public BattleMapDataModel BattleMapData;
+        public string Zone;
 
         [DataMember(Order = 6)]
-        public Entities.EntityFieldModel[] Entities;
+        public BattleMapDataModel BattleMapData;
 
         [DataMember(Order = 7)]
+        public Entities.EntityFieldModel[] Entities;
+
+        [DataMember(Order = 8)]
         public OffsetMapModel[] OffsetMaps;
     }
 }

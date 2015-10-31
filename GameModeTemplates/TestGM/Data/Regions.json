@@ -1,0 +1,24 @@
+[
+	{
+		"Name" : "Johto",
+		"Zones" : [
+			{
+				"Name" : "EastJohto",
+				"Weather" : [
+					{
+						"WeatherType" : "Clear",
+						"Chance" : 70
+					},
+					{
+						"WeatherType" : "Rain",
+						"Chance" : 25
+					},
+					{
+						"WeatherType" : "Snow",
+						"Chance" : 5
+					}
+				]
+			}
+		]
+	}
+]

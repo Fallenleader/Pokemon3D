@@ -1,0 +1,23 @@
+[
+	{
+		"Name" : "TestEnvironment",
+		"EnvironmentType" : 0,
+		"WeatherType" : 0,
+		"LightingType" : 0,
+		"IsDark" : false,
+		"Terrain" : "Grass",
+		"PokemonData" : {
+			"ShowFollower" : true,
+			"WildInGrass" : false,
+			"WildOnFloor" : false,
+			"WildInWater" : false,
+			"WildAbilityChance" : 0
+		},
+		"AllowedFieldMoves" : [],
+		"MapRules" : [],
+		"RadioFrequency" : {
+			"Min" : 0,
+			"Max" : 21
+		}
+	}
+]
