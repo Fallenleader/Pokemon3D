@@ -25,8 +25,8 @@ namespace Pokémon3D.UI.Screens
 
         public ScreenManager()
         {
-            _sourceRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height);
-            _targetRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height);
+            _sourceRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            _targetRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             _executingScreenTransition = false;
             _currentTransition = new BlendTransition();
 
