@@ -42,7 +42,7 @@ namespace Pokémon3D.GameModes.Maps
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 _sceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
-                _sceneNode.IsBillboard = dataModel.Components.Any(c => c.Name == "isBillboard");
+                _sceneNode.IsBillboard = dataModel.Components.Any(c => c.Id == "isBillboard");
 
                 var texture = renderMode.Textures.First();
 
