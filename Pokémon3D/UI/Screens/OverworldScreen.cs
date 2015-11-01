@@ -22,7 +22,7 @@ namespace Pokémon3D.UI.Screens
             _gameMode = Game.GameModeManager.LoadGameMode(gameModes.First());
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
-            _currentMap = _gameMode.MapManager.LoadMap(_scene, Game.Resources, _gameMode.StartMap);
+            _currentMap = _gameMode.MapManager.LoadMap(_gameMode.StartMap, _scene, Game.Resources);
         }
 
         public void OnUpdate(GameTime gameTime)

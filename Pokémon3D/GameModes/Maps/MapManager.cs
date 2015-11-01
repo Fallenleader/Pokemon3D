@@ -1,4 +1,5 @@
-﻿using Pokemon3D.Rendering;
+﻿using System.Collections.Generic;
+using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Data;
 
 namespace Pokémon3D.GameModes.Maps
@@ -12,7 +13,7 @@ namespace Pokémon3D.GameModes.Maps
             _prototypes = new Dictionary<string, MapPrototype>();
         }
 
-        public Map LoadMap(string mapName)
+        public Map LoadMap(string mapName, Scene scene, ResourceManager resourceManager)
         {
             return new Map(scene, resourceManager);
         }
