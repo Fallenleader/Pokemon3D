@@ -6,14 +6,14 @@ namespace Pokémon3D.GameModes.Maps
 {
     class Map
     {
-        private List<Entity> _allEntitis;
+        private List<Entity> _allEntities;
 
         public Scene Scene { get; private set; }
         public ResourceManager ResourceManager { get; private set; }
 
         public Map(Scene scene, ResourceManager resourceManager)
         {
-            _allEntitis = new List<Entity>();
+            _allEntities = new List<Entity>();
             Scene = scene;
             ResourceManager = resourceManager;
         } 

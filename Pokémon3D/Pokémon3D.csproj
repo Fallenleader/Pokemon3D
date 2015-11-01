@@ -136,6 +136,7 @@
     <Compile Include="GameModes\Maps\Map.cs" />
     <Compile Include="GameModes\Maps\MapManager.cs" />
     <Compile Include="GameModes\Maps\MapPrototype.cs" />
+    <Compile Include="GameModes\Maps\Primitive.cs" />
     <Compile Include="GameModes\Resources\ModelManager.cs" />
     <Compile Include="GameModes\Resources\TextureManager.cs" />
     <Compile Include="ResourceNames.cs">

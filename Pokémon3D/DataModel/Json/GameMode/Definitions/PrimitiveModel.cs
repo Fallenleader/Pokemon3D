@@ -12,12 +12,12 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
     class PrimitiveModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Id;
+        public string Name;
         
         [DataMember(Order = 1)]
         public VertexModel[] Vertices;
         
         [DataMember(Order = 2)]
-        public int[] Indicies;
+        public int[] Indices;
     }
 }
