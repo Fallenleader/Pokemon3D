@@ -30,6 +30,8 @@ namespace Pokémon3D.GameModes.Maps
             _map = map;
             _dataModel = dataModel;
 
+            InitializeComponents();
+
             _sceneNode = Scene.CreateSceneNode();
             _sceneNode.Scale = dataModel.Scale.GetVector3();
             _sceneNode.Position = position;
@@ -42,7 +44,7 @@ namespace Pokémon3D.GameModes.Maps
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 _sceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
-                _sceneNode.IsBillboard = dataModel.Components.Any(c => c.Id == "isBillboard");
+                _sceneNode.IsBillboard = HasComponent(EntityComponentFactory.COMPONENT_ID_BILLBOARD);
 
                 var texture = renderMode.Textures.First();
 
@@ -69,8 +71,6 @@ namespace Pokémon3D.GameModes.Maps
             {
                 //todo: model not yet supported.
             }
-
-            InitializeProperties();
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Pokémon3D.GameModes.Maps
             }
         }
         
-        void InitializeProperties()
+        void InitializeComponents()
         {
             // Loops over the data models of the entity components and creates actual instances.
 

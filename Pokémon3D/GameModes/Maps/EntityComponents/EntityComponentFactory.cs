@@ -18,6 +18,8 @@ namespace Pokémon3D.GameModes.Maps.EntityComponents
     /// </summary>
     class EntityComponentFactory
     {
+        public const string COMPONENT_ID_BILLBOARD = "isBillboard";
+
         private static EntityComponentFactory _instance;
 
         private EntityComponentFactory() { }
@@ -61,6 +63,9 @@ namespace Pokémon3D.GameModes.Maps.EntityComponents
 
             switch (dataModel.Id.ToLowerInvariant())
             {
+                case COMPONENT_ID_BILLBOARD:
+                    comp = new BillboardEntityComponent(parameters);
+                    break;
                 default:
                     comp = new DataStorageEntityComponent(parameters);
                     break;

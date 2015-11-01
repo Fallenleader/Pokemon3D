@@ -129,6 +129,7 @@
     <Compile Include="GameModes\IGameModeComponent.cs" />
     <Compile Include="GameModes\Maps\Entity.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\Components\DataStorageEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\BillboardEntityComponent.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponent.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentFactory.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
