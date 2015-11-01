@@ -5,6 +5,8 @@ float4x4 LightWorldViewProjection;
 texture DiffuseTexture;
 texture ShadowMap;
 float3 LightDirection = float3(1, -1,  -1);
+float2 TexcoordOffset;
+float2 TexcoordScale;
 
 sampler2D DiffuseSampler = sampler_state {
 	Texture = (DiffuseTexture);
@@ -59,7 +61,7 @@ VertexShaderOutput DefaultVertexShaderFunction(VertexShaderInput input)
 	float4 viewPosition = mul(worldPosition, View);
 	output.Position = mul(viewPosition, Projection);
 	output.Normal = mul(input.Normal, (float3x3)World);
-	output.TexCoord = input.TexCoord;
+	output.TexCoord = TexcoordOffset + float2(input.TexCoord.x * TexcoordScale.x, input.TexCoord.y * TexcoordScale.y);
 
 	return output;
 }
@@ -80,7 +82,7 @@ VertexShaderShadowReceiverOutput DefaultVertexShaderShadowReceiverFunction(Verte
 	float4 viewPosition = mul(worldPosition, View);
 	output.Position = mul(viewPosition, Projection);
 	output.Normal = mul(input.Normal, (float3x3)World);
-	output.TexCoord = input.TexCoord;
+	output.TexCoord = TexcoordOffset + float2(input.TexCoord.x * TexcoordScale.x, input.TexCoord.y * TexcoordScale.y);
 	output.LightPosition = mul(input.Position, LightWorldViewProjection);
 
 	return output;
@@ -170,9 +172,6 @@ technique ShadowCaster
 //-----------------------------------------------------------------------------
 // Billboard
 //-----------------------------------------------------------------------------
-
-float2 TexcoordOffset = float2(0.5625f, 0.5625f);
-float2 TexcoordScale = float2(0.0625f, 0.0625f*2.0f);
 
 sampler2D BillboardSampler = sampler_state {
 	Texture = (DiffuseTexture);

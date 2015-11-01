@@ -23,10 +23,11 @@ namespace Pokémon3D.UI.Screens
             Game.Resources.SetPrimitiveProvider(_gameMode);
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
+            _scene.Renderer.LightDirection = new Vector3(0, -1, 0);
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.StartMap, _scene, Game.Resources);
 
             _camera = _scene.CreateCamera();
-            _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
+            _camera.Position = new Vector3(6.0f, 8.0f, 8.0f);
             _camera.RotateX(-MathHelper.PiOver4);
         }
 

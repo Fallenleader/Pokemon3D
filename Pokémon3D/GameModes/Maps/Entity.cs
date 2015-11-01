@@ -4,6 +4,7 @@ using Pokémon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokémon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Data;
 
@@ -41,15 +42,26 @@ namespace Pokémon3D.GameModes.Maps
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 _sceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
+                _sceneNode.IsBillboard = dataModel.Components.Any(c => c.Name == "isBillboard");
 
                 var texture = renderMode.Textures.First();
 
-                var material = new Material(Resources.GetTexture2D(texture.Source))
+                var diffuseTexture = Resources.GetTexture2D(texture.Source);
+                var material = new Material(diffuseTexture)
                 {
                     Color = new Color(renderMode.Shading.GetVector3()),
                     CastShadow = false,
                     ReceiveShadow = false
                 };
+
+                if (texture.Rectangle != null)
+                {
+                    material.TexcoordOffset = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.X,
+                        texture.Rectangle.Y);
+                    material.TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.Width,
+                        texture.Rectangle.Height);
+                }
+
                 _sceneNode.Material = material;
             }
             else
