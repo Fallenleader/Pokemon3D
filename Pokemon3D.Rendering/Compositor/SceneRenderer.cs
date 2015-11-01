@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Pokemon3D.Rendering.Scene;
 
 namespace Pokemon3D.Rendering.Compositor
 {

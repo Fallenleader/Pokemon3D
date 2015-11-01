@@ -76,5 +76,15 @@ namespace Pokemon3D.Rendering.Compositor
         /// Post-Processing Effects Container.
         /// </summary>
         Effect PostProcessingEffect { get; }
+
+        /// <summary>
+        /// Offset of Tex-Coords.
+        /// </summary>
+        Vector2 TexcoordOffset { get; set; }
+
+        /// <summary>
+        /// Texcoord Scales.
+        /// </summary>
+        Vector2 TexcoordScale { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Pokemon3D.Rendering.Data;
 
-namespace Pokemon3D.Rendering.Scene
+namespace Pokemon3D.Rendering
 {
     /// <summary>
     /// Part of a Scene with contains Transformation and Optional Rendering Attachments.

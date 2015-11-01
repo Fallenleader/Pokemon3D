@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Pokemon3D.Rendering.Scene
+namespace Pokemon3D.Rendering
 {
     /// <summary>
     /// Specialized Scene Node representing a camera.

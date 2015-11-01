@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pokemon3D.Common.Extensions;
+using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Compositor;
 using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
-using Pokemon3D.Rendering.Scene;
 using Pokémon3D.GameCore;
 
 namespace Pokémon3D.UI.Screens
@@ -30,13 +31,18 @@ namespace Pokémon3D.UI.Screens
             var billboardSceneNode = _scene.CreateSceneNode();
             billboardSceneNode.IsBillboard = true;
             billboardSceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
-            billboardSceneNode.Material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1))
+            billboardSceneNode.Position = new Vector3(-5, 0, -5);
+            billboardSceneNode.Scale = new Vector3(2, 4, 1);
+
+            var material = new Material(Game.Content.Load<Texture2D>(ResourceNames.Textures.tileset1))
             {
                 CastShadow = false,
                 UseTransparency = true
             };
-            billboardSceneNode.Position = new Vector3(-5, 0, -5);
-            billboardSceneNode.Scale = new Vector3(2, 4, 1);
+            material.TexcoordOffset = material.DiffuseTexture.GetTexcoordsFromPixelCoords(9*16, 9*16);
+            material.TexcoordScale = material.DiffuseTexture.GetTexcoordsFromPixelCoords(16,32);
+
+            billboardSceneNode.Material = material;
 
             for (var x = 0; x < 5; x++)
             {

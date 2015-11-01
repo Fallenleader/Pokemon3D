@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pokemon3D.Rendering.Scene;
+using Pokemon3D.Rendering;
 using Pokémon3D.GameCore;
 using Pokémon3D.GameModes;
 using Pokémon3D.GameModes.Maps;

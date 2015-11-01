@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
-using Pokemon3D.Rendering.Scene;
 
 namespace Pokemon3D.Rendering.Compositor
 {
@@ -128,6 +127,8 @@ namespace Pokemon3D.Rendering.Compositor
 
                 _sceneEffect.World = worldMatrix;
                 _sceneEffect.DiffuseTexture = sceneNode.Material.DiffuseTexture;
+                _sceneEffect.TexcoordScale = sceneNode.Material.TexcoordScale;
+                _sceneEffect.TexcoordOffset = sceneNode.Material.TexcoordOffset;
 
                 foreach (var pass in _sceneEffect.CurrentTechniquePasses)
                 {

@@ -5,7 +5,6 @@ using Pokémon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Rendering;
-using Pokemon3D.Rendering.Scene;
 
 namespace Pokémon3D.GameModes.Maps
 {

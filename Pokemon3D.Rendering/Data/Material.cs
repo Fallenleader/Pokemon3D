@@ -14,6 +14,8 @@ namespace Pokemon3D.Rendering.Data
             Color = Color.White;
             CastShadow = true;
             ReceiveShadow = true;
+            TexcoordOffset = Vector2.Zero;
+            TexcoordScale = Vector2.One;
         }
 
         public bool UseTransparency { get; set; }
@@ -21,6 +23,8 @@ namespace Pokemon3D.Rendering.Data
         public Color Color { get; set; }
         public bool CastShadow { get; set; }
         public bool ReceiveShadow { get; set; }
+        public Vector2 TexcoordScale { get; set; }
+        public Vector2 TexcoordOffset { get; set; }
 
         internal Material Clone()
         {
@@ -29,7 +33,9 @@ namespace Pokemon3D.Rendering.Data
                 Color = Color,
                 UseTransparency = UseTransparency,
                 CastShadow = CastShadow,
-                ReceiveShadow = ReceiveShadow
+                ReceiveShadow = ReceiveShadow,
+                TexcoordOffset = TexcoordOffset,
+                TexcoordScale = TexcoordScale
             };
         }
     }

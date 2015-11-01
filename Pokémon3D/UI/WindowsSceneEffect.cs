@@ -21,6 +21,8 @@ namespace Pokémon3D.UI
         private readonly EffectParameter _lightDirection;
         private readonly EffectParameter _shadowMap;
         private readonly EffectParameter _diffuseTexture;
+        private readonly EffectParameter _texcoordOffset;
+        private readonly EffectParameter _texcoordScale;
 
         public WindowsSceneEffect(ContentManager content)
         {
@@ -40,6 +42,8 @@ namespace Pokémon3D.UI
             _lightDirection = _basicEffect.Parameters["LightDirection"];
             _shadowMap = _basicEffect.Parameters["ShadowMap"];
             _diffuseTexture = _basicEffect.Parameters["DiffuseTexture"];
+            _texcoordOffset = _basicEffect.Parameters["TexcoordOffset"];
+            _texcoordScale = _basicEffect.Parameters["TexcoordScale"];
         }
 
         public Effect ShadowMapDebugEffect { get; }
@@ -102,6 +106,18 @@ namespace Pokémon3D.UI
         }
 
         public Effect PostProcessingEffect { get; }
+
+        public Vector2 TexcoordOffset
+        {
+            get { return _texcoordOffset.GetValueVector2(); }
+            set { _texcoordOffset.SetValue(value); }
+        }
+
+        public Vector2 TexcoordScale
+        {
+            get { return _texcoordScale.GetValueVector2(); }
+            set { _texcoordScale.SetValue(value); }
+        }
 
         public IEnumerable<EffectPass> CurrentTechniquePasses
         {

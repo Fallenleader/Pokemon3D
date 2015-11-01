@@ -9,5 +9,10 @@ namespace Pokemon3D.Common.Extensions
         {
             return new Vector2(texture.Width, texture.Height) * 0.5f;
         }
+
+        public static Vector2 GetTexcoordsFromPixelCoords(this Texture2D texture, int x, int y)
+        {
+            return new Vector2(x /  (float)texture.Width, y / (float)texture.Height);
+        }
     }
 }
