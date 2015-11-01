@@ -31,9 +31,9 @@ namespace Pokemon3D.UI.Screens
             Game.SpriteBatch.End();
         }
 
-        public override void OnUpdate(GameTime gameTime)
+        public override void OnUpdate(float elapsedTime)
         {
-            _mainMenuPanel.Update(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
+            _mainMenuPanel.Update(elapsedTime);
         }
 
         public override void OnClosing()

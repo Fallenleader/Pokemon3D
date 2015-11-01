@@ -23,9 +23,9 @@ namespace Pokemon3D.UI.Screens
             Game.SpriteBatch.End();
         }
 
-        public void OnUpdate(GameTime gameTime)
+        public void OnUpdate(float elapsedTime)
         {
-            _logoAnimator.Update(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
+            _logoAnimator.Update(elapsedTime);
         }
 
         public void OnClosing()

@@ -31,11 +31,10 @@ namespace Pokemon3D.UI.Screens
             _camera.RotateX(-MathHelper.PiOver4);
         }
 
-        public void OnUpdate(GameTime gameTime)
+        public void OnUpdate(float elapsedTime)
         {
-            var elapsedSeconds = gameTime.ElapsedGameTime.Milliseconds * 0.001f;
-            _currentMap.Update(elapsedSeconds);
-            _scene.Update(elapsedSeconds);
+            _currentMap.Update(elapsedTime);
+            _scene.Update(elapsedTime);
 
             if (Game.Keyboard.IsKeyDown(Keys.Escape))
             {

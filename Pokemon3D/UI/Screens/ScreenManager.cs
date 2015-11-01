@@ -70,7 +70,7 @@ namespace Pokemon3D.UI.Screens
             oldScreen.OnDraw(new GameTime());
 
             Game.GraphicsDevice.SetRenderTarget(_targetRenderTarget);
-            currentScreen.OnUpdate(new GameTime(TimeSpan.Zero, TimeSpan.FromSeconds(1.0/60.0d)));
+            currentScreen.OnUpdate(0);
             currentScreen.OnDraw(new GameTime());
 
             Game.GraphicsDevice.SetRenderTargets(currentRenderTarget);
@@ -82,7 +82,7 @@ namespace Pokemon3D.UI.Screens
         /// </summary>
         public void Draw(GameTime gameTime)
         {
-            if (_executingScreenTransition)
+        if (_executingScreenTransition)
             {
                 _currentTransition.Draw();
             }
@@ -98,9 +98,11 @@ namespace Pokemon3D.UI.Screens
         /// </summary>
         public bool Update(GameTime gameTime)
         {
+            var elapsedMilliSeconds = gameTime.ElapsedGameTime.Milliseconds*0.001f;
+
             if (_executingScreenTransition)
             {
-                _currentTransition.Update(gameTime.ElapsedGameTime.Milliseconds * 0.001f);
+                _currentTransition.Update(elapsedMilliSeconds);
                 if (_currentTransition.IsFinished)
                 {
                     _executingScreenTransition = false;
@@ -108,7 +110,7 @@ namespace Pokemon3D.UI.Screens
             }
             else
             {
-                CurrentScreen?.OnUpdate(gameTime);
+                CurrentScreen?.OnUpdate(elapsedMilliSeconds);
             }
 
             return !_quitGame;

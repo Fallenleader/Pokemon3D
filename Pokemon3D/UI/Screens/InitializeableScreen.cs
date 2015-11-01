@@ -9,7 +9,7 @@ namespace Pokemon3D.UI.Screens
 
         protected abstract void OnInitialize();
         public abstract void OnDraw(GameTime gameTime);
-        public abstract void OnUpdate(GameTime gameTime);
+        public abstract void OnUpdate(float elapsedTime);
         public abstract void OnClosing();
 
         public void OnOpening()
