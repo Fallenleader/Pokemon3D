@@ -46,7 +46,7 @@
 				"TakeFullRotation" : true,
 				"Scale" : {
 					"X" : 1,
-					"Y" : 1,
+					"Y" : 2,
 					"Z" : 1
 				},
 				"RenderMode" : {

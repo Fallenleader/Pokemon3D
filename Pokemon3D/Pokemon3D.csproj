@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D11A857-65E3-46BB-9550-633D5DC5973F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pokemon3D</RootNamespace>
+    <AssemblyName>Pokemon3D</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <MonoGameContentBuilderExe>
+    </MonoGameContentBuilderExe>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Windows\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Pokemon3D.GameCore.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DataModel\IDataModelContainer.cs" />
+    <Compile Include="DataModel\Json\ColorModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\PrimitiveModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\VertexModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\CitySize.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\FlyToModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\MapObjectModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\PlaceModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\PlaceSize.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteDirection.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteType.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherType.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\WorldmapModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\ZoneModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\GameModeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\GameModeStartConfigurationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\GameRuleModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\BattleItemCategory.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\BerryFlavour.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\InventoryDefinitionModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\ItemCategory.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\ItemClassificationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\ItemModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\ItemUsageModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\BerryModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\MegaStoneModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\PlateModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\TechnicalMachineModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\BattleMapDataModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldPositionModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityComponentModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\Entities\RenderMethod.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\MapEnvironmentModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\MapPokemonModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\OffsetMapModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\BodyStyleModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionConditionModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionConditionType.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionTrigger.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\ExperienceType.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\HeldItemModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\LevelUpMoveModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokedexEntryModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormActivationModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
+    <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
+    <Compile Include="DataModel\Json\i18n\TokenModel.cs" />
+    <Compile Include="DataModel\Json\JsonDataLoadException.cs" />
+    <Compile Include="DataModel\Json\JsonDataModel.cs" />
+    <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
+    <Compile Include="DataModel\Json\RangeModel.cs" />
+    <Compile Include="DataModel\Json\RectangleModel.cs" />
+    <Compile Include="DataModel\Json\TextureSourceModel.cs" />
+    <Compile Include="DataModel\Json\Vector2Model.cs" />
+    <Compile Include="DataModel\Json\Vector3Model.cs" />
+    <Compile Include="FileSystem\FileProvider.cs" />
+    <Compile Include="FileSystem\GameModeFileProvider.cs" />
+    <Compile Include="FileSystem\TranslationFileProvider.cs" />
+    <Compile Include="FileSystem\StaticFileProvider.cs" />
+    <Compile Include="GameCore\GameContextObject.cs" />
+    <Compile Include="GameCore\GameController.cs" />
+    <Compile Include="GameModes\GameMode.cs" />
+    <Compile Include="GameModes\GameModeInfo.cs" />
+    <Compile Include="GameModes\GameModeManager.cs" />
+    <Compile Include="GameModes\GameMode_Definitions.cs" />
+    <Compile Include="GameModes\IGameModeComponent.cs" />
+    <Compile Include="GameModes\Maps\Entity.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\DataStorageEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\BillboardEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponentFactory.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
+    <Compile Include="GameModes\Maps\EntityFaceDirection.cs" />
+    <Compile Include="GameModes\Maps\Map.cs" />
+    <Compile Include="GameModes\Maps\MapManager.cs" />
+    <Compile Include="GameModes\Maps\MapPrototype.cs" />
+    <Compile Include="GameModes\Player.cs" />
+    <Compile Include="GameModes\Resources\ModelManager.cs" />
+    <Compile Include="GameModes\Resources\TextureManager.cs" />
+    <Compile Include="ResourceNames.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceNames.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UI\i18n\Localization.cs" />
+    <Compile Include="UI\i18n\LocalizationManager.cs" />
+    <Compile Include="UI\i18n\Translation.cs" />
+    <Compile Include="GameCore\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Screens\InitializeableScreen.cs" />
+    <Compile Include="UI\Screens\OverworldScreen.cs" />
+    <Compile Include="UI\Transitions\BlendTransition.cs" />
+    <Compile Include="UI\Screens\IntroScreen.cs" />
+    <Compile Include="UI\Screens\MainMenuScreen.cs" />
+    <Compile Include="UI\Screens\RenderingTestScreen.cs" />
+    <Compile Include="UI\Screens\Screen.cs" />
+    <Compile Include="UI\Screens\ScreenManager.cs" />
+    <Compile Include="UI\Ellipse.cs" />
+    <Compile Include="UI\Gradient.cs" />
+    <Compile Include="UI\GradientTextureProvider.cs" />
+    <Compile Include="UI\Graphics.cs" />
+    <Compile Include="UI\IShape.cs" />
+    <Compile Include="UI\Plane.cs" />
+    <Compile Include="UI\Polygon.cs" />
+    <Compile Include="UI\Transitions\ScreenTransition.cs" />
+    <Compile Include="UI\ShapeTextureProvider.cs" />
+    <Compile Include="UI\Triangle.cs" />
+    <Compile Include="UI\WindowsSceneEffect.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>C:\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Effects\BasicEffect.fx" />
+    <None Include="Content\Effects\DebugShadowMap.fx" />
+    <None Include="Content\Effects\PostProcessing.fx" />
+    <Content Include="Content\GUI\GuiSkin.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GUI\PauseMenu.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\GUI\MainMenu.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
+    <None Include="Content\Effects\BasicEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Effects\DebugShadowMap.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Content\Textures\bricksSample.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\default_texture.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\SquareLogo_256px.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\highlight.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\guiskin.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\tileset1.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\BigFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\NormalFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Textures\P3D.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Effects\PostProcessing.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ResourceNames.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ResourceNames.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\birdScript\birdScript.csproj">
+      <Project>{7c228bb5-e710-4170-9c70-8a588040e405}</Project>
+      <Name>birdScript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.csproj">
+      <Project>{b29dc7f0-2a16-4585-80a2-b4030558ec35}</Project>
+      <Name>Pokemon3D.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon3D.Rendering\Pokemon3D.Rendering.csproj">
+      <Project>{d3c6ea8f-1a82-4885-849e-d83747cd8ebc}</Project>
+      <Name>Pokemon3D.Rendering</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y /E /I "$(SolutionDir)GameModeTemplates" "$(TargetDir)GameModes"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
