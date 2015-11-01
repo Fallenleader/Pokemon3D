@@ -5,6 +5,7 @@ using Pokemon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
+using Pokemon3D.GameCore;
 using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Data;
 
@@ -13,38 +14,39 @@ namespace Pokemon3D.GameModes.Maps
     /// <summary>
     /// Represents a functional part of a map.
     /// </summary>
-    class Entity
+    class Entity : GameContextObject
     {
         public const string COMPONENT_NAME_STATIC = "isStatic";
 
-        private readonly SceneNode _sceneNode;
+        protected Scene Scene { get; private set; }
+        protected SceneNode SceneNode { get; private set; }
+
         private readonly EntityModel _dataModel;
-        private Dictionary<string, EntityComponent> _components;
+        private readonly Dictionary<string, EntityComponent> _components = new Dictionary<string, EntityComponent>();
         private readonly Map _map;
 
-        private Scene Scene => _map.Scene;
         private ResourceManager Resources => _map.ResourceManager;
 
-        public Entity(Map map, EntityModel dataModel, Vector3 position)
+        public Entity(Map map, EntityModel dataModel, Vector3 position):
+            this(map.Scene)
         {
             _map = map;
             _dataModel = dataModel;
 
             InitializeComponents();
 
-            _sceneNode = Scene.CreateSceneNode();
-            _sceneNode.Scale = dataModel.Scale.GetVector3();
-            _sceneNode.Position = position;
+            SceneNode.Scale = dataModel.Scale.GetVector3();
+            SceneNode.Position = position;
 
             var eulerAngles = dataModel.Rotation.GetVector3();
-            _sceneNode.Scale = dataModel.Scale.GetVector3();
-            _sceneNode.Rotation = Quaternion.CreateFromYawPitchRoll(eulerAngles.Y, eulerAngles.X, eulerAngles.Z);
+            SceneNode.Scale = dataModel.Scale.GetVector3();
+            SceneNode.Rotation = Quaternion.CreateFromYawPitchRoll(eulerAngles.Y, eulerAngles.X, eulerAngles.Z);
             
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
-                _sceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
-                _sceneNode.IsBillboard = HasComponent(EntityComponentFactory.COMPONENT_ID_BILLBOARD);
+                SceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
+                SceneNode.IsBillboard = HasComponent(EntityComponentFactory.COMPONENT_ID_BILLBOARD);
 
                 var texture = renderMode.Textures.First();
 
@@ -54,7 +56,7 @@ namespace Pokemon3D.GameModes.Maps
                     Color = new Color(renderMode.Shading.GetVector3()),
                     CastShadow = false,
                     ReceiveShadow = false,
-                    UseTransparency = _sceneNode.IsBillboard
+                    UseTransparency = SceneNode.IsBillboard
                 };
 
                 if (texture.Rectangle != null)
@@ -65,7 +67,7 @@ namespace Pokemon3D.GameModes.Maps
                         texture.Rectangle.Height);
                 }
 
-                _sceneNode.Material = material;
+                SceneNode.Material = material;
             }
             else
             {
@@ -73,16 +75,22 @@ namespace Pokemon3D.GameModes.Maps
             }
         }
 
+        public Entity(Scene scene)
+        {
+            Scene = scene;
+            SceneNode = scene.CreateSceneNode();
+        }
+
         /// <summary>
         /// The absolute position of this entity in the world.
         /// </summary>
         public Vector3 Position
         {
-            get { return _sceneNode.Position; }
+            get { return SceneNode.Position; }
             set
             {
                 if (!IsStatic)
-                    _sceneNode.Position = value;
+                    SceneNode.Position = value;
             }
         }
 
@@ -91,11 +99,11 @@ namespace Pokemon3D.GameModes.Maps
         /// </summary>
         public Vector3 Scale
         {
-            get { return _sceneNode.Scale; }
+            get { return SceneNode.Scale; }
             set
             {
                 if (!IsStatic)
-                    _sceneNode.Scale = value;
+                    SceneNode.Scale = value;
             }
         }
 
@@ -104,11 +112,11 @@ namespace Pokemon3D.GameModes.Maps
         /// </summary>
         public Quaternion Rotation
         {
-            get { return _sceneNode.Rotation; }
+            get { return SceneNode.Rotation; }
             set
             {
                 if (!IsStatic)
-                    _sceneNode.Rotation = value;
+                    SceneNode.Rotation = value;
             }
         }
 
@@ -134,8 +142,6 @@ namespace Pokemon3D.GameModes.Maps
         void InitializeComponents()
         {
             // Loops over the data models of the entity components and creates actual instances.
-
-            _components = new Dictionary<string, EntityComponent>();
 
             var factory = EntityComponentFactory.GetInstance();
 

@@ -69,7 +69,7 @@ namespace Pokemon3D.Rendering
             _rotation = Quaternion.Identity;
             Right = Vector3.Right;
             Up = Vector3.Up;
-            Forward = Vector3.Forward;
+            Forward = new Vector3(0,0,-1);
             _isDirty = true;
         }
 
