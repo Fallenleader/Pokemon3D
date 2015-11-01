@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Animations;
 using Pokemon3D.Rendering.GUI;
 using Pokemon3D.GameCore;
+using Pokemon3D.UI.Transitions;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -55,7 +56,7 @@ namespace Pokemon3D.UI.Screens
 
         private void OnAnimatorFinished()
         {
-            Game.ScreenManager.SetScreen(typeof(MainMenuScreen));
+            Game.ScreenManager.SetScreen(typeof(MainMenuScreen), typeof(BlendTransition));
         }
 
         private void OnUpdateHighlightPass(float delta)

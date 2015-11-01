@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Pokemon3D.Rendering.GUI;
+using Pokemon3D.UI.Transitions;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -47,7 +48,7 @@ namespace Pokemon3D.UI.Screens
 
         private void OnStartClick()
         {
-            Game.ScreenManager.SetScreen(typeof(OverworldScreen));
+            Game.ScreenManager.SetScreen(typeof(OverworldScreen), typeof(SlideTransition));
         }
     }
 }

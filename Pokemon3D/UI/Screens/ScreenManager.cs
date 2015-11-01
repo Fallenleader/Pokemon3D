@@ -15,34 +15,36 @@ namespace Pokemon3D.UI.Screens
     {
         private readonly RenderTarget2D _sourceRenderTarget;
         private readonly RenderTarget2D _targetRenderTarget;
-        private readonly Dictionary<Type, Screen> _screensByType = new Dictionary<Type, Screen>();
+        private readonly Dictionary<Type, Screen> _screensByType;
+        private readonly Dictionary<Type, ScreenTransition> _screenTransitionsByType;
 
         private bool _executingScreenTransition;
         private bool _quitGame;
-        private readonly ScreenTransition _currentTransition;
+        private ScreenTransition _currentTransition;
 
         public Screen CurrentScreen { get; private set; }
 
         public ScreenManager()
         {
-            _sourceRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            _targetRenderTarget = new RenderTarget2D(Game.GraphicsDevice, Game.Window.ClientBounds.Width, Game.Window.ClientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            var clientBounds = Game.Window.ClientBounds;
+            _sourceRenderTarget = new RenderTarget2D(Game.GraphicsDevice, clientBounds.Width, clientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            _targetRenderTarget = new RenderTarget2D(Game.GraphicsDevice, clientBounds.Width, clientBounds.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             _executingScreenTransition = false;
             _currentTransition = new BlendTransition();
 
-            var screenTypes = typeof(Screen).Assembly.GetTypes().Where(t => typeof(Screen).IsAssignableFrom(t) && !t.IsAbstract);
-
-            foreach(var screenType in screenTypes)
-            {
-                var screen = (Screen)Activator.CreateInstance(screenType);
-                _screensByType.Add(screenType, screen);
-            }
+            _screensByType = GetImplementationsOf<Screen>().ToDictionary(s => s, s => (Screen) Activator.CreateInstance(s));
+            _screenTransitionsByType = GetImplementationsOf<ScreenTransition>().ToDictionary(s => s, s => (ScreenTransition)Activator.CreateInstance(s));
         }
+
+        private static IEnumerable<Type> GetImplementationsOf<T>()
+        {
+            return typeof(T).Assembly.GetTypes().Where(t => typeof(T).IsAssignableFrom(t) && !t.IsAbstract);
+        } 
 
         /// <summary>
         /// Sets the current screen to a new screen instance.
         /// </summary>
-        public void SetScreen(Type screenType)
+        public void SetScreen(Type screenType, Type transition = null)
         {
             var oldScreen = CurrentScreen;
 
@@ -50,9 +52,9 @@ namespace Pokemon3D.UI.Screens
             CurrentScreen = _screensByType[screenType];
             CurrentScreen.OnOpening();
 
-            if (oldScreen != null && CurrentScreen != null)
+            if (oldScreen != null && CurrentScreen != null && transition != null)
             {
-                PrerenderSourceAndTargetAndMakeTransition(oldScreen, CurrentScreen);
+                PrerenderSourceAndTargetAndMakeTransition(oldScreen, CurrentScreen, transition);
             }
         }
 
@@ -61,7 +63,7 @@ namespace Pokemon3D.UI.Screens
             _quitGame = true;
         }
 
-        private void PrerenderSourceAndTargetAndMakeTransition(Screen oldScreen, Screen currentScreen)
+        private void PrerenderSourceAndTargetAndMakeTransition(Screen oldScreen, Screen currentScreen, Type transition)
         {
             _executingScreenTransition = true;
             var currentRenderTarget = Game.GraphicsDevice.GetRenderTargets();
@@ -74,6 +76,7 @@ namespace Pokemon3D.UI.Screens
             currentScreen.OnDraw(new GameTime());
 
             Game.GraphicsDevice.SetRenderTargets(currentRenderTarget);
+            _currentTransition = _screenTransitionsByType[transition];
             _currentTransition.StartTransition(_sourceRenderTarget, _targetRenderTarget);
         }
 
@@ -82,7 +85,7 @@ namespace Pokemon3D.UI.Screens
         /// </summary>
         public void Draw(GameTime gameTime)
         {
-        if (_executingScreenTransition)
+            if (_executingScreenTransition)
             {
                 _currentTransition.Draw();
             }
