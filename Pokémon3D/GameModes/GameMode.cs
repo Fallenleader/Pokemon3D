@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
 using Pokemon3D.Common.Diagnostics;
+using Pokemon3D.Rendering.Data;
 using Pokémon3D.DataModel;
 using Pokémon3D.DataModel.Json;
 using Pokémon3D.DataModel.Json.GameMode;
+using Pokémon3D.DataModel.Json.GameMode.Definitions;
+using Pokémon3D.DataModel.Json.GameMode.Map;
 using Pokémon3D.GameCore;
 using Pokémon3D.GameModes.Maps;
 
@@ -15,13 +20,16 @@ namespace Pokémon3D.GameModes
     /// <summary>
     /// The main class to control a GameMode.
     /// </summary>
-    partial class GameMode : IDataModelContainer
+    partial class GameMode : IDataModelContainer, GameModeDataProvider
     {
-        private GameModeModel _dataModel;
-        private string _gameModeFolder;
-        private List<IGameModeComponent> _components;
+        private const string PrimitivesFileName = "Primitives.json";
+
+        private readonly GameModeModel _dataModel;
+        private readonly string _gameModeFolder;
+        private readonly List<IGameModeComponent> _components;
         private bool _initializedComponents;
-        private bool _isValid;
+        private readonly bool _isValid;
+        private readonly Dictionary<string, PrimitiveModel> _primitiveModels; 
 
         /// <summary>
         /// Returns if the container loaded the data correctly.
@@ -36,17 +44,22 @@ namespace Pokémon3D.GameModes
         /// </summary>
         public GameMode(string gameModeFile)
         {
-            MapManager = new MapManager();
-
             try
             {
+                _gameModeFolder = System.IO.Path.GetDirectoryName(gameModeFile);
                 _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
                 _components = new List<IGameModeComponent>();
-                _gameModeFolder = System.IO.Path.GetDirectoryName(gameModeFile);
+                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(DataPath, PrimitivesFileName)).ToDictionary(pm => pm.Name, pm => pm);
+
+
+                var mapModels = Directory.GetFiles(MapPath)
+                                         .Where(m => m.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+                                         .Select(m => JsonDataModel.FromFile<MapModel>(m)).ToArray();
+                MapManager = new MapManager(mapModels);
 
                 _isValid = true;
             }
-            catch (JsonDataLoadException)
+            catch (JsonDataLoadException ex)
             {
                 //Something went wrong processing the data from a GameMode config file.
                 //Log the error and mark the instance as invalid.
@@ -98,6 +111,26 @@ namespace Pokémon3D.GameModes
         {
             foreach (IGameModeComponent component in _components)
                 component.FreeResources();
+        }
+
+        public GeometryData GetPrimitiveData(string primitiveName)
+        {
+            PrimitiveModel primitiveModel;
+            if (_primitiveModels.TryGetValue(primitiveName, out primitiveModel))
+            {
+                return new GeometryData
+                {
+                    Vertices = primitiveModel.Vertices.Select(v => new VertexPositionNormalTexture
+                    {
+                        Position = v.Position.GetVector3(),
+                        TextureCoordinate = v.TexCoord.GetVector2(),
+                        Normal = v.Normal.GetVector3()
+                    }).ToArray(),
+                    Indices = primitiveModel.Indices.Select(i => (ushort) i).ToArray()
+                };
+            }
+            
+            throw new ApplicationException("Invalid Primitive Type: " + primitiveName);
         }
     }
 }

@@ -34,10 +34,9 @@ namespace Pokémon3D.GameModes.Maps
             _sceneNode.Position = position;
 
             var eulerAngles = dataModel.Rotation.GetVector3();
-            Scale = dataModel.Scale.GetVector3();
+            _sceneNode.Scale = dataModel.Scale.GetVector3();
             _sceneNode.Rotation = Quaternion.CreateFromYawPitchRoll(eulerAngles.Y, eulerAngles.X, eulerAngles.Z);
-
-
+            
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,14 +14,20 @@ namespace Pokémon3D.UI.Screens
         private GameMode _gameMode;
         private Map _currentMap;
         private Scene _scene;
+        private Camera _camera;
         
         public void OnOpening()
         {
             var gameModes = Game.GameModeManager.GetGameModeInfos();
             _gameMode = Game.GameModeManager.LoadGameMode(gameModes.First());
+            Game.Resources.SetPrimitiveProvider(_gameMode);
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.StartMap, _scene, Game.Resources);
+
+            _camera = _scene.CreateCamera();
+            _camera.Position = new Vector3(0.0f, 12.0f, 13.0f);
+            _camera.RotateX(-MathHelper.PiOver4);
         }
 
         public void OnUpdate(GameTime gameTime)

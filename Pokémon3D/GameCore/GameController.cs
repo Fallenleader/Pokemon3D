@@ -86,7 +86,7 @@ namespace Pokémon3D.GameCore
             IsMouseVisible = true;
 
             GameModeManager = new GameModeManager();
-            Resources = new ResourceManager(GraphicsDevice, null);
+            Resources = new ResourceManager(GraphicsDevice);
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Keyboard = new KeyboardEx();
             GuiSystem = new GuiSystem(this);

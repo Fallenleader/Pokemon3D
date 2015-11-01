@@ -16,15 +16,14 @@ namespace Pokemon3D.Rendering.Data
         private readonly Mesh _cubeMesh;
         private readonly Mesh _billboardMesh;
         private readonly GraphicsDevice _device;
-        private readonly PrimitiveDataProvider _primitiveDataprovider;
+        private GameModeDataProvider _gameModeDataprovider;
 
-        public ResourceManager(GraphicsDevice device, PrimitiveDataProvider primitiveDataprovider)
+        public ResourceManager(GraphicsDevice device)
         {
             _texturesByFilePath = new Dictionary<string, Texture2D>();
             _meshCache = new Dictionary<string, ModelMesh>();
             _primitiveMeshCache = new Dictionary<string, Mesh>();
             _device = device;
-            _primitiveDataprovider = primitiveDataprovider;
             _cubeMesh = new Mesh(_device, Primitives.GenerateCubeData());
             _billboardMesh = new Mesh(_device, Primitives.GenerateQuadForYBillboard());
         }
@@ -61,15 +60,20 @@ namespace Pokemon3D.Rendering.Data
 
         public Texture2D GetTexture2D(string filePathContent)
         {
+            var pathWithoutExtension = Path.Combine(_gameModeDataprovider.TexturePath, filePathContent);
             Texture2D texture;
-            if (!_texturesByFilePath.TryGetValue(filePathContent, out texture))
+            if (!_texturesByFilePath.TryGetValue(pathWithoutExtension, out texture))
             {
+                var pathWithExtension =
+                    Directory.GetFiles(_gameModeDataprovider.TexturePath)
+                             .Single(f => (Path.GetFileNameWithoutExtension(f) ?? "").Equals(filePathContent, StringComparison.OrdinalIgnoreCase));
+
                 //Nasty workaround because of same namespaces in MonoGame and mscorlib related to FileMode:
-                using (var memoryStream = new MemoryStream(File.ReadAllBytes(filePathContent)))
+                using (var memoryStream = new MemoryStream(File.ReadAllBytes(pathWithExtension)))
                 {
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     texture = Texture2D.FromStream(_device, memoryStream);
-                    _texturesByFilePath.Add(filePathContent, texture);
+                    _texturesByFilePath.Add(pathWithoutExtension, texture);
                 }
             }
 
@@ -81,7 +85,7 @@ namespace Pokemon3D.Rendering.Data
             Mesh mesh;
             if (!_primitiveMeshCache.TryGetValue(primitiveName, out mesh))
             {
-                mesh = new Mesh(_device, _primitiveDataprovider.GetPrimitiveData(primitiveName));
+                mesh = new Mesh(_device, _gameModeDataprovider.GetPrimitiveData(primitiveName));
                 _primitiveMeshCache.Add(primitiveName, mesh);
             }
             return mesh;
@@ -124,6 +128,15 @@ namespace Pokemon3D.Rendering.Data
             }
 
             return geometryData;
+        }
+
+        public void SetPrimitiveProvider(GameModeDataProvider gameModeDataProvider)
+        {
+            if (gameModeDataProvider != _gameModeDataprovider)
+            {
+                _primitiveMeshCache.Clear();
+                _gameModeDataprovider = gameModeDataProvider;
+            }
         }
     }
 }

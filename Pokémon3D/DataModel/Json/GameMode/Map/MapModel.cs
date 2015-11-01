@@ -12,30 +12,30 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class MapModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name { get; }
+        public string Name { get; private set; }
 
         [DataMember(Order = 1)]
-        public string Region { get; }
+        public string Region { get; private set; }
 
         [DataMember(Order = 2)]
-        public string Zone { get; }
+        public string Zone { get; private set; }
 
         [DataMember(Order = 3)]
-        public string Song { get; }
+        public string Song { get; private set; }
 
         [DataMember(Order = 4)]
-        public string MapScript { get; }
+        public string MapScript { get; private set; }
 
         [DataMember(Order = 5)]
-        public string Environment { get; }
+        public string Environment { get; private set; }
 
         [DataMember(Order = 6)]
-        public BattleMapDataModel BattleMapData { get; }
+        public BattleMapDataModel BattleMapData { get; private set; }
 
         [DataMember(Order = 7)]
-        public Entities.EntityFieldModel[] Entities { get; }
+        public Entities.EntityFieldModel[] Entities { get; private set; }
 
         [DataMember(Order = 8)]
-        public OffsetMapModel[] OffsetMaps { get; }
+        public OffsetMapModel[] OffsetMaps { get; private set; }
     }
 }

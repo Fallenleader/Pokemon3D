@@ -56,7 +56,7 @@
     <Compile Include="Compositor\DefaultSceneRenderer.cs" />
     <Compile Include="Compositor\GaussianBlurPostProcessingStep.cs" />
     <Compile Include="Data\GeometryData.cs" />
-    <Compile Include="Data\PrimitiveDataProvider.cs" />
+    <Compile Include="Data\GameModeDataProvider.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\ContentControl.cs" />
     <Compile Include="GUI\Frame.cs" />

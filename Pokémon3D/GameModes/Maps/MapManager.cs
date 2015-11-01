@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Data;
+using Pokémon3D.DataModel.Json.GameMode.Map;
 
 namespace Pokémon3D.GameModes.Maps
 {
     class MapManager
     {
-        Dictionary<string, MapPrototype> _prototypes;
+        private readonly MapModel[] _availableMaps;
 
-        public MapManager()
+        public MapManager(MapModel[] availableMaps)
         {
-            _prototypes = new Dictionary<string, MapPrototype>();
+            _availableMaps = availableMaps;
         }
 
         public Map LoadMap(string mapName, Scene scene, ResourceManager resourceManager)
         {
-            return new Map(scene, resourceManager);
+            var mapModel = _availableMaps.Single(m => m.Name == mapName);
+            return new Map(mapModel, scene, resourceManager);
         }
     }
 }
