@@ -117,6 +117,7 @@ namespace Pokemon3D.Rendering.Compositor
         private void DrawTransparentObjects(Camera camera)
         {
             _device.BlendState = BlendState.AlphaBlend;
+            _device.DepthStencilState = DepthStencilState.None;
             foreach (var sceneNode in _transparentObjects)
             {
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);
@@ -141,6 +142,7 @@ namespace Pokemon3D.Rendering.Compositor
         private void DrawSolidObjects(Camera camera, Matrix lightView)
         {
             _device.BlendState = BlendState.Opaque;
+            _device.DepthStencilState = DepthStencilState.Default;
             foreach (var sceneNode in _solidObjects)
             {
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);
