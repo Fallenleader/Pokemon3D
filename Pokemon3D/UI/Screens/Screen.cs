@@ -25,6 +25,7 @@ namespace Pokemon3D.UI.Screens
         /// <summary>
         /// Raising the Opening event.
         /// </summary>
-        void OnOpening();
+        /// <param name="enterInformation">Context information from previous screen</param>
+        void OnOpening(object enterInformation);
     }
 }

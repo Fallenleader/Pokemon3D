@@ -16,7 +16,7 @@ namespace Pokemon3D.UI.Screens
         private Scene _scene;
         private Camera _camera;
         
-        public void OnOpening()
+        public void OnOpening(object enterInformation)
         {
             var gameModes = Game.GameModeManager.GetGameModeInfos();
             _gameMode = Game.GameModeManager.LoadGameMode(gameModes.First());

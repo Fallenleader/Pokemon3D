@@ -7,14 +7,14 @@ namespace Pokemon3D.UI.Screens
     {
         private bool _isInitialized;
 
-        protected abstract void OnInitialize();
+        protected abstract void OnInitialize(object enterInformation);
         public abstract void OnDraw(GameTime gameTime);
         public abstract void OnUpdate(float elapsedTime);
         public abstract void OnClosing();
 
-        public void OnOpening()
+        public void OnOpening(object enterInformation)
         {
-            if (!_isInitialized) OnInitialize();
+            if (!_isInitialized) OnInitialize(enterInformation);
             _isInitialized = true;
         }
     }

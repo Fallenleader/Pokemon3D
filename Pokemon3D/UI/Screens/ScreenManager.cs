@@ -44,13 +44,13 @@ namespace Pokemon3D.UI.Screens
         /// <summary>
         /// Sets the current screen to a new screen instance.
         /// </summary>
-        public void SetScreen(Type screenType, Type transition = null)
+        public void SetScreen(Type screenType, Type transition = null, object enterInformation = null)
         {
             var oldScreen = CurrentScreen;
 
             CurrentScreen?.OnClosing();
             CurrentScreen = _screensByType[screenType];
-            CurrentScreen.OnOpening();
+            CurrentScreen.OnOpening(enterInformation);
 
             if (oldScreen != null && CurrentScreen != null && transition != null)
             {

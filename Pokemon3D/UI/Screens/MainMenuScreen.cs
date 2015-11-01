@@ -8,7 +8,7 @@ namespace Pokemon3D.UI.Screens
     {
         private GuiPanel _mainMenuPanel;
 
-        protected override void OnInitialize()
+        protected override void OnInitialize(object enterInformation)
         {
             _mainMenuPanel = new GuiPanel(Game);
             var root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("Content/Gui/MainMenu.xml");

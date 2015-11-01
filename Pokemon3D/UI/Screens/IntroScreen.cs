@@ -33,7 +33,7 @@ namespace Pokemon3D.UI.Screens
         {
         }
 
-        public void OnOpening()
+        public void OnOpening(object enterInformation)
         {
             _logoSprite = new Sprite(Game.Content.Load<Texture2D>(ResourceNames.Textures.SquareLogo_256px))
             {
