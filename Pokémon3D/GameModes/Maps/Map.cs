@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.Data;
 
 namespace Pokémon3D.GameModes.Maps
 {
     class Map
     {
-        private Map()
-        {
+        private List<Entity> _allEntitis;
 
-        }
+        public Scene Scene { get; private set; }
+        public ResourceManager ResourceManager { get; private set; }
 
-        public static Map FromPrototype(MapPrototype prototype)
+        public Map(Scene scene, ResourceManager resourceManager)
         {
-            return new Map();
-        }
+            _allEntitis = new List<Entity>();
+            Scene = scene;
+            ResourceManager = resourceManager;
+        } 
 
         public void Update(float elapsedTime)
         {
-            
         }
     }
 }

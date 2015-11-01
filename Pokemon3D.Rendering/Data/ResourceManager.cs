@@ -12,15 +12,19 @@ namespace Pokemon3D.Rendering.Data
     {
         private readonly Dictionary<string, Texture2D> _texturesByFilePath;
         private readonly Dictionary<string, ModelMesh> _meshCache;
+        private readonly Dictionary<string, Mesh> _primitiveMeshCache;
         private readonly Mesh _cubeMesh;
         private readonly Mesh _billboardMesh;
         private readonly GraphicsDevice _device;
+        private readonly PrimitiveDataProvider _primitiveDataprovider;
 
-        public ResourceManager(GraphicsDevice device)
+        public ResourceManager(GraphicsDevice device, PrimitiveDataProvider primitiveDataprovider)
         {
             _texturesByFilePath = new Dictionary<string, Texture2D>();
             _meshCache = new Dictionary<string, ModelMesh>();
+            _primitiveMeshCache = new Dictionary<string, Mesh>();
             _device = device;
+            _primitiveDataprovider = primitiveDataprovider;
             _cubeMesh = new Mesh(_device, Primitives.GenerateCubeData());
             _billboardMesh = new Mesh(_device, Primitives.GenerateQuadForYBillboard());
         }
@@ -70,6 +74,17 @@ namespace Pokemon3D.Rendering.Data
             }
 
             return texture;
+        }
+
+        public Mesh GetMeshFromPrimitiveName(string primitiveName)
+        {
+            Mesh mesh;
+            if (!_primitiveMeshCache.TryGetValue(primitiveName, out mesh))
+            {
+                mesh = new Mesh(_device, _primitiveDataprovider.GetPrimitiveData(primitiveName));
+                _primitiveMeshCache.Add(primitiveName, mesh);
+            }
+            return mesh;
         }
 
         private Material GenerateMaterialFromMesh(int materialIndex, Assimp.Scene assimpScene)

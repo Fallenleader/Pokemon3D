@@ -12,19 +12,17 @@ namespace Pokémon3D.UI.Screens
 {
     class OverworldScreen : GameContextObject, Screen
     {
-        private GameModeManager _gameModeManager;
         private GameMode _gameMode;
         private Map _currentMap;
         private Scene _scene;
         
         public void OnOpening()
         {
-            _gameModeManager = new GameModeManager();
-            var gameModes = _gameModeManager.GetGameModeInfos();
-            _gameMode = _gameModeManager.LoadGameMode(gameModes.First());
+            var gameModes = Game.GameModeManager.GetGameModeInfos();
+            _gameMode = Game.GameModeManager.LoadGameMode(gameModes.First());
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
-            _currentMap = _gameMode.MapManager.LoadMap(_gameMode.StartMap);
+            _currentMap = _gameMode.MapManager.LoadMap(_scene, Game.Resources, _gameMode.StartMap);
         }
 
         public void OnUpdate(GameTime gameTime)

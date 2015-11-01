@@ -5,29 +5,10 @@ using Pokémon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.Data;
 
 namespace Pokémon3D.GameModes.Maps
 {
-    /// <summary>
-    /// The rendermode for an entity.
-    /// </summary>
-    enum EntityRenderMode
-    {
-        Primitive,
-        Model
-    }
-
-    /// <summary>
-    /// The cardinal directions an entity can face.
-    /// </summary>
-    enum EntityFaceDirection
-    {
-        North = 0,
-        West = 1,
-        South = 2,
-        East = 3
-    }
-
     /// <summary>
     /// Represents a functional part of a map.
     /// </summary>
@@ -35,15 +16,50 @@ namespace Pokémon3D.GameModes.Maps
     {
         public const string COMPONENT_NAME_STATIC = "isStatic";
 
-        private SceneNode _sceneNode;
-
-        private EntityModel _dataModel;
+        private readonly SceneNode _sceneNode;
+        private readonly EntityModel _dataModel;
         private Dictionary<string, EntityComponent> _components;
+        private readonly Map _map;
 
-        private Model _model = null;
-        private Texture2D _texture;
+        private Scene Scene => _map.Scene;
+        private ResourceManager Resources => _map.ResourceManager;
 
-        private float _cameraDistance = 0f;
+        public Entity(Map map, EntityModel dataModel, Vector3 position)
+        {
+            _map = map;
+            _dataModel = dataModel;
+
+            _sceneNode = Scene.CreateSceneNode();
+            _sceneNode.Scale = dataModel.Scale.GetVector3();
+            _sceneNode.Position = position;
+
+            var eulerAngles = dataModel.Rotation.GetVector3();
+            Scale = dataModel.Scale.GetVector3();
+            _sceneNode.Rotation = Quaternion.CreateFromYawPitchRoll(eulerAngles.Y, eulerAngles.X, eulerAngles.Z);
+
+
+            var renderMode = _dataModel.RenderMode;
+            if (renderMode.RenderMethod == RenderMethod.Primitive)
+            {
+                _sceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
+
+                var texture = renderMode.Textures.First();
+
+                var material = new Material(Resources.GetTexture2D(texture.Source))
+                {
+                    Color = new Color(renderMode.Shading.GetVector3()),
+                    CastShadow = false,
+                    ReceiveShadow = false
+                };
+                _sceneNode.Material = material;
+            }
+            else
+            {
+                //todo: model not yet supported.
+            }
+
+            InitializeProperties();
+        }
 
         /// <summary>
         /// The absolute position of this entity in the world.
@@ -102,20 +118,7 @@ namespace Pokémon3D.GameModes.Maps
                 }
             }
         }
-
-        public Entity(EntityModel dataModel, Vector3 position)
-        {
-            _dataModel = dataModel;
-
-            //_sceneNode = new SceneNode(); //TODO: Factory?
-
-            Position = position;
-            Scale = dataModel.Scale.GetVector3();
-            //TODO: create rotation quaternion from rotation vector3 in data model.
-
-            InitializeProperties();
-        }
-
+        
         void InitializeProperties()
         {
             // Loops over the data models of the entity components and creates actual instances.

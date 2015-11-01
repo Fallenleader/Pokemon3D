@@ -5,7 +5,9 @@ using Pokémon3D.FileSystem;
 using Pokémon3D.UI.Screens;
 using Pokemon3D.Common;
 using Pokemon3D.Common.Diagnostics;
+using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
+using Pokémon3D.GameModes;
 
 namespace Pokémon3D.GameCore
 {
@@ -55,6 +57,8 @@ namespace Pokémon3D.GameCore
         /// </summary>
         public GameModes.GameModeManager GameModeManager { get; private set; }
 
+        public ResourceManager Resources { get; private set; }
+
         public Rectangle ScreenBounds => Window.ClientBounds;
 
         public ShapeRenderer ShapeRenderer { get; private set; }
@@ -81,6 +85,8 @@ namespace Pokémon3D.GameCore
 
             IsMouseVisible = true;
 
+            GameModeManager = new GameModeManager();
+            Resources = new ResourceManager(GraphicsDevice, null);
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             Keyboard = new KeyboardEx();
             GuiSystem = new GuiSystem(this);
