@@ -46,6 +46,8 @@ namespace Pokemon3D.Rendering
             }
         }
 
+        public Vector3 EulerAngles { get { return _rotationAxis; } }
+
         public Vector3 Position
         {
             get { return _position; }
@@ -123,9 +125,7 @@ namespace Pokemon3D.Rendering
 
         private Matrix CalculateBillboardMatrix(Camera currentCamera)
         {
-            //I don't know why, but the scaling is getting negative calculating the billboard matrix.
-            var bill = Matrix.CreateScale(-1,1,-1)* Matrix.CreateConstrainedBillboard(Position, currentCamera.Position, Vector3.UnitY, null, null);
-            return Matrix.CreateScale(Scale) * bill;
+            return Matrix.CreateScale(Scale)* Matrix.CreateRotationY(currentCamera.EulerAngles.Y) * Matrix.CreateTranslation(Position);
         }
 
         private Matrix CalculateLocalWorldMatrix()

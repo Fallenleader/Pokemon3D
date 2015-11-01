@@ -118,7 +118,7 @@ namespace Pokemon3D.Rendering.Compositor
         {
             _device.BlendState = BlendState.AlphaBlend;
             _device.DepthStencilState = DepthStencilState.None;
-            foreach (var sceneNode in _transparentObjects)
+            foreach (var sceneNode in _transparentObjects.OrderByDescending(n => (camera.Position - n.Position).Length()))
             {
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);
                 if (sceneNode.IsBillboard)
