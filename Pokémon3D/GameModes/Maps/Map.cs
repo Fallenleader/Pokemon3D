@@ -8,6 +8,16 @@ namespace Pokémon3D.GameModes.Maps
 {
     class Map
     {
+        private Map()
+        {
+
+        }
+
+        public static Map FromPrototype(MapPrototype prototype)
+        {
+            return new Map();
+        }
+
         public void Update(float elapsedTime)
         {
             

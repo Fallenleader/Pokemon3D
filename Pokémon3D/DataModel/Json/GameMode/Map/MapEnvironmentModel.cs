@@ -12,42 +12,39 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     class MapEnvironmentModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name;
+        public string Name { get; }
 
+        /// <summary>
+        /// If the weather information in the Zone data model applied to the map will get applied.
+        /// </summary>
         [DataMember(Order = 1)]
-        public int EnvironmentType;
-
-        [DataMember(Order = 2)]
-        public int WeatherType;
-
-        [DataMember(Order = 3)]
-        public int LightingType;
+        public bool ApplyZoneData { get; }
 
         /// <summary>
         /// If the map needs to get lit up by a Flash-like move.
         /// </summary>
+        [DataMember(Order = 1)]
+        public bool IsDark { get; }
+
+        [DataMember(Order = 2)]
+        public string Terrain { get; }
+
+        [DataMember(Order = 3)]
+        public string[] AllowedFieldMoves { get; }
+
         [DataMember(Order = 4)]
-        public bool IsDark;
-
-        [DataMember(Order = 5)]
-        public string Terrain;
-
-        [DataMember(Order = 6)]
-        public string[] AllowedFieldMoves;
-
-        [DataMember(Order = 7)]
-        public MapPokemonModel PokemonData;
+        public MapPokemonModel PokemonData { get; }
 
         /// <summary>
         /// Special rules for the map, like Safari Zone and Bug Catching Contest.
         /// </summary>
-        [DataMember(Order = 8)]
-        public string[] MapRules;
+        [DataMember(Order = 5)]
+        public string[] MapRules { get; }
 
         /// <summary>
         /// The radio frequency that can be captured on this map.
         /// </summary>
-        [DataMember(Order = 9)]
-        public RangeModel RadioFrequency;
+        [DataMember(Order = 6)]
+        public RangeModel RadioFrequency { get; }
     }
 }

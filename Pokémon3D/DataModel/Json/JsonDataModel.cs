@@ -33,7 +33,7 @@ namespace Pokémon3D.DataModel.Json
         public static T FromString<T>(string input)
         {
             //We create a new Json serializer of the given type and a corresponding memory stream here.
-            var serializer = new DataContractJsonSerializer(typeof(T));
+            var serializer = new DataContractJsonSerializer(typeof(T), new DataContractJsonSerializerSettings() { SerializeReadOnlyTypes = true });
             var memStream = new MemoryStream();
 
             //Create StreamWriter to the memory stream, which writes the input string to the stream.
@@ -64,7 +64,7 @@ namespace Pokémon3D.DataModel.Json
         public override string ToString()
         {
             //We create a new Json serializer of the given type and a corresponding memory stream here.
-            var serializer = new DataContractJsonSerializer(GetType());
+            var serializer = new DataContractJsonSerializer(GetType(), new DataContractJsonSerializerSettings() { SerializeReadOnlyTypes = true });
             var memStream = new MemoryStream();
 
             //Write the data to the stream.
