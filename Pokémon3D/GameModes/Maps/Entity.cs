@@ -51,7 +51,8 @@ namespace Pokémon3D.GameModes.Maps
                 {
                     Color = new Color(renderMode.Shading.GetVector3()),
                     CastShadow = false,
-                    ReceiveShadow = false
+                    ReceiveShadow = false,
+                    UseTransparency = _sceneNode.IsBillboard
                 };
 
                 if (texture.Rectangle != null)
