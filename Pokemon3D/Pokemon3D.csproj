@@ -155,7 +155,6 @@
     <Compile Include="UI\Transitions\BlendTransition.cs" />
     <Compile Include="UI\Screens\IntroScreen.cs" />
     <Compile Include="UI\Screens\MainMenuScreen.cs" />
-    <Compile Include="UI\Screens\RenderingTestScreen.cs" />
     <Compile Include="UI\Screens\Screen.cs" />
     <Compile Include="UI\Screens\ScreenManager.cs" />
     <Compile Include="UI\Ellipse.cs" />

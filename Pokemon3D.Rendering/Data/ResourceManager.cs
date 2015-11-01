@@ -13,8 +13,6 @@ namespace Pokemon3D.Rendering.Data
         private readonly Dictionary<string, Texture2D> _texturesByFilePath;
         private readonly Dictionary<string, ModelMesh> _meshCache;
         private readonly Dictionary<string, Mesh> _primitiveMeshCache;
-        private readonly Mesh _cubeMesh;
-        private readonly Mesh _billboardMesh;
         private readonly GraphicsDevice _device;
         private GameModeDataProvider _gameModeDataprovider;
 
@@ -24,18 +22,6 @@ namespace Pokemon3D.Rendering.Data
             _meshCache = new Dictionary<string, ModelMesh>();
             _primitiveMeshCache = new Dictionary<string, Mesh>();
             _device = device;
-            _cubeMesh = new Mesh(_device, Primitives.GenerateCubeData());
-            _billboardMesh = new Mesh(_device, Primitives.GenerateQuadForYBillboard());
-        }
-
-        public Mesh GetCubeMesh()
-        {
-            return _cubeMesh;
-        }
-
-        public Mesh GetBillboardMesh()
-        {
-            return _billboardMesh;
         }
 
         public ModelMesh GetMeshByFilePath(string filePath)

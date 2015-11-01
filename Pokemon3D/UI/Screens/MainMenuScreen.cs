@@ -20,7 +20,7 @@ namespace Pokemon3D.UI.Screens
 
         private void OnLoadClick()
         {
-            Game.ScreenManager.SetScreen(typeof(OverworldScreen));
+            
         }
 
         public override void OnDraw(GameTime gameTime)
@@ -47,7 +47,7 @@ namespace Pokemon3D.UI.Screens
 
         private void OnStartClick()
         {
-            Game.ScreenManager.SetScreen(typeof(RenderingTestScreen));
+            Game.ScreenManager.SetScreen(typeof(OverworldScreen));
         }
     }
 }
