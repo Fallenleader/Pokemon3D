@@ -11,6 +11,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     [DataContract]
     class MapModel : JsonDataModel
     {
+        /// <summary>
+        /// Display name of the map.
+        /// </summary>
         [DataMember(Order = 0)]
         public string Name { get; private set; }
 

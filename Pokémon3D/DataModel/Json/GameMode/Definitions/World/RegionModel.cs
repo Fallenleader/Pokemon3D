@@ -11,10 +11,16 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions.World
     [DataContract]
     class RegionModel : JsonDataModel
     {
+        /// <summary>
+        /// Referenced in: <see cref="Map.MapModel.Region"/>.
+        /// </summary>
         [DataMember(Order = 0)]
-        public string Name;
-        
+        public string Id;
+
         [DataMember(Order = 1)]
+        public string Name;
+
+        [DataMember(Order = 2)]
         public ZoneModel[] Zones;
     }
 }

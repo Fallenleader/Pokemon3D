@@ -11,8 +11,11 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
     [DataContract]
     class PrimitiveModel : JsonDataModel
     {
+        /// <summary>
+        /// Referenced in: <see cref="Map.Entities.EntityRenderModeModel.PrimitiveModelId"/>.
+        /// </summary>
         [DataMember(Order = 0)]
-        public string Name;
+        public string Id;
         
         [DataMember(Order = 1)]
         public VertexModel[] Vertices;

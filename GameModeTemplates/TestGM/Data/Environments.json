@@ -1,9 +1,6 @@
 [
 	{
-		"Name" : "TestEnvironment",
-		"EnvironmentType" : 0,
-		"WeatherType" : 0,
-		"LightingType" : 0,
+		"Id" : "TestEnvironment",
 		"IsDark" : false,
 		"Terrain" : "Grass",
 		"PokemonData" : {

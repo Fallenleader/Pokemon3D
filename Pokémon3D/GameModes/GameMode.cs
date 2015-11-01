@@ -49,7 +49,7 @@ namespace Pokémon3D.GameModes
                 _gameModeFolder = System.IO.Path.GetDirectoryName(gameModeFile);
                 _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
                 _components = new List<IGameModeComponent>();
-                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(DataPath, PrimitivesFileName)).ToDictionary(pm => pm.Name, pm => pm);
+                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(DataPath, PrimitivesFileName)).ToDictionary(pm => pm.Id, pm => pm);
 
 
                 var mapModels = Directory.GetFiles(MapPath)

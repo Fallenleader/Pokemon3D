@@ -13,7 +13,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Items
     class ItemModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public int Id;
+        public string Id;
 
         [DataMember(Order = 1)]
         public string Name;

@@ -12,27 +12,33 @@ namespace Pokémon3D.DataModel.Json.GameMode.Definitions
     class BadgeModel : JsonDataModel
     {
         /// <summary>
-        /// The name of the badge.
+        /// The identification of the badge.
         /// </summary>
         [DataMember(Order = 0)]
+        public string Id;
+
+        /// <summary>
+        /// The display name of the badge.
+        /// </summary>
+        [DataMember(Order = 1)]
         public string Name;
 
         /// <summary>
         /// The description of the badge.
         /// </summary>
-        [DataMember(Order = 1)]
+        [DataMember(Order = 2)]
         public string Description;
 
         /// <summary>
         /// The texture which is the badge's visual representation.
         /// </summary>
-        [DataMember(Order = 2)]
+        [DataMember(Order = 3)]
         public TextureSourceModel Texture;
 
         /// <summary>
         /// The region this badge belongs to.
         /// </summary>
-        [DataMember(Order = 3)]
+        [DataMember(Order = 4)]
         public string Region;
     }
 }

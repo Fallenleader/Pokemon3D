@@ -15,7 +15,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The Id of the item.
         /// </summary>
         [DataMember(Order = 0)]
-        public int ItemId;
+        public string ItemId;
 
         /// <summary>
         /// The chance of this item appearing.

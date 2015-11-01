@@ -9,7 +9,7 @@ namespace Pokémon3D.DataModel.Json.GameMode
     class GameRuleModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name;
+        public string Id;
 
         [DataMember(Order = 1)]
         public string Value;

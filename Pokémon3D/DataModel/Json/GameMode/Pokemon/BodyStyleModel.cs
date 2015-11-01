@@ -15,15 +15,21 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
     class BodyStyleModel : JsonDataModel
     {
         /// <summary>
-        /// The name of this BodyStyle.
+        /// The identification of this BodyStyle.
         /// </summary>
         [DataMember(Order = 0)]
+        public string Id;
+
+        /// <summary>
+        /// The name of this BodyStyle.
+        /// </summary>
+        [DataMember(Order = 1)]
         public string Name;
 
         /// <summary>
         /// The texture of this BodyStyle.
         /// </summary>
-        [DataMember(Order = 1)]
+        [DataMember(Order = 2)]
         public TextureSourceModel Texture;
     }
 }

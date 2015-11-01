@@ -1,9 +1,11 @@
 [
 	{
+		"Id" : "Johto",
 		"Name" : "Johto",
 		"Zones" : [
 			{
-				"Name" : "EastJohto",
+				"Id" : "EastJohto",
+				"Name" : "East Johto",
 				"Weather" : [
 					{
 						"WeatherType" : "Clear",

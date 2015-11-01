@@ -11,6 +11,9 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     [DataContract]
     class EntityModel : JsonDataModel
     {
+        /// <summary>
+        /// The Id this Entity definition can be accessed with.
+        /// </summary>
         [DataMember(Order = 0)]
         public int Id;
 

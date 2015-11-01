@@ -11,8 +11,11 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map
     [DataContract]
     class MapEnvironmentModel : JsonDataModel
     {
+        /// <summary>
+        /// Referenced in: <see cref="MapModel.Environment"/>.
+        /// </summary>
         [DataMember(Order = 0)]
-        public string Name { get; }
+        public string Id { get; }
 
         /// <summary>
         /// If the weather information in the Zone data model applied to the map will get applied.

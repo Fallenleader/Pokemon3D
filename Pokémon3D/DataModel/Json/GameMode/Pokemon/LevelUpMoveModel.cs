@@ -21,6 +21,6 @@ namespace Pokémon3D.DataModel.Json.GameMode.Pokemon
         /// The Id of the move.
         /// </summary>
         [DataMember(Order = 1)]
-        public int Id;
+        public string Id;
     }
 }

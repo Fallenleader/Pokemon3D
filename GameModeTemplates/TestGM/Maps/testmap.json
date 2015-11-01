@@ -82,7 +82,7 @@
 				"IsFloor" : false,
 				"Components" : [
 					{
-						"Name" : "isBillboard",
+						"Id" : "isBillboard",
 						"Data" : ""
 					}
 				]

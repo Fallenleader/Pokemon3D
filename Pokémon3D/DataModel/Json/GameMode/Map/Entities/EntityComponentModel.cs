@@ -12,7 +12,7 @@ namespace Pokémon3D.DataModel.Json.GameMode.Map.Entities
     class EntityComponentModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string Name;
+        public string Id;
 
         [DataMember(Order = 1)]
         public string Data;

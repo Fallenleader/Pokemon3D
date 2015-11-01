@@ -128,10 +128,10 @@ namespace Pokémon3D.GameModes.Maps
 
             foreach (var compModel in _dataModel.Components)
             {
-                if (!HasComponent(compModel.Name))
+                if (!HasComponent(compModel.Id))
                 {
                     var comp = factory.GetComponent(this, compModel);
-                    _components.Add(compModel.Name.ToLowerInvariant(), comp);
+                    _components.Add(compModel.Id.ToLowerInvariant(), comp);
                 }
             }
         }

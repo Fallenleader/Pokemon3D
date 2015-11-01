@@ -56,10 +56,10 @@ namespace Pokémon3D.GameModes.Maps.EntityComponents
             {
                 Parent = parent,
                 Data = dataModel.Data,
-                Name = dataModel.Name
+                Name = dataModel.Id
             };
 
-            switch (dataModel.Name.ToLowerInvariant())
+            switch (dataModel.Id.ToLowerInvariant())
             {
                 default:
                     comp = new DataStorageEntityComponent(parameters);
