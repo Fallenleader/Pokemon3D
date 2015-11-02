@@ -49,6 +49,10 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents
             return TypeConverter.Convert<T>(Data);
         }
 
+        public virtual void OnComponentAdded() { }
+
+        public virtual void OnComponentRemove() { }
+
         #region Behaviour
 
         /// <summary>

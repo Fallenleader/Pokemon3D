@@ -18,7 +18,7 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents
     /// </summary>
     class EntityComponentFactory
     {
-        public const string COMPONENT_ID_BILLBOARD = "isBillboard";
+        public const string COMPONENT_ID_BILLBOARD = "isbillboard";
 
         private static EntityComponentFactory _instance;
 

@@ -18,8 +18,9 @@ namespace Pokemon3D.GameModes.Maps
     {
         public const string COMPONENT_NAME_STATIC = "isStatic";
 
-        protected Scene Scene { get; private set; }
-        protected SceneNode SceneNode { get; private set; }
+        public Scene Scene { get; private set; }
+        public SceneNode SceneNode { get; private set; }
+        public RenderMethod RenderMethod => _dataModel.RenderMode.RenderMethod;
 
         private readonly EntityModel _dataModel;
         private readonly Dictionary<string, EntityComponent> _components = new Dictionary<string, EntityComponent>();
@@ -46,8 +47,7 @@ namespace Pokemon3D.GameModes.Maps
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 SceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
-                SceneNode.IsBillboard = HasComponent(EntityComponentFactory.COMPONENT_ID_BILLBOARD);
-
+                
                 var texture = renderMode.Textures.First();
 
                 var diffuseTexture = Resources.GetTexture2D(texture.Source);
@@ -150,7 +150,7 @@ namespace Pokemon3D.GameModes.Maps
                 if (!HasComponent(compModel.Id))
                 {
                     var comp = factory.GetComponent(this, compModel);
-                    _components.Add(compModel.Id.ToLowerInvariant(), comp);
+                    AddComponent(comp);
                 }
             }
         }
@@ -158,13 +158,19 @@ namespace Pokemon3D.GameModes.Maps
         public void AddComponent(EntityComponent component)
         {
             if (!HasComponent(component.Name))
+            {
                 _components.Add(component.Name.ToLowerInvariant(), component);
+                component.OnComponentAdded();
+            }
         }
 
         public void RemoveComponent(string componentName)
         {
             if (HasComponent(componentName))
+            {
+                _components[componentName.ToLowerInvariant()].OnComponentRemove();
                 _components.Remove(componentName.ToLowerInvariant());
+            }
         }
 
         /// <summary>
