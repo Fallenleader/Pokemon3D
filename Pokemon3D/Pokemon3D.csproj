@@ -136,6 +136,8 @@
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponent.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentFactory.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\FunctionResponse.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\RenderResultType.cs" />
     <Compile Include="GameModes\Maps\EntityFaceDirection.cs" />
     <Compile Include="GameModes\Maps\Map.cs" />
     <Compile Include="GameModes\Maps\MapManager.cs" />

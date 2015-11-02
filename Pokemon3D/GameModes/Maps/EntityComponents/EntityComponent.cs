@@ -8,35 +8,6 @@ using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 namespace Pokemon3D.GameModes.Maps.EntityComponents
 {
     /// <summary>
-    /// The response from a player interfaction with an <see cref="EntityComponent"/>.
-    /// </summary>
-    enum FunctionResponse
-    {
-        False = 0,
-        True = 1,
-        NoValue
-    }
-
-    /// <summary>
-    /// The result type of the render method call of an <see cref="EntityComponent"/>.
-    /// </summary>
-    enum RenderResultType
-    {
-        /// <summary>
-        /// This entity component rendered something and was the last component in this entity to render something.
-        /// </summary>
-        Rendered,
-        /// <summary>
-        /// This entity component rendered something, but the next component might also render something.
-        /// </summary>
-        RenderedButPassed,
-        /// <summary>
-        /// This entity component did not render something.
-        /// </summary>
-        Passed
-    }
-
-    /// <summary>
     /// A component of an <see cref="Entity"/>, responsible for the Entity's functionality.
     /// </summary>
     class EntityComponent
