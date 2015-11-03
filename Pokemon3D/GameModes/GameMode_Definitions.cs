@@ -13,6 +13,8 @@ namespace Pokemon3D.GameModes
         private const string PATH_CONTENT_DATA = "Data";
         private const string PATH_CONTENT_MAPS = "Maps";
 
+        public const string FILE_DATA_PRIMITIVES = "Primitives.json";
+
         /// <summary>
         /// The path to the texture base folder of this GameMode.
         /// </summary>

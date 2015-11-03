@@ -144,8 +144,7 @@
     <Compile Include="GameModes\Maps\MapPrototype.cs" />
     <Compile Include="GameModes\Maps\Player.cs" />
     <Compile Include="GameModes\Maps\PlayerMovementMode.cs" />
-    <Compile Include="GameModes\Resources\ModelManager.cs" />
-    <Compile Include="GameModes\Resources\TextureManager.cs" />
+    <Compile Include="GameModes\Resources\PrimitiveManager.cs" />
     <Compile Include="ResourceNames.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

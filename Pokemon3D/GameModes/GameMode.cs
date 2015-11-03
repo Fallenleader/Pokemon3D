@@ -20,16 +20,11 @@ namespace Pokemon3D.GameModes
     /// <summary>
     /// The main class to control a GameMode.
     /// </summary>
-    partial class GameMode : IDataModelContainer, GameModeDataProvider
+    partial class GameMode : IDataModelContainer, IDisposable, GameModeDataProvider
     {
-        private const string PrimitivesFileName = "Primitives.json";
-
         private readonly GameModeModel _dataModel;
         private readonly string _gameModeFolder;
-        private readonly List<IGameModeComponent> _components;
-        private bool _initializedComponents;
         private readonly bool _isValid;
-        private readonly Dictionary<string, PrimitiveModel> _primitiveModels; 
 
         /// <summary>
         /// Returns if the container loaded the data correctly.
@@ -46,16 +41,11 @@ namespace Pokemon3D.GameModes
         {
             try
             {
-                _gameModeFolder = System.IO.Path.GetDirectoryName(gameModeFile);
+                _gameModeFolder = Path.GetDirectoryName(gameModeFile);
                 _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
-                _components = new List<IGameModeComponent>();
-                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(DataPath, PrimitivesFileName)).ToDictionary(pm => pm.Id, pm => pm);
 
-
-                var mapModels = Directory.GetFiles(MapPath)
-                                         .Where(m => m.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
-                                         .Select(m => JsonDataModel.FromFile<MapModel>(m)).ToArray();
-                MapManager = new MapManager(mapModels);
+                PrimitiveManager = new Resources.PrimitiveManager(this);
+                MapManager = new MapManager(this);
 
                 _isValid = true;
             }
@@ -73,64 +63,20 @@ namespace Pokemon3D.GameModes
         public string StartMap => _dataModel.StartConfiguration.Map;
 
         public MapManager MapManager { get; private set; }
-
-        private void InitializeComponents()
-        {
-            // Search the assembly for types that implement the IGameModeComponent interface:
-            var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetType().IsAssignableFrom(typeof(IGameModeComponent)));
-
-            // Create instances of those types and add those instances to the component list.
-            foreach (var type in types)
-                AddComponent((IGameModeComponent)Activator.CreateInstance(type));
-
-            _initializedComponents = true;
-        }
-
-        private void AddComponent(IGameModeComponent component)
-        {
-            _components.Add(component);
-            component.Activated(this);
-        }
-
-        /// <summary>
-        /// Returns a component of this GameMode.
-        /// </summary>
-        /// <typeparam name="T">The type of the component.</typeparam>
-        public T GetComponent<T>() where T : IGameModeComponent
-        {
-            if (!_initializedComponents)
-                InitializeComponents();
-
-            return (T)_components.Find(c => c.GetType() == typeof(T));
-        }
-
+        public Resources.PrimitiveManager PrimitiveManager { get; private set; }
+        
         /// <summary>
         /// Frees all resources consumed by this GameMode.
         /// </summary>
-        public void FreeResources()
+        public void Dispose()
         {
-            foreach (IGameModeComponent component in _components)
-                component.FreeResources();
+            MapManager.Dispose();
+            PrimitiveManager.Dispose();
         }
 
         public GeometryData GetPrimitiveData(string primitiveName)
         {
-            PrimitiveModel primitiveModel;
-            if (_primitiveModels.TryGetValue(primitiveName, out primitiveModel))
-            {
-                return new GeometryData
-                {
-                    Vertices = primitiveModel.Vertices.Select(v => new VertexPositionNormalTexture
-                    {
-                        Position = v.Position.GetVector3(),
-                        TextureCoordinate = v.TexCoord.GetVector2(),
-                        Normal = v.Normal.GetVector3()
-                    }).ToArray(),
-                    Indices = primitiveModel.Indices.Select(i => (ushort) i).ToArray()
-                };
-            }
-            
-            throw new ApplicationException("Invalid Primitive Type: " + primitiveName);
+            return PrimitiveManager.GetPrimitiveData(primitiveName);
         }
     }
 }
