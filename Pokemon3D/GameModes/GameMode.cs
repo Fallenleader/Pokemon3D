@@ -65,18 +65,40 @@ namespace Pokemon3D.GameModes
         public MapManager MapManager { get; private set; }
         public Resources.PrimitiveManager PrimitiveManager { get; private set; }
         
+        public GeometryData GetPrimitiveData(string primitiveName)
+        {
+            return PrimitiveManager.GetPrimitiveData(primitiveName);
+        }
+
+        #region Dispose
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                MapManager.Dispose();
+                PrimitiveManager.Dispose();
+            }
+
+            // todo: free unmanaged resources.
+        }
+
         /// <summary>
         /// Frees all resources consumed by this GameMode.
         /// </summary>
         public void Dispose()
         {
-            MapManager.Dispose();
-            PrimitiveManager.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        public GeometryData GetPrimitiveData(string primitiveName)
-        {
-            return PrimitiveManager.GetPrimitiveData(primitiveName);
-        }
+        // Add, if this class has unmanaged resources
+        //~GameMode()
+        //{
+        //    Dispose(false);
+        //}
+
+        #endregion
     }
 }

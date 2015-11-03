@@ -25,11 +25,6 @@ namespace Pokemon3D.GameModes.Resources
                 .ToDictionary(pm => pm.Id, pm => pm);
         }
         
-        public void Dispose()
-        {
-            // todo: dispose primitive manager resources.
-        }
-
         public GeometryData GetPrimitiveData(string primitiveName)
         {
             PrimitiveModel primitiveModel;
@@ -49,5 +44,32 @@ namespace Pokemon3D.GameModes.Resources
 
             throw new ApplicationException("Invalid Primitive Type: " + primitiveName);
         }
+
+        #region Dispose
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // todo: free managed resources
+            }
+
+            // todo: free unmanaged resources
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // Add, if this class has unmanaged resources
+        //~PrimitiveManager()
+        //{
+        //    // Destructor calls dipose to free unmanaged resources:
+        //    Dispose(false);
+        //}
+
+        #endregion
     }
 }

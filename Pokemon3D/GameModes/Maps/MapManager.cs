@@ -26,15 +26,37 @@ namespace Pokemon3D.GameModes.Maps
                                          .Select(m => JsonDataModel.FromFile<MapModel>(m)).ToArray();
         }
 
-        public void Dispose()
-        {
-            // todo: dispose map manager resources
-        }
-
         public Map LoadMap(string mapName, Scene scene, ResourceManager resourceManager)
         {
             var mapModel = _mapModels.Single(m => m.Name == mapName);
             return new Map(mapModel, scene, resourceManager);
         }
+
+        #region Dispose
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // todo: free managed resources
+            }
+
+            // todo: free unmanaged resources
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        
+        // Add, if this class has unmanaged resources
+        //~MapManager()
+        //{
+        //    // Destructor calls dipose to free unmanaged resources:
+        //    Dispose(false);
+        //}
+
+        #endregion
     }
 }
