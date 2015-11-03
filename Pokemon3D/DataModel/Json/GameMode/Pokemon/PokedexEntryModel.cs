@@ -14,14 +14,12 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
         /// <summary>
         /// The description text of the entry.
         /// </summary>
-        /// <returns></returns>
         [DataMember(Order = 0)]
         public string Text;
 
         /// <summary>
         /// The species of this Pokémon.
         /// </summary>
-        /// <returns></returns>
         [DataMember(Order = 1)]
         public string Species;
 

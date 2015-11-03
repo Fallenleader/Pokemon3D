@@ -20,10 +20,24 @@ namespace Pokemon3D.GameModes.Maps
         {
             _gameMode = gameMode;
 
-            // todo: when a map file is invalid, the loop stops at that file.
-            _mapModels = Directory.GetFiles(_gameMode.MapPath)
-                                         .Where(m => m.EndsWith(MapFileExtension, StringComparison.OrdinalIgnoreCase))
-                                         .Select(m => JsonDataModel.FromFile<MapModel>(m)).ToArray();
+            List<MapModel> mapModels = new List<MapModel>();
+
+            var files = Directory.GetFiles(_gameMode.MapPath)
+                .Where(m => m.EndsWith(MapFileExtension, StringComparison.OrdinalIgnoreCase));
+            
+            foreach (var file in files)
+            {
+                try
+                {
+                    mapModels.Add(JsonDataModel.FromFile<MapModel>(file));
+                }
+                catch (JsonDataLoadException ex)
+                {
+                    // todo: log exception.
+                }
+            }
+
+            _mapModels = mapModels.ToArray();
         }
 
         public Map LoadMap(string mapName, Scene scene, ResourceManager resourceManager)

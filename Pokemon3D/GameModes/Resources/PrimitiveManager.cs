@@ -16,13 +16,28 @@ namespace Pokemon3D.GameModes.Resources
         private GameMode _gameMode;
         private readonly Dictionary<string, PrimitiveModel> _primitiveModels;
 
+        /// <summary>
+        /// If the primitives file loaded without errors.
+        /// </summary>
+        public bool IsValid { get; private set; } = false;
+
         public PrimitiveManager(GameMode gameMode)
         {
             _gameMode = gameMode;
+            
+            try
+            {
+                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(_gameMode.DataPath, GameMode.FILE_DATA_PRIMITIVES))
+                    .ToDictionary(pm => pm.Id, pm => pm);
 
-            // todo: the loop breaks when a primitive fails to load correctly.
-            _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(_gameMode.DataPath, GameMode.FILE_DATA_PRIMITIVES))
-                .ToDictionary(pm => pm.Id, pm => pm);
+                IsValid = true;
+            }
+            catch (Exception ex) when (ex is JsonDataLoadException || ex is FileNotFoundException)
+            {
+                // todo: log exception!
+
+                IsValid = false;
+            }
         }
         
         public GeometryData GetPrimitiveData(string primitiveName)

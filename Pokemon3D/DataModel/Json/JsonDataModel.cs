@@ -22,7 +22,7 @@ namespace Pokemon3D.DataModel.Json
             if (File.Exists(fileName))
                 return FromString<T>(File.ReadAllText(fileName));
             else
-                throw new FileNotFoundException("The JSON file does not exist.", fileName);
+                throw new FileNotFoundException("The Json file does not exist.", fileName);
         }
 
         /// <summary>

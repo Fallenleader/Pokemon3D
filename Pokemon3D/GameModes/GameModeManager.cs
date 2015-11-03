@@ -12,7 +12,6 @@ namespace Pokemon3D.GameModes
         /// <summary>
         /// Returns a collection of GameModes information.
         /// </summary>
-        /// <returns></returns>
         public GameModeInfo[] GetGameModeInfos()
         {
             var gameModes = new List<GameModeInfo>();
@@ -25,9 +24,7 @@ namespace Pokemon3D.GameModes
 
         public GameMode LoadGameMode(GameModeInfo gameModeInfo)
         {
-            var gameModeDirectory = Path.Combine(GameModeFileProvider.GameModeFolder, gameModeInfo.DirectioryName);
-            var gameModeFilePath = GameModeFileProvider.GetGameModeFile(gameModeDirectory);
-            return new GameMode(gameModeFilePath);
+            return new GameMode(gameModeInfo);
         }
     }
 }

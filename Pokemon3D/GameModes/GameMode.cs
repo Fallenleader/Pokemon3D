@@ -22,48 +22,29 @@ namespace Pokemon3D.GameModes
     /// </summary>
     partial class GameMode : IDataModelContainer, IDisposable, GameModeDataProvider
     {
-        private readonly GameModeModel _dataModel;
-        private readonly string _gameModeFolder;
-        private readonly bool _isValid;
+        public GameModeInfo GameModeInfo { get; }
 
-        /// <summary>
-        /// Returns if the container loaded the data correctly.
-        /// </summary>
-        public bool IsValid
-        {
-            get { return _isValid; }
-        }
+        public MapManager MapManager { get; private set; }
+        public Resources.PrimitiveManager PrimitiveManager { get; private set; }
+        
+        public bool IsValid { get; private set; }
 
         /// <summary>
         /// Creates an instance of the <see cref="GameMode"/> class and loads the data model.
         /// </summary>
-        public GameMode(string gameModeFile)
+        public GameMode(GameModeInfo gameModeInfo)
         {
-            try
-            {
-                _gameModeFolder = Path.GetDirectoryName(gameModeFile);
-                _dataModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
+            GameModeInfo = gameModeInfo;
 
+            // only continue if the game mode config file loaded correctly.
+            if (GameModeInfo.IsValid)
+            {
                 PrimitiveManager = new Resources.PrimitiveManager(this);
                 MapManager = new MapManager(this);
-
-                _isValid = true;
             }
-            catch (JsonDataLoadException ex)
-            {
-                //Something went wrong processing the data from a GameMode config file.
-                //Log the error and mark the instance as invalid.
 
-                GameLogger.Instance.Log(MessageType.Error, "An error occurred trying to load the GameMode config file \"" + gameModeFile + "\".");
-
-                _isValid = false;
-            }
+            IsValid = true;
         }
-
-        public string StartMap => _dataModel.StartConfiguration.Map;
-
-        public MapManager MapManager { get; private set; }
-        public Resources.PrimitiveManager PrimitiveManager { get; private set; }
         
         public GeometryData GetPrimitiveData(string primitiveName)
         {
