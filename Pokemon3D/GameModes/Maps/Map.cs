@@ -29,8 +29,6 @@ namespace Pokemon3D.GameModes.Maps
                     PlaceEntities(entityDefinition, entityPlacing);
                 }   
             }
-            
-            _allEntities = new List<Entity>();
         }
 
         private void PlaceEntities(EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing)
