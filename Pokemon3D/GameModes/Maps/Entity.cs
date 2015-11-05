@@ -16,7 +16,6 @@ namespace Pokemon3D.GameModes.Maps
     /// </summary>
     class Entity : GameContextObject
     {
-        public const string COMPONENT_NAME_STATIC = "isStatic";
 
         public Scene Scene { get; private set; }
         public SceneNode SceneNode { get; private set; }
@@ -125,16 +124,16 @@ namespace Pokemon3D.GameModes.Maps
         /// </summary>
         public bool IsStatic
         {
-            get { return HasComponent(COMPONENT_NAME_STATIC); }
+            get { return HasComponent(EntityComponent.IDs.Static); }
             set
             {
                 if (value && !IsStatic)
                 {
-                    AddComponent(EntityComponentFactory.GetInstance().GetComponent(this, COMPONENT_NAME_STATIC));
+                    AddComponent(EntityComponentFactory.Instance.GetComponent(this, EntityComponent.IDs.Static));
                 }
                 else if (!value && IsStatic)
                 {
-                    RemoveComponent(COMPONENT_NAME_STATIC);
+                    RemoveComponent(EntityComponent.IDs.Static);
                 }
             }
         }
@@ -143,7 +142,7 @@ namespace Pokemon3D.GameModes.Maps
         {
             // Loops over the data models of the entity components and creates actual instances.
 
-            var factory = EntityComponentFactory.GetInstance();
+            var factory = EntityComponentFactory.Instance;
 
             foreach (var compModel in _dataModel.Components)
             {

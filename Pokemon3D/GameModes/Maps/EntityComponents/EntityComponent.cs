@@ -10,7 +10,7 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents
     /// <summary>
     /// A component of an <see cref="Entity"/>, responsible for the Entity's functionality.
     /// </summary>
-    class EntityComponent
+    partial class EntityComponent
     {
         /// <summary>
         /// The original name of this component.
