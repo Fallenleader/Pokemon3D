@@ -92,7 +92,11 @@ namespace Pokemon3D.Common.Animations
                     currentTarget = newTarget;
                 }
             }
-            
+        }
+
+        public void Stop()
+        {
+            CurrentAnimation = null;
         }
 
         /// <summary>
@@ -106,17 +110,24 @@ namespace Pokemon3D.Common.Animations
             CurrentAnimation.Update(elapsedSeconds);
             if (CurrentAnimation.IsFinished)
             {
-                AnimationFinished?.Invoke(_currentAnimationName);
-
-                string newAnimation;
-                if (_transitions.TryGetValue(_currentAnimationName, out newAnimation))
+                if (CurrentAnimation.IsLoop)
                 {
-                    SetAnimation(newAnimation);
+                    CurrentAnimation.Start();
                 }
                 else
                 {
-                    CurrentAnimation = null;
-                    AnimatorFinished?.Invoke();
+                    AnimationFinished?.Invoke(_currentAnimationName);
+
+                    string newAnimation;
+                    if (_transitions.TryGetValue(_currentAnimationName, out newAnimation))
+                    {
+                        SetAnimation(newAnimation);
+                    }
+                    else
+                    {
+                        CurrentAnimation = null;
+                        AnimatorFinished?.Invoke();
+                    }
                 }
             }
         }

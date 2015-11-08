@@ -29,16 +29,32 @@ namespace Pokemon3D.Rendering
         private Vector3 _right;
         private Vector3 _up;
         private Vector3 _forward;
+        private bool _isActive;
 
         internal SceneNode()
         {
+            _isActive = true;
             _childNodes = new List<SceneNode>();
             Children = _childNodes.AsReadOnly();
             _scale = Vector3.One;
             Right = Vector3.Right;
             Up = Vector3.Up;
-            Forward = new Vector3(0, 0, -1);
+            Forward = Vector3.Forward;
             SetDirty();
+        }
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    _childNodes.ForEach(c => c.IsActive = _isActive);
+                }
+                
+            }
         }
 
         public Vector3 Scale
@@ -139,6 +155,7 @@ namespace Pokemon3D.Rendering
         {
             Parent?.RemoveChild(this);
             parent?.AddChild(this);
+            SetDirty();
         }
 
         public void AddChild(SceneNode childElement)
@@ -198,10 +215,11 @@ namespace Pokemon3D.Rendering
 
             _globalEulerAngles = Parent != null ? Parent.GlobalEulerAngles + _rotationAxis : _rotationAxis;
 
-            var localWorldMatrix = Matrix.CreateScale(_scale)*Matrix.CreateFromYawPitchRoll(_globalEulerAngles.Y, _globalEulerAngles.X, _globalEulerAngles.Z) *
+            var localWorldMatrix = Matrix.CreateScale(_scale)*Matrix.CreateFromYawPitchRoll(_rotationAxis.Y, _rotationAxis.X, _rotationAxis.Z) *
                                    Matrix.CreateTranslation(_position);
 
-            _world = Parent == null ? localWorldMatrix : Parent._world * localWorldMatrix;
+            Parent?.HandleIsDirty();
+            _world = Parent == null ? localWorldMatrix :localWorldMatrix * Parent._world;
 
             if (Parent != null)
             {
@@ -215,7 +233,7 @@ namespace Pokemon3D.Rendering
             var rotationMatrix = Matrix.CreateFromYawPitchRoll(_globalEulerAngles.Y, _globalEulerAngles.X, _globalEulerAngles.Z);
             _right = Vector3.TransformNormal(Vector3.Right, rotationMatrix);
             _up = Vector3.TransformNormal(Vector3.Up, rotationMatrix);
-            _forward = Vector3.TransformNormal(new Vector3(0, 0, -1), rotationMatrix);
+            _forward = Vector3.TransformNormal(Vector3.Forward, rotationMatrix);
 
             _isDirty = false;
         }

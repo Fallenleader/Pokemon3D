@@ -10,7 +10,7 @@ namespace Pokemon3D.Common.Animations
     {
         private readonly Action<float> _onUpdate;
 
-        public DeltaAnimation(float durationSeconds, Action<float> onUpdate) : base(durationSeconds)
+        public DeltaAnimation(float durationSeconds, Action<float> onUpdate, bool loops) : base(durationSeconds, loops)
         {
             if (onUpdate == null) throw new ArgumentNullException(nameof(onUpdate));
             _onUpdate = onUpdate;

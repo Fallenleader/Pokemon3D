@@ -22,6 +22,7 @@ namespace Pokemon3D
         {
             public const string bricksSample = "Textures/bricksSample";
             public const string default_texture = "Textures/default_texture";
+            public const string DefaultGuy = "Textures/DefaultGuy";
             public const string guiskin = "Textures/guiskin";
             public const string highlight = "Textures/highlight";
             public const string P3D = "Textures/P3D";

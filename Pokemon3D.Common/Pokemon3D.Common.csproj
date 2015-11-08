@@ -46,6 +46,7 @@
     <Compile Include="Animations\Animation.cs" />
     <Compile Include="Animations\Animator.cs" />
     <Compile Include="Animations\DeltaAnimation.cs" />
+    <Compile Include="Animations\DiscreteAnimation.cs" />
     <Compile Include="Diagnostics\GameLogger.cs" />
     <Compile Include="Diagnostics\MessageType.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />

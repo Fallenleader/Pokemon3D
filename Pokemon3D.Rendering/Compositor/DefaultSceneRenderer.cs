@@ -218,7 +218,7 @@ namespace Pokemon3D.Rendering.Compositor
             for (var i = 0; i < allNodes.Count; i++)
             {
                 var node = allNodes[i];
-                if (node.Mesh == null || node.Material == null) continue;
+                if (node.Mesh == null || node.Material == null || !node.IsActive) continue;
 
                 if (node.Material.UseTransparency)
                 {

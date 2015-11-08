@@ -2,7 +2,7 @@
 {
     internal class WaitAnimation : Animation
     {
-        public WaitAnimation(float durationSeconds) : base(durationSeconds)
+        public WaitAnimation(float durationSeconds) : base(durationSeconds, false)
         {
         }
 

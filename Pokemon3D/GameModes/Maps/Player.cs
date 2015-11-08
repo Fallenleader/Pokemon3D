@@ -1,12 +1,17 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pokemon3D.Common.Animations;
+using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering;
+using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.GameModes.Maps
 {
     class Player : Entity
     {
+        private readonly Animator _figureAnimator;
         private readonly Camera _camera;
         private PlayerMovementMode _movementMode;
         private MouseState _mouseState;
@@ -27,20 +32,36 @@ namespace Pokemon3D.GameModes.Maps
             }
         }
         
-        public Player(Scene scene) : base(scene)
+        public Player(Scene scene, GeometryData billboardData) : base(scene)
         {
-            SceneNode.Position = new Vector3(0,0,0);
-
             _camera = scene.CreateCamera();
             _camera.SetParent(SceneNode);
-            _camera.Position = new Vector3(6.0f, 2.0f, 14.0f);
             Speed = 2.0f;
             RotationSpeed = MathHelper.PiOver4;
-            MovementMode = PlayerMovementMode.GodMode;
+            
+            SceneNode.Mesh = new Mesh(Game.GraphicsDevice, billboardData);
+            var diffuseTexture = Game.Content.Load<Texture2D>(ResourceNames.Textures.DefaultGuy);
+            SceneNode.Material = new Material(diffuseTexture)
+            {
+                UseTransparency = true,
+                TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(32, 32)
+            };
+            SceneNode.Position = new Vector3(10,1,8);
+
+            _figureAnimator = new Animator();
+            _figureAnimator.AddAnimation("Walk", Animation.CreateDiscrete(0.5f, new[]
+            {
+                diffuseTexture.GetTexcoordsFromPixelCoords(32, 0),
+                diffuseTexture.GetTexcoordsFromPixelCoords(64, 0),
+            }, t => SceneNode.Material.TexcoordOffset = t, true));
+
+            MovementMode = PlayerMovementMode.ThirdPerson;
         }
 
         public void Update(float elapsedTime)
         {
+            _figureAnimator.Update(elapsedTime);
+
             var currentMouseState = Mouse.GetState();
 
             var movementDirection = Vector3.Zero;
@@ -78,6 +99,20 @@ namespace Pokemon3D.GameModes.Maps
             _mouseState = currentMouseState;
         }
 
+        private void ActivateWalkingAnimation()
+        {
+            if (_figureAnimator.CurrentAnimation == null) _figureAnimator.SetAnimation("Walk");
+        }
+
+        private void DeactivateWalkingAnimation()
+        {
+            if (_figureAnimator.CurrentAnimation != null)
+            {
+                _figureAnimator.Stop();
+                SceneNode.Material.TexcoordOffset = Vector2.Zero;
+            }
+        }
+
         private void HandleGodModeMovement(float elapsedTime, MouseState mouseState, Vector3 movementDirection)
         {
             var speedFactor = Game.Keyboard.IsKeyDown(Keys.LeftShift) ? 2.0f : 1.0f;
@@ -104,6 +139,24 @@ namespace Pokemon3D.GameModes.Maps
 
         private void HandleThirdPersonMovement(float elapsedTime, MouseState mouseState, Vector3 movementDirection)
         {
+            if (movementDirection.LengthSquared() > 0.0f)
+            {
+                SceneNode.Translate(Vector3.Normalize(movementDirection)*Speed*elapsedTime);
+                ActivateWalkingAnimation();
+            }
+            else
+            {
+                DeactivateWalkingAnimation();
+            }
+
+            if (Game.Keyboard.IsKeyDown(Keys.Left))
+            {
+                SceneNode.RotateY(RotationSpeed * elapsedTime);
+            }
+            else if (Game.Keyboard.IsKeyDown(Keys.Right))
+            {
+                SceneNode.RotateY(-RotationSpeed * elapsedTime);
+            }
         }
 
         private void HandleFirstPersonMovement(float elapsedTime, MouseState mouseState, Vector3 movementDirection)
@@ -128,8 +181,12 @@ namespace Pokemon3D.GameModes.Maps
             switch (MovementMode)
             {
                 case PlayerMovementMode.FirstPerson:
+                    _camera.EulerAngles = Vector3.Zero;
+                    _camera.Position = new Vector3(0,1,0);
                     break;
                 case PlayerMovementMode.ThirdPerson:
+                    _camera.EulerAngles = Vector3.Zero;
+                    _camera.Position = new Vector3(0,1,3);
                     break;
                 case PlayerMovementMode.GodMode:
                     break;

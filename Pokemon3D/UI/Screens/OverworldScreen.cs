@@ -2,10 +2,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering;
 using Pokemon3D.GameCore;
 using Pokemon3D.GameModes;
 using Pokemon3D.GameModes.Maps;
+using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -15,6 +17,7 @@ namespace Pokemon3D.UI.Screens
         private Map _currentMap;
         private Scene _scene;
         private Player _player;
+
         private SpriteFont _debugSpriteFont;
         private bool _showRenderStatistics;
 
@@ -28,7 +31,7 @@ namespace Pokemon3D.UI.Screens
             _scene.Renderer.LightDirection = new Vector3(0, -1, 0);
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.GameModeInfo.StartMap, _scene, Game.Resources);
 
-            _player = new Player(_scene);
+            _player = new Player(_scene, _gameMode.GetPrimitiveData("Billboard"));
 
             _debugSpriteFont = Game.Content.Load<SpriteFont>(ResourceNames.Fonts.DebugFont);
         }
@@ -47,6 +50,23 @@ namespace Pokemon3D.UI.Screens
             if (Game.Keyboard.IsKeyDownOnce(Keys.F12))
             {
                 _showRenderStatistics = !_showRenderStatistics;
+            }
+
+            if (Game.Keyboard.IsKeyDownOnce(Keys.V))
+            {
+                if (_player.MovementMode == PlayerMovementMode.FirstPerson)
+                {
+                    _player.MovementMode = PlayerMovementMode.ThirdPerson;
+                }
+                else
+                {
+                    _player.MovementMode = PlayerMovementMode.FirstPerson;
+                }
+            }
+
+            if (Game.Keyboard.IsKeyDownOnce(Keys.F10))
+            {
+                _player.MovementMode = PlayerMovementMode.GodMode;
             }
         }
 

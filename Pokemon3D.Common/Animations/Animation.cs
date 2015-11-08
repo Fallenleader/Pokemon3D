@@ -11,9 +11,11 @@ namespace Pokemon3D.Common.Animations
         /// Creates a new animation.
         /// </summary>
         /// <param name="durationSeconds">Time of animation.</param>
-        protected Animation(float durationSeconds)
+        /// <param name="isLoop">if the animation loops</param>
+        protected Animation(float durationSeconds, bool isLoop)
         {
             DurationSeconds = durationSeconds;
+            IsLoop = isLoop;
         }
 
         /// <summary>
@@ -43,7 +45,11 @@ namespace Pokemon3D.Common.Animations
         {
             if (IsFinished) return;
             ElapsedSeconds += elapsedSeconds;
-            IsFinished = ElapsedSeconds >= DurationSeconds;
+            if (ElapsedSeconds >= DurationSeconds)
+            {
+                IsFinished = true;
+                ElapsedSeconds = DurationSeconds;
+            }
             OnUpdate();
         }
 
@@ -59,10 +65,24 @@ namespace Pokemon3D.Common.Animations
         /// </summary>
         /// <param name="durationSeconds">Animation duration</param>
         /// <param name="onUpdate">called when updating</param>
+        /// <param name="loops">Loops</param>
         /// <returns>Animation to add to animator</returns>
-        public static Animation CreateDelta(float durationSeconds, Action<float> onUpdate)
+        public static Animation CreateDelta(float durationSeconds, Action<float> onUpdate, bool loops = false)
         {
-            return new DeltaAnimation(durationSeconds, onUpdate);
+            return new DeltaAnimation(durationSeconds, onUpdate, loops);
+        }
+
+        /// <summary>
+        /// Creates an Animation getting discrete values.
+        /// </summary>
+        /// <param name="durationSeconds">Animation duration</param>
+        /// <param name="animationSteps">Animation Steps</param>
+        /// <param name="onUpdate">called when updating</param>
+        /// <param name="loops">Loops</param>
+        /// <returns>Animation to add to animator</returns>
+        public static Animation CreateDiscrete<T>(float durationSeconds, T[] animationSteps, Action<T> onUpdate, bool loops = false)
+        {
+            return new DiscreteAnimation<T>(durationSeconds, animationSteps, onUpdate, loops);
         }
 
         /// <summary>
@@ -74,5 +94,7 @@ namespace Pokemon3D.Common.Animations
         {
             return new WaitAnimation(durationSeconds);
         }
+
+        public bool IsLoop { get; private set; }
     }
 }
