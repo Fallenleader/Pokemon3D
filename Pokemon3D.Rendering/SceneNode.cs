@@ -22,19 +22,19 @@ namespace Pokemon3D.Rendering
         private Vector3 _rotationAxis;
         private Vector3 _position;
         private Vector3 _scale;
-        private Quaternion _rotation;
         private bool _isDirty;
-        private Matrix _localWorldMatrix;
         private Matrix _world;
         private Vector3 _globalPosition;
         private Vector3 _globalEulerAngles;
+        private Vector3 _right;
+        private Vector3 _up;
+        private Vector3 _forward;
 
         internal SceneNode()
         {
             _childNodes = new List<SceneNode>();
             Children = _childNodes.AsReadOnly();
             _scale = Vector3.One;
-            _rotation = Quaternion.Identity;
             Right = Vector3.Right;
             Up = Vector3.Up;
             Forward = new Vector3(0, 0, -1);
@@ -55,26 +55,17 @@ namespace Pokemon3D.Rendering
             }
         }
 
-        public Quaternion Rotation
-        {
-            get
-            {
-                HandleIsDirty();
-                return _rotation;
-            }
-            set
-            {
-                _rotation = value;
-                SetDirty();
-            }
-        }
-
         public Vector3 EulerAngles
         {
             get
             {
                 HandleIsDirty();
                 return _rotationAxis;
+            }
+            set
+            {
+                _rotationAxis = value;
+                SetDirty();
             }
         }
 
@@ -112,9 +103,36 @@ namespace Pokemon3D.Rendering
             private set { _globalPosition = value; }
         }
 
-        public Vector3 Right { get; private set; }
-        public Vector3 Up { get; private set; }
-        public Vector3 Forward { get; private set; }
+        public Vector3 Right
+        {
+            get
+            {
+                HandleIsDirty();
+                return _right;
+            }
+            private set { _right = value; }
+        }
+
+        public Vector3 Up
+        {
+            get
+            {
+                HandleIsDirty();
+                return _up;
+            }
+            private set { _up = value; }
+        }
+
+        public Vector3 Forward
+        {
+            get
+            {
+                HandleIsDirty();
+                return _forward;
+            }
+            private set { _forward = value; }
+        }
+
         public bool IsBillboard { get; set; }
         
         public void SetParent(SceneNode parent)
@@ -152,34 +170,19 @@ namespace Pokemon3D.Rendering
 
         public void RotateX(float angle)
         {
-            var matrix = Matrix.CreateFromAxisAngle(Right, angle);
-            _rotationAxis.X += angle;
-            Rotation = Quaternion.CreateFromYawPitchRoll(_rotationAxis.Y, _rotationAxis.X, _rotationAxis.Z);
-
-            Up = Vector3.Transform(Up, matrix);
-            Forward = Vector3.Transform(Forward, matrix);
+            EulerAngles += new Vector3(angle, 0, 0);
             SetDirty();
         }
 
         public void RotateY(float angle)
         {
-            var matrix = Matrix.CreateFromAxisAngle(Up, angle);
-            _rotationAxis.Y += angle;
-            Rotation = Quaternion.CreateFromYawPitchRoll(_rotationAxis.Y, _rotationAxis.X, _rotationAxis.Z);
-
-            Right = Vector3.Transform(Right, matrix);
-            Forward = Vector3.Transform(Forward, matrix);
+            EulerAngles += new Vector3(0, angle, 0);
             SetDirty();
         }
 
         public void RotateZ(float angle)
         {
-            var matrix = Matrix.CreateFromAxisAngle(Forward, angle);
-            _rotationAxis.Z += angle;
-            Rotation = Quaternion.CreateFromYawPitchRoll(_rotationAxis.Y, _rotationAxis.X, _rotationAxis.Z);
-
-            Up = Vector3.Transform(Up, matrix);
-            Right = Vector3.Transform(Right, matrix);
+            EulerAngles += new Vector3(0, 0, angle);
             SetDirty();
         }
 
@@ -193,7 +196,9 @@ namespace Pokemon3D.Rendering
         {
             if (!_isDirty) return;
 
-            var localWorldMatrix = Matrix.CreateScale(_scale)*Matrix.CreateFromQuaternion(_rotation)*
+            _globalEulerAngles = Parent != null ? Parent.GlobalEulerAngles + _rotationAxis : _rotationAxis;
+
+            var localWorldMatrix = Matrix.CreateScale(_scale)*Matrix.CreateFromYawPitchRoll(_globalEulerAngles.Y, _globalEulerAngles.X, _globalEulerAngles.Z) *
                                    Matrix.CreateTranslation(_position);
 
             _world = Parent == null ? localWorldMatrix : Parent._world * localWorldMatrix;
@@ -201,14 +206,16 @@ namespace Pokemon3D.Rendering
             if (Parent != null)
             {
                 GlobalPosition = new Vector3(_world.M41, _world.M42, _world.M43);
-                GlobalEulerAngles = Parent.GlobalEulerAngles + _rotationAxis;
             }
             else
             {
                 GlobalPosition = _position;
-                GlobalEulerAngles = _rotationAxis;
             }
-            
+
+            var rotationMatrix = Matrix.CreateFromYawPitchRoll(_globalEulerAngles.Y, _globalEulerAngles.X, _globalEulerAngles.Z);
+            _right = Vector3.TransformNormal(Vector3.Right, rotationMatrix);
+            _up = Vector3.TransformNormal(Vector3.Up, rotationMatrix);
+            _forward = Vector3.TransformNormal(new Vector3(0, 0, -1), rotationMatrix);
 
             _isDirty = false;
         }
@@ -234,8 +241,8 @@ namespace Pokemon3D.Rendering
                 Scale = Scale,
                 Forward = Forward,
                 Right = Right,
-                Rotation = Rotation,
-                Up = Up
+                Up = Up,
+                EulerAngles = EulerAngles
             };
             sceneNode.SetParent(Parent);
             return sceneNode;

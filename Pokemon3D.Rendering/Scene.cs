@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
@@ -44,7 +45,7 @@ namespace Pokemon3D.Rendering
 
         public void Update(float elapsedTime)
         {
-            foreach (var sceneNode in _allNodes)
+            foreach (var sceneNode in _allNodes.OrderBy(n => n.Parent != null))
             {
                 sceneNode.Update();
             }

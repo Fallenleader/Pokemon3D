@@ -38,9 +38,8 @@ namespace Pokemon3D.GameModes.Maps
             SceneNode.Scale = dataModel.Scale.GetVector3();
             SceneNode.Position = position;
 
-            var eulerAngles = dataModel.Rotation.GetVector3();
             SceneNode.Scale = dataModel.Scale.GetVector3();
-            SceneNode.Rotation = Quaternion.CreateFromYawPitchRoll(eulerAngles.Y, eulerAngles.X, eulerAngles.Z);
+            SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
             
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
@@ -103,19 +102,6 @@ namespace Pokemon3D.GameModes.Maps
             {
                 if (!IsStatic)
                     SceneNode.Scale = value;
-            }
-        }
-
-        /// <summary>
-        /// The rotation <see cref="Quaternion"/> of this entity.
-        /// </summary>
-        public Quaternion Rotation
-        {
-            get { return SceneNode.Rotation; }
-            set
-            {
-                if (!IsStatic)
-                    SceneNode.Rotation = value;
             }
         }
 
