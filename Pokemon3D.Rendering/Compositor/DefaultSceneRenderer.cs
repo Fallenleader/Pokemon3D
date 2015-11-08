@@ -117,7 +117,7 @@ namespace Pokemon3D.Rendering.Compositor
         private void DrawTransparentObjects(Camera camera)
         {
             _device.BlendState = BlendState.AlphaBlend;
-            _device.DepthStencilState = DepthStencilState.None;
+            _device.DepthStencilState = DepthStencilState.DepthRead;
             foreach (var sceneNode in _transparentObjects.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).Length()))
             {
                 var worldMatrix = sceneNode.GetWorldMatrix(camera);

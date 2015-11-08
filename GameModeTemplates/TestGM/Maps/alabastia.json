@@ -1,0 +1,180 @@
+{
+	"Name" : "Alabastia",
+	"Song" : "testsong1",
+	"MapScript" : "",
+	"Region" : "Johto",
+	"Zone" : "EastJohto",
+	"Environment" : "TestEnvironment",
+	"BattleMapData" : {
+		"BattleMapFile" : "testBattleMap",
+		"CameraPosition" : {
+			"X" : 0,
+			"Y" : 0,
+			"Z" : 0
+		}
+	},
+	"Entities" : [
+		{
+			"Tag" : "Trees",
+			"Placing" : [
+				{
+					"Position" : { "X" : 0, "Y" : 0, "Z" : 1 },
+					"Size" : { "X" : 1, "Y" : 1, "Z" : 17 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 19, "Y" : 0, "Z" : 1 },
+					"Size" : { "X" : 1, "Y" : 1, "Z" : 17 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 1, "Y" : 0, "Z" : 1 },
+					"Size" : { "X" : 7, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 10, "Y" : 0, "Z" : 1 },
+					"Size" : { "X" : 9, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 1, "Y" : 0, "Z" : 17 },
+					"Size" : { "X" : 1, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 7, "Y" : 0, "Z" : 17 },
+					"Size" : { "X" : 11, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+			],
+			"Entity" : {
+				"Id" : 0,
+				"Rotation" : {
+					"X" : 0,
+					"Y" : 0,
+					"Z" : 0
+				},
+				"TakeFullRotation" : false,
+				"Scale" : {
+					"X" : 1,
+					"Y" : 2,
+					"Z" : 1
+				},
+				"RenderMode" : {
+					"RenderMethod" : "Primitive",
+					"Textures" : [
+						{
+							"Source" : "tileset1",
+							"Rectangle" : {
+								"X" : 144,
+								"Y" : 144,
+								"Width" : 16,
+								"Height" : 32
+							}
+						}
+					],
+					"TextureIndex" : [
+						0,
+						0
+					],
+					"PrimitiveModelId" : "Billboard",
+					"ModelPath" : "",
+					"Visible" : true,
+					"Opacity" : 1.0,
+					"Shading" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					},
+					"ObstructCamera" : true,
+					"SeasonPalettes" : []
+				},
+				"Collision" : true,
+				"IsFloor" : false,
+				"Components" : [
+					{
+						"Id" : "isBillboard",
+						"Data" : ""
+					}
+				]
+			}
+		},
+		{
+			"Tag" : "Floors",
+			"Placing" : [
+				{
+					"Position" : {
+						"X" : 0,
+						"Y" : 0,
+						"Z" : 0
+					},
+					"Size" : {
+						"X" : 20,
+						"Y" : 1,
+						"Z" : 18
+					},
+					"Fill" : true,
+					"Steps" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					}
+				}
+			],
+			"Entity" : {
+				"Id" : 1,
+				"Rotation" : {
+					"X" : 0,
+					"Y" : 0,
+					"Z" : 0
+				},
+				"TakeFullRotation" : true,
+				"Scale" : {
+					"X" : 1,
+					"Y" : 1,
+					"Z" : 1
+				},
+				"RenderMode" : {
+					"RenderMethod" : "Primitive",
+					"Textures" : [
+						{
+							"Source" : "tileset1",
+							"Rectangle" : {
+								"X" : 32,
+								"Y" : 16,
+								"Width" : 16,
+								"Height" : 16
+							}
+						}
+					],
+					"TextureIndex" : [
+						0,
+						0
+					],
+					"PrimitiveModelId" : "FloorQuad",
+					"ModelPath" : "",
+					"Visible" : true,
+					"Opacity" : 1.0,
+					"Shading" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					},
+					"ObstructCamera" : false,
+					"SeasonPalettes" : []
+				},
+				"Collision" : true,
+				"IsFloor" : true,
+				"Components" : []
+			}
+		}
+	],
+	"OffsetMaps" : []
+}
