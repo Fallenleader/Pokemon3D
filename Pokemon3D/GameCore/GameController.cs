@@ -102,7 +102,11 @@ namespace Pokemon3D.GameCore
             };
             GuiSystem.SetSkin(parameters);
 
+#if DEBUG
+            ScreenManager.SetScreen(typeof(MainMenuScreen));
+#else
             ScreenManager.SetScreen(typeof(IntroScreen));
+#endif
         }
 
         protected override void Update(GameTime gameTime)

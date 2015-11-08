@@ -444,6 +444,99 @@
 				"IsFloor" : true,
 				"Components" : []
 			}
+		},
+		{
+			"Tag" : "Dirts2",
+			"Placing" : [
+				{
+					"Position" : { "X" : 2, "Y" : 0, "Z" : 4 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 2 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 10, "Y" : 0, "Z" : 4 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 2 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 8, "Y" : 0, "Z" : 14 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 3 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 10, "Y" : 0, "Z" : 16 },
+					"Size" : { "X" : 6, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 16, "Y" : 0, "Z" : 12 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 5 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 10, "Y" : 0, "Z" : 12 },
+					"Size" : { "X" : 6, "Y" : 1, "Z" : 2 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 4, "Y" : 0, "Z" : 8 },
+					"Size" : { "X" : 6, "Y" : 1, "Z" : 2 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+			],
+			"Entity" : {
+				"Id" : 1,
+				"Rotation" : {
+					"X" : 0,
+					"Y" : 0,
+					"Z" : 0
+				},
+				"TakeFullRotation" : true,
+				"Scale" : {
+					"X" : 1,
+					"Y" : 1,
+					"Z" : 1
+				},
+				"RenderMode" : {
+					"RenderMethod" : "Primitive",
+					"Textures" : [
+						{
+							"Source" : "tileset1",
+							"Rectangle" : {
+								"X" : 48,
+								"Y" : 160,
+								"Width" : 16,
+								"Height" : 16
+							}
+						}
+					],
+					"TextureIndex" : [
+						0,
+						0
+					],
+					"PrimitiveModelId" : "FloorQuad",
+					"ModelPath" : "",
+					"Visible" : true,
+					"Opacity" : 1.0,
+					"Shading" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					},
+					"ObstructCamera" : false,
+					"SeasonPalettes" : []
+				},
+				"Collision" : true,
+				"IsFloor" : true,
+				"Components" : []
+			}
 		}
 	],
 	"OffsetMaps" : []
