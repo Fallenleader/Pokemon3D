@@ -24,9 +24,9 @@ namespace Pokemon3D.Rendering
             FieldOfView = MathHelper.PiOver4;
         }
 
-        public override void Update()
+        protected override void HandleIsDirty()
         {
-            base.Update();
+            base.HandleIsDirty();
             ViewMatrix = Matrix.Invert(GetWorldMatrix(null));
             ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(FieldOfView, Viewport.AspectRatio, NearClipDistance, FarClipDistance);
         }
