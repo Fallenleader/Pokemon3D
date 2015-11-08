@@ -30,6 +30,7 @@ namespace Pokemon3D.Rendering.Compositor
             var height = context.ScreenBounds.Height;
             _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
             _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
+            RenderStatistics = new RenderStatistics();
         }
 
         public Vector3 LightDirection { get; set; }
@@ -54,6 +55,7 @@ namespace Pokemon3D.Rendering.Compositor
 
         public void Draw(IList<SceneNode> allNodes, IList<Camera> cameras)
         {
+            RenderStatistics.StartFrame();
             PreparePostProcessing();
 
             UpdateNodeLists(allNodes);
@@ -69,6 +71,7 @@ namespace Pokemon3D.Rendering.Compositor
             }
 
             DoPostProcessing();
+            RenderStatistics.EndFrame();
         }
 
         private void DoPostProcessing()
@@ -99,6 +102,8 @@ namespace Pokemon3D.Rendering.Compositor
             _device.BlendState = BlendState.Opaque;
             _device.DepthStencilState = DepthStencilState.Default;
         }
+
+        public RenderStatistics RenderStatistics { get; }
 
         private void DrawSceneForCamera(Camera camera)
         {
@@ -135,6 +140,7 @@ namespace Pokemon3D.Rendering.Compositor
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();
+                    RenderStatistics.TransparentObjectDrawCalls++;
                 }
             }
         }
@@ -166,6 +172,7 @@ namespace Pokemon3D.Rendering.Compositor
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();
+                    RenderStatistics.SolidObjectDrawCalls++;
                 }
             }
         }
@@ -197,6 +204,7 @@ namespace Pokemon3D.Rendering.Compositor
                 {
                     pass.Apply();
                     sceneNode.Mesh.Draw();
+                    RenderStatistics.ShadowCasterDrawCalls++;
                 }
             }
             _device.SetRenderTargets(oldRenderTargets);

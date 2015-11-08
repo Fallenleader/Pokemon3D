@@ -120,3 +120,9 @@
 /processorParam:DebugMode=Auto
 /build:Effects/PostProcessing.fx
 
+#begin Fonts/DebugFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/DebugFont.spritefont
+

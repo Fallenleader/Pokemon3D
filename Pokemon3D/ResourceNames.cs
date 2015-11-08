@@ -14,6 +14,7 @@ namespace Pokemon3D
         public static class Fonts
         {
             public const string BigFont = "Fonts/BigFont";
+            public const string DebugFont = "Fonts/DebugFont";
             public const string NormalFont = "Fonts/NormalFont";
         }
         

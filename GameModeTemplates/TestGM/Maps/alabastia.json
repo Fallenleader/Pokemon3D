@@ -537,6 +537,63 @@
 				"IsFloor" : true,
 				"Components" : []
 			}
+		},
+		{
+			"Tag" : "Dirts2",
+			"Placing" : [
+				{
+					"Position" : { "X" : 4, "Y" : 0, "Z" : 14 },
+					"Size" : { "X" : 4, "Y" : 1, "Z" : 4 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				}
+			],
+			"Entity" : {
+				"Id" : 1,
+				"Rotation" : {
+					"X" : 0,
+					"Y" : 0,
+					"Z" : 0
+				},
+				"TakeFullRotation" : true,
+				"Scale" : {
+					"X" : 1,
+					"Y" : 1,
+					"Z" : 1
+				},
+				"RenderMode" : {
+					"RenderMethod" : "Primitive",
+					"Textures" : [
+						{
+							"Source" : "tileset1",
+							"Rectangle" : {
+								"X" : 0,
+								"Y" : 240,
+								"Width" : 16,
+								"Height" : 16
+							}
+						}
+					],
+					"TextureIndex" : [
+						0,
+						0
+					],
+					"PrimitiveModelId" : "FloorQuad",
+					"ModelPath" : "",
+					"Visible" : true,
+					"Opacity" : 1.0,
+					"Shading" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					},
+					"ObstructCamera" : false,
+					"SeasonPalettes" : []
+				},
+				"Collision" : true,
+				"IsFloor" : true,
+				"Components" : []
+			}
 		}
 	],
 	"OffsetMaps" : []
