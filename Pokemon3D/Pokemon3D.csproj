@@ -49,77 +49,6 @@
     <StartupObject>Pokemon3D.GameCore.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DataModel\IDataModelContainer.cs" />
-    <Compile Include="DataModel\Json\ColorModel.cs" />
-    <Compile Include="DataModel\Json\GameCore\ConfigurationModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Battle\MoveCategory.cs" />
-    <Compile Include="DataModel\Json\GameMode\Battle\MoveModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Battle\TargetType.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\BadgeModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\PrimitiveModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\TypeModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\VertexModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\CityModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\CitySize.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\FlyToModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\MapObjectModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\PlaceModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\PlaceSize.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteDirection.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\RouteType.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\WeatherType.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\WorldmapModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\ZoneModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\GameModeModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\GameModeStartConfigurationModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\GameRuleModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\BattleItemCategory.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\BerryFlavour.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\InventoryDefinitionModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\ItemCategory.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\ItemClassificationModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\ItemModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\ItemUsageModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\BerryModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\MegaStoneModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\PlateModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Items\SpecialItems\TechnicalMachineModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\BattleMapDataModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityFieldPositionModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityComponentModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\Entities\RenderMethod.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\MapEnvironmentModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\MapPokemonModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\OffsetMapModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\BodyStyleModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionConditionModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionConditionType.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\EvolutionTrigger.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\ExperienceType.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\HeldItemModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\LevelUpMoveModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\PokedexEntryModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormActivationModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
-    <Compile Include="DataModel\Json\i18n\SectionModel.cs" />
-    <Compile Include="DataModel\Json\i18n\TokenModel.cs" />
-    <Compile Include="DataModel\Json\JsonDataLoadException.cs" />
-    <Compile Include="DataModel\Json\JsonDataModel.cs" />
-    <Compile Include="DataModel\Json\GameMode\Map\MapModel.cs" />
-    <Compile Include="DataModel\Json\RangeModel.cs" />
-    <Compile Include="DataModel\Json\RectangleModel.cs" />
-    <Compile Include="DataModel\Json\TextureSourceModel.cs" />
-    <Compile Include="DataModel\Json\Vector2Model.cs" />
-    <Compile Include="DataModel\Json\Vector3Model.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
     <Compile Include="FileSystem\GameModeFileProvider.cs" />
     <Compile Include="FileSystem\i18nFileProvider.cs" />
@@ -210,7 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <Compile Include="DataModel\Json\GameMode\Definitions\World\RegionModel.cs" />
     <None Include="Content\Effects\BasicEffect.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -269,6 +197,10 @@
     <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.csproj">
       <Project>{b29dc7f0-2a16-4585-80a2-b4030558ec35}</Project>
       <Name>Pokemon3D.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon3D.DataModel\Pokemon3D.DataModel.csproj">
+      <Project>{261cf093-e9db-48ec-bade-1fa70ef36e3c}</Project>
+      <Name>Pokemon3D.DataModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pokemon3D.Rendering\Pokemon3D.Rendering.csproj">
       <Project>{d3c6ea8f-1a82-4885-849e-d83747cd8ebc}</Project>
