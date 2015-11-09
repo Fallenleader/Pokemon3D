@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pokemon3D.UI.i18n;
+using Pokemon3D.UI.Localization;
 using System.IO;
 using Pokemon3D.DataModel.Json;
 using Pokemon3D.DataModel.Json.i18n;
 
 namespace Pokemon3D.GameModes.Resources
 {
-    class GameModei18nManager : I18nManager
+    class GameModei18nManager : TranslationManager
     {
         private GameMode _gameMode;
 

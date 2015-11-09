@@ -14,13 +14,13 @@
               VerticalAlignment="Middle">
     
     <Button Margin="10" Id="StartButton">
-      <TextBlock Text="Start New Game" Margin="40,20" />
+      <TextBlock Text="{i18n>MainMenu>StartButton}" Margin="40,20" />
     </Button>
     <Button Margin="10" Id="LoadButton">
-      <TextBlock Text="Load Existing Game" Margin="40,20" />
+      <TextBlock Text="{i18n>MainMenu>LoadButton}" Margin="40,20" />
     </Button>
     <Button Margin="10" Id="QuitButton">
-      <TextBlock Text="Quit Game" Margin="40,20" />
+      <TextBlock Text="{i18n>MainMenu>QuitButton}" Margin="40,20" />
     </Button>
   </StackPanel>
   

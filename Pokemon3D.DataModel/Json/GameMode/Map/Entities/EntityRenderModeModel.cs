@@ -28,10 +28,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
 
         [DataMember(Order = 1)]
         public TextureSourceModel[] Textures;
-
-        [DataMember(Order = 2)]
-        public int[] TextureIndex;
-
+        
         [DataMember(Order = 3)]
         public string PrimitiveModelId;
 

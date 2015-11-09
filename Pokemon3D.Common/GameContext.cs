@@ -12,5 +12,6 @@ namespace Pokemon3D.Common
         SpriteBatch SpriteBatch { get; }
         ShapeRenderer ShapeRenderer { get; }
         GraphicsDevice GraphicsDevice { get; }
+        Localization.TranslationProvider TranslationProvider { get; }
     }
 }

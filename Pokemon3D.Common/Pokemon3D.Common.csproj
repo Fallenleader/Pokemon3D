@@ -55,6 +55,7 @@
     <Compile Include="Extensions\TextureExtensions.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="GameContext.cs" />
+    <Compile Include="Localization\TranslationProvider.cs" />
     <Compile Include="Interaction\InputType.cs" />
     <Compile Include="Interaction\StringInputController.cs" />
     <Compile Include="KeyboardEx.cs" />

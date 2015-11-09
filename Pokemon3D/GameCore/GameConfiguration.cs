@@ -43,5 +43,7 @@ namespace Pokemon3D.GameCore
             GameLogger.Instance.Log(MessageType.Message, "Saving configuration file.");
             _dataModel.ToFile(StaticFileProvider.ConfigFile);
         }
+
+        public string DisplayLanguage => _dataModel.DisplayLanguage;
     }
 }

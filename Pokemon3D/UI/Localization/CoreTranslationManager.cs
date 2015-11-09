@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Pokemon3D.UI.i18n
+namespace Pokemon3D.UI.Localization
 {
-    class Corei18nManager : I18nManager
+    class CoreTranslationManager : TranslationManager
     {
-        public Corei18nManager()
+        public CoreTranslationManager()
         {
             if (Directory.Exists(StaticFileProvider.i18nDirectory))
             {

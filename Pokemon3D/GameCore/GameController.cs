@@ -3,12 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.FileSystem;
 using Pokemon3D.UI.Screens;
-using Pokemon3D.UI.i18n;
+using Pokemon3D.UI.Localization;
 using Pokemon3D.Common;
 using Pokemon3D.Common.Diagnostics;
 using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
 using Pokemon3D.GameModes;
+using Pokemon3D.Common.Localization;
 
 namespace Pokemon3D.GameCore
 {
@@ -53,7 +54,7 @@ namespace Pokemon3D.GameCore
         public GuiSystem GuiSystem { get; private set; }
         public KeyboardEx Keyboard { get; private set; }
         public GameConfiguration GameConfig { get; private set; }
-        public Corei18nManager i18n { get; private set; }
+        public TranslationProvider TranslationProvider { get; private set; }
 
         /// <summary>
         /// Object to manage loaded GameModes.
@@ -65,7 +66,7 @@ namespace Pokemon3D.GameCore
         public Rectangle ScreenBounds => Window.ClientBounds;
 
         public ShapeRenderer ShapeRenderer { get; private set; }
-
+        
         public GameController()
         {
             if (Instance != null) throw new InvalidOperationException("Game is singleton and can be created just once");
@@ -96,7 +97,7 @@ namespace Pokemon3D.GameCore
             ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
             GameConfig = new GameConfiguration();
-            i18n = new Corei18nManager();
+            TranslationProvider = new CoreTranslationManager();
             
             var parameters = new GuiSystemSkinParameters
             {
