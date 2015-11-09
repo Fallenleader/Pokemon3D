@@ -12,6 +12,7 @@ namespace Pokemon3D.GameModes
         private const string PATH_CONTENT_MODELS = "Models";
         private const string PATH_CONTENT_DATA = "Data";
         private const string PATH_CONTENT_MAPS = "Maps";
+        private const string PATH_DATA_i18n = "i18n";
 
         public const string FILE_DATA_PRIMITIVES = "Primitives.json";
 
@@ -34,5 +35,7 @@ namespace Pokemon3D.GameModes
         /// The path to the model base folder of this GameMode.
         /// </summary>
         public string MapPath => Path.Combine(GameModeInfo.DirectoryPath, PATH_CONTENT_MAPS);
+
+        public string i18nPath => Path.Combine(DataPath, PATH_DATA_i18n);
     }
 }

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DataModel\IDataModelContainer.cs" />
     <Compile Include="DataModel\Json\ColorModel.cs" />
+    <Compile Include="DataModel\Json\GameCore\ConfigurationModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Battle\MoveCategory.cs" />
     <Compile Include="DataModel\Json\GameMode\Battle\MoveModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Battle\TargetType.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonFormModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonModel.cs" />
     <Compile Include="DataModel\Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
-    <Compile Include="DataModel\Json\i18n\LocalizationModel.cs" />
+    <Compile Include="DataModel\Json\i18n\SectionModel.cs" />
     <Compile Include="DataModel\Json\i18n\TokenModel.cs" />
     <Compile Include="DataModel\Json\JsonDataLoadException.cs" />
     <Compile Include="DataModel\Json\JsonDataModel.cs" />
@@ -121,8 +122,9 @@
     <Compile Include="DataModel\Json\Vector3Model.cs" />
     <Compile Include="FileSystem\FileProvider.cs" />
     <Compile Include="FileSystem\GameModeFileProvider.cs" />
-    <Compile Include="FileSystem\TranslationFileProvider.cs" />
+    <Compile Include="FileSystem\i18nFileProvider.cs" />
     <Compile Include="FileSystem\StaticFileProvider.cs" />
+    <Compile Include="GameCore\GameConfiguration.cs" />
     <Compile Include="GameCore\GameContextObject.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameModes\GameMode.cs" />
@@ -152,9 +154,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceNames.tt</DependentUpon>
     </Compile>
-    <Compile Include="UI\i18n\Localization.cs" />
-    <Compile Include="UI\i18n\LocalizationManager.cs" />
-    <Compile Include="UI\i18n\Translation.cs" />
+    <Compile Include="UI\i18n\Corei18nManager.cs" />
+    <Compile Include="GameModes\Resources\GameModei18nManager.cs" />
+    <Compile Include="UI\i18n\I18nManager.cs" />
     <Compile Include="GameCore\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Screens\InitializeableScreen.cs" />

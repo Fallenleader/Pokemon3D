@@ -26,6 +26,16 @@ namespace Pokemon3D.DataModel.Json
         }
 
         /// <summary>
+        /// Saves the content of this data model to a file.
+        /// </summary>
+        /// <param name="filename">The file to save the content to.</param>
+        public void ToFile(string filename)
+        {
+            string content = ToString();
+            File.WriteAllText(filename, content);
+        }
+
+        /// <summary>
         /// Creates a data model of a specific type.
         /// </summary>
         /// <typeparam name="T">The return type of the data model.</typeparam>

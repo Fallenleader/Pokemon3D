@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.FileSystem;
 using Pokemon3D.UI.Screens;
+using Pokemon3D.UI.i18n;
 using Pokemon3D.Common;
 using Pokemon3D.Common.Diagnostics;
 using Pokemon3D.Rendering.Data;
@@ -51,11 +52,13 @@ namespace Pokemon3D.GameCore
         public SpriteBatch SpriteBatch { get; private set; }
         public GuiSystem GuiSystem { get; private set; }
         public KeyboardEx Keyboard { get; private set; }
+        public GameConfiguration GameConfig { get; private set; }
+        public Corei18nManager i18n { get; private set; }
 
         /// <summary>
         /// Object to manage loaded GameModes.
         /// </summary>
-        public GameModes.GameModeManager GameModeManager { get; private set; }
+        public GameModeManager GameModeManager { get; private set; }
 
         public ResourceManager Resources { get; private set; }
 
@@ -92,7 +95,9 @@ namespace Pokemon3D.GameCore
             GuiSystem = new GuiSystem(this);
             ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
-
+            GameConfig = new GameConfiguration();
+            i18n = new Corei18nManager();
+            
             var parameters = new GuiSystemSkinParameters
             {
                 SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.guiskin),
@@ -108,7 +113,7 @@ namespace Pokemon3D.GameCore
             ScreenManager.SetScreen(typeof(IntroScreen));
 #endif
         }
-
+        
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

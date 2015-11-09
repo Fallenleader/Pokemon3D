@@ -31,7 +31,7 @@ namespace Pokemon3D.GameModes.Maps
                 {
                     mapModels.Add(JsonDataModel.FromFile<MapModel>(file));
                 }
-                catch (JsonDataLoadException ex)
+                catch (JsonDataLoadException)
                 {
                     // todo: log exception.
                 }
