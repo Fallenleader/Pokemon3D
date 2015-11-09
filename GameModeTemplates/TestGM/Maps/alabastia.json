@@ -594,6 +594,65 @@
 				"IsFloor" : true,
 				"Components" : []
 			}
+		},
+		{
+			"Tag" : "HouseWall1",
+			"Placing" : [
+				{
+					"Position" : { "X" : 10, "Y" : 0.5, "Z" : 11.5 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+				{
+					"Position" : { "X" : 14, "Y" : 0.5, "Z" : 11.5 },
+					"Size" : { "X" : 2, "Y" : 1, "Z" : 1 },
+					"Fill" : true,
+					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
+				},
+			],
+			"Entity" : {
+				"Id" : 1,
+				"Rotation" : {
+					"X" : 0,
+					"Y" : 0,
+					"Z" : 0
+				},
+				"TakeFullRotation" : true,
+				"Scale" : { "X" : 1, "Y" : 1, "Z" : 1 },
+				"RenderMode" : {
+					"RenderMethod" : "Primitive",
+					"Textures" : [
+						{
+							"Source" : "tileset1",
+							"Rectangle" : {
+								"X" : 176,
+								"Y" : 160,
+								"Width" : 16,
+								"Height" : 16
+							}
+						}
+					],
+					"TextureIndex" : [
+						0,
+						0
+					],
+					"PrimitiveModelId" : "WallQuad",
+					"ModelPath" : "",
+					"Visible" : true,
+					"Opacity" : 1.0,
+					"Shading" : {
+						"X" : 1,
+						"Y" : 1,
+						"Z" : 1
+					},
+					"ObstructCamera" : false,
+					"SeasonPalettes" : []
+				},
+				"Collision" : true,
+				"IsFloor" : true,
+				"Components" : []
+			}
 		}
 	],
 	"OffsetMaps" : []

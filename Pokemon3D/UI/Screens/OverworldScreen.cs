@@ -28,7 +28,7 @@ namespace Pokemon3D.UI.Screens
             Game.Resources.SetPrimitiveProvider(_gameMode);
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
-            _scene.Renderer.LightDirection = new Vector3(0, -1, 0);
+            _scene.Renderer.LightDirection = new Vector3(0, -1, -1);
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.GameModeInfo.StartMap, _scene, Game.Resources);
 
             _player = new Player(_scene, _gameMode.GetPrimitiveData("Billboard"));
