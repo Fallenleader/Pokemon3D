@@ -98,7 +98,9 @@ namespace Pokemon3D.GameCore
             ScreenManager = new ScreenManager();
             GameConfig = new GameConfiguration();
             TranslationProvider = new CoreTranslationManager();
-            
+
+            GameConfig.ConfigFileLoaded += TranslationProvider.OnLanguageChanged;
+
             var parameters = new GuiSystemSkinParameters
             {
                 SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.guiskin),

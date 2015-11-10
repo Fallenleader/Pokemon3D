@@ -54,6 +54,10 @@
     <Compile Include="Extensions\RectangleExtension.cs" />
     <Compile Include="Extensions\TextureExtensions.cs" />
     <Compile Include="Extensions\Vector2Extension.cs" />
+    <Compile Include="FileSystem\FileObserver.cs" />
+    <Compile Include="FileSystem\WatchedDirectory.cs" />
+    <Compile Include="FileSystem\WatchedFile.cs" />
+    <Compile Include="FileSystem\WatchedResource.cs" />
     <Compile Include="GameContext.cs" />
     <Compile Include="Localization\TranslationProvider.cs" />
     <Compile Include="Interaction\InputType.cs" />

@@ -18,6 +18,8 @@ namespace Pokemon3D.UI.Localization
 
         private Dictionary<string, string> _translations = new Dictionary<string, string>();
 
+        public event EventHandler LanguageChanged;
+
         /// <summary>
         /// Processes the loaded section models into tokens.
         /// </summary>
@@ -51,15 +53,24 @@ namespace Pokemon3D.UI.Localization
                 endIndex = text.IndexOf("}", foundIndex);
                 if (endIndex > -1)
                 {
-                    string[] parts = text.Substring(foundIndex, endIndex - foundIndex + 1).Trim('{', '}').Split('>');
+                    string replace = text.Substring(foundIndex, endIndex - foundIndex + 1);
+                    string[] parts = replace.Trim('{', '}').Split('>');
 
                     if (parts.Length == 3)
                     {
-                        string result = GetTranslation(Game.GameConfig.DisplayLanguage, parts[1], parts[2]);
                         text = text.Remove(foundIndex, endIndex - foundIndex + 1);
-                        text = text.Insert(foundIndex, result);
+                        string result = GetTranslation(Game.GameConfig.DisplayLanguage, parts[1], parts[2]);
 
-                        searchIndex += result.Length;
+                        if (result != null)
+                        {
+                            text = text.Insert(foundIndex, result);
+                            searchIndex += result.Length;
+                        }
+                        else
+                        {
+                            text = text.Insert(foundIndex, replace);
+                            searchIndex += replace.Length;
+                        }
                     }
                     else
                     {
@@ -74,6 +85,16 @@ namespace Pokemon3D.UI.Localization
             }
 
             return text;
+        }
+
+        public void BindText(string text, Action<string> resolveText)
+        {
+            TranslationTextBinding.Create(this, text, resolveText);
+        }
+
+        public void OnLanguageChanged(object sender, EventArgs e)
+        {
+            LanguageChanged(this, e);
         }
     }
 }
