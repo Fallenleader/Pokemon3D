@@ -56,6 +56,8 @@
     <Compile Include="Extensions\Vector2Extension.cs" />
     <Compile Include="FileSystem\FileObserver.cs" />
     <Compile Include="FileSystem\WatchedDirectory.cs" />
+    <Compile Include="FileSystem\WatchedDirectoryChangeEventHandler.cs" />
+    <Compile Include="FileSystem\WatchedDirectoryEventArgs.cs" />
     <Compile Include="FileSystem\WatchedFile.cs" />
     <Compile Include="FileSystem\WatchedResource.cs" />
     <Compile Include="GameContext.cs" />

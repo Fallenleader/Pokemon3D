@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 
 namespace Pokemon3D.Common.FileSystem
 {
     /// <summary>
-    /// A file, watched by the <see cref="FileObserver"/> class.
+    /// A file watched by the <see cref="FileObserver"/> class.
     /// </summary>
     class WatchedFile : WatchedResource
     {
         DateTime _lastRead = DateTime.MinValue;
         event FileSystemEventHandler _watcherEvent;
+        private int _handleCount = 0;
+
+        public bool HasHandles
+        {
+            get { return _handleCount > 0; }
+        }
 
         public WatchedFile(string filePath, FileSystemEventHandler eventHandler)
             : base(filePath)
@@ -27,7 +29,7 @@ namespace Pokemon3D.Common.FileSystem
             _watcher.NotifyFilter = NotifyFilters.LastWrite;
             _watcher.EnableRaisingEvents = true;
 
-            _watcherEvent += eventHandler;
+            AddHandler(eventHandler);
         }
 
         private void OnWatcherEvent(object sender, FileSystemEventArgs e)
@@ -48,11 +50,13 @@ namespace Pokemon3D.Common.FileSystem
         public void AddHandler(FileSystemEventHandler eventHandler)
         {
             _watcherEvent += eventHandler;
+            _handleCount++;
         }
 
         public void RemoveHandler(FileSystemEventHandler eventHandler)
         {
             _watcherEvent -= eventHandler;
+            _handleCount--;
         }
     }
 }

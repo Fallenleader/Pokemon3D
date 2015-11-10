@@ -40,7 +40,45 @@ namespace Pokemon3D.Common.FileSystem
             filePath = filePath.ToLowerInvariant();
 
             if (_watchedResources.ContainsKey(filePath))
-                ((WatchedFile)_watchedResources[filePath]).RemoveHandler(eventHandler);
+            {
+                var watchedFile = (WatchedFile)_watchedResources[filePath];
+                watchedFile.RemoveHandler(eventHandler);
+
+                if (!watchedFile.HasHandles)
+                    _watchedResources.Remove(filePath);
+            }
+        }
+
+        public void StartDirectoryObserve(string directoryPath, string fileExtension, WatchedDirectoryChangeEventHandler eventHandler)
+        {
+            directoryPath = directoryPath.ToLowerInvariant();
+
+            string key = directoryPath + fileExtension.ToLowerInvariant();
+
+            if (_watchedResources.ContainsKey(key))
+            {
+                ((WatchedDirectory)_watchedResources[key]).AddHandler(eventHandler);
+            }
+            else
+            {
+                _watchedResources.Add(key, new WatchedDirectory(directoryPath, fileExtension, eventHandler));
+            }
+        }
+
+        public void StopDirectoryObserve(string directoryPath, string fileExtension, WatchedDirectoryChangeEventHandler eventHandler)
+        {
+            directoryPath = directoryPath.ToLowerInvariant();
+
+            string key = directoryPath + fileExtension.ToLowerInvariant();
+
+            if (_watchedResources.ContainsKey(key))
+            {
+                var watchedDirectory = (WatchedDirectory)_watchedResources[key];
+                watchedDirectory.RemoveHandler(eventHandler);
+
+                if (!watchedDirectory.HasHandles)
+                    _watchedResources.Remove(key);
+            }
         }
     }
 }
