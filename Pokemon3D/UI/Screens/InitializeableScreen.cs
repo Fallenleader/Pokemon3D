@@ -3,7 +3,7 @@ using Pokemon3D.GameCore;
 
 namespace Pokemon3D.UI.Screens
 {
-    abstract class InitializeableScreen : GameContextObject, Screen
+    abstract class InitializeableScreen : GameObject, Screen
     {
         private bool _isInitialized;
 

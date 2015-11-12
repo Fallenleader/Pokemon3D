@@ -7,7 +7,7 @@ using Pokemon3D.UI.Transitions;
 
 namespace Pokemon3D.UI.Screens
 {
-    class IntroScreen : GameContextObject, Screen
+    class IntroScreen : GameObject, Screen
     {
         private Animator _logoAnimator;
 

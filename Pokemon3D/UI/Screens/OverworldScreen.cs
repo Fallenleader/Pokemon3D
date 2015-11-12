@@ -11,7 +11,7 @@ using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.UI.Screens
 {
-    class OverworldScreen : GameContextObject, Screen
+    class OverworldScreen : GameObject, Screen
     {
         private GameMode _gameMode;
         private Map _currentMap;

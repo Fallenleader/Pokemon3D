@@ -14,7 +14,7 @@ namespace Pokemon3D.GameModes.Maps
     /// <summary>
     /// Represents a functional part of a map.
     /// </summary>
-    class Entity : GameContextObject
+    class Entity : GameObject
     {
 
         public Scene Scene { get; private set; }

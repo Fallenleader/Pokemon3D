@@ -11,7 +11,7 @@ namespace Pokemon3D.UI.Screens
     /// <summary>
     /// A component to manage open screens.
     /// </summary>
-    class ScreenManager : GameContextObject
+    class ScreenManager : GameObject
     {
         private readonly RenderTarget2D _sourceRenderTarget;
         private readonly RenderTarget2D _targetRenderTarget;

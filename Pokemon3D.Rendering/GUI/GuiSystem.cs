@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using Pokemon3D.Common;
 using Pokemon3D.Rendering.GUI.ItemDescriptors;
+using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering.GUI
 {
-    public class GuiSystem
+    public class GuiSystem : GameContextObject
     {
         private GuiSystemSkinParameters _parameters;
         private readonly List<SkinItemDescriptor> _itemDescriptors;
 
-        public GameContext GameContext { get; private set; }
-
-        public GuiSystem(GameContext gameContext)
+        public GuiSystem(GameContext gameContext) : base(gameContext)
         {
-            GameContext = gameContext;
             _itemDescriptors = new List<SkinItemDescriptor>
             {
                 new FrameSkinItemDescriptor(),

@@ -4,7 +4,7 @@ using Pokemon3D.GameCore;
 
 namespace Pokemon3D.UI.Transitions
 {
-    class BlendTransition : GameContextObject, ScreenTransition
+    class BlendTransition : GameObject, ScreenTransition
     {
         private Texture2D _source;
         private Texture2D _target;

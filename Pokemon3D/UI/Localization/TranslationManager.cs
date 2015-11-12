@@ -11,7 +11,7 @@ namespace Pokemon3D.UI.Localization
     /// <summary>
     /// The base class for internationalization Managers.
     /// </summary>
-    abstract class TranslationManager : GameCore.GameContextObject, TranslationProvider
+    abstract class TranslationManager : GameCore.GameObject, TranslationProvider
     {
         protected const string i18nFileExtension = ".json";
         private const string KeyFormat = "{0}>{1}>{2}";

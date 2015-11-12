@@ -6,9 +6,8 @@ using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering.Compositor
 {
-    class DefaultSceneRenderer : SceneRenderer
+    class DefaultSceneRenderer : GameContextObject, SceneRenderer
     {
-        private readonly GameContext _gameContext;
         private readonly GraphicsDevice _device;
         private readonly SceneEffect _sceneEffect;
         private readonly RenderTarget2D _shadowMap;
@@ -19,9 +18,8 @@ namespace Pokemon3D.Rendering.Compositor
         private RenderTarget2D _activeInputSource;
         private RenderTarget2D _activeRenderTarget;
 
-        public DefaultSceneRenderer(GameContext context, SceneEffect effect)
+        public DefaultSceneRenderer(GameContext context, SceneEffect effect) : base(context)
         {
-            _gameContext = context;
             _device = context.GraphicsDevice;
             _sceneEffect = effect;
             _shadowMap = new RenderTarget2D(context.GraphicsDevice, 1024, 1024, false, SurfaceFormat.Single, DepthFormat.Depth24);
@@ -85,13 +83,13 @@ namespace Pokemon3D.Rendering.Compositor
                 _activeInputSource = temp;
                 _device.SetRenderTarget(_activeRenderTarget);
 
-                postProcessingStep.Process(_gameContext, _activeInputSource, _activeRenderTarget);
+                postProcessingStep.Process(GameContext, _activeInputSource, _activeRenderTarget);
             }
 
             _device.SetRenderTargets(_oldBindings);
-            _gameContext.SpriteBatch.Begin();
-            _gameContext.SpriteBatch.Draw(_activeRenderTarget, Vector2.Zero, Color.White);
-            _gameContext.SpriteBatch.End();
+            GameContext.SpriteBatch.Begin();
+            GameContext.SpriteBatch.Draw(_activeRenderTarget, Vector2.Zero, Color.White);
+            GameContext.SpriteBatch.End();
         }
 
         public void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target)

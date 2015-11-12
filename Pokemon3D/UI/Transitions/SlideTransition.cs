@@ -9,7 +9,7 @@ using Pokemon3D.GameCore;
 
 namespace Pokemon3D.UI.Transitions
 {
-    class SlideTransition : GameContextObject, ScreenTransition
+    class SlideTransition : GameObject, ScreenTransition
     {
         private Texture2D _source;
         private Texture2D _target;

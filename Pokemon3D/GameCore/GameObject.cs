@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pokemon3D.GameCore
 {
-    abstract class GameContextObject
+    abstract class GameObject
     {
         public GameController Game => GameController.Instance;
     }

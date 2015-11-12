@@ -61,6 +61,7 @@
     <Compile Include="FileSystem\WatchedFile.cs" />
     <Compile Include="FileSystem\WatchedResource.cs" />
     <Compile Include="GameContext.cs" />
+    <Compile Include="GameContextObject.cs" />
     <Compile Include="Localization\TranslationProvider.cs" />
     <Compile Include="Interaction\InputType.cs" />
     <Compile Include="Interaction\StringInputController.cs" />

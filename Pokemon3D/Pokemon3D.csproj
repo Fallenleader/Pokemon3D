@@ -54,7 +54,7 @@
     <Compile Include="FileSystem\i18nFileProvider.cs" />
     <Compile Include="FileSystem\StaticFileProvider.cs" />
     <Compile Include="GameCore\GameConfiguration.cs" />
-    <Compile Include="GameCore\GameContextObject.cs" />
+    <Compile Include="GameCore\GameObject.cs" />
     <Compile Include="GameCore\GameController.cs" />
     <Compile Include="GameModes\GameMode.cs" />
     <Compile Include="GameModes\GameModeInfo.cs" />

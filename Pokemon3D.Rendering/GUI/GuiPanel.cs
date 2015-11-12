@@ -7,7 +7,7 @@ using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering.GUI
 {
-    public class GuiPanel
+    public class GuiPanel : GameContextObject
     {
         private readonly List<GuiElement> _elements = new List<GuiElement>();
 
@@ -18,9 +18,8 @@ namespace Pokemon3D.Rendering.GUI
 
         public bool IsEnabled { get; set; }
 
-        public GuiPanel(GameContext gameContext)
+        public GuiPanel(GameContext gameContext) : base(gameContext)
         {
-            _gameContext = gameContext;
             _lastMouseState = Mouse.GetState();
             IsEnabled = true;
         }
