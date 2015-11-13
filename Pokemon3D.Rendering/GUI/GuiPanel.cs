@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Pokemon3D.Common;
+using System.IO;
 
 namespace Pokemon3D.Rendering.GUI
 {
@@ -14,7 +15,6 @@ namespace Pokemon3D.Rendering.GUI
         private GuiElement _currentMouseOverElement;
         private GuiElement _focusedElement;
         private MouseState _lastMouseState;
-        private readonly GameContext _gameContext;
 
         public bool IsEnabled { get; set; }
 
@@ -32,7 +32,7 @@ namespace Pokemon3D.Rendering.GUI
 
         private void ArrangeElement(GuiElement element)
         {
-            element.Arrange(_gameContext.ScreenBounds);
+            element.Arrange(GameContext.ScreenBounds);
         }
 
         public void Update(float elapsedTime)
@@ -156,7 +156,7 @@ namespace Pokemon3D.Rendering.GUI
             if (!IsEnabled) return;
             foreach (var element in _elements.Where(e => e.IsActive))
             {
-                element.Draw(_gameContext.SpriteBatch);
+                element.Draw(GameContext.SpriteBatch);
             }
         }
     }

@@ -10,6 +10,7 @@ using Pokemon3D.Rendering.Data;
 using Pokemon3D.Rendering.GUI;
 using Pokemon3D.GameModes;
 using Pokemon3D.Common.Localization;
+using Pokemon3D.UI;
 
 namespace Pokemon3D.GameCore
 {
@@ -55,6 +56,7 @@ namespace Pokemon3D.GameCore
         public KeyboardEx Keyboard { get; private set; }
         public GameConfiguration GameConfig { get; private set; }
         public TranslationProvider TranslationProvider { get; private set; }
+        public NotificationBar NotificationBar { get; private set; }
 
         /// <summary>
         /// Object to manage loaded GameModes.
@@ -98,6 +100,7 @@ namespace Pokemon3D.GameCore
             ScreenManager = new ScreenManager();
             GameConfig = new GameConfiguration();
             TranslationProvider = new CoreTranslationManager();
+            NotificationBar = new NotificationBar();
 
             GameConfig.ConfigFileLoaded += TranslationProvider.OnLanguageChanged;
 
@@ -119,17 +122,18 @@ namespace Pokemon3D.GameCore
         
         protected override void Update(GameTime gameTime)
         {
+            var elapsedSeconds = gameTime.ElapsedGameTime.Milliseconds * 0.001f;
+
             base.Update(gameTime);
             Keyboard.Update();
-            if (!ScreenManager.Update(gameTime))
-            {
-                Exit();
-            }
+            if (!ScreenManager.Update(elapsedSeconds)) Exit();
+            NotificationBar.Update(elapsedSeconds);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             ScreenManager.Draw(gameTime);
+            NotificationBar.Draw();
             base.Draw(gameTime);
         }
         

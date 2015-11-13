@@ -99,13 +99,11 @@ namespace Pokemon3D.UI.Screens
         /// <summary>
         /// Updates the current screen.
         /// </summary>
-        public bool Update(GameTime gameTime)
+        public bool Update(float elapsedTime)
         {
-            var elapsedMilliSeconds = gameTime.ElapsedGameTime.Milliseconds*0.001f;
-
             if (_executingScreenTransition)
             {
-                _currentTransition.Update(elapsedMilliSeconds);
+                _currentTransition.Update(elapsedTime);
                 if (_currentTransition.IsFinished)
                 {
                     _executingScreenTransition = false;
@@ -113,7 +111,7 @@ namespace Pokemon3D.UI.Screens
             }
             else
             {
-                CurrentScreen?.OnUpdate(elapsedMilliSeconds);
+                CurrentScreen?.OnUpdate(elapsedTime);
             }
 
             return !_quitGame;
