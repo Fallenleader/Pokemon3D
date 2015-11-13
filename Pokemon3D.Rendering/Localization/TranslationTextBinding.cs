@@ -47,7 +47,7 @@ namespace Pokemon3D.Rendering.Localization
             {
                 Match match = matches[i];
                 
-                string[] parts = match.Value.Trim('{', '}').Split('>');
+                string[] parts = match.Value.Trim('{', '}').Split(':');
                 string result = _translationProvider.GetTranslation(parts[1], parts[2]);
 
                 text = text.Remove(match.Index, match.Length);
