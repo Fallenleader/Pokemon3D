@@ -16,7 +16,6 @@ namespace Pokemon3D.GameModes.Maps
     /// </summary>
     class Entity : GameObject
     {
-
         public Scene Scene { get; private set; }
         public SceneNode SceneNode { get; private set; }
         public RenderMethod RenderMethod => _dataModel.RenderMode.RenderMethod;
@@ -54,7 +53,7 @@ namespace Pokemon3D.GameModes.Maps
                     Color = new Color(renderMode.Shading.GetVector3()),
                     CastShadow = false,
                     ReceiveShadow = false,
-                    UseTransparency = SceneNode.IsBillboard
+                    UseTransparency = _dataModel.RenderMode.UseTransparency
                 };
 
                 if (texture.Rectangle != null)

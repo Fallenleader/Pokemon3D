@@ -45,12 +45,15 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
         public double Opacity;
 
         [DataMember(Order = 8)]
-        public Vector3Model Shading;
+        public bool UseTransparency;
 
         [DataMember(Order = 9)]
-        public bool ObstructCamera;
+        public Vector3Model Shading;
 
         [DataMember(Order = 10)]
+        public bool ObstructCamera;
+
+        [DataMember(Order = 11)]
         public EntitySeasonPaletteModel[] SeasonPalettes;
     }
 }

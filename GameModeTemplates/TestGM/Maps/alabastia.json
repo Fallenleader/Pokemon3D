@@ -76,7 +76,7 @@
 					"Size" : { "X" : 1, "Y" : 1, "Z" : 1 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},
+				}
 			],
 			"Entity" : {
 				"Id" : 0,
@@ -104,10 +104,6 @@
 							}
 						}
 					],
-					"TextureIndex" : [
-						0,
-						0
-					],
 					"PrimitiveModelId" : "Billboard",
 					"ModelPath" : "",
 					"Visible" : true,
@@ -118,7 +114,8 @@
 						"Z" : 1
 					},
 					"ObstructCamera" : true,
-					"SeasonPalettes" : []
+					"SeasonPalettes" : [],
+					"UseTransparency" : true
 				},
 				"Collision" : true,
 				"IsFloor" : false,
@@ -192,7 +189,7 @@
 					"Size" : { "X" : 1, "Y" : 1, "Z" : 1 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},
+				}
 			],
 			"Entity" : {
 				"Id" : 1,
@@ -297,7 +294,7 @@
 					"Size" : { "X" : 4, "Y" : 1, "Z" : 2 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},
+				}
 			],
 			"Entity" : {
 				"Id" : 1,
@@ -396,7 +393,7 @@
 					"Size" : { "X" : 4, "Y" : 1, "Z" : 2 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},	
+				}
 			],
 			"Entity" : {
 				"Id" : 1,
@@ -489,7 +486,7 @@
 					"Size" : { "X" : 6, "Y" : 1, "Z" : 2 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},
+				}
 			],
 			"Entity" : {
 				"Id" : 1,
@@ -609,7 +606,7 @@
 					"Size" : { "X" : 2, "Y" : 1, "Z" : 1 },
 					"Fill" : true,
 					"Steps" : { "X" : 1, "Y" : 1, "Z" : 1 }
-				},
+				}
 			],
 			"Entity" : {
 				"Id" : 1,
