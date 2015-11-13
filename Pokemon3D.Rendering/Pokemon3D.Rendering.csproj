@@ -88,6 +88,7 @@
     <Compile Include="Data\Mesh.cs" />
     <Compile Include="Data\ModelMesh.cs" />
     <Compile Include="Compositor\PostProcessingStep.cs" />
+    <Compile Include="Localization\TranslationTextBinding.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\ResourceManager.cs" />
     <Compile Include="Scene.cs" />

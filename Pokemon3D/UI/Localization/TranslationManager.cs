@@ -34,64 +34,14 @@ namespace Pokemon3D.UI.Localization
             }
         }
 
-        public string GetTranslation(string languageId, string sectionId, string tokenId)
+        public string GetTranslation(string sectionId, string tokenId)
         {
-            string key = string.Format(KeyFormat, languageId, sectionId, tokenId);
+            string key = string.Format(KeyFormat, Game.GameConfig.DisplayLanguage, sectionId, tokenId);
             string value = "";
             _translations.TryGetValue(key, out value);
             return value;
         }
-
-        public string TranslateText(string text)
-        {
-            int searchIndex = 0;
-            int foundIndex = text.IndexOf("{i18n>", searchIndex);
-            int endIndex = -1;
-
-            while (foundIndex > -1)
-            {
-                endIndex = text.IndexOf("}", foundIndex);
-                if (endIndex > -1)
-                {
-                    string replace = text.Substring(foundIndex, endIndex - foundIndex + 1);
-                    string[] parts = replace.Trim('{', '}').Split('>');
-
-                    if (parts.Length == 3)
-                    {
-                        text = text.Remove(foundIndex, endIndex - foundIndex + 1);
-                        string result = GetTranslation(Game.GameConfig.DisplayLanguage, parts[1], parts[2]);
-
-                        if (result != null)
-                        {
-                            text = text.Insert(foundIndex, result);
-                            searchIndex += result.Length;
-                        }
-                        else
-                        {
-                            text = text.Insert(foundIndex, replace);
-                            searchIndex += replace.Length;
-                        }
-                    }
-                    else
-                    {
-                        searchIndex = endIndex;
-                    }
-                }
-                else
-                {
-                    searchIndex = foundIndex + 6;
-                }
-                foundIndex = text.IndexOf("{i18n>", searchIndex);
-            }
-
-            return text;
-        }
-
-        public void BindText(string text, Action<string> resolveText)
-        {
-            TranslationTextBinding.Create(this, text, resolveText);
-        }
-
+        
         public void OnLanguageChanged(object sender, EventArgs e)
         {
             LanguageChanged(this, e);

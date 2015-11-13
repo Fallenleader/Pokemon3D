@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering.GUI.ItemDescriptors;
+using Pokemon3D.Rendering.Localization;
 
 namespace Pokemon3D.Rendering.GUI
 {
@@ -33,7 +34,7 @@ namespace Pokemon3D.Rendering.GUI
             if (element.HasAttribute("Text")) Text = element.GetAttribute("Text");
             if (element.HasAttribute("Color")) Color = element.GetAttribute("Color").ParseColor();
 
-            GuiSystem.GameContext.TranslationProvider.BindText(Text, t => Text = t);
+            TranslationTextBinding.Create(GuiSystem.GameContext.TranslationProvider, Text, t => Text = t);
         }
 
         public TextBlock(GuiSystem guiSystem)
