@@ -1,5 +1,6 @@
 ﻿using Pokemon3D.Common.Localization;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Pokemon3D.Rendering.Localization
 {
@@ -40,45 +41,25 @@ namespace Pokemon3D.Rendering.Localization
 
         private string TranslateText(string text)
         {
-            int searchIndex = 0;
-            int foundIndex = text.IndexOf("{i18n>", searchIndex);
-            int endIndex = -1;
+            var matches = Regex.Matches(text, @"{i18n:\w:\w}");
 
-            while (foundIndex > -1)
+            for (int i = matches.Count - 1; i >= 0; i--)
             {
-                endIndex = text.IndexOf("}", foundIndex);
-                if (endIndex > -1)
+                Match match = matches[i];
+                
+                string[] parts = match.Value.Trim('{', '}').Split('>');
+                string result = _translationProvider.GetTranslation(parts[1], parts[2]);
+
+                text = text.Remove(match.Index, match.Length);
+
+                if (result != null)
                 {
-                    string replace = text.Substring(foundIndex, endIndex - foundIndex + 1);
-                    string[] parts = replace.Trim('{', '}').Split('>');
-
-                    if (parts.Length == 3)
-                    {
-                        text = text.Remove(foundIndex, endIndex - foundIndex + 1);
-
-                        string result = _translationProvider.GetTranslation(parts[1], parts[2]);
-
-                        if (result != null)
-                        {
-                            text = text.Insert(foundIndex, result);
-                            searchIndex += result.Length;
-                        }
-                        else
-                        {
-                            text = text.Insert(foundIndex, replace);
-                            searchIndex += replace.Length;
-                        }
-                    }
-                    else
-                    {
-                        searchIndex = endIndex;
-                    }
+                    text = text.Insert(match.Index, result);
                 }
                 else
                 {
-                    searchIndex = foundIndex + 6;
+                    text = text.Insert(match.Index, match.Value);
                 }
-                foundIndex = text.IndexOf("{i18n>", searchIndex);
             }
 
             return text;
