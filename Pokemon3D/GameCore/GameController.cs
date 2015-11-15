@@ -100,7 +100,7 @@ namespace Pokemon3D.GameCore
             ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
             TranslationProvider = new CoreTranslationManager();
-            NotificationBar = new NotificationBar();
+            NotificationBar = new NotificationBar(400);
 
             GameConfig.ConfigFileLoaded += TranslationProvider.OnLanguageChanged;
 

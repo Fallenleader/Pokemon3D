@@ -56,7 +56,7 @@ namespace Pokemon3D.UI.Screens
             {
                 if (_player.MovementMode == PlayerMovementMode.GodMode)
                 {
-                    Game.NotificationBar.PushNotification("Disabled God Mode");
+                    Game.NotificationBar.PushNotification(NotificationKind.Information, "Disabled God Mode");
                 }
                 if (_player.MovementMode == PlayerMovementMode.FirstPerson)
                 {
@@ -71,7 +71,7 @@ namespace Pokemon3D.UI.Screens
             if (Game.Keyboard.IsKeyDownOnce(Keys.F10))
             {
                 _player.MovementMode = PlayerMovementMode.GodMode;
-                Game.NotificationBar.PushNotification("Enabled God Mode");
+                Game.NotificationBar.PushNotification(NotificationKind.Information, "Enabled God Mode");
             }
         }
 

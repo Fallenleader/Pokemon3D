@@ -90,6 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\NotificationBar.cs" />
     <Compile Include="UI\NotificationItem.cs" />
+    <Compile Include="UI\NotificationKind.cs" />
     <Compile Include="UI\Screens\InitializeableScreen.cs" />
     <Compile Include="UI\Screens\OverworldScreen.cs" />
     <Compile Include="UI\Transitions\BlendTransition.cs" />
@@ -97,17 +98,8 @@
     <Compile Include="UI\Screens\MainMenuScreen.cs" />
     <Compile Include="UI\Screens\Screen.cs" />
     <Compile Include="UI\Screens\ScreenManager.cs" />
-    <Compile Include="UI\Ellipse.cs" />
-    <Compile Include="UI\Gradient.cs" />
-    <Compile Include="UI\GradientTextureProvider.cs" />
-    <Compile Include="UI\Graphics.cs" />
-    <Compile Include="UI\IShape.cs" />
-    <Compile Include="UI\Plane.cs" />
-    <Compile Include="UI\Polygon.cs" />
     <Compile Include="UI\Transitions\ScreenTransition.cs" />
-    <Compile Include="UI\ShapeTextureProvider.cs" />
     <Compile Include="UI\Transitions\SlideTransition.cs" />
-    <Compile Include="UI\Triangle.cs" />
     <Compile Include="UI\WindowsSceneEffect.cs" />
   </ItemGroup>
   <ItemGroup>
