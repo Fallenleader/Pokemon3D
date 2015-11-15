@@ -1,5 +1,5 @@
 {
-	"Name" : "Alabastia",
+	"Name" : "Pallet Town",
 	"Song" : "testsong1",
 	"MapScript" : "",
 	"Region" : "Johto",
@@ -231,7 +231,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		},
 		{
@@ -332,7 +337,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		},
 		{
@@ -427,7 +437,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		},
 		{
@@ -516,7 +531,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		},
 		{
@@ -569,7 +589,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		},
 		{
@@ -624,7 +649,12 @@
 				},
 				"Collision" : true,
 				"IsFloor" : true,
-				"Components" : []
+				"Components" : [
+					{
+						"Id" : "isstatic",
+						"Data" : ""
+					}
+				]
 			}
 		}
 	],

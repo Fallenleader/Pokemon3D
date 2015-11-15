@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
+using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering.Compositor
 {
@@ -36,12 +37,12 @@ namespace Pokemon3D.Rendering.Compositor
 
             _renderQueues = new List<RenderQueue>
             {
-                new RenderQueue(_device, HandleSolidObjects, GetSolidObjects, _sceneEffect)
+                new RenderQueue(context, HandleSolidObjects, GetSolidObjects, _sceneEffect)
                 {
                     DepthStencilState = DepthStencilState.Default,
                     BlendState = BlendState.Opaque
                 },
-                    new RenderQueue(_device, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
+                    new RenderQueue(context, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
                 {
                     DepthStencilState = DepthStencilState.DepthRead,
                     BlendState = BlendState.AlphaBlend,
@@ -87,14 +88,14 @@ namespace Pokemon3D.Rendering.Compositor
             RenderStatistics.EndFrame();
         }
 
-        private void HandleSolidObjects(SceneNode sceneNode)
+        private void HandleSolidObjects(Material material)
         {
             _sceneEffect.ActivateLightingTechnique(false);
         }
 
-        private void HandleEffectTransparentObjects(SceneNode sceneNode)
+        private void HandleEffectTransparentObjects(Material material)
         {
-            if (sceneNode.IsBillboard)
+            if (material.IsUnlit)
             {
                 _sceneEffect.ActivateBillboardingTechnique();
             }
@@ -147,7 +148,7 @@ namespace Pokemon3D.Rendering.Compositor
 
             foreach (var renderQueue in _renderQueues)
             {
-                renderQueue.Draw(camera);
+                renderQueue.Draw(camera, RenderStatistics);
             }
         }
 

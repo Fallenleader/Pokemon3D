@@ -6,18 +6,13 @@ namespace Pokemon3D.Rendering.Compositor
     {
         private Stopwatch _frameStopwatch;
 
-        public int DrawCalls => TransparentObjectDrawCalls + SolidObjectDrawCalls + ShadowCasterDrawCalls;
-        public int TransparentObjectDrawCalls { get; set; }
-        public int SolidObjectDrawCalls { get; set; }
-        public int ShadowCasterDrawCalls { get; set; }
+        public int DrawCalls { get; set; }
         public float AverageDrawTime { get; set; }
 
         internal void StartFrame()
         {
             _frameStopwatch = Stopwatch.StartNew();
-            TransparentObjectDrawCalls = 0;
-            SolidObjectDrawCalls = 0;
-            ShadowCasterDrawCalls = 0;
+            DrawCalls = 0;
         }
 
         internal void EndFrame()

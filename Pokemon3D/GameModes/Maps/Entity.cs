@@ -31,12 +31,10 @@ namespace Pokemon3D.GameModes.Maps
             _map = map;
             _dataModel = dataModel;
 
-            InitializeComponents();
-
             SceneNode.Scale = dataModel.Scale.GetVector3();
             SceneNode.Position = position;
             SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
-            SceneNode.IsStatic = IsStatic;
+            
             
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
@@ -68,6 +66,10 @@ namespace Pokemon3D.GameModes.Maps
             {
                 //todo: model not yet supported.
             }
+
+            InitializeComponents();
+
+            SceneNode.IsStatic = IsStatic;
         }
 
         public Entity(Scene scene)

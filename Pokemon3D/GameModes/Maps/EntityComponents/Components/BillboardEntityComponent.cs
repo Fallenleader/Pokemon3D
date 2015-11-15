@@ -11,9 +11,15 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents.Components
         {
             // Set the billboard property of the scene node, when this component got added to the entity:
             if (Parent.RenderMethod == RenderMethod.Primitive)
+            {
+                Parent.SceneNode.Material.IsUnlit = true;
                 Parent.SceneNode.IsBillboard = true;
+            }
             else
+            {
                 Parent.SceneNode.IsBillboard = false;
+            }
+                
         }
 
         public override void OnComponentRemove()

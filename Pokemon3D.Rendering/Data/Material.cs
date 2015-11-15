@@ -16,6 +16,7 @@ namespace Pokemon3D.Rendering.Data
             ReceiveShadow = true;
             TexcoordOffset = Vector2.Zero;
             TexcoordScale = Vector2.One;
+            IsUnlit = false;
         }
 
         public bool UseTransparency { get; set; }
@@ -25,6 +26,7 @@ namespace Pokemon3D.Rendering.Data
         public bool ReceiveShadow { get; set; }
         public Vector2 TexcoordScale { get; set; }
         public Vector2 TexcoordOffset { get; set; }
+        public bool IsUnlit { get; set; }
 
         internal Material Clone()
         {
@@ -35,7 +37,8 @@ namespace Pokemon3D.Rendering.Data
                 CastShadow = CastShadow,
                 ReceiveShadow = ReceiveShadow,
                 TexcoordOffset = TexcoordOffset,
-                TexcoordScale = TexcoordScale
+                TexcoordScale = TexcoordScale,
+                IsUnlit = IsUnlit
             };
         }
     }

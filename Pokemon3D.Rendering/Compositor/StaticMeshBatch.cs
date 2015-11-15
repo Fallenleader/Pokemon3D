@@ -2,54 +2,59 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common;
 using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering.Compositor
 {
-    class StaticMeshBatch : DrawableElement
+    class StaticMeshBatch : GameContextObject, DrawableElement
     {
-        public StaticMeshBatch(GraphicsDevice device, Material sharedMaterial, IList<SceneNode> sceneNodes)
-        {
+        private readonly List<VertexPositionNormalTexture> _vertices = new List<VertexPositionNormalTexture>(1000); 
+        private readonly List<ushort> _indices = new List<ushort>(1000);
+
+        public StaticMeshBatch(GameContext context, Material sharedMaterial) : base(context)
+        { 
             Material = sharedMaterial.Clone();
             Material.TexcoordOffset = Vector2.Zero;
             Material.TexcoordScale = Vector2.One;
-
-            var geometryData = new GeometryData
-            {
-                Vertices =  new VertexPositionNormalTexture[sceneNodes.Sum(s => s.Mesh.VertexCount)],
-                Indices = new ushort[sceneNodes.Sum(s => s.Mesh.IndexCount)]
-            };
-
-            var baseVertexIndex = 0;
-            var baseIndicesIndex = 0;
-            foreach (var sceneNode in sceneNodes)
-            {
-                //todo: what about billboards?
-                var world = sceneNode.GetWorldMatrix(null);
-
-                var meshData = sceneNode.Mesh.GeometryData;
-                for (var i = 0; i < meshData.Indices.Length; i++)
-                {
-                    geometryData.Indices[baseIndicesIndex+i] = (ushort) (baseVertexIndex + meshData.Indices[i]);
-                }
-                baseIndicesIndex += (ushort)meshData.Indices.Length;
-
-                for (var i = 0; i < meshData.Vertices.Length; i++)
-                {
-                    var currentVertex = meshData.Vertices[i];
-                    geometryData.Vertices[baseVertexIndex+i] = new VertexPositionNormalTexture(
-                        Vector3.Transform(currentVertex.Position, world),
-                        Vector3.TransformNormal(currentVertex.Normal, world),
-                        currentVertex.TextureCoordinate * sceneNode.Material.TexcoordScale + sceneNode.Material.TexcoordOffset);
-                }
-                baseVertexIndex += meshData.Vertices.Length;
-                baseIndicesIndex += meshData.Indices.Length;
-            }
-            
-            Mesh = new Mesh(device, geometryData);
         }
 
-        public Mesh Mesh { get; }
+        public void AddBatch(SceneNode sceneNode)
+        {
+            var world = sceneNode.GetWorldMatrix(null);
+
+            var meshData = sceneNode.Mesh.GeometryData;
+            for (var i = 0; i < meshData.Indices.Length; i++)
+            {
+                _indices.Add((ushort) (_vertices.Count + meshData.Indices[i]));
+            }
+
+            for (var i = 0; i < meshData.Vertices.Length; i++)
+            {
+                var currentVertex = meshData.Vertices[i];
+                _vertices.Add(new VertexPositionNormalTexture(
+                    Vector3.Transform(currentVertex.Position, world),
+                    Vector3.TransformNormal(currentVertex.Normal, world),
+                    currentVertex.TextureCoordinate*sceneNode.Material.TexcoordScale + sceneNode.Material.TexcoordOffset));
+            }
+        }
+
+        public void Build()
+        {
+            var geometryData = new GeometryData
+            {
+                Vertices = _vertices.ToArray(),
+                Indices = _indices.ToArray()
+            };
+
+            Mesh = new Mesh(GameContext.GraphicsDevice, geometryData);
+        }
+
+        public Mesh Mesh { get; private set; }
         public Material Material { get; }
+        public Matrix GetWorldMatrix(Camera camera)
+        {
+            return Matrix.Identity;
+        }
     }
 }

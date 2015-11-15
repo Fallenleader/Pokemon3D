@@ -2,12 +2,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering;
 using Pokemon3D.GameCore;
 using Pokemon3D.GameModes;
 using Pokemon3D.GameModes.Maps;
-using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -77,7 +75,6 @@ namespace Pokemon3D.UI.Screens
 
         public void OnDraw(GameTime gameTime)
         {
-            Game.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer,Color.Black, 1.0f, 0);
             _scene.Draw();
 
             if (_showRenderStatistics) DrawRenderStatsitics();
@@ -108,12 +105,6 @@ namespace Pokemon3D.UI.Screens
             startPosition.Y += elementHeight;
             Game.SpriteBatch.DrawString(_debugSpriteFont, string.Format("Total Drawcalls: {0}", renderStatistics.DrawCalls),
                 startPosition, Color.White);
-            startPosition.Y += elementHeight;
-            Game.SpriteBatch.DrawString(_debugSpriteFont,
-                string.Format("Solid Drawcalls: {0}", renderStatistics.SolidObjectDrawCalls), startPosition, Color.White);
-            startPosition.Y += elementHeight;
-            Game.SpriteBatch.DrawString(_debugSpriteFont,
-                string.Format("Trans Drawcalls: {0}", renderStatistics.TransparentObjectDrawCalls), startPosition, Color.White);
             Game.SpriteBatch.End();
         }
 

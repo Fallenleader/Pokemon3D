@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering.Compositor
@@ -12,5 +13,6 @@ namespace Pokemon3D.Rendering.Compositor
     {
         Mesh Mesh { get; }
         Material Material { get; }
+        Matrix GetWorldMatrix(Camera camera);
     }
 }
