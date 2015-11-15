@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
 using Pokemon3D.Rendering.Compositor;
 
@@ -16,6 +15,7 @@ namespace Pokemon3D.Rendering
         private readonly List<Camera> _allCameras; 
 
         public SceneRenderer Renderer { get; }
+        public bool HasSceneNodesChanged { get; private set; }
 
         public Scene(GameContext context, SceneEffect effect) : base(context)
         {
@@ -26,6 +26,7 @@ namespace Pokemon3D.Rendering
 
         public SceneNode CreateSceneNode()
         {
+            HasSceneNodesChanged = true;
             var sceneNode = new SceneNode();
             _allNodes.Add(sceneNode);
             return sceneNode;
@@ -33,6 +34,7 @@ namespace Pokemon3D.Rendering
         
         public Camera CreateCamera()
         {
+            HasSceneNodesChanged = true;
             var camera = new Camera(GameContext.GraphicsDevice.Viewport);
             _allCameras.Add(camera);
             _allNodes.Add(camera);
@@ -49,7 +51,7 @@ namespace Pokemon3D.Rendering
 
         public void Draw()
         {
-            Renderer.Draw(_allNodes, _allCameras);
+            Renderer.Draw(HasSceneNodesChanged, _allNodes, _allCameras);
 
 #if DEBUG_RENDERING
             if (EnableShadows) Renderer.DrawDebugShadowMap(_spriteBatch, new Rectangle(0,0,128,128));
@@ -65,6 +67,7 @@ namespace Pokemon3D.Rendering
         /// <returns>SceneNode cloned.</returns>
         public SceneNode CloneNode(SceneNode nodeToClone, bool cloneMeshs = false)
         {
+            HasSceneNodesChanged = true;
             var cloned = nodeToClone.Clone(cloneMeshs);
             _allNodes.Add(cloned);
             CloneChildren(cloned, nodeToClone, cloneMeshs);

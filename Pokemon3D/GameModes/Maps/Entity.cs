@@ -3,7 +3,6 @@ using System.Linq;
 using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokemon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.GameCore;
 using Pokemon3D.Rendering;
@@ -36,9 +35,8 @@ namespace Pokemon3D.GameModes.Maps
 
             SceneNode.Scale = dataModel.Scale.GetVector3();
             SceneNode.Position = position;
-
-            SceneNode.Scale = dataModel.Scale.GetVector3();
             SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
+            SceneNode.IsStatic = IsStatic;
             
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)

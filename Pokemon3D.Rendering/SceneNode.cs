@@ -44,6 +44,8 @@ namespace Pokemon3D.Rendering
             SetDirty();
         }
 
+        public bool IsStatic { get; set; }
+
         public bool IsActive
         {
             get { return _isActive; }

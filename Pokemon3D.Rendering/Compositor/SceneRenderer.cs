@@ -11,7 +11,7 @@ namespace Pokemon3D.Rendering.Compositor
         bool EnablePostProcessing { get; set; }
 
         void AddPostProcessingStep(PostProcessingStep step);
-        void Draw(IList<SceneNode> allNodes, IList<Camera> cameras);
+        void Draw(bool hasSceneNodesChanged, IList<SceneNode> allNodes, IList<Camera> cameras);
 
         void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target);
 

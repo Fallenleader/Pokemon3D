@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assimp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
@@ -12,12 +11,16 @@ namespace Pokemon3D.Rendering.Compositor
         private readonly GraphicsDevice _device;
         private readonly SceneEffect _sceneEffect;
         private readonly RenderTarget2D _shadowMap;
+        private RenderTargetBinding[] _oldBindings;
+
         private readonly List<SceneNode> _solidObjects = new List<SceneNode>();
         private readonly List<SceneNode> _transparentObjects = new List<SceneNode>();
         private readonly List<PostProcessingStep> _postProcessingSteps = new List<PostProcessingStep>();
 
         private RenderTarget2D _activeInputSource;
         private RenderTarget2D _activeRenderTarget;
+
+        private readonly List<RenderQueue> _renderQueues; 
 
         public DefaultSceneRenderer(GameContext context, SceneEffect effect) : base(context)
         {
@@ -30,39 +33,50 @@ namespace Pokemon3D.Rendering.Compositor
             _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
             _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
             RenderStatistics = new RenderStatistics();
+
+            _renderQueues = new List<RenderQueue>
+            {
+                new RenderQueue(_device, HandleSolidObjects, GetSolidObjects, _sceneEffect)
+                {
+                    DepthStencilState = DepthStencilState.Default,
+                    BlendState = BlendState.Opaque
+                },
+                    new RenderQueue(_device, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
+                {
+                    DepthStencilState = DepthStencilState.DepthRead,
+                    BlendState = BlendState.AlphaBlend,
+                    SortNodesBackToFront = true
+                }
+            };
         }
 
         public Vector3 LightDirection { get; set; }
         public bool EnableShadows { get; set; }
         public bool EnablePostProcessing { get; set; }
+        public RenderStatistics RenderStatistics { get; }
 
+        private IEnumerable<SceneNode> GetTransparentObjects()
+        {
+            return _transparentObjects;
+        }
+
+        private IEnumerable<SceneNode> GetSolidObjects()
+        {
+            return _solidObjects;
+        }
+        
         public void AddPostProcessingStep(PostProcessingStep step)
         {
             step.Initialize(_sceneEffect.PostProcessingEffect);
             _postProcessingSteps.Add(step);
         }
 
-        private RenderTargetBinding[] _oldBindings;
-
-        private void PreparePostProcessing()
-        {
-            if (!EnablePostProcessing || !_postProcessingSteps.Any()) return;
-
-            _oldBindings = _device.GetRenderTargets();
-            _device.SetRenderTarget(_activeRenderTarget);
-        }
-
-        public void Draw(IList<SceneNode> allNodes, IList<Camera> cameras)
+        public void Draw(bool hasSceneNodesChanged, IList<SceneNode> allNodes, IList<Camera> cameras)
         {
             RenderStatistics.StartFrame();
             PreparePostProcessing();
 
             UpdateNodeLists(allNodes);
-
-            if (EnableShadows)
-            {
-                DrawShadowMap();
-            }
 
             foreach (var camera in cameras)
             {
@@ -71,6 +85,27 @@ namespace Pokemon3D.Rendering.Compositor
 
             DoPostProcessing();
             RenderStatistics.EndFrame();
+        }
+
+        private void HandleSolidObjects(SceneNode sceneNode)
+        {
+            _sceneEffect.ActivateLightingTechnique(false);
+        }
+
+        private void HandleEffectTransparentObjects(SceneNode sceneNode)
+        {
+            if (sceneNode.IsBillboard)
+            {
+                _sceneEffect.ActivateBillboardingTechnique();
+            }
+        }
+
+        private void PreparePostProcessing()
+        {
+            if (!EnablePostProcessing || !_postProcessingSteps.Any()) return;
+
+            _oldBindings = _device.GetRenderTargets();
+            _device.SetRenderTarget(_activeRenderTarget);
         }
 
         private void DoPostProcessing()
@@ -101,9 +136,7 @@ namespace Pokemon3D.Rendering.Compositor
             _device.BlendState = BlendState.Opaque;
             _device.DepthStencilState = DepthStencilState.Default;
         }
-
-        public RenderStatistics RenderStatistics { get; }
-
+        
         private void DrawSceneForCamera(Camera camera)
         {
             _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
@@ -112,96 +145,10 @@ namespace Pokemon3D.Rendering.Compositor
             _sceneEffect.Projection = camera.ProjectionMatrix;
             _sceneEffect.LightDirection = LightDirection;
 
-            var lightView = BuildLightViewMatrix(LightDirection);
-
-            DrawSolidObjects(camera, lightView);
-            DrawTransparentObjects(camera);
-        }
-
-        private void DrawElement(Matrix worldMatrix, DrawableElement element)
-        {
-            _sceneEffect.World = worldMatrix;
-            _sceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
-            _sceneEffect.TexcoordScale = element.Material.TexcoordScale;
-            _sceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
-
-            foreach (var pass in _sceneEffect.CurrentTechniquePasses)
+            foreach (var renderQueue in _renderQueues)
             {
-                pass.Apply();
-                element.Mesh.Draw();
-                RenderStatistics.SolidObjectDrawCalls++;
+                renderQueue.Draw(camera);
             }
-        }
-
-        private void DrawTransparentObjects(Camera camera)
-        {
-            _device.BlendState = BlendState.AlphaBlend;
-            _device.DepthStencilState = DepthStencilState.DepthRead;
-            foreach (var sceneNode in _transparentObjects.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).Length()))
-            {
-                var worldMatrix = sceneNode.GetWorldMatrix(camera);
-                if (sceneNode.IsBillboard)
-                {
-                    _sceneEffect.ActivateBillboardingTechnique();
-                }
-
-                DrawElement(worldMatrix, sceneNode);
-            }
-        }
-
-        private void DrawSolidObjects(Camera camera, Matrix lightView)
-        {
-            _device.BlendState = BlendState.Opaque;
-            _device.DepthStencilState = DepthStencilState.Default;
-            foreach (var sceneNode in _solidObjects)
-            {
-                var worldMatrix = sceneNode.GetWorldMatrix(camera);
-                if (EnableShadows && sceneNode.Material.ReceiveShadow)
-                {
-                    _sceneEffect.ActivateLightingTechnique(true);
-                    _sceneEffect.LightWorldViewProjection = worldMatrix*lightView;
-                    _sceneEffect.ShadowMap = _shadowMap;
-                }
-                else
-                {
-                    _sceneEffect.ActivateLightingTechnique(false);
-                }
-
-                DrawElement(worldMatrix, sceneNode);
-            }
-        }
-
-        private static Matrix BuildLightViewMatrix(Vector3 lightDirection)
-        {
-            lightDirection.Normalize();
-            var lightProjection = Matrix.CreateOrthographic(21, 21, 1.0f, 60.0f);
-            var lightView = Matrix.CreateLookAt(-lightDirection * 10.0f, Vector3.Zero, Vector3.Up);
-            return lightView * lightProjection;
-        }
-
-        private void DrawShadowMap()
-        {
-            var oldRenderTargets = _device.GetRenderTargets();
-            _device.SetRenderTarget(_shadowMap);
-            _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-
-            var lightViewProjection = BuildLightViewMatrix(LightDirection);
-
-            _sceneEffect.ActivateShadowDepthMapPass();
-            foreach (var sceneNode in _solidObjects)
-            {
-                if (!sceneNode.Material.CastShadow) continue;
-
-                _sceneEffect.LightWorldViewProjection = sceneNode.GetWorldMatrix(null) * lightViewProjection;
-
-                foreach (var pass in _sceneEffect.CurrentTechniquePasses)
-                {
-                    pass.Apply();
-                    sceneNode.Mesh.Draw();
-                    RenderStatistics.ShadowCasterDrawCalls++;
-                }
-            }
-            _device.SetRenderTargets(oldRenderTargets);
         }
 
         private void UpdateNodeLists(IList<SceneNode> allNodes)
