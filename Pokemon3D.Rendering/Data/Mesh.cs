@@ -10,10 +10,18 @@ namespace Pokemon3D.Rendering.Data
         private readonly VertexBuffer _vertexBuffer;
         private readonly IndexBuffer _indexBuffer;
 
+        public int VertexCount { get; }
+        public int IndexCount { get; }
+        public GeometryData GeometryData { get; }
+
         public Mesh(GraphicsDevice device, GeometryData data)
         {
-            _vertexBuffer = new VertexBuffer(device, VertexPositionNormalTexture.VertexDeclaration, data.Vertices.Length, BufferUsage.WriteOnly);
-            _indexBuffer = new IndexBuffer(device, IndexElementSize.SixteenBits, data.Indices.Length, BufferUsage.WriteOnly);
+            GeometryData = data;
+            VertexCount = data.Vertices.Length;
+            IndexCount = data.Indices.Length;
+
+            _vertexBuffer = new VertexBuffer(device, VertexPositionNormalTexture.VertexDeclaration, VertexCount, BufferUsage.WriteOnly);
+            _indexBuffer = new IndexBuffer(device, IndexElementSize.SixteenBits, IndexCount, BufferUsage.WriteOnly);
 
             _vertexBuffer.SetData(data.Vertices);
             _indexBuffer.SetData(data.Indices);
@@ -25,16 +33,15 @@ namespace Pokemon3D.Rendering.Data
             device.SetVertexBuffer(_vertexBuffer);
             device.Indices = _indexBuffer;
 
-            var primitiveCount = _indexBuffer.IndexCount / 3;
-            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,0,_vertexBuffer.VertexCount, 0, primitiveCount);
+            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,0, VertexCount, 0, IndexCount / 3);
         }
 
         internal Mesh Clone()
         {
             var geometryData = new GeometryData
             {
-                Vertices = new VertexPositionNormalTexture[_vertexBuffer.VertexCount],
-                Indices = new ushort[_indexBuffer.IndexCount],
+                Vertices = new VertexPositionNormalTexture[VertexCount],
+                Indices = new ushort[IndexCount],
             };
             
             _vertexBuffer.GetData(geometryData.Vertices);

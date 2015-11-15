@@ -54,8 +54,10 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Compositor\DefaultSceneRenderer.cs" />
+    <Compile Include="Compositor\DrawableElement.cs" />
     <Compile Include="Compositor\GaussianBlurPostProcessingStep.cs" />
     <Compile Include="Compositor\RenderStatistics.cs" />
+    <Compile Include="Compositor\StaticMeshBatch.cs" />
     <Compile Include="Data\GeometryData.cs" />
     <Compile Include="Data\GameModeDataProvider.cs" />
     <Compile Include="GUI\Button.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Pokemon3D.Common.Extensions;
+using Pokemon3D.Rendering.Compositor;
 using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering
@@ -10,7 +11,7 @@ namespace Pokemon3D.Rendering
     /// Part of a Scene with contains Transformation and Optional Rendering Attachments.
     /// SceneNodes can be arranged in a hierarchy to allow complex transformations.
     /// </summary>
-    public class SceneNode
+    public class SceneNode : DrawableElement
     {
         private readonly List<SceneNode> _childNodes;
         

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assimp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
@@ -117,6 +118,21 @@ namespace Pokemon3D.Rendering.Compositor
             DrawTransparentObjects(camera);
         }
 
+        private void DrawElement(Matrix worldMatrix, DrawableElement element)
+        {
+            _sceneEffect.World = worldMatrix;
+            _sceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
+            _sceneEffect.TexcoordScale = element.Material.TexcoordScale;
+            _sceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
+
+            foreach (var pass in _sceneEffect.CurrentTechniquePasses)
+            {
+                pass.Apply();
+                element.Mesh.Draw();
+                RenderStatistics.SolidObjectDrawCalls++;
+            }
+        }
+
         private void DrawTransparentObjects(Camera camera)
         {
             _device.BlendState = BlendState.AlphaBlend;
@@ -129,17 +145,7 @@ namespace Pokemon3D.Rendering.Compositor
                     _sceneEffect.ActivateBillboardingTechnique();
                 }
 
-                _sceneEffect.World = worldMatrix;
-                _sceneEffect.DiffuseTexture = sceneNode.Material.DiffuseTexture;
-                _sceneEffect.TexcoordScale = sceneNode.Material.TexcoordScale;
-                _sceneEffect.TexcoordOffset = sceneNode.Material.TexcoordOffset;
-
-                foreach (var pass in _sceneEffect.CurrentTechniquePasses)
-                {
-                    pass.Apply();
-                    sceneNode.Mesh.Draw();
-                    RenderStatistics.TransparentObjectDrawCalls++;
-                }
+                DrawElement(worldMatrix, sceneNode);
             }
         }
 
@@ -161,17 +167,7 @@ namespace Pokemon3D.Rendering.Compositor
                     _sceneEffect.ActivateLightingTechnique(false);
                 }
 
-                _sceneEffect.World = worldMatrix;
-                _sceneEffect.DiffuseTexture = sceneNode.Material.DiffuseTexture;
-                _sceneEffect.TexcoordScale = sceneNode.Material.TexcoordScale;
-                _sceneEffect.TexcoordOffset = sceneNode.Material.TexcoordOffset;
-
-                foreach (var pass in _sceneEffect.CurrentTechniquePasses)
-                {
-                    pass.Apply();
-                    sceneNode.Mesh.Draw();
-                    RenderStatistics.SolidObjectDrawCalls++;
-                }
+                DrawElement(worldMatrix, sceneNode);
             }
         }
 
