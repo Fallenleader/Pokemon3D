@@ -13,6 +13,7 @@ namespace Pokemon3D.UI
         private const int IconSize = 16;
 
         private readonly int _width;
+        private readonly int _maxNotifications;
         private readonly Color _backgroundColor;
         private readonly SpriteFont _spriteFont;
         private readonly float _notificationTime;
@@ -25,9 +26,10 @@ namespace Pokemon3D.UI
             { NotificationKind.Information, new Rectangle(0,IconSize,IconSize, IconSize) },
             { NotificationKind.Warning, new Rectangle(IconSize,0,IconSize, IconSize) }
         };
-        
-        public NotificationBar(int barWidth)
+
+        public NotificationBar(int barWidth, int maxNotifications = 10)
         {
+            _maxNotifications = maxNotifications;
             _width = barWidth;
             _notificationTime = 2.0f;
             _spriteFont = Game.Content.Load<SpriteFont>(ResourceNames.Fonts.NotificationFont);
@@ -38,6 +40,10 @@ namespace Pokemon3D.UI
         public void PushNotification(NotificationKind notificationKind, string message)
         {
             _notifications.Add(new NotificationItem(_notificationTime, notificationKind, message));
+            if (_notifications.Count > _maxNotifications)
+            {
+                _notifications.RemoveAt(0);
+            }
         }
 
         public void Update(float elapsedTime)
@@ -67,8 +73,8 @@ namespace Pokemon3D.UI
                 var position = new Vector2(currentX, startY + (elementHeight-IconSize)/2);
                 Game.SpriteBatch.Draw(_notificationIcons, position, sourceRectangle, Color.White);
 
-                currentX += IconSize + ElementMargin;
-                Game.SpriteBatch.DrawString(_spriteFont, notification.Message, new Vector2(currentX, startY + ElementPadding), Color.White * notification.Alpha);
+                position = new Vector2(currentX + IconSize + ElementMargin, startY + ElementPadding);
+                Game.SpriteBatch.DrawString(_spriteFont, notification.Message, position, Color.White * notification.Alpha);
 
                 startY -= ElementMargin;
             }
