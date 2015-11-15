@@ -109,6 +109,7 @@
     <Compile Include="Json\JsonDataModel.cs" />
     <Compile Include="Json\RangeModel.cs" />
     <Compile Include="Json\RectangleModel.cs" />
+    <Compile Include="Json\SizeModel.cs" />
     <Compile Include="Json\TextureSourceModel.cs" />
     <Compile Include="Json\Vector2Model.cs" />
     <Compile Include="Json\Vector3Model.cs" />
@@ -118,6 +119,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
   </ItemGroup>

@@ -17,6 +17,24 @@ namespace Pokemon3D.GameCore
 
         public event EventHandler ConfigFileLoaded;
 
+        public string DisplayLanguage => _dataModel.DisplayLanguage;
+
+        public SizeModel WindowSize
+        {
+            get
+            {
+                if (_dataModel.WindowSize == null)
+                {
+                    _dataModel.WindowSize = new SizeModel()
+                    {
+                        Width = 1024,
+                        Height = 600
+                    };
+                }
+                return _dataModel.WindowSize;
+            }
+        }
+        
         public GameConfiguration()
         {
             if (File.Exists(StaticFileProvider.ConfigFile))
@@ -41,6 +59,8 @@ namespace Pokemon3D.GameCore
                 Save();
             }
 
+            Game.Exiting += OnGameExiting;
+
             FileObserver.Instance.StartFileObserve(StaticFileProvider.ConfigFile, ReloadFile);
         }
 
@@ -49,7 +69,7 @@ namespace Pokemon3D.GameCore
             try
             {
                 _dataModel = JsonDataModel.FromFile<ConfigurationModel>(StaticFileProvider.ConfigFile);
-                ConfigFileLoaded(this, new EventArgs());
+                ConfigFileLoaded(this, EventArgs.Empty);
             }
             catch (JsonDataLoadException)
             {
@@ -61,12 +81,15 @@ namespace Pokemon3D.GameCore
             }
         }
 
+        private void OnGameExiting(object sender, EventArgs e)
+        {
+            Save();
+        }
+
         public void Save()
         {
             GameLogger.Instance.Log(MessageType.Message, "Saving configuration file.");
             _dataModel.ToFile(StaticFileProvider.ConfigFile);
         }
-
-        public string DisplayLanguage => _dataModel.DisplayLanguage;
     }
 }

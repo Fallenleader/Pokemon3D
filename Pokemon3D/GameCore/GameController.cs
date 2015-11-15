@@ -75,16 +75,17 @@ namespace Pokemon3D.GameCore
 
             GameLogger.Instance.Initialize(this, StaticFileProvider.LogFile);
 
+            Instance = this;
+
+            Content.RootDirectory = "Content";
+            GameConfig = new GameConfiguration();
             GraphicsDeviceManager = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 1024,
-                PreferredBackBufferHeight = 600
+                PreferredBackBufferWidth = GameConfig.WindowSize.Width,
+                PreferredBackBufferHeight = GameConfig.WindowSize.Height
             };
-            Content.RootDirectory = "Content";
-            
-            Instance = this;
         }
-
+        
         protected override void LoadContent()
         {
             base.LoadContent();
@@ -98,20 +99,18 @@ namespace Pokemon3D.GameCore
             GuiSystem = new GuiSystem(this);
             ShapeRenderer =  new ShapeRenderer(SpriteBatch, GraphicsDevice);
             ScreenManager = new ScreenManager();
-            GameConfig = new GameConfiguration();
             TranslationProvider = new CoreTranslationManager();
             NotificationBar = new NotificationBar();
 
             GameConfig.ConfigFileLoaded += TranslationProvider.OnLanguageChanged;
 
-            var parameters = new GuiSystemSkinParameters
+            GuiSystem.SetSkin(new GuiSystemSkinParameters()
             {
                 SkinTexture = Content.Load<Texture2D>(ResourceNames.Textures.guiskin),
                 BigFont = Content.Load<SpriteFont>(ResourceNames.Fonts.BigFont),
                 NormalFont = Content.Load<SpriteFont>(ResourceNames.Fonts.NormalFont),
                 XmlSkinDescriptorFile = "Content/GUI/GuiSkin.xml"
-            };
-            GuiSystem.SetSkin(parameters);
+            });
 
 #if DEBUG
             ScreenManager.SetScreen(typeof(MainMenuScreen));

@@ -217,10 +217,6 @@
 							}
 						}
 					],
-					"TextureIndex" : [
-						0,
-						0
-					],
 					"PrimitiveModelId" : "FloorQuad",
 					"ModelPath" : "",
 					"Visible" : true,
@@ -322,10 +318,6 @@
 							}
 						}
 					],
-					"TextureIndex" : [
-						0,
-						0
-					],
 					"PrimitiveModelId" : "FloorQuad",
 					"ModelPath" : "",
 					"Visible" : true,
@@ -421,10 +413,6 @@
 							}
 						}
 					],
-					"TextureIndex" : [
-						0,
-						0
-					],
 					"PrimitiveModelId" : "FloorQuad",
 					"ModelPath" : "",
 					"Visible" : true,
@@ -514,10 +502,6 @@
 							}
 						}
 					],
-					"TextureIndex" : [
-						0,
-						0
-					],
 					"PrimitiveModelId" : "FloorQuad",
 					"ModelPath" : "",
 					"Visible" : true,
@@ -570,10 +554,6 @@
 								"Height" : 16
 							}
 						}
-					],
-					"TextureIndex" : [
-						0,
-						0
 					],
 					"PrimitiveModelId" : "FloorQuad",
 					"ModelPath" : "",
@@ -629,10 +609,6 @@
 								"Height" : 16
 							}
 						}
-					],
-					"TextureIndex" : [
-						0,
-						0
 					],
 					"PrimitiveModelId" : "WallQuad",
 					"ModelPath" : "",
