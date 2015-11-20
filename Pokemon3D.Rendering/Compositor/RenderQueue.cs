@@ -38,28 +38,30 @@ namespace Pokemon3D.Rendering.Compositor
             GameContext.GraphicsDevice.BlendState = BlendState;
             GameContext.GraphicsDevice.DepthStencilState = DepthStencilState;
 
-            var nodes = (SortNodesBackToFront ? _getSceneNodes().OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).Length()) 
-                                             : _getSceneNodes()).ToList();
+            HandleBatching();
 
-            HandleBatching(nodes);
+            var nodes = SortNodesBackToFront ? _elementsToDraw.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).Length()).ToList()
+                                             : _elementsToDraw;
 
-            foreach (var element in _elementsToDraw)
+            foreach (var element in nodes)
             {
                 _handleEffect(element.Material);
                 DrawElement(camera, element, renderStatistics);
             }
         }
 
-        private void HandleBatching(IList<SceneNode>  sceneNodes)
+        private void HandleBatching()
         {
             if (_isOptimized) return;
+
+            var sceneNodes = _getSceneNodes().ToArray();
 
             _staticBatches.Clear();
             _elementsToDraw.Clear();
 
             var staticNodes = new List<SceneNode>();
             var dynamicNodes = new List<SceneNode>();
-            for (var i = 0; i < sceneNodes.Count; i++)
+            for (var i = 0; i < sceneNodes.Length; i++)
             {
                 if (sceneNodes[i].IsStatic)
                 {

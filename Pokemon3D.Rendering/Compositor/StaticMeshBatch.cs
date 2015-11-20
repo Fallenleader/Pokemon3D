@@ -56,5 +56,7 @@ namespace Pokemon3D.Rendering.Compositor
         {
             return Matrix.Identity;
         }
+
+        public Vector3 GlobalPosition => Vector3.Zero;
     }
 }
