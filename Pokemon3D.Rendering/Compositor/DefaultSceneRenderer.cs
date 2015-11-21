@@ -46,7 +46,7 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 BlendState = BlendState.Opaque,
                 DepthStencilState = DepthStencilState.Default,
-                RasterizerState = RasterizerState.CullCounterClockwise,
+                RasterizerState = RasterizerState.CullNone,
                 IsEnabled = true,
                 SortNodesBackToFront = false,
             };

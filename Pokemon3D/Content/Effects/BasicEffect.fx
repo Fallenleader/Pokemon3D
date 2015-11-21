@@ -99,7 +99,7 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 	{
 		float depthStoredInShadowMap = tex2D(ShadowMapSampler, projectedTexCoords).r;
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
-		if ((realDistance - 1.0f / 100.0f) > depthStoredInShadowMap)
+		if ((realDistance - 1.0 / 1000.0f) > depthStoredInShadowMap)
 		{
 			diffuseFactor = 0;
 		}

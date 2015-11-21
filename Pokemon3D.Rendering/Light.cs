@@ -20,7 +20,7 @@ namespace Pokemon3D.Rendering
         {
             var forward = Vector3.Normalize(Direction);
             var upVector = Vector3.Cross(forward, -Vector3.UnitX);
-            var lightViewMatrix = Matrix.CreateLookAt(Vector3.Zero, forward, upVector);
+            var lightViewMatrix = Matrix.CreateLookAt(Vector3.Zero, forward, Vector3.Up);
 
             var boundingBox = BoundingBox.CreateFromPoints(camera.Frustum.GetCorners().Select(f => Vector3.Transform(f, lightViewMatrix)));
             var width = boundingBox.Max.X - boundingBox.Min.X;
@@ -30,7 +30,7 @@ namespace Pokemon3D.Rendering
             var cameraPositionTarget = camera.GlobalPosition + camera.Forward * (camera.FarClipDistance - camera.NearClipDistance) * 0.5f;
             var cameraPosition = cameraPositionTarget - Direction * depth * 0.5f;
 
-            LightViewMatrix = Matrix.CreateLookAt(cameraPosition, cameraPositionTarget, Vector3.Up) * Matrix.CreateOrthographic(width * 0.5f, height * 0.5f, 0.1f, depth);
+            LightViewMatrix = Matrix.CreateLookAt(cameraPosition, cameraPositionTarget, Vector3.Up) * Matrix.CreateOrthographic(width, height, 0.1f, depth*2.0f);
         }
     }
 }
