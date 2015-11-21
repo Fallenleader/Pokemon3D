@@ -40,10 +40,11 @@ namespace Pokemon3D.Common.FileSystem
             {
                 _lastRead = lastWriteTime;
 
-                // wait for a few milliseconds for handles to close:
-                Thread.Sleep(100);
+                Thread.Sleep(300);
 
+                _watcher.EnableRaisingEvents = false;
                 _watcherEvent(this, e);
+                _watcher.EnableRaisingEvents = true;
             }
         }
 

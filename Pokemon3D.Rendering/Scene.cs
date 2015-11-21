@@ -32,6 +32,12 @@ namespace Pokemon3D.Rendering
             return sceneNode;
         }
         
+        public void RemoveSceneNode(SceneNode node)
+        { 
+            HasSceneNodesChanged = true;
+            _allNodes.Remove(node);
+        }
+
         public Camera CreateCamera()
         {
             HasSceneNodesChanged = true;

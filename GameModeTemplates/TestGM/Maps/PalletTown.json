@@ -343,6 +343,194 @@
           "Data": ""
         }
       ]
+    },
+    {
+      "PrototypeId": "HouseWallWindow",
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "CardinalRotation": false,
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "RenderMode": {
+        "RenderMethod": "Primitive",
+        "Textures": [
+          {
+            "Source": "tileset1",
+            "Rectangle": {
+              "X": 160,
+              "Y": 160,
+              "Width": 16,
+              "Height": 16
+            }
+          }
+        ],
+        "PrimitiveModelId": "WallQuad",
+        "ModelPath": "",
+        "Visible": true,
+        "Opacity": 1.0,
+        "Shading": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "ObstructCamera": false,
+        "SeasonPalettes": [ ]
+      },
+      "Collision": true,
+      "IsFloor": true,
+      "Components": [
+        {
+          "Id": "isstatic",
+          "Data": ""
+        }
+      ]
+    },
+    {
+      "PrototypeId": "HouseWallDoor",
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "CardinalRotation": false,
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "RenderMode": {
+        "RenderMethod": "Primitive",
+        "Textures": [
+          {
+            "Source": "tileset1",
+            "Rectangle": {
+              "X": 16,
+              "Y": 0,
+              "Width": 16,
+              "Height": 16
+            }
+          }
+        ],
+        "PrimitiveModelId": "WallQuad",
+        "ModelPath": "",
+        "Visible": true,
+        "Opacity": 1.0,
+        "Shading": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "ObstructCamera": false,
+        "SeasonPalettes": [ ]
+      },
+      "Collision": true,
+      "IsFloor": true,
+      "Components": [
+        {
+          "Id": "isstatic",
+          "Data": ""
+        }
+      ]
+    },
+    {
+      "PrototypeId": "HouseWall2",
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "CardinalRotation": false,
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "RenderMode": {
+        "RenderMethod": "Primitive",
+        "Textures": [
+          {
+            "Source": "tileset1",
+            "Rectangle": {
+              "X": 208,
+              "Y": 160,
+              "Width": 16,
+              "Height": 16
+            }
+          }
+        ],
+        "PrimitiveModelId": "WallQuad",
+        "ModelPath": "",
+        "Visible": true,
+        "Opacity": 1.0,
+        "Shading": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "ObstructCamera": false,
+        "SeasonPalettes": [ ]
+      },
+      "Collision": true,
+      "IsFloor": true,
+      "Components": [
+        {
+          "Id": "isstatic",
+          "Data": ""
+        }
+      ]
+    },
+    {
+      "PrototypeId": "HouseCeiling",
+      "Rotation": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "CardinalRotation": false,
+      "Scale": {
+        "X": 1,
+        "Y": 1,
+        "Z": 1
+      },
+      "RenderMode": {
+        "RenderMethod": "Primitive",
+        "Textures": [
+          {
+            "Source": "tileset1",
+            "Rectangle": {
+              "X": 96,
+              "Y": 0,
+              "Width": 16,
+              "Height": 16
+            }
+          }
+        ],
+        "PrimitiveModelId": "FloorQuad",
+        "ModelPath": "",
+        "Visible": true,
+        "Opacity": 1.0,
+        "Shading": {
+          "X": 1,
+          "Y": 1,
+          "Z": 1
+        },
+        "ObstructCamera": false,
+        "SeasonPalettes": [ ]
+      },
+      "Collision": true,
+      "IsFloor": false,
+      "Components": [
+        {
+          "Id": "isstatic",
+          "Data": ""
+        }
+      ]
     }
   ],
   "Entities": [
@@ -1268,6 +1456,174 @@
           },
           "Size": {
             "X": 1,
+            "Y": 2,
+            "Z": 4
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWall1",
+        "Id": 8,
+        "Rotation": {
+          "X": 0,
+          "Y": 1,
+          "Z": 0
+        },
+        "CardinalRotation" : true
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 15.5,
+            "Y": 0.5,
+            "Z": 8
+          },
+          "Size": {
+            "X": 1,
+            "Y": 2,
+            "Z": 4
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWall1",
+        "Id": 9,
+        "Rotation": {
+          "X": 0,
+          "Y": 2,
+          "Z": 0
+        },
+        "CardinalRotation" : true
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0.5,
+            "Z": 7.5
+          },
+          "Size": {
+            "X": 6,
+            "Y": 2,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWallWindow",
+        "Id": 9
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 13,
+            "Y": 0.5,
+            "Z": 11.5
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWallDoor",
+        "Id": 9
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 12,
+            "Y": 0.5,
+            "Z": 11.5
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWall2",
+        "Id": 10
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 10,
+            "Y": 1.5,
+            "Z": 11.5
+          },
+          "Size": {
+            "X": 6,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseCeiling",
+        "Id": 11
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 10,
+            "Y": 2,
+            "Z": 8
+          },
+          "Size": {
+            "X": 6,
             "Y": 1,
             "Z": 4
           },
