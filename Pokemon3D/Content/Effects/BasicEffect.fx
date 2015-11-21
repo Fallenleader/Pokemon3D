@@ -7,6 +7,7 @@ texture ShadowMap;
 float3 LightDirection = float3(1, -1,  -1);
 float2 TexcoordOffset;
 float2 TexcoordScale;
+float ShadowScale = 1.0f / 1024.0f;
 
 sampler2D DiffuseSampler = sampler_state {
 	Texture = (DiffuseTexture);
@@ -97,12 +98,11 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 	float calculatedDiffuse = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 
 	float diffuseFactor = 0.2f;  
-	float bias = max(0.0025 * (1.0 - calculatedDiffuse), 0.0001);
 	if ((saturate(projectedTexCoords).x == projectedTexCoords.x) && (saturate(projectedTexCoords).y == projectedTexCoords.y))
 	{
 		float depthStoredInShadowMap = tex2D(ShadowMapSampler, projectedTexCoords).r;
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
-		if ((realDistance - bias) <= depthStoredInShadowMap)
+		if ((realDistance - 2.0f*ShadowScale) <= depthStoredInShadowMap)
 		{
 			diffuseFactor = calculatedDiffuse;
 		}
