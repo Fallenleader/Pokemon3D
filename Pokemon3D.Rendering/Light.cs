@@ -18,14 +18,13 @@ namespace Pokemon3D.Rendering
 
         public void UpdateLightViewMatrixForCamera(Camera camera, IList<SceneNode> shadowCasters)
         {
-            var forward = Vector3.Normalize(Direction);
-            var lightViewMatrix = Matrix.CreateLookAt(Vector3.Zero, forward, Vector3.Up);
+            var directionNormalized = Vector3.Normalize(Direction);
+            var lightViewMatrix = Matrix.CreateLookAt(Vector3.Zero, Direction, Vector3.Up);
 
             var mergedBox = new BoundingBox();
             for (var i = 0; i < shadowCasters.Count; i++)
             {
                 var drawableElement = shadowCasters[i];
-                if (camera.Frustum.Contains(drawableElement.BoundingBox) == ContainmentType.Disjoint) continue;
                 mergedBox = BoundingBox.CreateMerged(mergedBox, drawableElement.BoundingBox);
             }
             var sphere = BoundingSphere.CreateFromBoundingBox(mergedBox);
@@ -43,12 +42,11 @@ namespace Pokemon3D.Rendering
             var boundingBox = BoundingBox.CreateFromPoints(edges);
             var width = boundingBox.Max.X - boundingBox.Min.X;
             var height = boundingBox.Max.Y - boundingBox.Min.Y;
-            var depth = boundingBox.Max.Z - boundingBox.Min.Z;
 
-            var cameraPosition = sphere.Center - Direction*sphere.Radius;
-            var cameraPositionTarget = cameraPosition + Direction;
+            var cameraPosition = sphere.Center - directionNormalized * sphere.Radius;
+            var cameraPositionTarget = cameraPosition + directionNormalized;
                 
-            LightViewMatrix = Matrix.CreateLookAt(cameraPosition, cameraPositionTarget, Vector3.Up) * Matrix.CreateOrthographic(width *1.2f, height*1.2f, 0.1f, depth*2.0f);
+            LightViewMatrix = Matrix.CreateLookAt(cameraPosition, cameraPositionTarget, Vector3.Up) * Matrix.CreateOrthographic(width, height, 0.1f, sphere.Radius*2);
         }
     }
 }
