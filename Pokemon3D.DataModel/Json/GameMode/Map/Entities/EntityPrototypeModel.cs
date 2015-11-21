@@ -21,7 +21,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
         public Vector3Model Rotation;
 
         [DataMember(Order = 2)]
-        public bool TakeFullRotation;
+        public bool CardinalRotation;
 
         [DataMember(Order = 3)]
         public Vector3Model Scale;

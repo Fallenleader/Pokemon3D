@@ -44,11 +44,7 @@ namespace Pokemon3D.GameModes.Maps
 
             if (childDataModel.Rotation != null)
             {
-                if (childDataModel.TakeFullRotation)
-                {
-                    SceneNode.EulerAngles = childDataModel.Rotation.GetVector3();
-                }
-                else
+                if (childDataModel.CardinalRotation)
                 {
                     SceneNode.EulerAngles = new Vector3()
                     {
@@ -57,20 +53,34 @@ namespace Pokemon3D.GameModes.Maps
                         Z = childDataModel.Rotation.Z * MathHelper.PiOver2
                     };
                 }
+                else
+                {
+                    SceneNode.EulerAngles = new Vector3()
+                    {
+                        X = MathHelper.ToDegrees(childDataModel.Rotation.X),
+                        Y = MathHelper.ToDegrees(childDataModel.Rotation.Y),
+                        Z = MathHelper.ToDegrees(childDataModel.Rotation.Z)
+                    };
+                }
             }
             else
             {
-                if (dataModel.TakeFullRotation)
-                {
-                    SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
-                }
-                else
+                if (dataModel.CardinalRotation)
                 {
                     SceneNode.EulerAngles = new Vector3()
                     {
                         X = dataModel.Rotation.X * MathHelper.PiOver2,
                         Y = dataModel.Rotation.Y * MathHelper.PiOver2,
                         Z = dataModel.Rotation.Z * MathHelper.PiOver2
+                    };
+                }
+                else
+                {
+                    SceneNode.EulerAngles = new Vector3()
+                    {
+                        X = MathHelper.ToDegrees(dataModel.Rotation.X),
+                        Y = MathHelper.ToDegrees(dataModel.Rotation.Y),
+                        Z = MathHelper.ToDegrees(dataModel.Rotation.Z)
                     };
                 }
             }
