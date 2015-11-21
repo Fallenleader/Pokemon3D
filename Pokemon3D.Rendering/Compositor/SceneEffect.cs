@@ -40,7 +40,7 @@ namespace Pokemon3D.Rendering.Compositor
         /// <summary>
         /// Passes of current activated technique.
         /// </summary>
-        IEnumerable<EffectPass> CurrentTechniquePasses { get; } 
+        EffectPassCollection CurrentTechniquePasses { get; } 
 
         /// <summary>
         /// World Matrix for normal mesh rendering with lighting.

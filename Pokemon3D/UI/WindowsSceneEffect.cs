@@ -119,7 +119,7 @@ namespace Pokemon3D.UI
             set { _texcoordScale.SetValue(value); }
         }
 
-        public IEnumerable<EffectPass> CurrentTechniquePasses
+        public EffectPassCollection CurrentTechniquePasses
         {
             get { return _basicEffect.CurrentTechnique.Passes; }
         }

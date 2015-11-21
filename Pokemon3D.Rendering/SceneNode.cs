@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering.Compositor;
 using Pokemon3D.Rendering.Data;
+// ReSharper disable ForCanBeConvertedToForeach
 
 namespace Pokemon3D.Rendering
 {
@@ -55,7 +56,10 @@ namespace Pokemon3D.Rendering
                 if (_isActive != value)
                 {
                     _isActive = value;
-                    _childNodes.ForEach(c => c.IsActive = _isActive);
+                    for (var i = 0; i < _childNodes.Count; i++)
+                    {
+                        _childNodes[i].IsActive = _isActive;
+                    }
                 }
                 
             }
@@ -212,7 +216,10 @@ namespace Pokemon3D.Rendering
         protected void SetDirty()
         {
             _isDirty = true;
-            _childNodes.ForEach(c => c.SetDirty());
+            for (var i = 0; i < _childNodes.Count; i++)
+            {
+                _childNodes[i].SetDirty();
+            }
         }
 
         protected virtual void HandleIsDirty()

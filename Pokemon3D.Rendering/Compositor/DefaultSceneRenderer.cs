@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common;
 using Pokemon3D.Rendering.Data;
+// ReSharper disable ForCanBeConvertedToForeach
 
 namespace Pokemon3D.Rendering.Compositor
 {
@@ -79,9 +80,9 @@ namespace Pokemon3D.Rendering.Compositor
 
             UpdateNodeLists(allNodes);
 
-            foreach (var camera in cameras)
+            for (var i = 0; i < cameras.Count; i++)
             {
-                DrawSceneForCamera(camera);
+                DrawSceneForCamera(cameras[i]);
             }
 
             DoPostProcessing();
@@ -113,14 +114,14 @@ namespace Pokemon3D.Rendering.Compositor
         {
             if (!EnablePostProcessing) return;
 
-            foreach (var postProcessingStep in _postProcessingSteps)
+            for (var i = 0; i <  _postProcessingSteps.Count; i++)
             {
                 var temp = _activeRenderTarget;
                 _activeRenderTarget = _activeInputSource;
                 _activeInputSource = temp;
                 _device.SetRenderTarget(_activeRenderTarget);
 
-                postProcessingStep.Process(GameContext, _activeInputSource, _activeRenderTarget);
+                _postProcessingSteps[i].Process(GameContext, _activeInputSource, _activeRenderTarget);
             }
 
             _device.SetRenderTargets(_oldBindings);
@@ -146,9 +147,9 @@ namespace Pokemon3D.Rendering.Compositor
             _sceneEffect.Projection = camera.ProjectionMatrix;
             _sceneEffect.LightDirection = LightDirection;
 
-            foreach (var renderQueue in _renderQueues)
+            for(var i = 0; i < _renderQueues.Count; i++)
             {
-                renderQueue.Draw(camera, RenderStatistics);
+                _renderQueues[i].Draw(camera, RenderStatistics);
             }
         }
 

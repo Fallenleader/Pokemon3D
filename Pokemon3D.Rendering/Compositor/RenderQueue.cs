@@ -103,9 +103,9 @@ namespace Pokemon3D.Rendering.Compositor
             _sceneEffect.TexcoordScale = element.Material.TexcoordScale;
             _sceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
 
-            foreach (var pass in _sceneEffect.CurrentTechniquePasses)
+            for (var i = 0; i < _sceneEffect.CurrentTechniquePasses.Count; i++)
             {
-                pass.Apply();
+                _sceneEffect.CurrentTechniquePasses[i].Apply();
                 element.Mesh.Draw();
                 renderStatistics.DrawCalls++;
             }
