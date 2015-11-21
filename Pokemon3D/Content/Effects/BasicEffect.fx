@@ -83,7 +83,7 @@ VertexShaderShadowReceiverOutput DefaultVertexShaderShadowReceiverFunction(Verte
 	output.Position = mul(viewPosition, Projection);
 	output.Normal = mul(input.Normal, (float3x3)World);
 	output.TexCoord = TexcoordOffset + float2(input.TexCoord.x * TexcoordScale.x, input.TexCoord.y * TexcoordScale.y);
-	output.LightPosition = mul(input.Position, LightWorldViewProjection);
+	output.LightPosition = mul(worldPosition, LightWorldViewProjection);
 
 	return output;
 }
@@ -94,14 +94,14 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 	projectedTexCoords[0] = input.LightPosition.x / input.LightPosition.w / 2.0f + 0.5f;
 	projectedTexCoords[1] = -input.LightPosition.y / input.LightPosition.w / 2.0f + 0.5f;
 
-	float diffuseFactor = 0;
+	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 	if ((saturate(projectedTexCoords).x == projectedTexCoords.x) && (saturate(projectedTexCoords).y == projectedTexCoords.y))
 	{
 		float depthStoredInShadowMap = tex2D(ShadowMapSampler, projectedTexCoords).r;
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
-		if ((realDistance - 1.0f / 100.0f) <= depthStoredInShadowMap)
+		if ((realDistance - 1.0f / 100.0f) > depthStoredInShadowMap)
 		{
-			diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+			diffuseFactor = 0;
 		}
 	}
 

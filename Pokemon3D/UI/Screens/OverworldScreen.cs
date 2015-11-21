@@ -26,7 +26,7 @@ namespace Pokemon3D.UI.Screens
             Game.Resources.SetPrimitiveProvider(_gameMode);
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
-            _scene.Renderer.LightDirection = new Vector3(0, -1, -1);
+            _scene.Renderer.LightDirection = new Vector3(-1, -1, -1);
             _scene.Renderer.EnableShadows = true;
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.GameModeInfo.StartMap, _scene, Game.Resources);
 
@@ -49,6 +49,18 @@ namespace Pokemon3D.UI.Screens
             if (Game.Keyboard.IsKeyDownOnce(Keys.F12))
             {
                 _showRenderStatistics = !_showRenderStatistics;
+            }
+            if (Game.Keyboard.IsKeyDownOnce(Keys.F11))
+            {
+                _scene.Renderer.EnableShadows = !_scene.Renderer.EnableShadows;
+                if (_scene.Renderer.EnableShadows)
+                {
+                    Game.NotificationBar.PushNotification(NotificationKind.Information, "Enabled Shadows");
+                }
+                else
+                {
+                    Game.NotificationBar.PushNotification(NotificationKind.Information, "Disabled Shadows");
+                }
             }
 
             if (Game.Keyboard.IsKeyDownOnce(Keys.V))

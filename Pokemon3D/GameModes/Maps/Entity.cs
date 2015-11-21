@@ -100,7 +100,7 @@ namespace Pokemon3D.GameModes.Maps
                 {
                     Color = new Color(renderMode.Shading.GetVector3()),
                     CastShadow = !_dataModel.RenderMode.UseTransparency,
-                    ReceiveShadow = false,
+                    ReceiveShadow = !_dataModel.RenderMode.UseTransparency,
                     UseTransparency = _dataModel.RenderMode.UseTransparency,
                     IsUnlit = SceneNode.IsBillboard
                 };

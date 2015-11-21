@@ -17,13 +17,14 @@ namespace Pokemon3D.Rendering.Compositor
 
         protected SceneEffect SceneEffect { get; }
         public BlendState BlendState { get; set; }
+        public RasterizerState RasterizerState { get; set; }
         public DepthStencilState DepthStencilState { get; set; }
         public bool SortNodesBackToFront { get; set; }
         public bool IsEnabled { get; set; }
 
         public RenderQueue(GameContext context, 
                            Action<Material> handleEffect,
-                           Func<IEnumerable<SceneNode>> getSceneNodes,  
+                           Func<IEnumerable<SceneNode>> getSceneNodes,
                            SceneEffect sceneEffect) : base(context)
         {
             _handleEffect = handleEffect;
@@ -33,10 +34,11 @@ namespace Pokemon3D.Rendering.Compositor
             IsEnabled = true;
         }
 
-        public virtual void Draw(Camera camera, Vector3 lightDirection, RenderStatistics renderStatistics)
+        public virtual void Draw(Camera camera, Light light, RenderStatistics renderStatistics)
         {
             GameContext.GraphicsDevice.BlendState = BlendState;
             GameContext.GraphicsDevice.DepthStencilState = DepthStencilState;
+            GameContext.GraphicsDevice.RasterizerState = RasterizerState;
 
             HandleBatching();
 

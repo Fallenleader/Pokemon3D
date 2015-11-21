@@ -12,7 +12,6 @@ namespace Pokemon3D.Rendering.Compositor
     {
         private readonly GraphicsDevice _device;
         private readonly SceneEffect _sceneEffect;
-        private readonly RenderTarget2D _shadowMap;
         private RenderTargetBinding[] _oldBindings;
 
         private readonly List<SceneNode> _solidObjects = new List<SceneNode>();
@@ -26,13 +25,16 @@ namespace Pokemon3D.Rendering.Compositor
         private readonly List<RenderQueue> _renderQueues;
         private readonly RenderQueue _shadowCasterQueue;
         private bool _enableShadows;
-
+        private readonly Light _light;
 
         public DefaultSceneRenderer(GameContext context, SceneEffect effect) : base(context)
         {
             _device = context.GraphicsDevice;
+            _light = new Light(context.GraphicsDevice, 1024)
+            {
+                Direction = new Vector3(1, 1, 1)
+            };
             _sceneEffect = effect;
-            _shadowMap = new RenderTarget2D(context.GraphicsDevice, 1024, 1024, false, SurfaceFormat.Single, DepthFormat.Depth24);
 
             var width = context.ScreenBounds.Width;
             var height = context.ScreenBounds.Height;
@@ -44,9 +46,9 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 BlendState = BlendState.Opaque,
                 DepthStencilState = DepthStencilState.Default,
+                RasterizerState = RasterizerState.CullCounterClockwise,
                 IsEnabled = true,
                 SortNodesBackToFront = false,
-                ShadowMap = _shadowMap
             };
 
             _renderQueues = new List<RenderQueue>
@@ -54,12 +56,14 @@ namespace Pokemon3D.Rendering.Compositor
                 new RenderQueue(context, HandleSolidObjects, GetSolidObjects, _sceneEffect)
                 {
                     DepthStencilState = DepthStencilState.Default,
-                    BlendState = BlendState.Opaque
+                    BlendState = BlendState.Opaque,
+                    RasterizerState = RasterizerState.CullCounterClockwise,
                 },
                 new RenderQueue(context, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
                 {
                     DepthStencilState = DepthStencilState.DepthRead,
                     BlendState = BlendState.AlphaBlend,
+                    RasterizerState = RasterizerState.CullCounterClockwise,
                     SortNodesBackToFront = true
                 }
             };
@@ -70,7 +74,11 @@ namespace Pokemon3D.Rendering.Compositor
             return _shadowCastersObjects;
         }
 
-        public Vector3 LightDirection { get; set; }
+        public Vector3 LightDirection
+        {
+            get { return _light.Direction; }
+            set { _light.Direction = value; }
+        }
         public bool EnablePostProcessing { get; set; }
         public RenderStatistics RenderStatistics { get; }
 
@@ -121,7 +129,7 @@ namespace Pokemon3D.Rendering.Compositor
 
         private void HandleSolidObjects(Material material)
         {
-            _sceneEffect.ActivateLightingTechnique(false, false);
+            _sceneEffect.ActivateLightingTechnique(material.IsUnlit, material.ReceiveShadow && EnableShadows);
         }
 
         private void HandleEffectTransparentObjects(Material material)
@@ -165,21 +173,24 @@ namespace Pokemon3D.Rendering.Compositor
         public void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target)
         {
             spriteBatch.Begin(effect: _sceneEffect.ShadowMapDebugEffect);
-            spriteBatch.Draw(_shadowMap, target, Color.White);
+            spriteBatch.Draw(_light.ShadowMap, target, Color.White);
             spriteBatch.End();
-            _device.BlendState = BlendState.Opaque;
-            _device.DepthStencilState = DepthStencilState.Default;
         }
         
         private void DrawSceneForCamera(Camera camera)
         {
             if (EnableShadows)
             {
-                _shadowCasterQueue.Draw(camera, LightDirection, RenderStatistics);
+                _light.UpdateLightViewMatrixForCamera(camera);
+                _sceneEffect.ShadowMap = null;
+                _sceneEffect.LightWorldViewProjection = _light.LightViewMatrix;
+                
+                _shadowCasterQueue.Draw(camera, _light, RenderStatistics);
             }
 
-            _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
+            _sceneEffect.ShadowMap = _light.ShadowMap;
 
+            _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
             _sceneEffect.View = camera.ViewMatrix;
             _sceneEffect.Projection = camera.ProjectionMatrix;
             _sceneEffect.LightDirection = LightDirection;
@@ -188,7 +199,7 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 var renderQueue = _renderQueues[i];
                 if (!renderQueue.IsEnabled) continue;
-                renderQueue.Draw(camera, LightDirection, RenderStatistics);
+                renderQueue.Draw(camera, _light, RenderStatistics);
             }
         }
 
