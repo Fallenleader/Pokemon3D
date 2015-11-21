@@ -11,16 +11,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
     [DataContract]
     public class EntityFieldModel : JsonDataModel
     {
-        /// <summary>
-        /// An optional data tag, not used for anything. This can be used by map makers to store comments with their entities.
-        /// </summary>
-        [DataMember(Order = 0)]
-        public string Tag;
-
         [DataMember(Order = 1)]
         public EntityFieldPositionModel[] Placing;
 
         [DataMember(Order = 2)]
-        public EntityModel Entity;
+        public EntityChildModel Entity;
     }
 }

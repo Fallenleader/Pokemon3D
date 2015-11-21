@@ -9,14 +9,14 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
     /// The data model for an entity.
     /// </summary>
     [DataContract]
-    public class EntityModel : JsonDataModel
+    public class EntityPrototypeModel : JsonDataModel
     {
         /// <summary>
-        /// The Id this Entity definition can be accessed with.
+        /// There can be several entity prototypes defined in a single map file, which can then be parented by child entities. These access their parents by their prototype id via ParentId.
         /// </summary>
         [DataMember(Order = 0)]
-        public int Id;
-
+        public string PrototypeId;
+        
         [DataMember(Order = 1)]
         public Vector3Model Rotation;
 

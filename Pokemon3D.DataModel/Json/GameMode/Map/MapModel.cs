@@ -36,9 +36,12 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
         public BattleMapDataModel BattleMapData { get; private set; }
 
         [DataMember(Order = 7)]
-        public Entities.EntityFieldModel[] Entities { get; private set; }
+        public Entities.EntityPrototypeModel[] EntityPrototypes { get; private set; }
 
         [DataMember(Order = 8)]
+        public Entities.EntityFieldModel[] Entities { get; private set; }
+
+        [DataMember(Order = 9)]
         public OffsetMapModel[] OffsetMaps { get; private set; }
     }
 }

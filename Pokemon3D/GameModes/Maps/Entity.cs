@@ -19,30 +19,70 @@ namespace Pokemon3D.GameModes.Maps
         public SceneNode SceneNode { get; }
         public RenderMethod RenderMethod => _dataModel.RenderMode.RenderMethod;
 
-        private readonly EntityModel _dataModel;
+        public int Id => _childDataModel.Id;
+
+        private readonly EntityPrototypeModel _dataModel;
+        private readonly EntityChildModel _childDataModel;
         private readonly Dictionary<string, EntityComponent> _components = new Dictionary<string, EntityComponent>();
         private readonly Map _map;
 
         private ResourceManager Resources => _map.ResourceManager;
 
-        public Entity(Map map, EntityModel dataModel, Vector3 position):
+        public Entity(Map map, EntityPrototypeModel dataModel, EntityChildModel childDataModel, Vector3 position) :
             this(map.Scene)
         {
             _map = map;
             _dataModel = dataModel;
+            _childDataModel = childDataModel;
 
             InitializeComponents();
 
-            SceneNode.Scale = dataModel.Scale.GetVector3();
+            if (childDataModel.Scale != null)
+                SceneNode.Scale = childDataModel.Scale.GetVector3();
+            else
+                SceneNode.Scale = dataModel.Scale.GetVector3();
+
+            if (childDataModel.Rotation != null)
+            {
+                if (childDataModel.TakeFullRotation)
+                {
+                    SceneNode.EulerAngles = childDataModel.Rotation.GetVector3();
+                }
+                else
+                {
+                    SceneNode.EulerAngles = new Vector3()
+                    {
+                        X = childDataModel.Rotation.X * MathHelper.PiOver2,
+                        Y = childDataModel.Rotation.Y * MathHelper.PiOver2,
+                        Z = childDataModel.Rotation.Z * MathHelper.PiOver2
+                    };
+                }
+            }
+            else
+            {
+                if (dataModel.TakeFullRotation)
+                {
+                    SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
+                }
+                else
+                {
+                    SceneNode.EulerAngles = new Vector3()
+                    {
+                        X = dataModel.Rotation.X * MathHelper.PiOver2,
+                        Y = dataModel.Rotation.Y * MathHelper.PiOver2,
+                        Z = dataModel.Rotation.Z * MathHelper.PiOver2
+                    };
+                }
+            }
+
             SceneNode.Position = position;
-            SceneNode.EulerAngles = dataModel.Rotation.GetVector3();
             SceneNode.IsStatic = IsStatic;
 
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 SceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
-                
+
                 var texture = renderMode.Textures.First();
 
                 var diffuseTexture = Resources.GetTexture2D(texture.Source);
@@ -121,7 +161,7 @@ namespace Pokemon3D.GameModes.Maps
                 }
             }
         }
-        
+
         void InitializeComponents()
         {
             // Loops over the data models of the entity components and creates actual instances.
