@@ -61,6 +61,7 @@
     <Compile Include="Compositor\StaticMeshBatch.cs" />
     <Compile Include="Data\GeometryData.cs" />
     <Compile Include="Data\GameModeDataProvider.cs" />
+    <Compile Include="Data\Primitives.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\ContentControl.cs" />
     <Compile Include="GUI\Frame.cs" />

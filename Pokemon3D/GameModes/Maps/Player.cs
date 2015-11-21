@@ -32,14 +32,14 @@ namespace Pokemon3D.GameModes.Maps
             }
         }
         
-        public Player(Scene scene, GeometryData billboardData) : base(scene)
+        public Player(Scene scene) : base(scene)
         {
             _camera = scene.CreateCamera();
             _camera.SetParent(SceneNode);
             Speed = 2.0f;
             RotationSpeed = MathHelper.PiOver4;
             
-            SceneNode.Mesh = new Mesh(Game.GraphicsDevice, billboardData);
+            SceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
             var diffuseTexture = Game.Content.Load<Texture2D>(ResourceNames.Textures.DefaultGuy);
             SceneNode.Material = new Material(diffuseTexture)
             {

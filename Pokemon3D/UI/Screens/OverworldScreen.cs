@@ -29,7 +29,7 @@ namespace Pokemon3D.UI.Screens
             _scene.Renderer.LightDirection = new Vector3(0, -1, -1);
             _currentMap = _gameMode.MapManager.LoadMap(_gameMode.GameModeInfo.StartMap, _scene, Game.Resources);
 
-            _player = new Player(_scene, _gameMode.GetPrimitiveData("Billboard"));
+            _player = new Player(_scene);
 
             _debugSpriteFont = Game.Content.Load<SpriteFont>(ResourceNames.Fonts.DebugFont);
         }
