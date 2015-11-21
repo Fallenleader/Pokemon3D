@@ -40,7 +40,7 @@ namespace Pokemon3D.Rendering.Compositor
 
             HandleBatching();
 
-            var nodes = SortNodesBackToFront ? _elementsToDraw.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).Length()).ToList()
+            var nodes = SortNodesBackToFront ? _elementsToDraw.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).LengthSquared()).ToList()
                                              : _elementsToDraw;
 
             foreach (var element in nodes)

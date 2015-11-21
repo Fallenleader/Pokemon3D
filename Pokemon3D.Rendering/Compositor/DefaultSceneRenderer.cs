@@ -42,7 +42,7 @@ namespace Pokemon3D.Rendering.Compositor
                     DepthStencilState = DepthStencilState.Default,
                     BlendState = BlendState.Opaque
                 },
-                    new RenderQueue(context, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
+                new RenderQueue(context, HandleEffectTransparentObjects, GetTransparentObjects, _sceneEffect)
                 {
                     DepthStencilState = DepthStencilState.DepthRead,
                     BlendState = BlendState.AlphaBlend,
