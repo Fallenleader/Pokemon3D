@@ -181,7 +181,7 @@ namespace Pokemon3D.Rendering.Compositor
         {
             if (EnableShadows)
             {
-                _light.UpdateLightViewMatrixForCamera(camera);
+                _light.UpdateLightViewMatrixForCamera(camera, _shadowCastersObjects);
                 _sceneEffect.ShadowMap = null;
                 _sceneEffect.LightWorldViewProjection = _light.LightViewMatrix;
                 
