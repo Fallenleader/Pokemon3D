@@ -15,6 +15,7 @@ namespace Pokemon3D.Rendering
 
         public Matrix ViewMatrix { get; private set; }
         public Matrix ProjectionMatrix { get; private set; }
+        public BoundingFrustum Frustum { get; }
         
         internal Camera(Viewport viewport)
         {
@@ -22,6 +23,7 @@ namespace Pokemon3D.Rendering
             NearClipDistance = 1.0f;
             FarClipDistance = 1000.0f;
             FieldOfView = MathHelper.PiOver4;
+            Frustum = new BoundingFrustum(Matrix.Identity);
         }
 
         protected override void HandleIsDirty()
@@ -29,6 +31,7 @@ namespace Pokemon3D.Rendering
             base.HandleIsDirty();
             ViewMatrix = Matrix.Invert(GetWorldMatrix(null));
             ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(FieldOfView, Viewport.AspectRatio, NearClipDistance, FarClipDistance);
+            Frustum.Matrix = ViewMatrix*ProjectionMatrix;
         }
     }
 }

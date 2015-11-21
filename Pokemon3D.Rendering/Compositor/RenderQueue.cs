@@ -43,8 +43,10 @@ namespace Pokemon3D.Rendering.Compositor
             var nodes = SortNodesBackToFront ? _elementsToDraw.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).LengthSquared()).ToList()
                                              : _elementsToDraw;
 
-            foreach (var element in nodes)
+            for (var i = 0; i < nodes.Count; i++)
             {
+                var element = nodes[i];
+                if (camera.Frustum.Contains(element.BoundingBox) == ContainmentType.Disjoint) continue;
                 _handleEffect(element.Material);
                 DrawElement(camera, element, renderStatistics);
             }
@@ -56,7 +58,6 @@ namespace Pokemon3D.Rendering.Compositor
 
             var sceneNodes = _getSceneNodes().ToArray();
 
-            _staticBatches.Clear();
             _elementsToDraw.Clear();
 
             var staticNodes = new List<SceneNode>();

@@ -9,5 +9,6 @@ namespace Pokemon3D.Rendering.Compositor
         Material Material { get; }
         Matrix GetWorldMatrix(Camera camera);
         Vector3 GlobalPosition { get; }
+        BoundingBox BoundingBox { get; }
     }
 }

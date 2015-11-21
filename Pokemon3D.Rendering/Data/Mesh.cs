@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Pokemon3D.Rendering.Data
 {
@@ -13,6 +14,7 @@ namespace Pokemon3D.Rendering.Data
         public int VertexCount { get; }
         public int IndexCount { get; }
         public GeometryData GeometryData { get; }
+        public BoundingBox LocalBounds { get; private set; }
 
         public Mesh(GraphicsDevice device, GeometryData data)
         {
@@ -25,6 +27,20 @@ namespace Pokemon3D.Rendering.Data
 
             _vertexBuffer.SetData(data.Vertices);
             _indexBuffer.SetData(data.Indices);
+
+            var min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+            var max  = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+            foreach (var vertex in GeometryData.Vertices)
+            {
+                min.X = MathHelper.Min(min.X, vertex.Position.X);
+                min.Y = MathHelper.Min(min.Y, vertex.Position.Y);
+                min.Z = MathHelper.Min(min.Z, vertex.Position.Z);
+
+                max.X = MathHelper.Max(max.X, vertex.Position.X);
+                max.Y = MathHelper.Max(max.Y, vertex.Position.Y);
+                max.Z = MathHelper.Max(max.Z, vertex.Position.Z);
+            }
+            LocalBounds = new BoundingBox(min, max);
         }
 
         public void Draw()

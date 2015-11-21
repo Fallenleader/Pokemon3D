@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering.Compositor;
@@ -122,6 +123,8 @@ namespace Pokemon3D.Rendering
             private set { _globalPosition = value; }
         }
 
+        public BoundingBox BoundingBox { get; private set; }
+
         public Vector3 Right
         {
             get
@@ -237,6 +240,24 @@ namespace Pokemon3D.Rendering
             _right = Vector3.TransformNormal(Vector3.Right, rotationMatrix);
             _up = Vector3.TransformNormal(Vector3.Up, rotationMatrix);
             _forward = Vector3.TransformNormal(Vector3.Forward, rotationMatrix);
+
+            if (Mesh != null)
+            {
+                var box = Mesh.LocalBounds;
+
+                if (IsBillboard)
+                {
+                    box.Min.X = MathHelper.Min(box.Min.X, box.Min.Z);
+                    box.Min.Z = box.Min.X;
+                    box.Max.X = MathHelper.Max(box.Max.X, box.Max.Z);
+                    box.Max.Z = box.Max.X;
+                }
+
+                box.Min += _globalPosition;
+                box.Max += _globalPosition;
+
+                BoundingBox = box;
+            }
 
             _isDirty = false;
         }

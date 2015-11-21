@@ -48,6 +48,8 @@ namespace Pokemon3D.Rendering.Compositor
             };
 
             Mesh = new Mesh(GameContext.GraphicsDevice, geometryData);
+
+            BoundingBox = BoundingBox.CreateFromPoints(geometryData.Vertices.Select(v => v.Position));
         }
 
         public Mesh Mesh { get; private set; }
@@ -58,5 +60,6 @@ namespace Pokemon3D.Rendering.Compositor
         }
 
         public Vector3 GlobalPosition => Vector3.Zero;
+        public BoundingBox BoundingBox { get; private set; }
     }
 }
