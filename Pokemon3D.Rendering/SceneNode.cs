@@ -163,6 +163,7 @@ namespace Pokemon3D.Rendering
         
         public void SetParent(SceneNode parent)
         {
+            if (parent == Parent) return;
             Parent?.RemoveChild(this);
             parent?.AddChild(this);
             SetDirty();

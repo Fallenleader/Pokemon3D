@@ -181,14 +181,21 @@ namespace Pokemon3D.GameModes.Maps
             switch (MovementMode)
             {
                 case PlayerMovementMode.FirstPerson:
+                    SceneNode.IsActive = true;
+                    _camera.SetParent(SceneNode);
                     _camera.EulerAngles = Vector3.Zero;
                     _camera.Position = new Vector3(0,1,0);
                     break;
                 case PlayerMovementMode.ThirdPerson:
+                    SceneNode.IsActive = true;
+                    _camera.SetParent(SceneNode);
                     _camera.EulerAngles = Vector3.Zero;
                     _camera.Position = new Vector3(0,1,3);
                     break;
                 case PlayerMovementMode.GodMode:
+                    _camera.SetParent(null);
+                    SceneNode.IsActive = false;
+                    _camera.Position = SceneNode.GlobalPosition + new Vector3(0,1,0);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

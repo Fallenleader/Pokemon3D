@@ -5,6 +5,7 @@ namespace Pokemon3D.Rendering.Compositor
 {
     interface DrawableElement
     {
+        bool IsActive { get; }
         Mesh Mesh { get; }
         Material Material { get; }
         Matrix GetWorldMatrix(Camera camera);

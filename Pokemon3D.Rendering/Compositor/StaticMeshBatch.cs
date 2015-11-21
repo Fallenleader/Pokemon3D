@@ -52,6 +52,7 @@ namespace Pokemon3D.Rendering.Compositor
             BoundingBox = BoundingBox.CreateFromPoints(geometryData.Vertices.Select(v => v.Position));
         }
 
+        public bool IsActive => true;
         public Mesh Mesh { get; private set; }
         public Material Material { get; }
         public Matrix GetWorldMatrix(Camera camera)

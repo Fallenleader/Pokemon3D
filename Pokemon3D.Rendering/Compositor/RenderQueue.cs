@@ -14,7 +14,6 @@ namespace Pokemon3D.Rendering.Compositor
         private readonly Func<IEnumerable<SceneNode>> _getSceneNodes;
         private readonly SceneEffect _sceneEffect;
 
-        private readonly List<StaticMeshBatch> _staticBatches = new List<StaticMeshBatch>();
         private readonly List<DrawableElement> _elementsToDraw = new List<DrawableElement>();
         private bool _isOptimized;
 
@@ -46,6 +45,8 @@ namespace Pokemon3D.Rendering.Compositor
             for (var i = 0; i < nodes.Count; i++)
             {
                 var element = nodes[i];
+
+                if (!element.IsActive) continue;
                 if (camera.Frustum.Contains(element.BoundingBox) == ContainmentType.Disjoint) continue;
                 _handleEffect(element.Material);
                 DrawElement(camera, element, renderStatistics);
