@@ -94,14 +94,14 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 	projectedTexCoords[0] = input.LightPosition.x / input.LightPosition.w / 2.0f + 0.5f;
 	projectedTexCoords[1] = -input.LightPosition.y / input.LightPosition.w / 2.0f + 0.5f;
 
-	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+	float diffuseFactor = 0.2f;  
 	if ((saturate(projectedTexCoords).x == projectedTexCoords.x) && (saturate(projectedTexCoords).y == projectedTexCoords.y))
 	{
 		float depthStoredInShadowMap = tex2D(ShadowMapSampler, projectedTexCoords).r;
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
-		if ((realDistance - 1.0 / 1000.0f) > depthStoredInShadowMap)
+		if ((realDistance - 1.0 / 1000.0f) <= depthStoredInShadowMap)
 		{
-			diffuseFactor = 0;
+			diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 		}
 	}
 
