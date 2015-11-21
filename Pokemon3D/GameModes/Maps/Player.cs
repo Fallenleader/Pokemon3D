@@ -36,6 +36,7 @@ namespace Pokemon3D.GameModes.Maps
         {
             _camera = scene.CreateCamera();
             _camera.SetParent(SceneNode);
+            _camera.FarClipDistance = 50.0f;
             Speed = 2.0f;
             RotationSpeed = MathHelper.PiOver4;
             
@@ -44,7 +45,8 @@ namespace Pokemon3D.GameModes.Maps
             SceneNode.Material = new Material(diffuseTexture)
             {
                 UseTransparency = true,
-                TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(32, 32)
+                TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(32, 32),
+                IsUnlit = true
             };
             SceneNode.Position = new Vector3(10,1,8);
 

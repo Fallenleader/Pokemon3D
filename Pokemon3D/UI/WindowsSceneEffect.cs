@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Rendering.Compositor;
@@ -53,14 +52,16 @@ namespace Pokemon3D.UI
             _basicEffect.CurrentTechnique = _shadowDepthTechnique;
         }
 
-        public void ActivateBillboardingTechnique()
+        public void ActivateLightingTechnique(bool unlit, bool receiveShadows)
         {
-            _basicEffect.CurrentTechnique = _billboardTechnique;
-        }
-
-        public void ActivateLightingTechnique(bool withShadows)
-        {
-            _basicEffect.CurrentTechnique = withShadows ? _defaultWithShadowsTechnique : _defaultTechnique;
+            if (unlit)
+            {
+                _basicEffect.CurrentTechnique = _billboardTechnique;
+            }
+            else
+            {
+                _basicEffect.CurrentTechnique = receiveShadows ? _defaultWithShadowsTechnique : _defaultTechnique;
+            }
         }
 
         public Matrix LightWorldViewProjection
@@ -119,9 +120,6 @@ namespace Pokemon3D.UI
             set { _texcoordScale.SetValue(value); }
         }
 
-        public EffectPassCollection CurrentTechniquePasses
-        {
-            get { return _basicEffect.CurrentTechnique.Passes; }
-        }
+        public EffectPassCollection CurrentTechniquePasses => _basicEffect.CurrentTechnique.Passes;
     }
 }

@@ -12,27 +12,28 @@ namespace Pokemon3D.Rendering.Compositor
     {
         private readonly Action<Material> _handleEffect;
         private readonly Func<IEnumerable<SceneNode>> _getSceneNodes;
-        private readonly SceneEffect _sceneEffect;
-
         private readonly List<DrawableElement> _elementsToDraw = new List<DrawableElement>();
         private bool _isOptimized;
 
+        protected SceneEffect SceneEffect { get; }
         public BlendState BlendState { get; set; }
         public DepthStencilState DepthStencilState { get; set; }
         public bool SortNodesBackToFront { get; set; }
+        public bool IsEnabled { get; set; }
 
         public RenderQueue(GameContext context, 
-                           Action<Material> handleEffect, 
+                           Action<Material> handleEffect,
                            Func<IEnumerable<SceneNode>> getSceneNodes,  
                            SceneEffect sceneEffect) : base(context)
         {
             _handleEffect = handleEffect;
             _getSceneNodes = getSceneNodes;
-            _sceneEffect = sceneEffect;
+            SceneEffect = sceneEffect;
             _isOptimized = false;
+            IsEnabled = true;
         }
 
-        public void Draw(Camera camera, RenderStatistics renderStatistics)
+        public virtual void Draw(Camera camera, Vector3 lightDirection, RenderStatistics renderStatistics)
         {
             GameContext.GraphicsDevice.BlendState = BlendState;
             GameContext.GraphicsDevice.DepthStencilState = DepthStencilState;
@@ -46,11 +47,15 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 var element = nodes[i];
 
-                if (!element.IsActive) continue;
-                if (camera.Frustum.Contains(element.BoundingBox) == ContainmentType.Disjoint) continue;
+                if (!IsValidForRendering(camera, element)) continue;
                 _handleEffect(element.Material);
                 DrawElement(camera, element, renderStatistics);
             }
+        }
+
+        protected virtual bool IsValidForRendering(Camera camera, DrawableElement element)
+        {
+            return element.IsActive && camera.Frustum.Contains(element.BoundingBox) != ContainmentType.Disjoint;
         }
 
         private void HandleBatching()
@@ -99,14 +104,14 @@ namespace Pokemon3D.Rendering.Compositor
 
         private void DrawElement(Camera camera, DrawableElement element, RenderStatistics renderStatistics)
         {
-            _sceneEffect.World = element.GetWorldMatrix(camera);
-            _sceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
-            _sceneEffect.TexcoordScale = element.Material.TexcoordScale;
-            _sceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
+            SceneEffect.World = element.GetWorldMatrix(camera);
+            SceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
+            SceneEffect.TexcoordScale = element.Material.TexcoordScale;
+            SceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
 
-            for (var i = 0; i < _sceneEffect.CurrentTechniquePasses.Count; i++)
+            for (var i = 0; i < SceneEffect.CurrentTechniquePasses.Count; i++)
             {
-                _sceneEffect.CurrentTechniquePasses[i].Apply();
+                SceneEffect.CurrentTechniquePasses[i].Apply();
                 element.Mesh.Draw();
                 renderStatistics.DrawCalls++;
             }

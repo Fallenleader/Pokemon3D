@@ -99,7 +99,7 @@ namespace Pokemon3D.GameModes.Maps
                 var material = new Material(diffuseTexture)
                 {
                     Color = new Color(renderMode.Shading.GetVector3()),
-                    CastShadow = false,
+                    CastShadow = !_dataModel.RenderMode.UseTransparency,
                     ReceiveShadow = false,
                     UseTransparency = _dataModel.RenderMode.UseTransparency,
                     IsUnlit = SceneNode.IsBillboard

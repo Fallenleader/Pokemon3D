@@ -58,6 +58,7 @@
     <Compile Include="Compositor\GaussianBlurPostProcessingStep.cs" />
     <Compile Include="Compositor\RenderQueue.cs" />
     <Compile Include="Compositor\RenderStatistics.cs" />
+    <Compile Include="Compositor\ShadowCastRenderQueue.cs" />
     <Compile Include="Compositor\StaticMeshBatch.cs" />
     <Compile Include="Data\GeometryData.cs" />
     <Compile Include="Data\GameModeDataProvider.cs" />

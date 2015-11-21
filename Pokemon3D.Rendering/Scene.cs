@@ -54,7 +54,7 @@ namespace Pokemon3D.Rendering
             Renderer.Draw(HasSceneNodesChanged, _allNodes, _allCameras);
 
 #if DEBUG_RENDERING
-            if (EnableShadows) Renderer.DrawDebugShadowMap(_spriteBatch, new Rectangle(0,0,128,128));
+            if (Renderer.EnableShadows) Renderer.DrawDebugShadowMap(GameContext.SpriteBatch, new Rectangle(0,0,128,128));
 #endif
         }
 

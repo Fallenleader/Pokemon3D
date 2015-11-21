@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -22,15 +21,12 @@ namespace Pokemon3D.Rendering.Compositor
         void ActivateShadowDepthMapPass();
 
         /// <summary>
-        /// Sets Technique for rendering billboards.
+        /// Activates to Draw Objekt unlit or using directional lighting.
+        /// Shadows are optional for both.
         /// </summary>
-        void ActivateBillboardingTechnique();
-
-        /// <summary>
-        /// Activate Lighting technique, optional with shadows.
-        /// </summary>
-        /// <param name="withShadows"></param>
-        void ActivateLightingTechnique(bool withShadows);
+        /// <param name="unlit">Ignore lighting</param>
+        /// <param name="receiveShadows">Is an object receiving shadows.</param>
+        void ActivateLightingTechnique(bool unlit, bool receiveShadows);
 
         /// <summary>
         /// Light Matrix for Shadow Map.
