@@ -124,7 +124,7 @@ namespace Pokemon3D.Rendering.Compositor
 
             for (var i = 0; i < cameras.Count; i++)
             {
-                DrawSceneForCamera(cameras[i]);
+                DrawSceneForCamera(cameras[i], hasSceneNodesChanged);
             }
 
             DoPostProcessing();
@@ -181,7 +181,7 @@ namespace Pokemon3D.Rendering.Compositor
             spriteBatch.End();
         }
         
-        private void DrawSceneForCamera(Camera camera)
+        private void DrawSceneForCamera(Camera camera, bool hasSceneNodesChanged)
         {
             if (EnableShadows)
             {
@@ -189,7 +189,7 @@ namespace Pokemon3D.Rendering.Compositor
                 _sceneEffect.ShadowMap = null;
                 _sceneEffect.LightWorldViewProjection = _light.LightViewMatrix;
                 
-                _shadowCasterQueue.Draw(camera, _light, RenderStatistics);
+                _shadowCasterQueue.Draw(camera, _light, RenderStatistics, hasSceneNodesChanged);
             }
 
             _sceneEffect.ShadowMap = _light.ShadowMap;
@@ -203,7 +203,7 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 var renderQueue = _renderQueues[i];
                 if (!renderQueue.IsEnabled) continue;
-                renderQueue.Draw(camera, _light, RenderStatistics);
+                renderQueue.Draw(camera, _light, RenderStatistics, hasSceneNodesChanged);
             }
         }
 

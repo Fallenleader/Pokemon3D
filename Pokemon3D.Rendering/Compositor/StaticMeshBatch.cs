@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,7 +8,7 @@ using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering.Compositor
 {
-    class StaticMeshBatch : GameContextObject, DrawableElement
+    class StaticMeshBatch : GameContextObject, DrawableElement, IDisposable
     {
         private readonly List<VertexPositionNormalTexture> _vertices = new List<VertexPositionNormalTexture>(1000); 
         private readonly List<ushort> _indices = new List<ushort>(1000);
@@ -62,5 +63,30 @@ namespace Pokemon3D.Rendering.Compositor
 
         public Vector3 GlobalPosition => Vector3.Zero;
         public BoundingBox BoundingBox { get; private set; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~StaticMeshBatch()
+        {
+            Dispose(false);
+        }
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                if (Mesh != null)
+                {
+                    Mesh.Dispose();
+                    Mesh = null;
+                }
+            }
+            // free native resources if there are any.
+        }
     }
 }

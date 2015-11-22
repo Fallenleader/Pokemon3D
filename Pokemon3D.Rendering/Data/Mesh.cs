@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Pokemon3D.Rendering.Data
@@ -6,10 +7,10 @@ namespace Pokemon3D.Rendering.Data
     /// <summary>
     /// Holding Geometry Data uploaded to the GPU.
     /// </summary>
-    public class Mesh
+    public class Mesh : IDisposable
     {
-        private readonly VertexBuffer _vertexBuffer;
-        private readonly IndexBuffer _indexBuffer;
+        private VertexBuffer _vertexBuffer;
+        private IndexBuffer _indexBuffer;
 
         public int VertexCount { get; }
         public int IndexCount { get; }
@@ -64,6 +65,36 @@ namespace Pokemon3D.Rendering.Data
             _indexBuffer.GetData(geometryData.Indices);
 
             return new Mesh(_vertexBuffer.GraphicsDevice, geometryData);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~Mesh()
+        {
+            Dispose(false);
+        }
+        // The bulk of the clean-up code is implemented in Dispose(bool)
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // free managed resources
+                if (_vertexBuffer != null)
+                {
+                    _vertexBuffer.Dispose();
+                    _vertexBuffer = null;
+                }
+                if (_indexBuffer != null)
+                {
+                    _indexBuffer.Dispose();
+                    _indexBuffer = null;
+                }
+            }
+            // free native resources if there are any.
         }
     }
 }

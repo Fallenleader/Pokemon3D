@@ -34,13 +34,13 @@ namespace Pokemon3D.Rendering.Compositor
             IsEnabled = true;
         }
 
-        public virtual void Draw(Camera camera, Light light, RenderStatistics renderStatistics)
+        public virtual void Draw(Camera camera, Light light, RenderStatistics renderStatistics, bool hasSceneNodesChanged)
         {
             GameContext.GraphicsDevice.BlendState = BlendState;
             GameContext.GraphicsDevice.DepthStencilState = DepthStencilState;
             GameContext.GraphicsDevice.RasterizerState = RasterizerState;
 
-            HandleBatching();
+            HandleBatching(hasSceneNodesChanged);
 
             var nodes = SortNodesBackToFront ? _elementsToDraw.OrderByDescending(n => (camera.GlobalPosition - n.GlobalPosition).LengthSquared()).ToList()
                                              : _elementsToDraw;
@@ -60,9 +60,9 @@ namespace Pokemon3D.Rendering.Compositor
             return element.IsActive && camera.Frustum.Contains(element.BoundingBox) != ContainmentType.Disjoint;
         }
 
-        private void HandleBatching()
+        private void HandleBatching(bool hasSceneNodesChanged)
         {
-            if (_isOptimized) return;
+            if (_isOptimized && !hasSceneNodesChanged) return;
 
             var sceneNodes = _getSceneNodes().ToArray();
 

@@ -36,6 +36,7 @@ namespace Pokemon3D.Rendering
         { 
             HasSceneNodesChanged = true;
             _allNodes.Remove(node);
+            _allCameras.Remove(node as Camera);
         }
 
         public Camera CreateCamera()
@@ -58,6 +59,7 @@ namespace Pokemon3D.Rendering
         public void Draw()
         {
             Renderer.Draw(HasSceneNodesChanged, _allNodes, _allCameras);
+            HasSceneNodesChanged = false;
 
 #if DEBUG_RENDERING
             if (Renderer.EnableShadows) Renderer.DrawDebugShadowMap(GameContext.SpriteBatch, new Rectangle(0,0,128,128));
