@@ -56,8 +56,8 @@
         {
           "Position": {
             "X": 0,
-            "Y": -0.1,
-            "Z": 1
+            "Y": 0,
+            "Z": 0
           },
           "Size": {
             "X": 20,
@@ -83,6 +83,24 @@
           }
         }
       ]
+    }
+  ],
+  "Fragments": [
+    {
+      "Id": "PalletTown\\Lab",
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "Id": "PalletTown\\Lab",
+      "Position": {
+        "X": 2,
+        "Y": 0,
+        "Z": 4.5
+      }
     }
   ]
 }
