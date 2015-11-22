@@ -22,5 +22,14 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
 
         [DataMember(Order = 3)]
         public Vector3Model Steps;
+
+        [DataMember(Order = 4)]
+        public Vector3Model Rotation;
+
+        [DataMember(Order = 5)]
+        public bool CardinalRotation;
+
+        [DataMember(Order = 6)]
+        public Vector3Model Scale;
     }
 }

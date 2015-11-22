@@ -70,9 +70,9 @@ namespace Pokemon3D.GameModes.Maps
             _mapFragments = mapFragments.ToArray();
         }
 
-        public Map GetMap(string mapName, Scene scene, ResourceManager resourceManager)
+        public Map GetMap(string mapId, Scene scene, ResourceManager resourceManager)
         {
-            var mapModel = _mapModels.Single(m => m.Name == mapName);
+            var mapModel = _mapModels.Single(m => m.Id == mapId);
             return new Map(_gameMode, mapModel, scene, resourceManager);
         }
 

@@ -5,24 +5,25 @@
 
 namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
 {
+    /// <summary>
+    /// The data model for an entity.
+    /// </summary>
     [DataContract]
-    public class EntityChildModel : JsonDataModel
+    public class EntityModel : JsonDataModel
     {
         [DataMember(Order = 0)]
-        public string ParentId;
+        public string Id;
 
         [DataMember(Order = 1)]
-        public int Id;
-
-        /////Overriding members/////
+        public EntityRenderModeModel RenderMode;
 
         [DataMember(Order = 2)]
-        public Vector3Model Rotation;
+        public bool Collision;
 
         [DataMember(Order = 3)]
-        public bool CardinalRotation;
+        public bool IsFloor;
 
         [DataMember(Order = 4)]
-        public Vector3Model Scale;
+        public EntityComponentModel[] Components;
     }
 }

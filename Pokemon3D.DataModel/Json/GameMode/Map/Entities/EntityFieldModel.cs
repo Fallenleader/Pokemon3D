@@ -15,6 +15,6 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
         public EntityFieldPositionModel[] Placing;
 
         [DataMember(Order = 2)]
-        public EntityChildModel Entity;
+        public EntityModel Entity;
     }
 }

@@ -19,70 +19,51 @@ namespace Pokemon3D.GameModes.Maps
         public SceneNode SceneNode { get; }
         public RenderMethod RenderMethod => _dataModel.RenderMode.RenderMethod;
 
-        public int Id => _childDataModel.Id;
-
-        private readonly EntityPrototypeModel _dataModel;
-        private readonly EntityChildModel _childDataModel;
+        private readonly EntityModel _dataModel;
+        private readonly EntityFieldPositionModel _fieldSourceModel;
         private readonly Dictionary<string, EntityComponent> _components = new Dictionary<string, EntityComponent>();
         private readonly Map _map;
 
         private ResourceManager Resources => _map.ResourceManager;
 
-        public Entity(Map map, EntityPrototypeModel dataModel, EntityChildModel childDataModel, Vector3 position) :
+        public Entity(Map map, EntityModel dataModel, EntityFieldPositionModel fieldSourceModel, Vector3 position) :
             this(map.Scene)
         {
             _map = map;
             _dataModel = dataModel;
-            _childDataModel = childDataModel;
+            _fieldSourceModel = fieldSourceModel;
 
             InitializeComponents();
 
-            if (childDataModel.Scale != null)
-                SceneNode.Scale = childDataModel.Scale.GetVector3();
+            if (_fieldSourceModel.Scale != null)
+                SceneNode.Scale = _fieldSourceModel.Scale.GetVector3();
             else
-                SceneNode.Scale = dataModel.Scale.GetVector3();
+                SceneNode.Scale = Vector3.One;
 
-            if (childDataModel.Rotation != null)
+            if (_fieldSourceModel.Rotation != null)
             {
-                if (childDataModel.CardinalRotation)
+                if (_fieldSourceModel.CardinalRotation)
                 {
                     SceneNode.EulerAngles = new Vector3
                     {
-                        X = childDataModel.Rotation.X * MathHelper.PiOver2,
-                        Y = childDataModel.Rotation.Y * MathHelper.PiOver2,
-                        Z = childDataModel.Rotation.Z * MathHelper.PiOver2
+                        X = _fieldSourceModel.Rotation.X * MathHelper.PiOver2,
+                        Y = _fieldSourceModel.Rotation.Y * MathHelper.PiOver2,
+                        Z = _fieldSourceModel.Rotation.Z * MathHelper.PiOver2
                     };
                 }
                 else
                 {
                     SceneNode.EulerAngles = new Vector3
                     {
-                        X = MathHelper.ToDegrees(childDataModel.Rotation.X),
-                        Y = MathHelper.ToDegrees(childDataModel.Rotation.Y),
-                        Z = MathHelper.ToDegrees(childDataModel.Rotation.Z)
+                        X = MathHelper.ToDegrees(_fieldSourceModel.Rotation.X),
+                        Y = MathHelper.ToDegrees(_fieldSourceModel.Rotation.Y),
+                        Z = MathHelper.ToDegrees(_fieldSourceModel.Rotation.Z)
                     };
                 }
             }
             else
             {
-                if (dataModel.CardinalRotation)
-                {
-                    SceneNode.EulerAngles = new Vector3
-                    {
-                        X = dataModel.Rotation.X * MathHelper.PiOver2,
-                        Y = dataModel.Rotation.Y * MathHelper.PiOver2,
-                        Z = dataModel.Rotation.Z * MathHelper.PiOver2
-                    };
-                }
-                else
-                {
-                    SceneNode.EulerAngles = new Vector3
-                    {
-                        X = MathHelper.ToDegrees(dataModel.Rotation.X),
-                        Y = MathHelper.ToDegrees(dataModel.Rotation.Y),
-                        Z = MathHelper.ToDegrees(dataModel.Rotation.Z)
-                    };
-                }
+                SceneNode.EulerAngles = Vector3.Zero;
             }
 
             SceneNode.Position = position;

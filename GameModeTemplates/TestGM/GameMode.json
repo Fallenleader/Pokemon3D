@@ -4,7 +4,7 @@
 	"Description" : "This is a test GameMode.",
 	"Version" : "1.0",
 	"StartConfiguration" : {
-		"Map" : "Pallet Town",
+		"Map" : "PalletTown",
 		"Script" : "testscript"
 	},
 	"Gamerules" : []

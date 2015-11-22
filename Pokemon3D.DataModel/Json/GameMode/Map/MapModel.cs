@@ -17,27 +17,30 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
         [DataMember(Order = 0)]
         public string Name { get; private set; }
 
+        /// <summary>
+        /// The identification of the map, which is used to reference the map.
+        /// </summary>
         [DataMember(Order = 1)]
-        public string Region { get; private set; }
+        public string Id { get; private set; }
 
         [DataMember(Order = 2)]
-        public string Zone { get; private set; }
+        public string Region { get; private set; }
 
         [DataMember(Order = 3)]
-        public string Song { get; private set; }
+        public string Zone { get; private set; }
 
         [DataMember(Order = 4)]
-        public string MapScript { get; private set; }
+        public string Song { get; private set; }
 
         [DataMember(Order = 5)]
-        public string Environment { get; private set; }
+        public string MapScript { get; private set; }
 
         [DataMember(Order = 6)]
-        public BattleMapDataModel BattleMapData { get; private set; }
+        public string Environment { get; private set; }
 
         [DataMember(Order = 7)]
-        public Entities.EntityPrototypeModel[] EntityPrototypes { get; private set; }
-
+        public BattleMapDataModel BattleMapData { get; private set; }
+        
         [DataMember(Order = 8)]
         public Entities.EntityFieldModel[] Entities { get; private set; }
         

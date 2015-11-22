@@ -22,5 +22,29 @@
 				]
 			}
 		]
+	},
+	{
+		"Id" : "Kanto",
+		"Name" : "Kanto",
+		"Zones" : [
+			{
+				"Id" : "SouthKanto",
+				"Name" : "South Kanto",
+				"Weather" : [
+					{
+						"WeatherType" : "Clear",
+						"Chance" : 70
+					},
+					{
+						"WeatherType" : "Rain",
+						"Chance" : 25
+					},
+					{
+						"WeatherType" : "Snow",
+						"Chance" : 5
+					}
+				]
+			}
+		]
 	}
 ]

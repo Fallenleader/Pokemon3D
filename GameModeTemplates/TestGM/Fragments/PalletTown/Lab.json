@@ -254,11 +254,43 @@
           "Position": {
             "X": 0,
             "Y": 0,
+            "Z": 4
+          },
+          "Size": {
+            "X": 4,
+            "Y": 20,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "ParentId": "HouseWall1",
+        "Id": 1,
+        "Rotation": {
+          "X": 0,
+          "Y": 2,
+          "Z": 0
+        },
+        "CardinalRotation": true
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0,
             "Z": 0
           },
           "Size": {
             "X": 4,
-            "Y": 4,
+            "Y": 20,
             "Z": 1
           },
           "Fill": true,

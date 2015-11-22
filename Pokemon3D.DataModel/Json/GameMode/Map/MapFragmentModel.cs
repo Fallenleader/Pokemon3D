@@ -10,10 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
     {
         [DataMember(Order = 0)]
         public string Id { get; private set; }
-
-        [DataMember(Order = 1)]
-        public Entities.EntityPrototypeModel[] EntityPrototypes { get; private set; }
-
+        
         [DataMember(Order = 2)]
         public Entities.EntityFieldModel[] Entities { get; private set; }
     }
