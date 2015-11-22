@@ -71,7 +71,7 @@ namespace Pokemon3D.UI
                 var currentX = startX + ElementMargin;
                 var sourceRectangle = _notificationRectangle[notification.NotificationKind];
                 var position = new Vector2(currentX, startY + (elementHeight-IconSize)/2);
-                Game.SpriteBatch.Draw(_notificationIcons, position, sourceRectangle, Color.White);
+                Game.SpriteBatch.Draw(_notificationIcons, position, sourceRectangle, Color.White * notification.Alpha);
 
                 position = new Vector2(currentX + IconSize + ElementMargin, startY + ElementPadding);
                 Game.SpriteBatch.DrawString(_spriteFont, notification.Message, position, Color.White * notification.Alpha);

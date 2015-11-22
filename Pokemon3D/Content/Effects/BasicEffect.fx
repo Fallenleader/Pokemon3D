@@ -5,6 +5,7 @@ float4x4 LightWorldViewProjection;
 texture DiffuseTexture;
 texture ShadowMap;
 float3 LightDirection = float3(1, -1,  -1);
+float4 AmbientLight = float4(0.2f, 0.2f, 0.2f, 1.0f);
 float2 TexcoordOffset;
 float2 TexcoordScale;
 float ShadowScale = 1.0f / 1024.0f;
@@ -95,22 +96,21 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 	projectedTexCoords[0] = input.LightPosition.x / input.LightPosition.w / 2.0f + 0.5f;
 	projectedTexCoords[1] = -input.LightPosition.y / input.LightPosition.w / 2.0f + 0.5f;
 
-	float calculatedDiffuse = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+	float diffuseFactor = 0.0f;
 
-	float diffuseFactor = 0.2f;  
 	if ((saturate(projectedTexCoords).x == projectedTexCoords.x) && (saturate(projectedTexCoords).y == projectedTexCoords.y))
 	{
 		float depthStoredInShadowMap = tex2D(ShadowMapSampler, projectedTexCoords).r;
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
 		if ((realDistance - 2.0f*ShadowScale) <= depthStoredInShadowMap)
 		{
-			diffuseFactor = calculatedDiffuse;
+			diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 		}
 	}
 
-	float4 colorFromTexture = tex2D(DiffuseSampler, input.TexCoord);
+	float4 diffuseColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * diffuseFactor;
 
-	return colorFromTexture * diffuseFactor;
+	return saturate(tex2D(DiffuseSampler, input.TexCoord) * (diffuseColor + AmbientLight));
 }
 
 technique Default
