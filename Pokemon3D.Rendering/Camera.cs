@@ -20,7 +20,7 @@ namespace Pokemon3D.Rendering
         internal Camera(Viewport viewport)
         {
             Viewport = viewport;
-            NearClipDistance = 1.0f;
+            NearClipDistance = 0.1f;
             FarClipDistance = 1000.0f;
             FieldOfView = MathHelper.PiOver4;
             Frustum = new BoundingFrustum(Matrix.Identity);

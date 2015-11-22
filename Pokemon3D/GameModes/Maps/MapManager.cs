@@ -12,19 +12,27 @@ namespace Pokemon3D.GameModes.Maps
     class MapManager : IDisposable
     {
         private const string MapFileExtension = ".json";
+        private const string MapFragmentFileExtension = ".json";
 
         private GameMode _gameMode;
-        private readonly MapModel[] _mapModels;
+        private MapModel[] _mapModels;
+        private MapFragmentModel[] _mapFragments;
 
         public MapManager(GameMode gameMode)
         {
             _gameMode = gameMode;
 
+            LoadMaps();
+            LoadMapFragments();
+        }
+
+        private void LoadMaps()
+        {
             List<MapModel> mapModels = new List<MapModel>();
 
-            var files = Directory.GetFiles(_gameMode.MapPath)
+            var files = Directory.GetFiles(_gameMode.MapPath, "*.*", SearchOption.AllDirectories)
                 .Where(m => m.EndsWith(MapFileExtension, StringComparison.OrdinalIgnoreCase));
-            
+
             foreach (var file in files)
             {
                 try
@@ -40,10 +48,37 @@ namespace Pokemon3D.GameModes.Maps
             _mapModels = mapModels.ToArray();
         }
 
-        public Map LoadMap(string mapName, Scene scene, ResourceManager resourceManager)
+        private void LoadMapFragments()
+        {
+            List<MapFragmentModel> mapFragments = new List<MapFragmentModel>();
+
+            var files = Directory.GetFiles(_gameMode.FragmentsPath, "*.*", SearchOption.AllDirectories)
+                .Where(m => m.EndsWith(MapFragmentFileExtension, StringComparison.OrdinalIgnoreCase));
+
+            foreach (var file in files)
+            {
+                try
+                {
+                    mapFragments.Add(JsonDataModel.FromFile<MapFragmentModel>(file));
+                }
+                catch (JsonDataLoadException)
+                {
+                    // todo: log exception.
+                }
+            }
+
+            _mapFragments = mapFragments.ToArray();
+        }
+
+        public Map GetMap(string mapName, Scene scene, ResourceManager resourceManager)
         {
             var mapModel = _mapModels.Single(m => m.Name == mapName);
-            return new Map(mapModel, scene, resourceManager);
+            return new Map(_gameMode, mapModel, scene, resourceManager);
+        }
+
+        public MapFragmentModel GetMapFragment(string fragmentId)
+        {
+            return _mapFragments.Single(m => m.Id == fragmentId);
         }
 
         #region Dispose

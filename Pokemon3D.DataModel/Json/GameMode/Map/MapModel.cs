@@ -40,8 +40,11 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
 
         [DataMember(Order = 8)]
         public Entities.EntityFieldModel[] Entities { get; private set; }
-
+        
         [DataMember(Order = 9)]
+        public MapFragmentImportModel[] Fragments { get; private set; }
+
+        [DataMember(Order = 10)]
         public OffsetMapModel[] OffsetMaps { get; private set; }
     }
 }

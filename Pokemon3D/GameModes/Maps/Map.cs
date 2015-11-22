@@ -11,31 +11,52 @@ namespace Pokemon3D.GameModes.Maps
 {
     class Map
     {
+        private readonly GameMode _gameMode;
         private readonly List<Entity> _allEntities = new List<Entity>();
         private readonly MapModel _mapModel;
 
         public Scene Scene { get; private set; }
         public ResourceManager ResourceManager { get; private set; }
 
-        public Map(MapModel mapModel, Scene scene, ResourceManager resourceManager)
+        public Map(GameMode gameMode, MapModel mapModel, Scene scene, ResourceManager resourceManager)
         {
             Scene = scene;
             ResourceManager = resourceManager;
+            _gameMode = gameMode;
             _mapModel = mapModel;
 
-            foreach (var entityDefinition in _mapModel.Entities)
+            if (_mapModel.Entities != null)
             {
-                foreach (var entityPlacing in entityDefinition.Placing)
+                foreach (var entityDefinition in _mapModel.Entities)
                 {
-                    PlaceEntities(entityDefinition, entityPlacing);
+                    var prototypeModel = GetEntityPrototypeModel(_mapModel.EntityPrototypes, entityDefinition.Entity.ParentId);
+                    foreach (var entityPlacing in entityDefinition.Placing)
+                    {
+                        PlaceEntities(prototypeModel, entityDefinition, entityPlacing, Vector3.Zero);
+                    }
+                }
+            }
+            if (_mapModel.Fragments != null)
+            {
+                foreach (var fragmentImport in _mapModel.Fragments)
+                {
+                    var fragmentModel = _gameMode.MapManager.GetMapFragment(fragmentImport.Id);
+                    Vector3 fragmentOffset = fragmentImport.Position.GetVector3();
+
+                    foreach (var entityDefinition in fragmentModel.Entities)
+                    {
+                        var prototypeModel = GetEntityPrototypeModel(fragmentModel.EntityPrototypes, entityDefinition.Entity.ParentId);
+                        foreach (var entityPlacing in entityDefinition.Placing)
+                        {
+                            PlaceEntities(prototypeModel, entityDefinition, entityPlacing, fragmentOffset);
+                        }
+                    }
                 }
             }
         }
 
-        private void PlaceEntities(EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing)
+        private void PlaceEntities(EntityPrototypeModel prototypeModel, EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing, Vector3 offset)
         {
-            var prototypeModel = GetEntityPrototypeModel(entityDefinition.Entity.ParentId);
-
             if (prototypeModel != null)
             {
                 for (var x = 1.0f; x <= entityPlacing.Size.X; x += entityPlacing.Steps.X)
@@ -44,7 +65,7 @@ namespace Pokemon3D.GameModes.Maps
                     {
                         for (var z = 1.0f; z <= entityPlacing.Size.Z; z += entityPlacing.Steps.Z)
                         {
-                            var position = entityPlacing.Position.GetVector3() + new Vector3(x, y, z);
+                            var position = entityPlacing.Position.GetVector3() + new Vector3(x, y, z) + offset;
                             var entity = new Entity(this, prototypeModel, entityDefinition.Entity, position);
                             _allEntities.Add(entity);
                         }
@@ -53,13 +74,16 @@ namespace Pokemon3D.GameModes.Maps
             }
         }
 
-        private EntityPrototypeModel GetEntityPrototypeModel(string prototypeId)
+        private EntityPrototypeModel GetEntityPrototypeModel(EntityPrototypeModel[] source, string prototypeId)
         {
-            var results = _mapModel.EntityPrototypes.Where(x => x.PrototypeId == prototypeId);
-            if (results.Count() == 0)
-                return null;
-            else
-                return results.ElementAt(0);
+            if (source != null)
+            {
+                var results = source.Where(x => x.PrototypeId == prototypeId);
+                if (results.Count() > 0)
+                    return results.ElementAt(0);
+            }
+
+            return null;
         }
 
         public void Update(float elapsedTime)

@@ -94,6 +94,8 @@
     <Compile Include="Json\GameMode\Map\Entities\EntityFieldModel.cs" />
     <Compile Include="Json\GameMode\Map\Entities\EntityFieldPositionModel.cs" />
     <Compile Include="Json\GameMode\Map\Entities\EntityChildModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapFragmentImportModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapFragmentModel.cs" />
     <Compile Include="Json\GameMode\Map\Entities\EntityPrototypeModel.cs" />
     <Compile Include="Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
     <Compile Include="Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
