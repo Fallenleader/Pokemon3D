@@ -5,7 +5,7 @@ float4x4 LightWorldViewProjection;
 texture DiffuseTexture;
 texture ShadowMap;
 float3 LightDirection = float3(1, -1,  -1);
-float4 AmbientLight = float4(0.2f, 0.2f, 0.2f, 1.0f);
+float4 AmbientLight = float4(0.5f, 0.5f, 0.5f, 1.0f);
 float2 TexcoordOffset;
 float2 TexcoordScale;
 float ShadowScale = 1.0f / 1024.0f;
@@ -55,6 +55,19 @@ struct VertexShaderShadowReceiverOutput
 	float4 LightPosition : TEXCOORD2;
 };
 
+float GetDiffuseFactor(float3 normal, float3 lightDir)
+{
+	return saturate(dot(normalize(normal), normalize(-lightDir)));
+}
+
+float4 CalculateLighting(float4 diffuseTextureColor, float diffuseFactor) 
+{
+	float alpha = diffuseTextureColor.a;
+	float4 colorLit = diffuseTextureColor * (diffuseFactor + AmbientLight * (1-diffuseFactor));
+	colorLit.a = alpha;
+	return colorLit;
+}
+
 VertexShaderOutput DefaultVertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
@@ -70,10 +83,10 @@ VertexShaderOutput DefaultVertexShaderFunction(VertexShaderInput input)
 
 float4 DefaultPixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
+	float diffuseFactor = GetDiffuseFactor(input.Normal, LightDirection);
 	float4 colorFromTexture = tex2D(DiffuseSampler, input.TexCoord);
-	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
 
-	return colorFromTexture * diffuseFactor;
+	return CalculateLighting(colorFromTexture, diffuseFactor);
 }
 
 VertexShaderShadowReceiverOutput DefaultVertexShaderShadowReceiverFunction(VertexShaderShadowReceiverInput input)
@@ -104,13 +117,13 @@ float4 DefaultPixelShaderShadowReceiverFunction(VertexShaderShadowReceiverOutput
 		float realDistance = input.LightPosition.z / input.LightPosition.w;
 		if ((realDistance - 2.0f*ShadowScale) <= depthStoredInShadowMap)
 		{
-			diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+			diffuseFactor = GetDiffuseFactor(input.Normal, LightDirection);
 		}
 	}
 
-	float4 diffuseColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * diffuseFactor;
+	float4 colorFromTexture = tex2D(DiffuseSampler, input.TexCoord);
 
-	return saturate(tex2D(DiffuseSampler, input.TexCoord) * (diffuseColor + AmbientLight));
+	return CalculateLighting(colorFromTexture, diffuseFactor);
 }
 
 technique Default

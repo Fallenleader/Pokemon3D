@@ -46,7 +46,7 @@ namespace Pokemon3D.GameModes.Maps
             {
                 if (childDataModel.CardinalRotation)
                 {
-                    SceneNode.EulerAngles = new Vector3()
+                    SceneNode.EulerAngles = new Vector3
                     {
                         X = childDataModel.Rotation.X * MathHelper.PiOver2,
                         Y = childDataModel.Rotation.Y * MathHelper.PiOver2,
@@ -55,7 +55,7 @@ namespace Pokemon3D.GameModes.Maps
                 }
                 else
                 {
-                    SceneNode.EulerAngles = new Vector3()
+                    SceneNode.EulerAngles = new Vector3
                     {
                         X = MathHelper.ToDegrees(childDataModel.Rotation.X),
                         Y = MathHelper.ToDegrees(childDataModel.Rotation.Y),
@@ -67,7 +67,7 @@ namespace Pokemon3D.GameModes.Maps
             {
                 if (dataModel.CardinalRotation)
                 {
-                    SceneNode.EulerAngles = new Vector3()
+                    SceneNode.EulerAngles = new Vector3
                     {
                         X = dataModel.Rotation.X * MathHelper.PiOver2,
                         Y = dataModel.Rotation.Y * MathHelper.PiOver2,
@@ -76,7 +76,7 @@ namespace Pokemon3D.GameModes.Maps
                 }
                 else
                 {
-                    SceneNode.EulerAngles = new Vector3()
+                    SceneNode.EulerAngles = new Vector3
                     {
                         X = MathHelper.ToDegrees(dataModel.Rotation.X),
                         Y = MathHelper.ToDegrees(dataModel.Rotation.Y),
@@ -102,7 +102,7 @@ namespace Pokemon3D.GameModes.Maps
                     CastShadow = !_dataModel.RenderMode.UseTransparency,
                     ReceiveShadow = !_dataModel.RenderMode.UseTransparency,
                     UseTransparency = _dataModel.RenderMode.UseTransparency,
-                    IsUnlit = SceneNode.IsBillboard
+                    IsUnlit = false
                 };
 
                 if (texture.Rectangle != null)

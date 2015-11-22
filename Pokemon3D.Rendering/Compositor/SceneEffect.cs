@@ -39,6 +39,11 @@ namespace Pokemon3D.Rendering.Compositor
         EffectPassCollection CurrentTechniquePasses { get; } 
 
         /// <summary>
+        /// Sets Ambient Component.
+        /// </summary>
+        Vector4 AmbientLight { get; set; }
+
+        /// <summary>
         /// World Matrix for normal mesh rendering with lighting.
         /// </summary>
         Matrix World { get; set; }

@@ -79,6 +79,8 @@ namespace Pokemon3D.Rendering.Compositor
             get { return _light.Direction; }
             set { _light.Direction = value; }
         }
+
+        public Vector4 AmbientLight { get; set; }
         public bool EnablePostProcessing { get; set; }
         public RenderStatistics RenderStatistics { get; }
 
@@ -117,6 +119,8 @@ namespace Pokemon3D.Rendering.Compositor
             PreparePostProcessing();
 
             UpdateNodeLists(allNodes);
+
+            _sceneEffect.AmbientLight = AmbientLight;
 
             for (var i = 0; i < cameras.Count; i++)
             {
