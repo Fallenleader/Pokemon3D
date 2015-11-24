@@ -1,0 +1,535 @@
+{
+  "Id": "Sign",
+  "Entities": [
+    {
+      "Entity": {
+        "Id": "SignFront",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 0,
+                "Y": 0,
+                "Width": 16,
+                "Height": 10
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0.5,
+            "Z": 0.1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.8,
+            "Y": 0.5,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "SignBack",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 0,
+                "Y": 14,
+                "Width": 16,
+                "Height": 10
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0.5,
+            "Z": -0.1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 2,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.8,
+            "Y": 0.5,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "SignSide",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 16,
+                "Y": 0,
+                "Width": 4,
+                "Height": 10
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 0.4,
+            "Y": 0.5,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.5,
+            "Z": 1
+          }
+        },
+        {
+          "Position": {
+            "X": -0.4,
+            "Y": 0.5,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 3,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.5,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "SignTopBottom",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 0,
+                "Y": 10,
+                "Width": 16,
+                "Height": 4
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 0,
+            "Y": 0.75,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.8,
+            "Y": 0.2,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "PostSide",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 20,
+                "Y": 0,
+                "Width": 4,
+                "Height": 14
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": -0.2,
+            "Y": 0.45,
+            "Z": -0.05
+          },
+          "Size": {
+            "X": 1.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.4,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.9,
+            "Z": 1
+          }
+        },
+        {
+          "Position": {
+            "X": -0.1,
+            "Y": 0.45,
+            "Z": -0.15
+          },
+          "Size": {
+            "X": 1.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.4,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 1,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.9,
+            "Z": 1
+          }
+        },
+        {
+          "Position": {
+            "X": -0.3,
+            "Y": 0.45,
+            "Z": -0.15
+          },
+          "Size": {
+            "X": 1.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.4,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 3,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.9,
+            "Z": 1
+          }
+        },
+        {
+          "Position": {
+            "X": -0.2,
+            "Y": 0.45,
+            "Z": -0.25
+          },
+          "Size": {
+            "X": 1.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.4,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 2,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.9,
+            "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "PostTop",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "Sign",
+              "Rectangle": {
+                "X": 16,
+                "Y": 10,
+                "Width": 4,
+                "Height": 4
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": -0.2,
+            "Y": 0.9,
+            "Z": -0.15
+          },
+          "Size": {
+            "X": 1.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.4,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "CardinalRotation": true,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.2,
+            "Z": 1
+          }
+        }
+      ]
+    }
+  ]
+}

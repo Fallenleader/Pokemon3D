@@ -57,12 +57,12 @@
           "Position": {
             "X": 0,
             "Y": 0,
-            "Z": 0
+            "Z": 5
           },
           "Size": {
             "X": 20,
             "Y": 1,
-            "Z": 20
+            "Z": 2
           },
           "Fill": true,
           "Steps": {
@@ -100,6 +100,30 @@
         "X": 2,
         "Y": 0,
         "Z": 4.5
+      }
+    },
+    {
+      "Id": "PalletTown\\Lab",
+      "Position": {
+        "X": 4,
+        "Y": 0,
+        "Z": 9
+      }
+    },
+    {
+      "Id": "PalletTown\\Lab",
+      "Position": {
+        "X": 6,
+        "Y": 0,
+        "Z": 13.5
+      }
+    },
+    {
+      "Id": "Sign",
+      "Position": {
+        "X": 10,
+        "Y": 0,
+        "Z": 5
       }
     }
   ]
