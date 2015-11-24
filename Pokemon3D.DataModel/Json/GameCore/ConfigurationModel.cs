@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using System.Globalization;
+using System;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -7,7 +8,7 @@ using System.Globalization;
 namespace Pokemon3D.DataModel.Json.GameCore
 {
     [DataContract]
-    public class ConfigurationModel : JsonDataModel
+    public class ConfigurationModel : JsonDataModel<ConfigurationModel>
     {
         [DataMember(Order = 0)]
         public string DisplayLanguage;
@@ -37,6 +38,13 @@ namespace Pokemon3D.DataModel.Json.GameCore
                     }
                 };
             }
+        }
+
+        public override object Clone()
+        {
+            var clone = (ConfigurationModel)MemberwiseClone();
+            clone.WindowSize = WindowSize.CloneModel();
+            return clone;
         }
     }
 }

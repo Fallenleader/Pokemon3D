@@ -10,7 +10,7 @@ namespace Pokemon3D.DataModel.Json
     /// The data model for a <see cref="Vector3"/> definition.
     /// </summary>
     [DataContract]
-    public class Vector3Model : JsonDataModel
+    public class Vector3Model : JsonDataModel<Vector3Model>
     {
         /// <summary>
         /// The X coordinate of this vector.
@@ -36,6 +36,11 @@ namespace Pokemon3D.DataModel.Json
         public Vector3 GetVector3()
         {
             return new Vector3(X, Y, Z);
+        }
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

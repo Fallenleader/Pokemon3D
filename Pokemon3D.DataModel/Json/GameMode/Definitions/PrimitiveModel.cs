@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions
     /// The data model for a primitive model.
     /// </summary>
     [DataContract]
-    public class PrimitiveModel : JsonDataModel
+    public class PrimitiveModel : JsonDataModel<PrimitiveModel>
     {
         /// <summary>
         /// Referenced in: <see cref="Map.Entities.EntityRenderModeModel.PrimitiveModelId"/>.
@@ -22,5 +23,13 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions
         
         [DataMember(Order = 2)]
         public int[] Indices;
+
+        public override object Clone()
+        {
+            var clone = (PrimitiveModel)MemberwiseClone();
+            clone.Vertices = (VertexModel[])Vertices.Clone();
+            clone.Indices = (int[])Indices.Clone();
+            return clone;
+        }
     }
 }

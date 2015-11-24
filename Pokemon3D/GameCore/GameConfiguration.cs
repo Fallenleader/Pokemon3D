@@ -41,7 +41,7 @@ namespace Pokemon3D.GameCore
             {
                 try
                 {
-                    _dataModel = JsonDataModel.FromFile<ConfigurationModel>(StaticFileProvider.ConfigFile);
+                    _dataModel = JsonDataModel<ConfigurationModel>.FromFile(StaticFileProvider.ConfigFile);
                 }
                 catch (JsonDataLoadException)
                 {
@@ -68,7 +68,7 @@ namespace Pokemon3D.GameCore
         {
             try
             {
-                _dataModel = JsonDataModel.FromFile<ConfigurationModel>(StaticFileProvider.ConfigFile);
+                _dataModel = JsonDataModel<ConfigurationModel>.FromFile(StaticFileProvider.ConfigFile);
                 ConfigFileLoaded(this, EventArgs.Empty);
             }
             catch (JsonDataLoadException)

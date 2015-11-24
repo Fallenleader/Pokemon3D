@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -10,7 +11,7 @@ namespace Pokemon3D.DataModel.Json
     /// The data model for an RGB color.
     /// </summary>
     [DataContract]
-    public class ColorModel : JsonDataModel
+    public class ColorModel : JsonDataModel<ColorModel>
     {
         /// <summary>
         /// The red part of the color.
@@ -36,6 +37,11 @@ namespace Pokemon3D.DataModel.Json
         public Color GetColor()
         {
             return new Color(Red, Green, Blue);
+        }
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
     /// The data model for a weather definition.
     /// </summary>
     [DataContract]
-    public class WeatherModel : JsonDataModel
+    public class WeatherModel : JsonDataModel<WeatherModel>
     {
         [DataMember(Order = 0, Name = "WeatherType")]
         private string _weatherType;
@@ -21,5 +22,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
 
         [DataMember(Order = 1)]
         public int Chance;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

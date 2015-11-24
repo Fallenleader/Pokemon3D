@@ -6,7 +6,7 @@
 namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
 {
     [DataContract]
-    public class PokemonFormModel : JsonDataModel
+    public class PokemonFormModel : JsonDataModel<PokemonFormModel>
     {
         [DataMember(Order = 0)]
         public string FormName;
@@ -49,5 +49,21 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
 
         [DataMember(Order = 13)]
         public int[] TutorMoves;
+
+        public override object Clone()
+        {
+            var clone = (PokemonFormModel)MemberwiseClone();
+            clone.Activation = Activation.CloneModel();
+            clone.BaseStats = BaseStats.CloneModel();
+            clone.MenuTexture = MenuTexture.CloneModel();
+            clone.SpriteTexture = SpriteTexture.CloneModel();
+            clone.OverworldTexture = OverworldTexture.CloneModel();
+            clone.Abilities = (int[])Abilities.Clone();
+            clone.LevelMoves = (LevelUpMoveModel[])LevelMoves.Clone();
+            clone.MachineMoves = (int[])MachineMoves.Clone();
+            clone.EggMoves = (int[])EggMoves.Clone();
+            clone.TutorMoves = (int[])TutorMoves.Clone();
+            return clone;
+        }
     }
 }

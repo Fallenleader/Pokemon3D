@@ -9,7 +9,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
     /// The data model for a stat definition for a Pokémon.
     /// </summary>
     [DataContract]
-    public class PokemonStatSetModel : JsonDataModel
+    public class PokemonStatSetModel : JsonDataModel<PokemonStatSetModel>
     {
         /// <summary>
         /// The Health Points stat.
@@ -46,5 +46,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
         /// </summary>
         [DataMember(Order = 5)]
         public int Speed;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

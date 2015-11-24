@@ -11,16 +11,16 @@ namespace Pokemon3D.DataModel.Json
     /// The base data model class.
     /// </summary>
     [DataContract]
-    public abstract class JsonDataModel
+    public abstract class JsonDataModel<T> : ICloneable
     {
         /// <summary>
         /// Creates a data model of a specific type, loaded from a file.
         /// </summary>
-        /// <typeparam name="T">The return type of the data model.</typeparam>
-        public static T FromFile<T>(string fileName)
+        /// <typeparam name="TModel">The return type of the data model.</typeparam>
+        public static T FromFile(string fileName)
         {
             if (File.Exists(fileName))
-                return FromString<T>(File.ReadAllText(fileName));
+                return FromString(File.ReadAllText(fileName));
             else
                 throw new FileNotFoundException("The Json file does not exist.", fileName);
         }
@@ -38,9 +38,9 @@ namespace Pokemon3D.DataModel.Json
         /// <summary>
         /// Creates a data model of a specific type.
         /// </summary>
-        /// <typeparam name="T">The return type of the data model.</typeparam>
+        /// <typeparam name="TModel">The return type of the data model.</typeparam>
         /// <param name="input">The Json input string.</param>
-        public static T FromString<T>(string input)
+        public static T FromString(string input)
         {
             //We create a new Json serializer of the given type and a corresponding memory stream here.
             var serializer = new DataContractJsonSerializer(typeof(T), new DataContractJsonSerializerSettings() { SerializeReadOnlyTypes = true });
@@ -123,5 +123,12 @@ namespace Pokemon3D.DataModel.Json
 
             return stringArr;
         }
+
+        public abstract object Clone();
+
+        /// <summary>
+        /// Creates a shallow copy of the data model.
+        /// </summary>
+        public T CloneModel() { return (T)Clone(); }
     }
 }

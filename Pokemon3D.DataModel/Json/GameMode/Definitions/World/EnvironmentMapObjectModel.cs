@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
     /// A data model for a misc environment map object for decoration.
     /// </summary>
     [DataContract]
-    sealed public class EnvironmentMapObjectModel : JsonDataModel
+    sealed public class EnvironmentMapObjectModel : JsonDataModel<EnvironmentMapObjectModel>
     {
         [DataMember(Order = 0)]
         public Vector2Model Position;
@@ -19,5 +20,13 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
 
         [DataMember(Order = 2)]
         public TextureSourceModel Texture;
+
+        public override object Clone()
+        {
+            var clone = (EnvironmentMapObjectModel)MemberwiseClone();
+            clone.Position = Position.CloneModel();
+            clone.Texture = Texture.CloneModel();
+            return clone;
+        }
     }
 }

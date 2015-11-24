@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
     /// The data model for a Pokémon definition.
     /// </summary>
     [DataContract]
-    public class PokemonModel : JsonDataModel
+    public class PokemonModel : JsonDataModel<PokemonModel>
     {
         [DataMember(Order = 0)]
         public string Name;
@@ -66,5 +67,17 @@ namespace Pokemon3D.DataModel.Json.GameMode.Pokemon
 
         [DataMember(Order = 16)]
         public string[] EggGroups;
+
+        public override object Clone()
+        {
+            var clone = (PokemonModel)MemberwiseClone();
+            clone.PokedexEntry = PokedexEntry.CloneModel();
+            clone.Forms = (PokemonFormModel[])Forms.Clone();
+            clone.HeldItems = (HeldItemModel[])HeldItems.Clone();
+            clone.EvolutionConditions = (EvolutionConditionModel[])EvolutionConditions.Clone();
+            clone.RewardEV = RewardEV.CloneModel();
+            clone.EggGroups = (string[])EggGroups.Clone();
+            return clone;
+        }
     }
 }

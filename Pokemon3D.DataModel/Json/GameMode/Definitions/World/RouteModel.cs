@@ -34,5 +34,13 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
         }
 
         #endregion
+
+        public override object Clone()
+        {
+            var clone = (PlaceModel)MemberwiseClone();
+            clone.Position = Position.CloneModel();
+            clone.FlyTo = FlyTo.CloneModel();
+            return clone;
+        }
     }
 }

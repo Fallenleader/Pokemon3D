@@ -9,12 +9,19 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
     /// A data model for an offset map.
     /// </summary>
     [DataContract]
-    public class OffsetMapModel : JsonDataModel
+    public class OffsetMapModel : JsonDataModel<OffsetMapModel>
     {
         [DataMember(Order = 0)]
         public string MapFile;
 
         [DataMember(Order = 1)]
         public Vector3Model Offset;
+
+        public override object Clone()
+        {
+            var clone = (OffsetMapModel)MemberwiseClone();
+            clone.Offset = Offset.CloneModel();
+            return clone;
+        }
     }
 }

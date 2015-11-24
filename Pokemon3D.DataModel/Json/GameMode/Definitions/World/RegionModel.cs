@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
     /// The data model for a region.
     /// </summary>
     [DataContract]
-    public class RegionModel : JsonDataModel
+    public class RegionModel : JsonDataModel<RegionModel>
     {
         /// <summary>
         /// Referenced in: <see cref="Map.MapModel.Region"/>.
@@ -22,5 +23,12 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions.World
 
         [DataMember(Order = 2)]
         public ZoneModel[] Zones;
+
+        public override object Clone()
+        {
+            var clone = (RegionModel)MemberwiseClone();
+            clone.Zones = (ZoneModel[])Zones.Clone();
+            return clone;
+        }
     }
 }

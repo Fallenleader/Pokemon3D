@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -10,7 +11,7 @@ namespace Pokemon3D.DataModel.Json
     /// The data model for a <see cref="Vector2"/> definition.
     /// </summary>
     [DataContract]
-    public class Vector2Model : JsonDataModel
+    public class Vector2Model : JsonDataModel<Vector2Model>
     {
         /// <summary>
         /// The X coordinate of this vector.
@@ -30,6 +31,11 @@ namespace Pokemon3D.DataModel.Json
         public Vector2 GetVector2()
         {
             return new Vector2(X, Y);
+        }
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

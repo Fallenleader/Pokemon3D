@@ -37,7 +37,7 @@ namespace Pokemon3D.GameModes.Maps
             {
                 try
                 {
-                    mapModels.Add(JsonDataModel.FromFile<MapModel>(file));
+                    mapModels.Add(JsonDataModel<MapModel>.FromFile(file));
                 }
                 catch (JsonDataLoadException)
                 {
@@ -59,7 +59,7 @@ namespace Pokemon3D.GameModes.Maps
             {
                 try
                 {
-                    mapFragments.Add(JsonDataModel.FromFile<MapFragmentModel>(file));
+                    mapFragments.Add(JsonDataModel<MapFragmentModel>.FromFile(file));
                 }
                 catch (JsonDataLoadException)
                 {

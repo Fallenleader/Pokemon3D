@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Pokemon3D.DataModel.Json.GameMode.Items.SpecialItems;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -10,7 +11,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Items
     /// The data model for an item that can be obtained by the player and stored in the inventory.
     /// </summary>
     [DataContract]
-    public class ItemModel : JsonDataModel
+    public class ItemModel : JsonDataModel<ItemModel>
     {
         [DataMember(Order = 0)]
         public string Id;
@@ -60,6 +61,20 @@ namespace Pokemon3D.DataModel.Json.GameMode.Items
 
         [DataMember(Order = 13)]
         public MegaStoneModel MegaStoneData;
+
+        public override object Clone()
+        {
+            var clone = (ItemModel)MemberwiseClone();
+            clone.Texture = Texture.CloneModel();
+            clone.InventoryData = InventoryData.CloneModel();
+            clone.Usage = Usage.CloneModel();
+            clone.Classification = Classification.CloneModel();
+            clone.BerryData = BerryData.CloneModel();
+            clone.PlateData = PlateData.CloneModel();
+            clone.TMData = TMData.CloneModel();
+            clone.MegaStoneData = MegaStoneData.CloneModel();
+            return clone;
+        }
 
         #endregion
     }

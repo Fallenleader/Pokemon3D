@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -6,7 +7,7 @@
 namespace Pokemon3D.DataModel.Json.GameMode.Items
 {
     [DataContract]
-    public class ItemClassificationModel : JsonDataModel
+    public class ItemClassificationModel : JsonDataModel<ItemClassificationModel>
     {
         [DataMember]
         public bool IsBall;
@@ -20,5 +21,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Items
         public bool IsMegastone;
         [DataMember]
         public bool IsPlate;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

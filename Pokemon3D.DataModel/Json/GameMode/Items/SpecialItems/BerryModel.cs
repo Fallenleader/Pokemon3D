@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -6,7 +7,7 @@
 namespace Pokemon3D.DataModel.Json.GameMode.Items.SpecialItems
 {
     [DataContract]
-    public class BerryModel : JsonDataModel
+    public class BerryModel : JsonDataModel<BerryModel>
     {
         /// <summary>
         /// The time it takes this berry item to grow one stage when planted.
@@ -52,5 +53,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Items.SpecialItems
 
         [DataMember(Order = 7)]
         public int Power;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

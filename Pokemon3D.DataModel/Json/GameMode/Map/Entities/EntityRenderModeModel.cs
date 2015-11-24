@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
     /// The render mode model for an entity.
     /// </summary>
     [DataContract]
-    public class EntityRenderModeModel : JsonDataModel
+    public class EntityRenderModeModel : JsonDataModel<EntityRenderModeModel>
     {
         [DataMember(Name = "RenderMethod", Order = 0)]
         private string RenderMethodStr;
@@ -55,5 +56,14 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
 
         [DataMember(Order = 11)]
         public EntitySeasonPaletteModel[] SeasonPalettes;
+
+        public override object Clone()
+        {
+            var clone = (EntityRenderModeModel)MemberwiseClone();
+            clone.Textures = (TextureSourceModel[])Textures.Clone();
+            clone.Shading = Shading.CloneModel();
+            clone.SeasonPalettes = (EntitySeasonPaletteModel[])SeasonPalettes.Clone();
+            return clone;
+        }
     }
 }

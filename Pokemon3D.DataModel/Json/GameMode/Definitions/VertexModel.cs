@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
 #pragma warning disable 0649
@@ -9,7 +10,7 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions
     /// The data model for a vertex declaration with Position, Normal and Texture Coordinate within a primitive model.
     /// </summary>
     [DataContract]
-    public class VertexModel : JsonDataModel
+    public class VertexModel : JsonDataModel<VertexModel>
     {
         [DataMember(Order = 0)]
         public Vector3Model Position;
@@ -19,5 +20,14 @@ namespace Pokemon3D.DataModel.Json.GameMode.Definitions
 
         [DataMember(Order = 2)]
         public Vector2Model TexCoord;
+
+        public override object Clone()
+        {
+            var clone = (VertexModel)MemberwiseClone();
+            clone.Position = Position.CloneModel();
+            clone.Normal = Normal.CloneModel();
+            clone.TexCoord = TexCoord.CloneModel();
+            return clone;
+        }
     }
 }

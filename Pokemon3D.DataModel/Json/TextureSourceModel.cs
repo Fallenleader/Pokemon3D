@@ -9,7 +9,7 @@ namespace Pokemon3D.DataModel.Json
     /// Describes a texture source.
     /// </summary>
     [DataContract]
-    public class TextureSourceModel : JsonDataModel
+    public class TextureSourceModel : JsonDataModel<TextureSourceModel>
     {
         /// <summary>
         /// The source file for this texture.
@@ -22,5 +22,12 @@ namespace Pokemon3D.DataModel.Json
         /// </summary>
         [DataMember(Order = 1)]
         public RectangleModel Rectangle;
+
+        public override object Clone()
+        {
+            var clone = (TextureSourceModel)MemberwiseClone();
+            clone.Rectangle = Rectangle.CloneModel();
+            return clone;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Pokemon3D.GameModes.Resources
             
             try
             {
-                _primitiveModels = JsonDataModel.FromFile<PrimitiveModel[]>(Path.Combine(_gameMode.DataPath, GameMode.FILE_DATA_PRIMITIVES))
+                _primitiveModels = JsonDataModel<PrimitiveModel[]>.FromFile(Path.Combine(_gameMode.DataPath, GameMode.FILE_DATA_PRIMITIVES))
                     .ToDictionary(pm => pm.Id, pm => pm);
 
                 IsValid = true;

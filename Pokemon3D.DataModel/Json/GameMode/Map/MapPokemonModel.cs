@@ -6,7 +6,7 @@
 namespace Pokemon3D.DataModel.Json.GameMode.Map
 {
     [DataContract]
-    public class MapPokemonModel : JsonDataModel
+    public class MapPokemonModel : JsonDataModel<MapPokemonModel>
     {
         [DataMember(Order = 0)]
         public bool ShowFollower;
@@ -22,5 +22,10 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map
 
         [DataMember(Order = 4)]
         public int WildAbilityChance;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

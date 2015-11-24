@@ -6,11 +6,16 @@
 namespace Pokemon3D.DataModel.Json.i18n
 {
     [DataContract]
-    public class TokenModel : JsonDataModel
+    public class TokenModel : JsonDataModel<TokenModel>
     {
         [DataMember]
         public string Id;
         [DataMember]
         public string Val;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

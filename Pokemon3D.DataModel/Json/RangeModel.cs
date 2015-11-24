@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -10,7 +11,7 @@ namespace Pokemon3D.DataModel.Json
     /// The data model for a range.
     /// </summary>
     [DataContract]
-    public class RangeModel : JsonDataModel
+    public class RangeModel : JsonDataModel<RangeModel>
     {
         /// <summary>
         /// The lower bound of the range.
@@ -23,5 +24,10 @@ namespace Pokemon3D.DataModel.Json
         /// </summary>
         [DataMember(Order = 1)]
         public double Max;
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

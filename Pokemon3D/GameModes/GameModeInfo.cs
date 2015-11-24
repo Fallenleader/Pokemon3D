@@ -26,7 +26,7 @@ namespace Pokemon3D.GameModes
             {
                 try
                 {
-                    _gameModeModel = JsonDataModel.FromFile<GameModeModel>(gameModeFile);
+                    _gameModeModel = JsonDataModel<GameModeModel>.FromFile(gameModeFile);
                     IsValid = true;
                 }
                 catch (JsonDataLoadException)

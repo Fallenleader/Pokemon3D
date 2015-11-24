@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Microsoft.Xna.Framework;
 
 // Disable Code Analysis for warning CS0649: Field is never assigned to, and will always have its default value.
@@ -10,7 +11,7 @@ namespace Pokemon3D.DataModel.Json
     /// The data model for a rectangle definition.
     /// </summary>
     [DataContract]
-    public class RectangleModel : JsonDataModel
+    public class RectangleModel : JsonDataModel<RectangleModel>
     {
         /// <summary>
         /// The x position of this rectangle model.
@@ -42,6 +43,11 @@ namespace Pokemon3D.DataModel.Json
         public Rectangle GetRectangle()
         {
             return new Rectangle(X, Y, Width, Height);
+        }
+
+        public override object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }
