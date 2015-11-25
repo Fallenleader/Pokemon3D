@@ -6,12 +6,19 @@
 namespace Pokemon3D.DataModel.Json.GameMode.Map
 {
     [DataContract]
-    public class MapFragmentImportModel
+    public class MapFragmentImportModel : JsonDataModel<MapFragmentImportModel>
     {
         [DataMember(Order = 0)]
-        public string Id { get; private set; }
+        public string Id;
 
         [DataMember(Order = 1)]
-        public Vector3Model Position { get; private set; }
+        public Vector3Model[] Positions;
+
+        public override object Clone()
+        {
+            var clone = (MapFragmentImportModel)MemberwiseClone();
+            clone.Positions = (Vector3Model[])Positions.Clone();
+            return clone;
+        }
     }
 }

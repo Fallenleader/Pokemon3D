@@ -67,7 +67,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
 
                 // Front side:
                 var frontEntityModel = entityDefinition.Entity.CloneModel();
-                var frontEntityPlacing = entityPlacing.CloneModel();
+                var frontEntityPlacing = new EntityFieldPositionModel();
 
                 frontEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[0] };
                 frontEntityPlacing.CardinalRotation = true;
@@ -94,7 +94,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
 
                 // Back side:
                 var backEntityModel = entityDefinition.Entity.CloneModel();
-                var backEntityPlacing = entityPlacing.CloneModel();
+                var backEntityPlacing = new EntityFieldPositionModel();
 
                 backEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[1] };
                 backEntityPlacing.CardinalRotation = true;
@@ -121,7 +121,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
 
                 //Left side:
                 var leftEntityModel = entityDefinition.Entity.CloneModel();
-                var leftEntityPlacing = entityPlacing.CloneModel();
+                var leftEntityPlacing = new EntityFieldPositionModel();
 
                 leftEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[2] };
                 leftEntityPlacing.CardinalRotation = true;
@@ -148,7 +148,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
 
                 //right side:
                 var rightEntityModel = entityDefinition.Entity.CloneModel();
-                var rightEntityPlacing = entityPlacing.CloneModel();
+                var rightEntityPlacing = new EntityFieldPositionModel();
 
                 rightEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[3] };
                 rightEntityPlacing.CardinalRotation = true;
@@ -175,7 +175,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
 
                 //top:
                 var topEntityModel = entityDefinition.Entity.CloneModel();
-                var topEntityPlacing = entityPlacing.CloneModel();
+                var topEntityPlacing = new EntityFieldPositionModel();
 
                 topEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[4] };
                 topEntityPlacing.CardinalRotation = true;
@@ -204,7 +204,7 @@ namespace Pokemon3D.GameModes.Maps.Generators
                 if (textureEnumLength.Value != 5)
                 {
                     var bottomEntityModel = entityDefinition.Entity.CloneModel();
-                    var bottomEntityPlacing = entityPlacing.CloneModel();
+                    var bottomEntityPlacing = new EntityFieldPositionModel();
 
                     bottomEntityModel.RenderMode.Textures = new TextureSourceModel[] { textures[5] };
                     bottomEntityPlacing.CardinalRotation = true;

@@ -87,7 +87,7 @@
     {
       "Entity": {
         "Id": "Cube",
-        "Generator" :  "TexturedCube",
+        "Generator": "TexturedCube",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
@@ -130,13 +130,13 @@
             "Z": 6
           },
           "Size": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
+            "X": 4,
+            "Y": 4,
+            "Z": 4
           },
           "Fill": true,
           "Steps": {
-            "X": 0.5,
+            "X": 1,
             "Y": 1,
             "Z": 1
           },
@@ -158,43 +158,68 @@
   "Fragments": [
     {
       "Id": "PalletTown\\Lab",
-      "Position": {
-        "X": 0,
-        "Y": 0,
-        "Z": 0
-      }
-    },
-    {
-      "Id": "PalletTown\\Lab",
-      "Position": {
-        "X": 2,
-        "Y": 0,
-        "Z": 4.5
-      }
-    },
-    {
-      "Id": "PalletTown\\Lab",
-      "Position": {
-        "X": 4,
-        "Y": 0,
-        "Z": 9
-      }
-    },
-    {
-      "Id": "PalletTown\\Lab",
-      "Position": {
-        "X": 6,
-        "Y": 0,
-        "Z": 13.5
-      }
+      "Positions": [
+        {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        {
+          "X": 6,
+          "Y": 0,
+          "Z": 13.5
+        },
+        {
+          "X": 2,
+          "Y": 0,
+          "Z": 4.5
+        },
+        {
+          "X": 4,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 14,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 24,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 34,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 44,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 54,
+          "Y": 0,
+          "Z": 9
+        },
+        {
+          "X": 64,
+          "Y": 0,
+          "Z": 9
+        }
+      ]
     },
     {
       "Id": "Sign",
-      "Position": {
-        "X": 10,
-        "Y": 0,
-        "Z": 5
-      }
+      "Positions": [
+        {
+          "X": 10,
+          "Y": 0,
+          "Z": 5
+        }
+      ]
     }
   ]
 }

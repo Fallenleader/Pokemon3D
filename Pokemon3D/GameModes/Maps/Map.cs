@@ -41,13 +41,17 @@ namespace Pokemon3D.GameModes.Maps
                 foreach (var fragmentImport in _mapModel.Fragments)
                 {
                     var fragmentModel = _gameMode.MapManager.GetMapFragment(fragmentImport.Id);
-                    Vector3 fragmentOffset = fragmentImport.Position.GetVector3();
 
-                    foreach (var entityDefinition in fragmentModel.Entities)
+                    foreach (var position in fragmentImport.Positions)
                     {
-                        foreach (var entityPlacing in entityDefinition.Placing)
+                        Vector3 fragmentOffset = position.GetVector3();
+
+                        foreach (var entityDefinition in fragmentModel.Entities)
                         {
-                            PlaceEntities(entityDefinition, entityPlacing, fragmentOffset);
+                            foreach (var entityPlacing in entityDefinition.Placing)
+                            {
+                                PlaceEntities(entityDefinition, entityPlacing, fragmentOffset);
+                            }
                         }
                     }
                 }
