@@ -124,6 +124,9 @@ namespace Pokemon3D.DataModel.Json
             return stringArr;
         }
 
+        /// <summary>
+        /// Base cloning methods for data models. Use <see cref="CloneModel"/> for non-object typing instead.
+        /// </summary>
         public abstract object Clone();
 
         /// <summary>

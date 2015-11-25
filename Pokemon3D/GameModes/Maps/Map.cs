@@ -6,6 +6,7 @@ using Pokemon3D.Rendering;
 using Pokemon3D.Rendering.Data;
 using Pokemon3D.DataModel.Json.GameMode.Map;
 using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
+using Pokemon3D.GameModes.Maps.Generators;
 
 namespace Pokemon3D.GameModes.Maps
 {
@@ -55,6 +56,7 @@ namespace Pokemon3D.GameModes.Maps
 
         private void PlaceEntities(EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing, Vector3 offset)
         {
+            var generator = EntityGeneratorSupplier.GetGenerator(entityDefinition.Entity.Generator);
             for (var x = 1.0f; x <= entityPlacing.Size.X; x += entityPlacing.Steps.X)
             {
                 for (var y = 1.0f; y <= entityPlacing.Size.Y; y += entityPlacing.Steps.Y)
@@ -62,8 +64,8 @@ namespace Pokemon3D.GameModes.Maps
                     for (var z = 1.0f; z <= entityPlacing.Size.Z; z += entityPlacing.Steps.Z)
                     {
                         var position = entityPlacing.Position.GetVector3() + new Vector3(x, y, z) + offset;
-                        var entity = new Entity(this, entityDefinition.Entity, entityPlacing, position);
-                        _allEntities.Add(entity);
+
+                        _allEntities.AddRange(generator.Generate(this, entityDefinition, entityPlacing, position));
                     }
                 }
             }

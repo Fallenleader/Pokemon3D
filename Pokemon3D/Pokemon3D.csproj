@@ -81,6 +81,10 @@
     <Compile Include="GameModes\Maps\EntityComponents\FunctionResponse.cs" />
     <Compile Include="GameModes\Maps\EntityComponents\RenderResultType.cs" />
     <Compile Include="GameModes\Maps\EntityFaceDirection.cs" />
+    <Compile Include="GameModes\Maps\Generators\EntityGenerator.cs" />
+    <Compile Include="GameModes\Maps\Generators\EntityGeneratorSupplier.cs" />
+    <Compile Include="GameModes\Maps\Generators\SimpleEntityGenerator.cs" />
+    <Compile Include="GameModes\Maps\Generators\TexturedCubeEntityGenerator.cs" />
     <Compile Include="GameModes\Maps\Map.cs" />
     <Compile Include="GameModes\Maps\MapManager.cs" />
     <Compile Include="GameModes\Maps\Player.cs" />

@@ -62,7 +62,7 @@
           "Size": {
             "X": 20,
             "Y": 1,
-            "Z": 2
+            "Z": 20
           },
           "Fill": true,
           "Steps": {
@@ -80,6 +80,76 @@
             "X": 1,
             "Y": 1,
             "Z": 1
+          }
+        }
+      ]
+    },
+    {
+      "Entity": {
+        "Id": "Cube",
+        "Generator" :  "TexturedCube",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "PalletTown",
+              "Rectangle": {
+                "X": 0,
+                "Y": 32,
+                "Width": 16,
+                "Height": 16
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": false,
+        "IsFloor": true,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {
+            "X": 11,
+            "Y": 1.1,
+            "Z": 6
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Fill": true,
+          "Steps": {
+            "X": 0.5,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "CardinalRotation": false,
+          "Scale": {
+            "X": 0.2,
+            "Y": 0.2,
+            "Z": 0.2
           }
         }
       ]
