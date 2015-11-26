@@ -1,13 +1,19 @@
 ﻿using System.Diagnostics;
+using Pokemon3D.Common;
 
 namespace Pokemon3D.Rendering.Compositor
 {
-    public class RenderStatistics
+    public class RenderStatistics : Singleton<RenderStatistics>
     {
         private Stopwatch _frameStopwatch;
 
         public int DrawCalls { get; set; }
         public float AverageDrawTime { get; set; }
+
+        private RenderStatistics()
+        {
+            
+        }
 
         internal void StartFrame()
         {

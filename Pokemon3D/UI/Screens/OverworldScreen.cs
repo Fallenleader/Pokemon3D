@@ -7,6 +7,7 @@ using Pokemon3D.Rendering;
 using Pokemon3D.GameCore;
 using Pokemon3D.GameModes;
 using Pokemon3D.GameModes.Maps;
+using Pokemon3D.Rendering.Compositor;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -97,7 +98,7 @@ namespace Pokemon3D.UI.Screens
 
         private void DrawRenderStatsitics()
         {
-            var renderStatistics = _scene.Renderer.RenderStatistics;
+            var renderStatistics = RenderStatistics.Instance;
 
             const int spacing = 5;
             var elementHeight = _debugSpriteFont.LineSpacing + spacing;

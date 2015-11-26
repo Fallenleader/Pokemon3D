@@ -15,7 +15,5 @@ namespace Pokemon3D.Rendering.Compositor
         void Draw(bool hasSceneNodesChanged, IList<SceneNode> allNodes, IList<Camera> cameras);
 
         void DrawDebugShadowMap(SpriteBatch spriteBatch, Rectangle target);
-
-        RenderStatistics RenderStatistics { get; }
     }
 }

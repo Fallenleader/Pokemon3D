@@ -10,6 +10,8 @@ namespace Pokemon3D.Rendering.Compositor
 {
     class StaticMeshBatch : GameContextObject, DrawableElement, IDisposable
     {
+        private readonly int _maxVertexCount;
+        private readonly int _maxIndicesCount;
         private readonly List<VertexPositionNormalTexture> _vertices = new List<VertexPositionNormalTexture>(1000); 
         private readonly List<ushort> _indices = new List<ushort>(1000);
 
@@ -18,13 +20,20 @@ namespace Pokemon3D.Rendering.Compositor
             Material = sharedMaterial.Clone();
             Material.TexcoordOffset = Vector2.Zero;
             Material.TexcoordScale = Vector2.One;
+
+            _maxVertexCount = ushort.MaxValue;
+            _maxIndicesCount = _maxVertexCount*3;
         }
 
-        public void AddBatch(SceneNode sceneNode)
+        public bool AddBatch(SceneNode sceneNode)
         {
+            var meshData = sceneNode.Mesh.GeometryData;
+            if (_vertices.Count + meshData.Vertices.Length > _maxVertexCount) return false;
+            if (_indices.Count + meshData.Indices.Length > _maxIndicesCount) return false;
+
             var world = sceneNode.GetWorldMatrix(null);
 
-            var meshData = sceneNode.Mesh.GeometryData;
+            
             for (var i = 0; i < meshData.Indices.Length; i++)
             {
                 _indices.Add((ushort) (_vertices.Count + meshData.Indices[i]));
@@ -38,6 +47,8 @@ namespace Pokemon3D.Rendering.Compositor
                     Vector3.TransformNormal(currentVertex.Normal, world),
                     currentVertex.TextureCoordinate*sceneNode.Material.TexcoordScale + sceneNode.Material.TexcoordOffset));
             }
+
+            return true;
         }
 
         public void Build()

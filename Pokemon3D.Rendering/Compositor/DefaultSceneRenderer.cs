@@ -40,7 +40,6 @@ namespace Pokemon3D.Rendering.Compositor
             var height = context.ScreenBounds.Height;
             _activeInputSource = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
             _activeRenderTarget = new RenderTarget2D(_device, width, height, false, SurfaceFormat.Color, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
-            RenderStatistics = new RenderStatistics();
 
             _shadowCasterQueue = new ShadowCastRenderQueue(context, HandleShadowCasterObjects, GetShadowCasterSceneNodes, _sceneEffect)
             {
@@ -82,7 +81,6 @@ namespace Pokemon3D.Rendering.Compositor
 
         public Vector4 AmbientLight { get; set; }
         public bool EnablePostProcessing { get; set; }
-        public RenderStatistics RenderStatistics { get; }
 
         public bool EnableShadows
         {
@@ -115,7 +113,7 @@ namespace Pokemon3D.Rendering.Compositor
 
         public void Draw(bool hasSceneNodesChanged, IList<SceneNode> allNodes, IList<Camera> cameras)
         {
-            RenderStatistics.StartFrame();
+            RenderStatistics.Instance.StartFrame();
             PreparePostProcessing();
 
             UpdateNodeLists(allNodes);
@@ -128,7 +126,7 @@ namespace Pokemon3D.Rendering.Compositor
             }
 
             DoPostProcessing();
-            RenderStatistics.EndFrame();
+            RenderStatistics.Instance.EndFrame();
         }
 
         private void HandleSolidObjects(Material material)
@@ -189,7 +187,7 @@ namespace Pokemon3D.Rendering.Compositor
                 _sceneEffect.ShadowMap = null;
                 _sceneEffect.LightWorldViewProjection = _light.LightViewMatrix;
                 
-                _shadowCasterQueue.Draw(camera, _light, RenderStatistics, hasSceneNodesChanged);
+                _shadowCasterQueue.Draw(camera, _light, hasSceneNodesChanged);
             }
 
             _sceneEffect.ShadowMap = _light.ShadowMap;
@@ -203,7 +201,7 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 var renderQueue = _renderQueues[i];
                 if (!renderQueue.IsEnabled) continue;
-                renderQueue.Draw(camera, _light, RenderStatistics, hasSceneNodesChanged);
+                renderQueue.Draw(camera, _light, hasSceneNodesChanged);
             }
         }
 

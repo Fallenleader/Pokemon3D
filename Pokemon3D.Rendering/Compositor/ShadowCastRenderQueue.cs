@@ -13,13 +13,13 @@ namespace Pokemon3D.Rendering.Compositor
         {
         }
 
-        public override void Draw(Camera camera, Light light, RenderStatistics renderStatistics, bool hasSceneNodesChanged)
+        public override void Draw(Camera camera, Light light, bool hasSceneNodesChanged)
         {
             var oldRenderTargets = GameContext.GraphicsDevice.GetRenderTargets();
             GameContext.GraphicsDevice.SetRenderTarget(light.ShadowMap);
             GameContext.GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
 
-            base.Draw(camera, light, renderStatistics, hasSceneNodesChanged);
+            base.Draw(camera, light, hasSceneNodesChanged);
 
             GameContext.GraphicsDevice.SetRenderTargets(oldRenderTargets);
         }

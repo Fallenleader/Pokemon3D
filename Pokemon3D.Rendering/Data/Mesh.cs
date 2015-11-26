@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Rendering.Compositor;
 
 namespace Pokemon3D.Rendering.Data
 {
@@ -51,6 +52,7 @@ namespace Pokemon3D.Rendering.Data
             device.Indices = _indexBuffer;
 
             device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,0, VertexCount, 0, IndexCount / 3);
+            RenderStatistics.Instance.DrawCalls++;
         }
 
         internal Mesh Clone()

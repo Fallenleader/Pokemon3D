@@ -34,7 +34,7 @@ namespace Pokemon3D.Rendering.Compositor
             IsEnabled = true;
         }
 
-        public virtual void Draw(Camera camera, Light light, RenderStatistics renderStatistics, bool hasSceneNodesChanged)
+        public virtual void Draw(Camera camera, Light light, bool hasSceneNodesChanged)
         {
             GameContext.GraphicsDevice.BlendState = BlendState;
             GameContext.GraphicsDevice.DepthStencilState = DepthStencilState;
@@ -51,7 +51,7 @@ namespace Pokemon3D.Rendering.Compositor
 
                 if (!IsValidForRendering(camera, element)) continue;
                 _handleEffect(element.Material);
-                DrawElement(camera, element, renderStatistics);
+                DrawElement(camera, element);
             }
         }
 
@@ -88,14 +88,24 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 var node = sceneNodes[i];
 
-                if (currentTexture != node.Material.DiffuseTexture)
+                if (currentTexture != node.Material.DiffuseTexture || i == 0)
                 {
                     currentTexture = node.Material.DiffuseTexture;
                     currentBatch?.Build();
                     currentBatch = new StaticMeshBatch(GameContext, node.Material);
                     _elementsToDraw.Add(currentBatch);
                 }
-                currentBatch?.AddBatch(node);
+
+                if (currentBatch != null)
+                {
+                    var success = currentBatch.AddBatch(node);
+                    if (!success)
+                    {
+                        currentBatch.Build();
+                        currentBatch = new StaticMeshBatch(GameContext, node.Material);
+                        _elementsToDraw.Add(currentBatch);
+                    }
+                }
             }
             currentBatch?.Build();
 
@@ -104,7 +114,7 @@ namespace Pokemon3D.Rendering.Compositor
             _isOptimized = true;
         }
 
-        private void DrawElement(Camera camera, DrawableElement element, RenderStatistics renderStatistics)
+        private void DrawElement(Camera camera, DrawableElement element)
         {
             SceneEffect.World = element.GetWorldMatrix(camera);
             SceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
@@ -115,7 +125,6 @@ namespace Pokemon3D.Rendering.Compositor
             {
                 SceneEffect.CurrentTechniquePasses[i].Apply();
                 element.Mesh.Draw();
-                renderStatistics.DrawCalls++;
             }
         }
     }
