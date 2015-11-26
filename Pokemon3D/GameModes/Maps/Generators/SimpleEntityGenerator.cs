@@ -9,7 +9,7 @@ using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 
 namespace Pokemon3D.GameModes.Maps.Generators
 {
-    class SimpleEntityGenerator : Singleton<SimpleEntityGenerator>, EntityGenerator
+    class SimpleEntityGenerator : EntityGenerator
     {
         public List<Entity> Generate(Map map, EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing, Vector3 position)
         {

@@ -10,7 +10,7 @@ using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 
 namespace Pokemon3D.GameModes.Maps.Generators
 {
-    class TexturedCubeEntityGenerator : Singleton<TexturedCubeEntityGenerator>, EntityGenerator
+    class TexturedCubeEntityGenerator : EntityGenerator
     {
         public List<Entity> Generate(Map map, EntityFieldModel entityDefinition, EntityFieldPositionModel entityPlacing, Vector3 position)
         {
