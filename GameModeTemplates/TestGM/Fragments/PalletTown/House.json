@@ -1,16 +1,16 @@
 {
-  "Id": "PalletTown\\Lab",
+  "Id": "PalletTown\\House",
   "Entities": [
-	{
+    {
       "Entity": {
-        "Id": "LabWall",
+        "Id": "HouseWall",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X": 16,
+                "X": 48,
                 "Y": 32,
                 "Width": 16,
                 "Height": 16
@@ -40,8 +40,8 @@
       },
       "Placing": [
         {
-          "Position": {"X": 0, "Y": 0.5, "Z": -0.5 },
-          "Size": { "X": 6, "Y": 1, "Z": 1 },
+          "Position": {"X": 0, "Y": 0.5, "Z": -1.5 },
+          "Size": { "X": 4, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 2, "Z": 0 },
@@ -49,8 +49,8 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": -0.5, "Y": 0.5, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 3 },
+          "Position": {"X": -0.5, "Y": 0.5, "Z": -1 },
+          "Size": { "X": 1, "Y": 1, "Z": 2 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 3, "Z": 0 },
@@ -58,8 +58,8 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": 5.5, "Y": 0.5, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 3 },
+          "Position": {"X": 3.5, "Y": 0.5, "Z": -1 },
+          "Size": { "X": 1, "Y": 1, "Z": 2 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 1, "Z": 0 },
@@ -67,8 +67,8 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": 0, "Y": 0.5, "Z": 2.5 },
-          "Size": { "X": 2, "Y": 1, "Z": 1 },
+          "Position": {"X": 0, "Y": 0.5, "Z": 0.5 },
+          "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 0, "Z": 0 },
@@ -76,8 +76,57 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": 4, "Y": 0.5, "Z": 2.5 },
-          "Size": { "X": 2, "Y": 1, "Z": 1 },
+          "Position": {"X": 3, "Y": 0.5, "Z": 0.5 },
+          "Size": { "X": 1, "Y": 1, "Z": 1 },
+          "Fill": true,
+          "Steps": { "X": 1, "Y": 1, "Z": 1 },
+          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "CardinalRotation": true,
+          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+        },
+      ]
+    },
+	{
+      "Entity": {
+        "Id": "HouseWindow",
+        "RenderMode": {
+          "RenderMethod": "Primitive",
+          "Textures": [
+            {
+              "Source": "PalletTown",
+              "Rectangle": {
+                "X": 32,
+                "Y": 32,
+                "Width": 16,
+                "Height": 16
+              }
+            }
+          ],
+          "PrimitiveModelId": "WallQuad",
+          "ModelPath": "",
+          "Visible": true,
+          "Opacity": 1.0,
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "ObstructCamera": false,
+          "SeasonPalettes": [ ]
+        },
+        "Collision": true,
+        "IsFloor": false,
+        "Components": [
+          {
+            "Id": "isstatic",
+            "Data": ""
+          }
+        ]
+      },
+      "Placing": [
+        {
+          "Position": {"X": 2, "Y": 0.5, "Z": 0.5 },
+          "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 0, "Z": 0 },
@@ -125,7 +174,7 @@
       },
       "Placing": [
         {
-          "Position": {"X": 2, "Y": 0.5, "Z": 2.5 },
+          "Position": {"X": 1, "Y": 0.5, "Z": 0.5 },
           "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
@@ -137,15 +186,15 @@
     },
 	{
       "Entity": {
-        "Id": "Window",
+        "Id": "HouseWall2",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X": 32,
-                "Y": 32,
+                "X": 16,
+                "Y": 48,
                 "Width": 16,
                 "Height": 16
               }
@@ -174,57 +223,8 @@
       },
       "Placing": [
         {
-          "Position": {"X": 3, "Y": 0.5, "Z": 2.5 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
-          "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
-          "CardinalRotation": true,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
-      ]
-    },
-	{
-      "Entity": {
-        "Id": "LabWall2",
-        "RenderMode": {
-          "RenderMethod": "Primitive",
-          "Textures": [
-            {
-              "Source": "PalletTown",
-              "Rectangle": {
-                "X": 32,
-                "Y": 16,
-                "Width": 16,
-                "Height": 16
-              }
-            }
-          ],
-          "PrimitiveModelId": "WallQuad",
-          "ModelPath": "",
-          "Visible": true,
-          "Opacity": 1.0,
-          "Shading": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "ObstructCamera": false,
-          "SeasonPalettes": [ ]
-        },
-        "Collision": true,
-        "IsFloor": false,
-        "Components": [
-          {
-            "Id": "isstatic",
-            "Data": ""
-          }
-        ]
-      },
-      "Placing": [
-        {
-          "Position": {"X": 0, "Y": 1.5, "Z": -0.5 },
-          "Size": { "X": 6, "Y": 1, "Z": 1 },
+          "Position": {"X": 0, "Y": 1.5, "Z": -1.5 },
+          "Size": { "X": 4, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 2, "Z": 0 },
@@ -232,8 +232,8 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": -0.5, "Y": 1.5, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 3 },
+          "Position": {"X": -0.5, "Y": 1.5, "Z": -1 },
+          "Size": { "X": 1, "Y": 1, "Z": 2 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 3, "Z": 0 },
@@ -241,56 +241,16 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": 5.5, "Y": 1.5, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 3 },
+          "Position": {"X": 3.5, "Y": 1.5, "Z": -1 },
+          "Size": { "X": 1, "Y": 1, "Z": 2 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 1, "Z": 0 },
           "CardinalRotation": true,
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
-      ]
-    },
-	{
-      "Entity": {
-        "Id": "Window2",
-        "RenderMode": {
-          "RenderMethod": "Primitive",
-          "Textures": [
-            {
-              "Source": "PalletTown",
-              "Rectangle": {
-                "X": 80,
-                "Y": 0,
-                "Width": 16,
-                "Height": 16
-              }
-            }
-          ],
-          "PrimitiveModelId": "WallQuad",
-          "ModelPath": "",
-          "Visible": true,
-          "Opacity": 1.0,
-          "Shading": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "ObstructCamera": false,
-          "SeasonPalettes": [ ]
-        },
-        "Collision": true,
-        "IsFloor": false,
-        "Components": [
-          {
-            "Id": "isstatic",
-            "Data": ""
-          }
-        ]
-      },
-      "Placing": [
-        {
-          "Position": {"X": 0, "Y": 1.5, "Z": 2.5 },
+		{
+          "Position": {"X": 0, "Y": 1.5, "Z": 0.5 },
           "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
@@ -299,7 +259,7 @@
           "Scale": { "X": 1, "Y": 1, "Z": 1 }
         },
 		{
-          "Position": {"X": 3, "Y": 1.5, "Z": 2.5 },
+          "Position": {"X": 3, "Y": 1.5, "Z": 0.5 },
           "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
@@ -319,7 +279,7 @@
               "Source": "PalletTown",
               "Rectangle": {
                 "X": 64,
-                "Y": 0,
+                "Y": 48,
                 "Width": 16,
                 "Height": 16
               }
@@ -348,16 +308,7 @@
       },
       "Placing": [
         {
-          "Position": {"X": 2, "Y": 1.5, "Z": 2.5 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
-          "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
-          "CardinalRotation": true,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
-		{
-          "Position": {"X": 5, "Y": 1.5, "Z": 2.5 },
+          "Position": {"X": 1, "Y": 1.5, "Z": 0.5 },
           "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
@@ -369,15 +320,15 @@
     },
 	{
       "Entity": {
-        "Id": "Window2",
+        "Id": "Window3",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X": 64,
-                "Y": 16,
+                "X": 0,
+                "Y": 48,
                 "Width": 16,
                 "Height": 16
               }
@@ -406,7 +357,7 @@
       },
       "Placing": [
         {
-          "Position": {"X": 1, "Y": 1.5, "Z": 2.5 },
+          "Position": {"X": 2, "Y": 1.5, "Z": 0.5 },
           "Size": { "X": 1, "Y": 1, "Z": 1 },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
@@ -418,63 +369,14 @@
     },
 	{
       "Entity": {
-        "Id": "Window2",
+        "Id": "Roof",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X": 48,
-                "Y": 16,
-                "Width": 16,
-                "Height": 16
-              }
-            }
-          ],
-          "PrimitiveModelId": "WallQuad",
-          "ModelPath": "",
-          "Visible": true,
-          "Opacity": 1.0,
-          "Shading": {
-            "X": 1,
-            "Y": 1,
-            "Z": 1
-          },
-          "ObstructCamera": false,
-          "SeasonPalettes": [ ]
-        },
-        "Collision": true,
-        "IsFloor": false,
-        "Components": [
-          {
-            "Id": "isstatic",
-            "Data": ""
-          }
-        ]
-      },
-      "Placing": [
-        {
-          "Position": {"X": 4, "Y": 1.5, "Z": 2.5 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
-          "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
-          "CardinalRotation": true,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
-      ]
-    },
-	{
-      "Entity": {
-        "Id": "Window2",
-        "RenderMode": {
-          "RenderMethod": "Primitive",
-          "Textures": [
-            {
-              "Source": "PalletTown",
-              "Rectangle": {
-                "X": 48,
+                "X": 32,
                 "Y": 48,
                 "Width": 16,
                 "Height": 16
@@ -504,8 +406,8 @@
       },
       "Placing": [
         {
-          "Position": {"X": 0, "Y": 2, "Z": 0 },
-          "Size": { "X": 6, "Y": 1, "Z": 3 },
+          "Position": {"X": 0, "Y": 2, "Z": -1 },
+          "Size": { "X": 4, "Y": 1, "Z": 2  },
           "Fill": true,
           "Steps": { "X": 1, "Y": 1, "Z": 1 },
           "Rotation": { "X": 0, "Y": 0, "Z": 0 },

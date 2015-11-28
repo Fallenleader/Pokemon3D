@@ -5,6 +5,7 @@ using Pokemon3D.Rendering.Data;
 using Pokemon3D.DataModel.Json.GameMode.Map;
 using System;
 using System.IO;
+using Pokemon3D.Common.Diagnostics;
 using Pokemon3D.DataModel.Json;
 
 namespace Pokemon3D.GameModes.Maps
@@ -39,9 +40,9 @@ namespace Pokemon3D.GameModes.Maps
                 {
                     mapModels.Add(JsonDataModel<MapModel>.FromFile(file));
                 }
-                catch (JsonDataLoadException)
+                catch (JsonDataLoadException ex)
                 {
-                    // todo: log exception.
+                    GameLogger.Instance.Log(ex);
                 }
             }
 
