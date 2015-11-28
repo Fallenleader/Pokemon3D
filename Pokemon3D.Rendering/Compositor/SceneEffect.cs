@@ -24,9 +24,10 @@ namespace Pokemon3D.Rendering.Compositor
         /// Activates to Draw Objekt unlit or using directional lighting.
         /// Shadows are optional for both.
         /// </summary>
+        /// <param name="linearSampling">Linear Sampling</param>
         /// <param name="unlit">Ignore lighting</param>
         /// <param name="receiveShadows">Is an object receiving shadows.</param>
-        void ActivateLightingTechnique(bool unlit, bool receiveShadows);
+        void ActivateLightingTechnique(bool linearSampling, bool unlit, bool receiveShadows);
 
         /// <summary>
         /// Light Matrix for Shadow Map.

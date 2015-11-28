@@ -16,6 +16,9 @@ namespace Pokemon3D.Rendering
         public Matrix ViewMatrix { get; private set; }
         public Matrix ProjectionMatrix { get; private set; }
         public BoundingFrustum Frustum { get; }
+
+        public Color? ClearColor { get; set; }
+        public Skybox Skybox { get; set; }
         
         internal Camera(Viewport viewport)
         {
@@ -24,6 +27,7 @@ namespace Pokemon3D.Rendering
             FarClipDistance = 1000.0f;
             FieldOfView = MathHelper.PiOver4;
             Frustum = new BoundingFrustum(Matrix.Identity);
+            ClearColor = Color.CornflowerBlue;
         }
 
         protected override void HandleIsDirty()

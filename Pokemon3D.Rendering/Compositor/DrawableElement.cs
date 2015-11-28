@@ -3,7 +3,7 @@ using Pokemon3D.Rendering.Data;
 
 namespace Pokemon3D.Rendering.Compositor
 {
-    interface DrawableElement
+    internal interface DrawableElement
     {
         bool IsActive { get; }
         Mesh Mesh { get; }

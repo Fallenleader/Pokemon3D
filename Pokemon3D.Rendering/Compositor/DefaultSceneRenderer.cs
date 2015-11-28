@@ -131,12 +131,12 @@ namespace Pokemon3D.Rendering.Compositor
 
         private void HandleSolidObjects(Material material)
         {
-            _sceneEffect.ActivateLightingTechnique(material.IsUnlit, material.ReceiveShadow && EnableShadows);
+            _sceneEffect.ActivateLightingTechnique(false, material.IsUnlit, material.ReceiveShadow && EnableShadows);
         }
 
         private void HandleEffectTransparentObjects(Material material)
         {
-            _sceneEffect.ActivateLightingTechnique(material.IsUnlit, false);
+            _sceneEffect.ActivateLightingTechnique(false, material.IsUnlit, false);
         }
 
         private void HandleShadowCasterObjects(Material material)
@@ -191,17 +191,39 @@ namespace Pokemon3D.Rendering.Compositor
             }
 
             _sceneEffect.ShadowMap = _light.ShadowMap;
-
-            _device.Clear(ClearOptions.Target | ClearOptions.DepthBuffer, Color.CornflowerBlue, 1.0f, 0);
             _sceneEffect.View = camera.ViewMatrix;
             _sceneEffect.Projection = camera.ProjectionMatrix;
             _sceneEffect.LightDirection = LightDirection;
 
-            for(var i = 0; i < _renderQueues.Count; i++)
+            HandleCameraPass(camera);
+
+            for (var i = 0; i < _renderQueues.Count; i++)
             {
                 var renderQueue = _renderQueues[i];
                 if (!renderQueue.IsEnabled) continue;
                 renderQueue.Draw(camera, _light, hasSceneNodesChanged);
+            }
+        }
+
+        private void HandleCameraPass(Camera camera)
+        {
+            var clearFlags = ClearOptions.DepthBuffer;
+            if (camera.ClearColor.HasValue) clearFlags |= ClearOptions.Target;
+
+            _device.Clear(clearFlags, camera.ClearColor.GetValueOrDefault(Color.Black), 1.0f, 0);
+
+            var skybox = camera.Skybox;
+            if (skybox != null)
+            {
+                skybox.Update(camera);
+
+                _device.DepthStencilState = DepthStencilState.None;
+                _device.BlendState = BlendState.Opaque;
+
+                _sceneEffect.ActivateLightingTechnique(true, true, false);
+                RenderQueue.DrawElement(camera, skybox.SceneNode, _sceneEffect);
+
+                _device.DepthStencilState = DepthStencilState.Default;
             }
         }
 

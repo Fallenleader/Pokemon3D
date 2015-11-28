@@ -37,6 +37,13 @@ namespace Pokemon3D.GameModes.Maps
             _camera = scene.CreateCamera();
             _camera.SetParent(SceneNode);
             _camera.FarClipDistance = 50.0f;
+
+            _camera.Skybox = new Skybox(Game)
+            {
+                Scale = 50,
+                Texture = Game.Content.Load<Texture2D>(ResourceNames.Textures.skybox_texture)
+            };
+            
             Speed = 2.0f;
             RotationSpeed = MathHelper.PiOver4;
             

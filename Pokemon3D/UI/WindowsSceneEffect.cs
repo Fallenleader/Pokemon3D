@@ -10,7 +10,8 @@ namespace Pokemon3D.UI
         private readonly Effect _basicEffect;
         private readonly EffectTechnique _shadowDepthTechnique;
         private readonly EffectTechnique _defaultWithShadowsTechnique;
-        private readonly EffectTechnique _billboardTechnique;
+        private readonly EffectTechnique _unlitTechnique;
+        private readonly EffectTechnique _unlitLinearSampledTechnique;
         private readonly EffectTechnique _defaultTechnique;
 
         private readonly EffectParameter _lightWorldViewProjection;
@@ -32,7 +33,8 @@ namespace Pokemon3D.UI
             _defaultTechnique = _basicEffect.Techniques["Default"];
             _shadowDepthTechnique = _basicEffect.Techniques["ShadowCaster"];
             _defaultWithShadowsTechnique = _basicEffect.Techniques["DefaultWithShadows"];
-            _billboardTechnique = _basicEffect.Techniques["DefaultBillboard"];
+            _unlitTechnique = _basicEffect.Techniques["DefaultBillboard"];
+            _unlitLinearSampledTechnique = _basicEffect.Techniques["UnlitLinearSampled"];
             ShadowMapDebugEffect = content.Load<Effect>(ResourceNames.Effects.DebugShadowMap);
 
             _lightWorldViewProjection = _basicEffect.Parameters["LightWorldViewProjection"];
@@ -54,11 +56,11 @@ namespace Pokemon3D.UI
             _basicEffect.CurrentTechnique = _shadowDepthTechnique;
         }
 
-        public void ActivateLightingTechnique(bool unlit, bool receiveShadows)
+        public void ActivateLightingTechnique(bool linearSampling, bool unlit, bool receiveShadows)
         {
             if (unlit)
             {
-                _basicEffect.CurrentTechnique = _billboardTechnique;
+                _basicEffect.CurrentTechnique = linearSampling ? _unlitLinearSampledTechnique : _unlitTechnique;
             }
             else
             {

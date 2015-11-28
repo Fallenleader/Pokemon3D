@@ -116,14 +116,19 @@ namespace Pokemon3D.Rendering.Compositor
 
         private void DrawElement(Camera camera, DrawableElement element)
         {
-            SceneEffect.World = element.GetWorldMatrix(camera);
-            SceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
-            SceneEffect.TexcoordScale = element.Material.TexcoordScale;
-            SceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
+            DrawElement(camera, element, SceneEffect);
+        }
 
-            for (var i = 0; i < SceneEffect.CurrentTechniquePasses.Count; i++)
+        internal static void DrawElement(Camera camera, DrawableElement element, SceneEffect sceneEffect)
+        {
+            sceneEffect.World = element.GetWorldMatrix(camera);
+            sceneEffect.DiffuseTexture = element.Material.DiffuseTexture;
+            sceneEffect.TexcoordScale = element.Material.TexcoordScale;
+            sceneEffect.TexcoordOffset = element.Material.TexcoordOffset;
+
+            for (var i = 0; i < sceneEffect.CurrentTechniquePasses.Count; i++)
             {
-                SceneEffect.CurrentTechniquePasses[i].Apply();
+                sceneEffect.CurrentTechniquePasses[i].Apply();
                 element.Mesh.Draw();
             }
         }

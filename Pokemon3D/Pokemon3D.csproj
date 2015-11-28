@@ -190,6 +190,9 @@
     <Content Include="Content\Fonts\NotificationFont.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Textures\skybox_texture.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ResourceNames.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ResourceNames.cs</LastGenOutput>

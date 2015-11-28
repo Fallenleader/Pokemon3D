@@ -26,6 +26,7 @@ namespace Pokemon3D
             public const string highlight = "Textures/highlight";
             public const string NotificationIcons = "Textures/NotificationIcons";
             public const string P3D = "Textures/P3D";
+            public const string skybox_texture = "Textures/skybox_texture";
             public const string SquareLogo_256px = "Textures/SquareLogo_256px";
             public const string tileset1 = "Textures/tileset1";
         }

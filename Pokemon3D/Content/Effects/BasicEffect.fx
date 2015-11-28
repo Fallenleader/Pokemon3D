@@ -197,6 +197,14 @@ sampler2D BillboardSampler = sampler_state {
 	AddressV = Clamp;
 };
 
+sampler2D LinearUnlitSampler = sampler_state {
+	Texture = (DiffuseTexture);
+	MagFilter = Linear;
+	MinFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
 struct VertexShaderBillboardInput
 {
 	float4 Position : SV_Position0;
@@ -232,11 +240,28 @@ float4 PixelShaderFunctionBillboard(VertexShaderBillboardOutput input) : COLOR0
 	return colorFromTexture;
 }
 
+float4 PixelShaderUnlitLinearSampled(VertexShaderBillboardOutput input) : COLOR0
+{
+	float4 colorFromTexture = tex2D(LinearUnlitSampler, input.TexCoord);
+	float diffuseFactor = saturate(dot(normalize(input.Normal), normalize(-LightDirection)));
+
+	return colorFromTexture;
+}
+
 technique DefaultBillboard
 {
 	pass Pass1
 	{
 		VertexShader = compile vs_4_0 VertexShaderBillboard();
 		PixelShader = compile ps_4_0 PixelShaderFunctionBillboard();
+	}
+}
+
+technique UnlitLinearSampled
+{
+	pass Pass1
+	{
+		VertexShader = compile vs_4_0 VertexShaderBillboard();
+		PixelShader = compile ps_4_0 PixelShaderUnlitLinearSampled();
 	}
 }
