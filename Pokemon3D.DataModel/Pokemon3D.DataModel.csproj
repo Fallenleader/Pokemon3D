@@ -52,6 +52,7 @@
     <Compile Include="IDataModelContainer.cs" />
     <Compile Include="Json\ColorModel.cs" />
     <Compile Include="Json\GameCore\ConfigurationModel.cs" />
+    <Compile Include="Json\GameCore\ShadowQuality.cs" />
     <Compile Include="Json\GameMode\Battle\MoveCategory.cs" />
     <Compile Include="Json\GameMode\Battle\MoveModel.cs" />
     <Compile Include="Json\GameMode\Battle\TargetType.cs" />

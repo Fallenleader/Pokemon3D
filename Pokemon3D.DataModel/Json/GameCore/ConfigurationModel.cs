@@ -22,6 +22,21 @@ namespace Pokemon3D.DataModel.Json.GameCore
         [DataMember(Order = 3)]
         public SizeModel WindowSize;
 
+        [DataMember(Order = 4)]
+        public bool ShadowsEnabled;
+
+        [DataMember(Order = 5, Name = "ShadowQuality")]
+        private string _shadowQuality;
+
+        public ShadowQuality ShadowQuality
+        {
+            get { return ConvertStringToEnum<ShadowQuality>(_shadowQuality); }
+            set { _shadowQuality = value.ToString(); }
+        }
+
+        [DataMember(Order = 6)]
+        public bool SoftShadows;
+
         public static ConfigurationModel Default
         {
             get
@@ -31,6 +46,9 @@ namespace Pokemon3D.DataModel.Json.GameCore
                     DisplayLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
                     MusicVolume = 75,
                     SoundVolume = 100,
+                    ShadowsEnabled = true,
+                    SoftShadows = true,
+                    ShadowQuality = ShadowQuality.Medium,
                     WindowSize = new SizeModel()
                     {
                         Width = 1024,
