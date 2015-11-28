@@ -29,12 +29,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },
@@ -98,12 +95,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },
@@ -167,12 +161,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },
@@ -265,12 +256,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },
@@ -334,12 +322,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },
@@ -490,12 +475,9 @@
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": true,
-        "IsFloor": false,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
           }
         ]
       },

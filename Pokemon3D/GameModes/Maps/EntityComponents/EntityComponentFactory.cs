@@ -42,6 +42,15 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents
                 case EntityComponent.IDs.Billboard:
                     comp = new BillboardEntityComponent(parameters);
                     break;
+                case EntityComponent.IDs.Static:
+                    comp = new StaticEntityComponent(parameters);
+                    break;
+                case EntityComponent.IDs.Floor:
+                    comp = new FloorEntityComponent(parameters);
+                    break;
+                case EntityComponent.IDs.NoCollision:
+                    comp = new NoCollisionEntityComponent(parameters);
+                    break;
                 default:
                     comp = new DataStorageEntityComponent(parameters);
                     break;

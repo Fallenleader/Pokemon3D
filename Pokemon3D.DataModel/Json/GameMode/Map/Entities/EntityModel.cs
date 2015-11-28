@@ -20,14 +20,8 @@ namespace Pokemon3D.DataModel.Json.GameMode.Map.Entities
 
         [DataMember(Order = 2)]
         public EntityRenderModeModel RenderMode;
-
+        
         [DataMember(Order = 3)]
-        public bool Collision;
-
-        [DataMember(Order = 4)]
-        public bool IsFloor;
-
-        [DataMember(Order = 5)]
         public EntityComponentModel[] Components;
 
         public override object Clone()

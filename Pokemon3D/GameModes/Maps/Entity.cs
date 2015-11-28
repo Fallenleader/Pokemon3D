@@ -67,7 +67,6 @@ namespace Pokemon3D.GameModes.Maps
             }
 
             SceneNode.Position = position;
-            SceneNode.IsStatic = IsStatic;
 
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)

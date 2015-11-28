@@ -7,8 +7,11 @@
         /// </summary>
         public static class IDs
         {
+            // All IDs have to be lower case.
             public const string Billboard = "isbillboard";
             public const string Static = "isstatic";
+            public const string Floor = "isfloor";
+            public const string NoCollision = "nocollision";
         }
     }
 }

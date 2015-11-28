@@ -35,132 +35,378 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 0, "Y": 0, "Z": 1 },
-          "Size": { "X": 1, "Y": 1, "Z": 17 },
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 17
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 19, "Y": 0, "Z": 1 },
-          "Size": { "X": 1, "Y": 1, "Z": 17 },
+        {
+          "Position": {
+            "X": 19,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 17
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 8, "Y": 0, "Z": 17 },
-          "Size": { "X": 11, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 17
+          },
+          "Size": {
+            "X": 11,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 1, "Y": 0, "Z": 1 },
-          "Size": { "X": 7, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 7,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 1 },
-          "Size": { "X": 9, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 9,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 3, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 7, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 7,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 18, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 18,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 1, "Y": 0, "Z": 17 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 17
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 13 },
-          "Size": { "X": 6, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 13
+          },
+          "Size": {
+            "X": 6,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 9 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 9
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         }
       ]
     },
-	 {
+    {
       "Entity": {
         "Id": "Grass2",
         "RenderMode": {
@@ -180,33 +426,59 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 8, "Y": 0, "Z": 0 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Grass",
         "RenderMode": {
@@ -226,105 +498,291 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 0, "Y": 0, "Z": 0 },
-          "Size": { "X": 3, "Y": 1, "Z": 1 },
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 3,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 0 },
-          "Size": { "X": 3, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 3,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 11, "Y": 0, "Z": 0 },
-          "Size": { "X": 7, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 11,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 7,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 19, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 19,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 1, "Y": 0, "Z": 2 },
-          "Size": { "X": 1, "Y": 1, "Z": 15 },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 2
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 15
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 2, "Y": 0, "Z": 14 },
-          "Size": { "X": 2, "Y": 1, "Z": 4 },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 14
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 4
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 18, "Y": 0, "Z": 2 },
-          "Size": { "X": 1, "Y": 1, "Z": 15 },
+        {
+          "Position": {
+            "X": 18,
+            "Y": 0,
+            "Z": 2
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 15
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 10 },
-          "Size": { "X": 4, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 10
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 14 },
-          "Size": { "X": 6, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 14
+          },
+          "Size": {
+            "X": 6,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Dirt2",
         "RenderMode": {
@@ -344,87 +802,233 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 2, "Y": 0, "Z": 4 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 4
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 4 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 4
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 8 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 8
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 8, "Y": 0, "Z": 14 },
-          "Size": { "X": 2, "Y": 1, "Z": 3 },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 14
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 3
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 16 },
-          "Size": { "X": 8, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 16
+          },
+          "Size": {
+            "X": 8,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 16, "Y": 0, "Z": 12 },
-          "Size": { "X": 2, "Y": 1, "Z": 4 },
+        {
+          "Position": {
+            "X": 16,
+            "Y": 0,
+            "Z": 12
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 4
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 12 },
-          "Size": { "X": 6, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 12
+          },
+          "Size": {
+            "X": 6,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Water",
         "RenderMode": {
@@ -444,33 +1048,59 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 4, "Y": 0, "Z": 14 },
-          "Size": { "X": 4, "Y": 1, "Z": 4 },
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 14
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 4
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Dirt3",
         "RenderMode": {
@@ -490,87 +1120,233 @@
           "ModelPath": "",
           "Visible": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isstatic",
-            "Data": ""
+            "Id": "isstatic"
+          },
+          {
+            "Id": "noCollision"
+          },
+          {
+            "Id" :  "isFloor"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 2, "Y": 0, "Z": 2 },
-          "Size": { "X": 16, "Y": 1, "Z": 2 },
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 2
+          },
+          "Size": {
+            "X": 16,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 8, "Y": 0, "Z": 4 },
-          "Size": { "X": 2, "Y": 1, "Z": 10 },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 4
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 10
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 2, "Y": 0, "Z": 6 },
-          "Size": { "X": 2, "Y": 1, "Z": 8 },
+        {
+          "Position": {
+            "X": 2,
+            "Y": 0,
+            "Z": 6
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 8
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 12 },
-          "Size": { "X": 4, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 12
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 4, "Y": 0, "Z": 6 },
-          "Size": { "X": 4, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 4,
+            "Y": 0,
+            "Z": 6
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 16, "Y": 0, "Z": 4 },
-          "Size": { "X": 2, "Y": 1, "Z": 9 },
+        {
+          "Position": {
+            "X": 16,
+            "Y": 0,
+            "Z": 4
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 9
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 6 },
-          "Size": { "X": 6, "Y": 1, "Z": 3 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 6
+          },
+          "Size": {
+            "X": 6,
+            "Y": 1,
+            "Z": 3
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
-        },
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Blocks",
         "RenderMode": {
@@ -589,116 +1365,316 @@
           "PrimitiveModelId": "Billboard",
           "ModelPath": "",
           "Visible": true,
-		  "UseTransparency" : true,
+          "UseTransparency": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isbilloard",
-            "Data": ""
+            "Id": "isbillboard"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 0, "Y": 0, "Z": 1 },
-          "Size": { "X": 1, "Y": 1, "Z": 17 },
+          "Position": {
+            "X": 0,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 17
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 19, "Y": 0, "Z": 1 },
-          "Size": { "X": 1, "Y": 1, "Z": 17 },
+        {
+          "Position": {
+            "X": 19,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 17
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 1, "Y": 0, "Z": 1 },
-          "Size": { "X": 7, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 7,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 1 },
-          "Size": { "X": 9, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 1
+          },
+          "Size": {
+            "X": 9,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 1, "Y": 0, "Z": 17 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 1,
+            "Y": 0,
+            "Z": 17
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 8, "Y": 0, "Z": 17 },
-          "Size": { "X": 11, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 8,
+            "Y": 0,
+            "Z": 17
+          },
+          "Size": {
+            "X": 11,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 3, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 3,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 7, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 7,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 10, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 10,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         },
-		{
-          "Position": { "X": 18, "Y": 0, "Z": 0 },
-          "Size": { "X": 1, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 18,
+            "Y": 0,
+            "Z": 0
+          },
+          "Size": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 1, "Y": 1, "Z": 1 }
+          "Scale": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          }
         }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "Blocks",
         "RenderMode": {
@@ -707,7 +1683,7 @@
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X":64,
+                "X": 64,
                 "Y": 32,
                 "Width": 8,
                 "Height": 8
@@ -717,63 +1693,143 @@
           "PrimitiveModelId": "Billboard",
           "ModelPath": "",
           "Visible": true,
-		  "UseTransparency" : true,
+          "UseTransparency": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isbilloard",
-            "Data": ""
+            "Id": "isbillboard"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 4.25, "Y": 0, "Z": 10.25 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+          "Position": {
+            "X": 4.25,
+            "Y": 0,
+            "Z": 10.25
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		{
-          "Position": { "X": 3.75, "Y": 0, "Z": 10.75 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 3.75,
+            "Y": 0,
+            "Z": 10.75
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		
-		{
-          "Position": { "X": 10.25, "Y": 0, "Z": 14.25 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+
+        {
+          "Position": {
+            "X": 10.25,
+            "Y": 0,
+            "Z": 14.25
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		{
-          "Position": { "X": 9.75, "Y": 0, "Z": 14.75 },
-          "Size": { "X": 4, "Y": 1, "Z": 1 },
+        {
+          "Position": {
+            "X": 9.75,
+            "Y": 0,
+            "Z": 14.75
+          },
+          "Size": {
+            "X": 4,
+            "Y": 1,
+            "Z": 1
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
-        },
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
+        }
       ]
     },
-	{
+    {
       "Entity": {
         "Id": "HighGrass",
         "RenderMode": {
@@ -782,7 +1838,7 @@
             {
               "Source": "PalletTown",
               "Rectangle": {
-                "X":72,
+                "X": 72,
                 "Y": 32,
                 "Width": 8,
                 "Height": 8
@@ -792,62 +1848,145 @@
           "PrimitiveModelId": "Billboard",
           "ModelPath": "",
           "Visible": true,
-		  "UseTransparency" : true,
+          "UseTransparency": true,
           "Opacity": 1.0,
-          "Shading": { "X": 1, "Y": 1, "Z": 1
+          "Shading": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
           },
           "ObstructCamera": false,
           "SeasonPalettes": [ ]
         },
-        "Collision": false,
-        "IsFloor": true,
         "Components": [
           {
-            "Id": "isbilloard",
-            "Data": ""
+            "Id": "isbillboard"
+          },
+          {
+            "Id": "noCollision"
           }
         ]
       },
       "Placing": [
         {
-          "Position": { "X": 7.75, "Y": 0, "Z": -0.25 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+          "Position": {
+            "X": 7.75,
+            "Y": 0,
+            "Z": -0.25
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		{
-          "Position": { "X": 8.25, "Y": 0, "Z": -0.25 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 8.25,
+            "Y": 0,
+            "Z": -0.25
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		{
-          "Position": { "X": 7.75, "Y": 0, "Z": 0.25 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 7.75,
+            "Y": 0,
+            "Z": 0.25
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
         },
-		{
-          "Position": { "X": 8.25, "Y": 0, "Z": 0.25 },
-          "Size": { "X": 2, "Y": 1, "Z": 2 },
+        {
+          "Position": {
+            "X": 8.25,
+            "Y": 0,
+            "Z": 0.25
+          },
+          "Size": {
+            "X": 2,
+            "Y": 1,
+            "Z": 2
+          },
           "Fill": true,
-          "Steps": { "X": 1, "Y": 1, "Z": 1 },
-          "Rotation": { "X": 0, "Y": 0, "Z": 0 },
+          "Steps": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1
+          },
+          "Rotation": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+          },
           "CardinalRotation": false,
-          "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 }
-        },
+          "Scale": {
+            "X": 0.5,
+            "Y": 0.5,
+            "Z": 0.5
+          }
+        }
       ]
-    },
-	],
+    }
+  ],
   "Fragments": [
     {
       "Id": "Sign",
@@ -857,24 +1996,24 @@
           "Y": 0,
           "Z": 5.5
         },
-		{
+        {
           "X": 11,
           "Y": 0,
           "Z": 5.5
         },
-		{
+        {
           "X": 7,
           "Y": 0,
           "Z": 9.5
         },
-		{
+        {
           "X": 13,
           "Y": 0,
           "Z": 13.5
         }
       ]
     },
-	{
+    {
       "Id": "Fence",
       "Positions": [
         {
@@ -882,44 +2021,44 @@
           "Y": 0,
           "Z": 9.5
         },
-		{
+        {
           "X": 5,
           "Y": 0,
           "Z": 9.5
         },
-		{
+        {
           "X": 6,
           "Y": 0,
           "Z": 9.5
         },
-		{
+        {
           "X": 10,
           "Y": 0,
           "Z": 13.5
         },
-		{
+        {
           "X": 11,
           "Y": 0,
           "Z": 13.5
         },
-		{
+        {
           "X": 12,
           "Y": 0,
           "Z": 13.5
         },
-		{
+        {
           "X": 14,
           "Y": 0,
           "Z": 13.5
         },
-		{
+        {
           "X": 15,
           "Y": 0,
           "Z": 13.5
-        },
+        }
       ]
     },
-	{
+    {
       "Id": "PalletTown\\House",
       "Positions": [
         {
@@ -927,21 +2066,21 @@
           "Y": 0,
           "Z": 5
         },
-		{
+        {
           "X": 12,
           "Y": 0,
           "Z": 5
-        },
+        }
       ]
     },
-	{
+    {
       "Id": "PalletTown\\Lab",
       "Positions": [
         {
           "X": 10,
           "Y": 0,
           "Z": 9
-        },
+        }
       ]
     }
   ]
