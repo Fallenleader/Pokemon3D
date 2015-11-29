@@ -8,9 +8,9 @@ namespace Pokemon3D.Rendering.Data
     /// </summary>
     public class Material
     {
-        public Material(Texture2D diffuseTexture)
+        public Material()
         {
-            DiffuseTexture = diffuseTexture;
+            DiffuseTexture = null;
             Color = Color.White;
             CastShadow = true;
             ReceiveShadow = true;
@@ -30,9 +30,10 @@ namespace Pokemon3D.Rendering.Data
 
         internal Material Clone()
         {
-            return new Material(DiffuseTexture)
+            return new Material()
             {
                 Color = Color,
+                DiffuseTexture = DiffuseTexture,
                 UseTransparency = UseTransparency,
                 CastShadow = CastShadow,
                 ReceiveShadow = ReceiveShadow,

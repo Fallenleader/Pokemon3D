@@ -49,8 +49,9 @@ namespace Pokemon3D.GameModes.Maps
 
             SceneNode.Mesh = new Mesh(Game.GraphicsDevice, Primitives.GenerateQuadForYBillboard());
             var diffuseTexture = Game.Content.Load<Texture2D>(ResourceNames.Textures.DefaultGuy);
-            SceneNode.Material = new Material(diffuseTexture)
+            SceneNode.Material = new Material
             {
+                DiffuseTexture = diffuseTexture,
                 UseTransparency = true,
                 TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(32, 32),
                 IsUnlit = true

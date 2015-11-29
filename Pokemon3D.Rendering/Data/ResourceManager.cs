@@ -80,8 +80,11 @@ namespace Pokemon3D.Rendering.Data
         private Material GenerateMaterialFromMesh(int materialIndex, Assimp.Scene assimpScene)
         {
             var assimpMaterial = assimpScene.Materials[materialIndex];
-            var texture = string.IsNullOrEmpty(assimpMaterial.TextureDiffuse.FilePath) ? null : GetTexture2D(assimpMaterial.TextureDiffuse.FilePath);
-            return new Material(texture);
+            return new Material
+            {
+                DiffuseTexture = string.IsNullOrEmpty(assimpMaterial.TextureDiffuse.FilePath)
+                                        ? null : GetTexture2D(assimpMaterial.TextureDiffuse.FilePath)
+            };
         }
 
         private static GeometryData GenerateGeometryDataFromAssimpMesh(Assimp.Mesh mesh)

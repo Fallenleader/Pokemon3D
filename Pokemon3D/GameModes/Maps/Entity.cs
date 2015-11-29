@@ -4,6 +4,7 @@ using Pokemon3D.DataModel.Json;
 using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokemon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.GameCore;
 using Pokemon3D.Rendering;
@@ -70,11 +71,17 @@ namespace Pokemon3D.GameModes.Maps
             }
 
             SceneNode.Position = position;
+            SceneNode.Material = new Material();
 
             var renderMode = _dataModel.RenderMode;
             if (renderMode.RenderMethod == RenderMethod.Primitive)
             {
                 SceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
+                SceneNode.Material.Color = new Color(_dataModel.RenderMode.Shading.GetVector3());
+                SceneNode.Material.CastShadow = !_dataModel.RenderMode.UseTransparency;
+                SceneNode.Material.ReceiveShadow = !_dataModel.RenderMode.UseTransparency;
+                SceneNode.Material.UseTransparency = _dataModel.RenderMode.UseTransparency;
+                SceneNode.Material.IsUnlit = false;
 
                 SetTexture(0);
             }
@@ -143,24 +150,18 @@ namespace Pokemon3D.GameModes.Maps
             var texture = _dataModel.RenderMode.Textures[index];
 
             var diffuseTexture = Resources.GetTexture2D(texture.Source);
-            var material = new Material(diffuseTexture)
-            {
-                Color = new Color(_dataModel.RenderMode.Shading.GetVector3()),
-                CastShadow = !_dataModel.RenderMode.UseTransparency,
-                ReceiveShadow = !_dataModel.RenderMode.UseTransparency,
-                UseTransparency = _dataModel.RenderMode.UseTransparency,
-                IsUnlit = false
-            };
+            SceneNode.Material.DiffuseTexture = diffuseTexture;
 
             if (texture.Rectangle != null)
             {
-                material.TexcoordOffset = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.X,
-                    texture.Rectangle.Y);
-                material.TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.Width,
-                    texture.Rectangle.Height);
+                SceneNode.Material.TexcoordOffset = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.X, texture.Rectangle.Y);
+                SceneNode.Material.TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.Width, texture.Rectangle.Height);
             }
-
-            SceneNode.Material = material;
+            else
+            {
+                SceneNode.Material.TexcoordOffset = Vector2.Zero;
+                SceneNode.Material.TexcoordScale = Vector2.One;
+            }
         }
 
         /// <summary>

@@ -41,7 +41,7 @@ namespace Pokemon3D.Rendering
             
             _skyBoxModel = new Mesh(GameContext.GraphicsDevice, Primitives.GenerateCubeData(coords));
             SceneNode.Mesh = _skyBoxModel;
-            SceneNode.Material = new Material(null)
+            SceneNode.Material = new Material
             {
                 CastShadow = false,
                 ReceiveShadow = false,
