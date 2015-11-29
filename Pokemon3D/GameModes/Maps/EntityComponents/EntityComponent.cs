@@ -37,13 +37,16 @@ namespace Pokemon3D.GameModes.Maps.EntityComponents
         /// <summary>
         /// Updates this property's logic.
         /// </summary>
-        public virtual void Update() { }
+        public virtual void Update(float elapsedTime) { }
 
         /// <summary>
         /// Renders this component, if this component has special render settings for the entity.
         /// </summary>
         public virtual RenderResultType Render() { return RenderResultType.Passed; }
 
+        /// <summary>
+        /// Converts the data string that came with the component data into the desired data type.
+        /// </summary>
         public T GetData<T>()
         {
             return TypeConverter.Convert<T>(Data);

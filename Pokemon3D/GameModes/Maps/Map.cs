@@ -77,6 +77,7 @@ namespace Pokemon3D.GameModes.Maps
 
         public void Update(float elapsedTime)
         {
+            _allEntities.ForEach(e => e.Update(elapsedTime));
         }
     }
 }

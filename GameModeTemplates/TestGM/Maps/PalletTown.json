@@ -51,7 +51,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -442,7 +442,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -514,7 +514,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -818,7 +818,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -1064,7 +1064,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -1136,7 +1136,7 @@
             "Id": "noCollision"
           },
           {
-            "Id" :  "isFloor"
+            "Id": "isFloor"
           }
         ]
       },
@@ -1676,7 +1676,7 @@
     },
     {
       "Entity": {
-        "Id": "Blocks",
+        "Id": "Flowers",
         "RenderMode": {
           "RenderMethod": "Primitive",
           "Textures": [
@@ -1685,6 +1685,15 @@
               "Rectangle": {
                 "X": 64,
                 "Y": 32,
+                "Width": 8,
+                "Height": 8
+              }
+            },
+            {
+              "Source": "PalletTown",
+              "Rectangle": {
+                "X": 64,
+                "Y": 40,
                 "Width": 8,
                 "Height": 8
               }
@@ -1706,6 +1715,10 @@
         "Components": [
           {
             "Id": "isbillboard"
+          },
+          {
+            "Id": "AnimateTextures",
+            "Data": "0.8"
           }
         ]
       },

@@ -67,8 +67,10 @@ namespace Pokemon3D.GameModes.Maps
             MovementMode = PlayerMovementMode.ThirdPerson;
         }
 
-        public void Update(float elapsedTime)
+        public override void Update(float elapsedTime)
         {
+            base.Update(elapsedTime);
+
             _figureAnimator.Update(elapsedTime);
 
             var currentMouseState = Mouse.GetState();

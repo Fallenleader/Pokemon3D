@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Pokemon3D.DataModel.Json;
 using Pokemon3D.DataModel.Json.GameMode.Map.Entities;
 using Pokemon3D.GameModes.Maps.EntityComponents;
 using Microsoft.Xna.Framework;
@@ -18,6 +19,8 @@ namespace Pokemon3D.GameModes.Maps
         public Scene Scene { get; private set; }
         public SceneNode SceneNode { get; }
         public RenderMethod RenderMethod => _dataModel.RenderMode.RenderMethod;
+
+        public TextureSourceModel[] TextureSources => _dataModel.RenderMode.Textures;
 
         private readonly EntityModel _dataModel;
         private readonly EntityFieldPositionModel _fieldSourceModel;
@@ -73,27 +76,7 @@ namespace Pokemon3D.GameModes.Maps
             {
                 SceneNode.Mesh = map.ResourceManager.GetMeshFromPrimitiveName(renderMode.PrimitiveModelId);
 
-                var texture = renderMode.Textures.First();
-
-                var diffuseTexture = Resources.GetTexture2D(texture.Source);
-                var material = new Material(diffuseTexture)
-                {
-                    Color = new Color(renderMode.Shading.GetVector3()),
-                    CastShadow = !_dataModel.RenderMode.UseTransparency,
-                    ReceiveShadow = !_dataModel.RenderMode.UseTransparency,
-                    UseTransparency = _dataModel.RenderMode.UseTransparency,
-                    IsUnlit = false
-                };
-
-                if (texture.Rectangle != null)
-                {
-                    material.TexcoordOffset = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.X,
-                        texture.Rectangle.Y);
-                    material.TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.Width,
-                        texture.Rectangle.Height);
-                }
-
-                SceneNode.Material = material;
+                SetTexture(0);
             }
             else
             {
@@ -151,6 +134,45 @@ namespace Pokemon3D.GameModes.Maps
                 }
             }
         }
+
+        /// <summary>
+        /// Sets the texture of the entity to the texture at the provdided index in the data model.
+        /// </summary>
+        public void SetTexture(int index)
+        {
+            var texture = _dataModel.RenderMode.Textures[index];
+
+            var diffuseTexture = Resources.GetTexture2D(texture.Source);
+            var material = new Material(diffuseTexture)
+            {
+                Color = new Color(_dataModel.RenderMode.Shading.GetVector3()),
+                CastShadow = !_dataModel.RenderMode.UseTransparency,
+                ReceiveShadow = !_dataModel.RenderMode.UseTransparency,
+                UseTransparency = _dataModel.RenderMode.UseTransparency,
+                IsUnlit = false
+            };
+
+            if (texture.Rectangle != null)
+            {
+                material.TexcoordOffset = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.X,
+                    texture.Rectangle.Y);
+                material.TexcoordScale = diffuseTexture.GetTexcoordsFromPixelCoords(texture.Rectangle.Width,
+                    texture.Rectangle.Height);
+            }
+
+            SceneNode.Material = material;
+        }
+
+        /// <summary>
+        /// Entity update method to update all of the entity's components.
+        /// </summary>
+        public virtual void Update(float elapsedTime)
+        {
+            for (int i = 0; i < _components.Count; i++)
+                _components.Values.ElementAt(i).Update(elapsedTime);
+        }
+
+        #region Components
 
         void InitializeComponents()
         {
@@ -224,5 +246,8 @@ namespace Pokemon3D.GameModes.Maps
             var component = GetComponent(componentName);
             return component != null && component.GetType() == typeof(T);
         }
+
+        #endregion
+
     }
 }
