@@ -28,8 +28,8 @@ namespace Pokemon3D.UI.Screens
             Game.Resources.SetPrimitiveProvider(_gameMode);
 
             _scene = new Scene(Game, new WindowsSceneEffect(Game.Content));
-            _scene.Renderer.LightDirection = new Vector3(0.5f,-1,0.5f);
-            _scene.Renderer.AmbientLight = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+            _scene.Renderer.LightDirection = new Vector3(-1.5f,-1,-0.5f);
+            _scene.Renderer.AmbientLight = new Vector4(0.7f, 0.5f, 0.5f, 1.0f);
             _scene.Renderer.EnableShadows = true;
             _currentMap = _gameMode.MapManager.GetMap(_gameMode.GameModeInfo.StartMap, _scene, Game.Resources);
 
