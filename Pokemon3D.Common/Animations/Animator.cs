@@ -27,8 +27,6 @@ namespace Pokemon3D.Common.Animations
         /// </summary>
         public event Action AnimatorFinished;
 
-        public string CurrentAnimationName => _currentAnimationName;
-
         /// <summary>
         /// Currently active animation.
         /// </summary>
@@ -49,6 +47,7 @@ namespace Pokemon3D.Common.Animations
         /// <param name="name">Name of animation</param>
         public void SetAnimation(string name)
         {
+            if (_currentAnimationName == name) return;
             _currentAnimationName = name;
             CurrentAnimation = _animations[name];
             CurrentAnimation.Start();

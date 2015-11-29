@@ -134,14 +134,6 @@ namespace Pokemon3D.GameModes.Maps
             _mouseState = currentMouseState;
         }
 
-        private void ActivateWalkingAnimation(string animationName)
-        {
-            if (_figureAnimator.CurrentAnimation == null || _figureAnimator.CurrentAnimationName != animationName)
-            {
-                _figureAnimator.SetAnimation(animationName);
-            }
-        }
-
         private void DeactivateWalkingAnimation()
         {
             if (_figureAnimator.CurrentAnimation != null)
@@ -183,21 +175,21 @@ namespace Pokemon3D.GameModes.Maps
 
                 if (movementDirection.X > 0.0f)
                 {
-                    ActivateWalkingAnimation("WalkRight");
+                    _figureAnimator.SetAnimation("WalkRight");
                 }
                 else if (movementDirection.X < 0.0f)
                 {
-                    ActivateWalkingAnimation("WalkLeft");
+                    _figureAnimator.SetAnimation("WalkLeft");
                 }
                 else
                 {
                     if (movementDirection.Z > 0.0f)
                     {
-                        ActivateWalkingAnimation("WalkForward");
+                        _figureAnimator.SetAnimation("WalkForward");
                     }
                     else
                     {
-                        ActivateWalkingAnimation("WalkBackward");
+                        _figureAnimator.SetAnimation("WalkBackward");
                     }
                 }
             }
