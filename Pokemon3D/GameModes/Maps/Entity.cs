@@ -143,7 +143,7 @@ namespace Pokemon3D.GameModes.Maps
         }
 
         /// <summary>
-        /// Sets the texture of the entity to the texture at the provdided index in the data model.
+        /// Sets the texture of the entity to the texture at the provided index in the data model.
         /// </summary>
         public void SetTexture(int index)
         {

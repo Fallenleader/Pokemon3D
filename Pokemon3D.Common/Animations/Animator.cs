@@ -25,8 +25,10 @@ namespace Pokemon3D.Common.Animations
         /// <summary>
         /// Gets called when the last animation of animator has finished.
         /// </summary>
-        public event Action AnimatorFinished; 
-        
+        public event Action AnimatorFinished;
+
+        public string CurrentAnimationName => _currentAnimationName;
+
         /// <summary>
         /// Currently active animation.
         /// </summary>

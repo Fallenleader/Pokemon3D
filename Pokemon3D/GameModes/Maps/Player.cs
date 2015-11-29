@@ -136,7 +136,10 @@ namespace Pokemon3D.GameModes.Maps
 
         private void ActivateWalkingAnimation(string animationName)
         {
-            if (_figureAnimator.CurrentAnimation == null) _figureAnimator.SetAnimation(animationName);
+            if (_figureAnimator.CurrentAnimation == null || _figureAnimator.CurrentAnimationName != animationName)
+            {
+                _figureAnimator.SetAnimation(animationName);
+            }
         }
 
         private void DeactivateWalkingAnimation()
