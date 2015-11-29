@@ -13,5 +13,6 @@ namespace Pokemon3D.Common
         ShapeRenderer ShapeRenderer { get; }
         GraphicsDevice GraphicsDevice { get; }
         Localization.TranslationProvider TranslationProvider { get; }
+        string VersionInformation { get; }
     }
 }

@@ -58,6 +58,8 @@ namespace Pokemon3D.GameCore
         public TranslationProvider TranslationProvider { get; private set; }
         public NotificationBar NotificationBar { get; private set; }
 
+        public string VersionInformation => string.Format("{0} {1}", VERSION, DEVELOPMENT_STAGE);
+
         /// <summary>
         /// Object to manage loaded GameModes.
         /// </summary>

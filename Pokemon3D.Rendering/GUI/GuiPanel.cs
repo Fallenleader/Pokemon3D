@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Pokemon3D.Common;
-using System.IO;
 
 namespace Pokemon3D.Rendering.GUI
 {
     public class GuiPanel : GameContextObject
     {
-        private readonly List<GuiElement> _elements = new List<GuiElement>();
+        private GuiElement _root;
 
         private GuiElement _currentMouseOverElement;
         private GuiElement _focusedElement;
@@ -18,21 +15,17 @@ namespace Pokemon3D.Rendering.GUI
 
         public bool IsEnabled { get; set; }
 
-        public GuiPanel(GameContext gameContext) : base(gameContext)
+        public GuiPanel(GameContext gameContext, GuiElement guiElement, Rectangle? bounds = null) : base(gameContext)
         {
+            _root = guiElement;
             _lastMouseState = Mouse.GetState();
             IsEnabled = true;
+            ArrangeElement(_root, bounds);
         }
 
-        public void AddElement(GuiElement element)
+        private void ArrangeElement(GuiElement element, Rectangle? bounds = null)
         {
-            _elements.Add(element);
-            ArrangeElement(element);
-        }
-
-        private void ArrangeElement(GuiElement element)
-        {
-            element.Arrange(GameContext.ScreenBounds);
+            element.Arrange(bounds ?? GameContext.ScreenBounds);
         }
 
         public void Update(float elapsedTime)
@@ -41,11 +34,11 @@ namespace Pokemon3D.Rendering.GUI
             var newMouseState = Mouse.GetState();
 
             HandleDisabledElements();
-
-            foreach (var element in _elements.Where(e => e.IsActive))
+            
+            if (_root.IsActive)
             {
-                UpdateElementUiEvents(element, newMouseState);
-                element.Update(elapsedTime);
+                UpdateElementUiEvents(_root, newMouseState);
+                _root.Update(elapsedTime);
             }
 
             _lastMouseState = newMouseState;
@@ -153,11 +146,9 @@ namespace Pokemon3D.Rendering.GUI
 
         public void Draw()
         {
-            if (!IsEnabled) return;
-            foreach (var element in _elements.Where(e => e.IsActive))
-            {
-                element.Draw(GameContext.SpriteBatch);
-            }
+            if (!IsEnabled || !_root.IsActive) return;
+
+            _root.Draw(GameContext.SpriteBatch);
         }
     }
 }
