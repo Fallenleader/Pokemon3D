@@ -12,6 +12,10 @@
 				"Val" : "Load Existing Game"
 			},
 			{
+				"Id" : "OptionsButton",
+				"Val" : "Options"
+			},
+			{
 				"Id" : "QuitButton",
 				"Val" : "Quit Game"
 			}
@@ -28,6 +32,10 @@
 			{
 				"Id" : "LoadButton",
 				"Val" : "Spiel laden"
+			},
+			{
+				"Id" : "OptionsButton",
+				"Val" : "Optionen"
 			},
 			{
 				"Id" : "QuitButton",

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackPanel Orientation="Vertical"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Middle">
+  
+  <Button Margin="10" Id="BackToMainMenuButton">
+    <TextBlock Text="@Back To Main Menu" Margin="40,20" />
+  </Button>
+</StackPanel>

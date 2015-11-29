@@ -11,6 +11,7 @@ namespace Pokemon3D.UI.Screens
         private SpriteText _versionInformation;
 
         private GuiPanel _mainMenuPanel;
+        private GuiPanel _optionsMenuPanel;
 
         protected override void OnInitialize(object enterInformation)
         {
@@ -36,7 +37,27 @@ namespace Pokemon3D.UI.Screens
 
             root.FindGuiElementById<Button>("StartButton").Click += OnStartClick;
             root.FindGuiElementById<Button>("LoadButton").Click += OnLoadClick;
+            root.FindGuiElementById<Button>("OptionsButton").Click += OnOptionsClick;
             root.FindGuiElementById<Button>("QuitButton").Click += OnQuitClick;
+
+            root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("Content/Gui/OptionsMenu.xml");
+            _optionsMenuPanel = new GuiPanel(Game, root, guiSpace)
+            {
+                IsEnabled = false
+            };
+            root.FindGuiElementById<Button>("BackToMainMenuButton").Click += OnBackToMainMenuButtonClick;
+        }
+
+        private void OnBackToMainMenuButtonClick()
+        {
+            _optionsMenuPanel.IsEnabled = false;
+            _mainMenuPanel.IsEnabled = true;
+        }
+
+        private void OnOptionsClick()
+        {
+            _optionsMenuPanel.IsEnabled = true;
+            _mainMenuPanel.IsEnabled = false;
         }
 
         private void OnLoadClick()
@@ -53,12 +74,14 @@ namespace Pokemon3D.UI.Screens
             _versionInformation.Draw(Game.SpriteBatch);
 
             _mainMenuPanel.Draw();
+            _optionsMenuPanel.Draw();
             Game.SpriteBatch.End();
         }
 
         public override void OnUpdate(float elapsedTime)
         {
             _mainMenuPanel.Update(elapsedTime);
+            _optionsMenuPanel.Update(elapsedTime);
         }
 
         public override void OnClosing()
