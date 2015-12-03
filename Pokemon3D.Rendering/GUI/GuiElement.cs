@@ -51,6 +51,7 @@ namespace Pokemon3D.Rendering.GUI
                 case "Button": return new Button(guiSystem, element);
                 case "TextBox": return new TextBox(guiSystem, element);
                 case "ScrollViewer": return new ScrollViewer(guiSystem, element);
+                case "CheckBox": return new CheckBox(guiSystem, element);
             }
 
             throw new ArgumentException("Invalid Element Type", "element");

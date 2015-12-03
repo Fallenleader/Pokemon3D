@@ -20,6 +20,7 @@ namespace Pokemon3D.Rendering.GUI
                 new TextBlockSkinItemDescriptor(),
                 new ButtonSkinItemDescriptor(),
                 new TextBoxSkinItemDescriptor(),
+                new CheckBoxSkinItemDescriptor()
             };
         }
 

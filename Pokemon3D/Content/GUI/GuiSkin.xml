@@ -7,4 +7,7 @@
           Border="12" />
   <TextBox NormalRectangle="96,0,32,32"
            Border="6"/>
+  <CheckBox NormalRectangle="0,32,20,20"
+            HoverRectangle="20,32,20,20"
+            CheckmarkRectangle="40,32,20,20"/>
 </GuiSkin>

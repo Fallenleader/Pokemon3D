@@ -15,6 +15,8 @@ namespace Pokemon3D.Rendering.GUI
         public Vector2 Origin { get; set; }
         public Rectangle Bounds { get; protected set; }
 
+        public Rectangle? SourceRectangle { get; set; }
+
         public Vector2 Position
         {
             get { return _position; }
@@ -40,12 +42,11 @@ namespace Pokemon3D.Rendering.GUI
 
         public virtual void SetBounds(Rectangle rectangle)
         {
-            
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White * Alpha, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White * Alpha, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
         }
 
         public Vector2 Size
