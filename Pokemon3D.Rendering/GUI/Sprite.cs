@@ -1,67 +1,60 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Common.Extensions;
 
 namespace Pokemon3D.Rendering.GUI
 {
     public class Sprite
     {
-        private Vector2 _position;
-        public Texture2D Texture { get; set; }
-        
-        public float Rotation { get; set; }
-        public float Alpha { get; set; }
-        public Vector2 Scale { get; set; }
-        public Vector2 Origin { get; set; }
-        public Rectangle Bounds { get; protected set; }
-
-        public Rectangle? SourceRectangle { get; set; }
-
-        public Vector2 Position
-        {
-            get { return _position; }
-            set
-            {
-                var difference = value - _position;
-                _position = value;
-
-                var bounds = Bounds;
-                bounds.X += (int)Math.Round(difference.X, MidpointRounding.AwayFromZero);
-                bounds.Y += (int)Math.Round(difference.Y, MidpointRounding.AwayFromZero);
-                Bounds = bounds;
-            }
-        }
-
         public Sprite(Texture2D texture)
         {
             Texture = texture;
-            Origin = new Vector2(texture.Width * 0.5f, texture.Height *0.5f);
             Alpha = 1.0f;
             Scale = new Vector2(1.0f);
         }
 
+        public Texture2D Texture { get; set; }
+        
+        public float Alpha { get; set; }
+        public float Rotation { get; set; }
+        public Vector2 Scale { get; set; }
+
+        public virtual Rectangle Bounds
+        {
+            get
+            {
+                var srcRect = GetSourceRectangle();
+                var size = new Vector2(srcRect.Width * Scale.X, srcRect.Height* Scale.Y).SnapToPixels();
+                return new Rectangle((int) Position.X, (int)Position.Y, (int) size.X, (int) size.Y);
+            }
+        }
+
+        public Vector2 Position { get; set; }
+        public Rectangle? SourceRectangle { get; set; }
+
         public virtual void SetBounds(Rectangle rectangle)
         {
+            var bounds = GetSourceRectangle();
+            var scaleX = bounds.Width/(float)rectangle.Width;
+            var scaleY = bounds.Height/(float)rectangle.Height;
+            Scale = new Vector2(scaleX, scaleY);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White * Alpha, Rotation, Origin, Scale, SpriteEffects.None, 0.0f);
+            var sourceRectangle = GetSourceRectangle();
+            spriteBatch.Draw(Texture, Position, SourceRectangle, Color.White * Alpha, Rotation, new Vector2(sourceRectangle.Width*0.5f, sourceRectangle.Height * 0.5f), Scale, SpriteEffects.None, 0.0f);
         }
 
-        public Vector2 Size
-        {
-            get { return new Vector2(Texture.Width, Texture.Height);}
-        }
+        public Vector2 Size => new Vector2(Bounds.Width, Bounds.Height);
 
-        public float Width
-        {
-            get { return Texture.Width; }
-        }
+        public float Width => GetSourceRectangle().Width * Scale.X;
 
-        public float Height
+        public float Height => GetSourceRectangle().Height * Scale.Y;
+
+        private Rectangle GetSourceRectangle()
         {
-            get { return Texture.Height; }
+            return (SourceRectangle ?? Texture?.Bounds).GetValueOrDefault(Rectangle.Empty);
         }
     }
 }

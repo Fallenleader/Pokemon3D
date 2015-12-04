@@ -19,8 +19,7 @@ namespace Pokemon3D.UI.Screens
             {
                 Scale = new Vector2(0.5f)
             };
-            _headerSprite.Origin = new Vector2(_headerSprite.Width * 0.5f, 0.0f);
-            _headerSprite.Position = new Vector2(Game.ScreenBounds.Width * 0.5f, 10.0f);
+            _headerSprite.Position = new Vector2(Game.ScreenBounds.Width * 0.5f, _headerSprite.Bounds.Height * 0.5f + 10.0f);
             _versionInformation = new SpriteText(Game.Content.Load<SpriteFont>(ResourceNames.Fonts.NormalFont))
             {
                 Color = Color.White,

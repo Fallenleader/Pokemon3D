@@ -15,6 +15,7 @@ namespace Pokemon3D.Rendering.GUI
         private readonly int _bottomBorder;
         private readonly int _commulativeFixedWidth;
         private readonly int _commulativeFixedHeight;
+        private Rectangle _bounds;
 
         public NinePatchSprite(Texture2D texture, int unitBorder)
             : this(texture, null, unitBorder, unitBorder, unitBorder, unitBorder)
@@ -135,8 +136,10 @@ namespace Pokemon3D.Rendering.GUI
             target.Width = _rightBorder;
             if (target.Width > 0 && target.Height > 0) AddPatchField(source, target);
 
-            Bounds = bounds;
+            _bounds = bounds;
         }
+
+        public override Rectangle Bounds => _bounds;
 
         public override void Draw(SpriteBatch spriteBatch)
         {

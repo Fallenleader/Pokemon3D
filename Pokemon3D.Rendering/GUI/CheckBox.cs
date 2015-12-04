@@ -30,15 +30,12 @@ namespace Pokemon3D.Rendering.GUI
 
             _normalBorder = new Sprite(itemDescriptor.SkinTexture);
             _normalBorder.SourceRectangle = itemDescriptor.NormalRectangle;
-            _normalBorder.Origin = new Vector2(itemDescriptor.NormalRectangle.Width * 0.5f, itemDescriptor.NormalRectangle.Height * 0.5f);
 
             _hoverBorder = new Sprite(itemDescriptor.SkinTexture);
             _hoverBorder.SourceRectangle =  itemDescriptor.HoverRectangle;
-            _hoverBorder.Origin = new Vector2(itemDescriptor.HoverRectangle.Width * 0.5f, itemDescriptor.HoverRectangle.Height * 0.5f);
 
             _checkmarkSprite = new Sprite(itemDescriptor.SkinTexture);
             _checkmarkSprite.SourceRectangle = itemDescriptor.CheckmarkRectangle;
-            _checkmarkSprite.Origin = new Vector2(itemDescriptor.CheckmarkRectangle.Width * 0.5f, itemDescriptor.CheckmarkRectangle.Height * 0.5f);
         }
 
         public override Rectangle GetMinSize()
