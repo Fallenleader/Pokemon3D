@@ -42,31 +42,33 @@ namespace Pokemon3D.Rendering.GUI
         {
             var contentSize = Child?.GetMinSize() ?? Rectangle.Empty;
 
-            contentSize.Width += (int)20;
-            contentSize.Height = (int) Math.Max(contentSize.Height, 20);
+            contentSize.Width += (int)_normalBorder.Width;
+            contentSize.Height = (int) Math.Max(contentSize.Height, _normalBorder.Width);
 
             return ApplyMarginAndHandleSize(contentSize);
         }
 
         public override void Arrange(Rectangle target)
         {
-            var widthOfCheckboxMarker = (int)20;
             var targetWithoutMargin = RemoveMargin(target);
+            var minSizeOfContent = Child?.GetMinSize() ?? Rectangle.Empty;
 
+            var usedWidth = Math.Min(targetWithoutMargin.Width, (int)_normalBorder.Width + minSizeOfContent.Width);
+            var usedHeight = Math.Min(targetWithoutMargin.Height, Math.Max(minSizeOfContent.Height, (int)_normalBorder.Height));
+            var usedSize = new Rectangle(0,0, usedWidth, usedHeight);
             
-            targetWithoutMargin.X += widthOfCheckboxMarker;
-            targetWithoutMargin.Width -= widthOfCheckboxMarker;
-
-            Child?.Arrange(targetWithoutMargin);
-
-            var usedSize = Child?.Bounds ?? Rectangle.Empty;
-            usedSize.Width += widthOfCheckboxMarker;
-            usedSize.X -= widthOfCheckboxMarker;
-
             Bounds = ArrangeToAlignments(targetWithoutMargin, usedSize);
-            _normalBorder.Position = new Vector2(Bounds.X, Bounds.Y + Bounds.Height / 2);
-            _hoverBorder.Position = new Vector2(Bounds.X, Bounds.Y + Bounds.Height / 2);
-            _checkmarkSprite.Position = new Vector2(Bounds.X, Bounds.Y + Bounds.Height / 2);
+            _normalBorder.Position = new Vector2(Bounds.X + _normalBorder.Width * 0.5f, Bounds.Y + Bounds.Height / 2);
+            _hoverBorder.Position = new Vector2(Bounds.X + _normalBorder.Width * 0.5f, Bounds.Y + Bounds.Height / 2);
+            _checkmarkSprite.Position = new Vector2(Bounds.X + _normalBorder.Width * 0.5f, Bounds.Y + Bounds.Height / 2);
+
+            if (Child != null)
+            {
+                var boundsOfChild = Bounds;
+                boundsOfChild.X += (int)_normalBorder.Width;
+                boundsOfChild.Width -= (int)_normalBorder.Width;
+                Child.Arrange(boundsOfChild);
+            }
         }
 
         public override void Translate(int x, int y)

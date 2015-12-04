@@ -7,7 +7,7 @@ namespace Pokemon3D.Rendering.GUI
 {
     public class SpriteText
     {
-        public SpriteFont Font { get; private set; }
+        public SpriteFont Font { get; }
 
         private string _text;
 

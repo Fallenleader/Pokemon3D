@@ -115,6 +115,8 @@ namespace Pokemon3D.Rendering.GUI
 
                 guiElement.Arrange(rectangle);
             }
+
+            Bounds = newBoundsAligned;
         }
 
         public override void Translate(int x, int y)

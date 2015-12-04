@@ -1,0 +1,62 @@
+[
+	{
+		"Id" : "System",
+		"Language" : "en",
+		"Tokens" : [
+			{
+				"Id" : "StartNewGame",
+				"Val" : "Start New Game"
+			},
+			{
+				"Id" : "LoadGame",
+				"Val" : "Load Existing Game"
+			},
+			{
+				"Id" : "Options",
+				"Val" : "Options"
+			},
+			{
+				"Id" : "QuitGame",
+				"Val" : "Quit Game"
+			},
+			{
+				"Id" : "Back",
+				"Val" : "Back"
+			},
+			{
+				"Id" : "EnableShadows",
+				"Val" : "Enable Shadows"
+			}
+		]
+	},
+	{
+		"Id" : "System",
+		"Language" : "de",
+		"Tokens" : [
+			{
+				"Id" : "StartNewGame",
+				"Val" : "Neues Spiel starten"
+			},
+			{
+				"Id" : "LoadGame",
+				"Val" : "Spiel laden"
+			},
+			{
+				"Id" : "Options",
+				"Val" : "Optionen"
+			},
+			{
+				"Id" : "QuitGame",
+				"Val" : "Spiel beenden"
+			},
+			{
+				"Id" : "Back",
+				"Val" : "Zurueck"
+			},
+			{
+				"Id" : "EnableShadows",
+				"Val" : "Schatten verwenden"
+			}
+		]
+	}
+]

@@ -36,10 +36,11 @@ namespace Pokemon3D.UI.Localization
 
         public string GetTranslation(string sectionId, string tokenId)
         {
-            string key = string.Format(KeyFormat, Game.GameConfig.DisplayLanguage, sectionId, tokenId);
-            string value = "";
-            _translations.TryGetValue(key, out value);
-            return value;
+            var key = string.Format(KeyFormat, Game.GameConfig.DisplayLanguage, sectionId, tokenId);
+            string value;
+            if (_translations.TryGetValue(key, out value)) return value;
+
+            return string.Format("@{0}:{1}", sectionId, tokenId);
         }
         
         public void OnLanguageChanged(object sender, EventArgs e)
