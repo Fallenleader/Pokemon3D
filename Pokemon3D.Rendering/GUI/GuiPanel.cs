@@ -149,6 +149,20 @@ namespace Pokemon3D.Rendering.GUI
             if (!IsEnabled || !_root.IsActive) return;
 
             _root.Draw(GameContext.SpriteBatch);
+
+#if DEBUG_RENDERING
+
+            DrawBounds(_root);
+#endif
+        }
+
+        private void DrawBounds(GuiElement root)
+        {
+            GameContext.ShapeRenderer.DrawRectangle(root.Bounds, Color.Green);
+            foreach (var childElement in root.Children)
+            {
+                DrawBounds(childElement);
+            }
         }
     }
 }
