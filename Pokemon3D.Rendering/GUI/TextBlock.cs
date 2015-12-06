@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Common.Extensions;
 using Pokemon3D.Rendering.GUI.ItemDescriptors;
-using Pokemon3D.Rendering.Localization;
 
 namespace Pokemon3D.Rendering.GUI
 {
@@ -34,7 +33,7 @@ namespace Pokemon3D.Rendering.GUI
             if (element.HasAttribute("Text")) Text = element.GetAttribute("Text");
             if (element.HasAttribute("Color")) Color = element.GetAttribute("Color").ParseColor();
 
-            TranslationTextBinding.Create(GuiSystem.GameContext.TranslationProvider, Text, t => Text = t);
+            AddTranslationBinding(Text, t => Text = t);
         }
 
         public TextBlock(GuiSystem guiSystem)
@@ -46,11 +45,13 @@ namespace Pokemon3D.Rendering.GUI
         private void InitializeDrawElements()
         {
             var descriptor = GuiSystem.GetSkinItemDescriptor<TextBlockSkinItemDescriptor>();
-            _spriteText = new SpriteText(descriptor.NormalFont);
+            _spriteText = new SpriteText(descriptor.NormalFont)
+            {
+                HorizontalAlignment = HorizontalAlignment,
+                VerticalAlignment = VerticalAlignment,
+                Color = Color.Black
+            };
 
-            _spriteText.HorizontalAlignment = HorizontalAlignment;
-            _spriteText.VerticalAlignment = VerticalAlignment;
-            _spriteText.Color = Color.Black;
         }
 
         internal Rectangle GetMinSize(bool includeHeightForEmptyText)

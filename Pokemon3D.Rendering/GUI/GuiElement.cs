@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Pokemon3D.Rendering.Localization;
 
 namespace Pokemon3D.Rendering.GUI
 {
@@ -21,6 +22,7 @@ namespace Pokemon3D.Rendering.GUI
     {
         private bool _isActive;
         public const int SizeNotSet = int.MinValue;
+        private readonly List<TranslationTextBinding> _textBindings = new List<TranslationTextBinding>(); 
 
         public bool IsActive
         {
@@ -138,7 +140,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public abstract void Arrange(Rectangle target);
 
-        internal Rectangle ArrangeToAlignments(Rectangle availableBounds, Rectangle elementBounds)
+        protected Rectangle ArrangeToAlignments(Rectangle availableBounds, Rectangle elementBounds)
         {
             var finalRectangle = new Rectangle(0,0,elementBounds.Width, elementBounds.Height);
 
@@ -181,6 +183,12 @@ namespace Pokemon3D.Rendering.GUI
             }
 
             return finalRectangle;
+        }
+
+        protected void AddTranslationBinding(string resourceKey, Action<string> resolve)
+        {
+            var translationTextBinding = new TranslationTextBinding(GuiSystem.GameContext.TranslationProvider, resourceKey, resolve);
+            _textBindings.Add(translationTextBinding);
         }
 
         public abstract void Translate(int x, int y);

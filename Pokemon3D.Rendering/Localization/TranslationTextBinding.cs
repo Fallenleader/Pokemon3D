@@ -9,46 +9,35 @@ namespace Pokemon3D.Rendering.Localization
     /// </summary>
     class TranslationTextBinding
     {
-        private TranslationProvider _translationProvider;
-        private string _text;
-        private Action<string> _resolveText;
+        private readonly TranslationProvider _translationProvider;
+        private readonly string _text;
+        private readonly Action<string> _resolveText;
 
-        public static void Create(TranslationProvider translationProvider, string text, Action<string> resolveText)
-        {
-            new TranslationTextBinding(translationProvider, text, resolveText);
-        }
-
-        private TranslationTextBinding(TranslationProvider translationProvider, string text, Action<string> resolveText)
+        public TranslationTextBinding(TranslationProvider translationProvider, string text, Action<string> resolveText)
         {
             _translationProvider = translationProvider;
             _text = text;
             _resolveText = resolveText;
-            _translationProvider.LanguageChanged += new EventHandler(TranslationChanged);
+            _translationProvider.LanguageChanged += (s,e) => Resolve();
 
-            // Resolve initially:
-            Resolve();
-        }
-
-        private void TranslationChanged(object sender, EventArgs e)
-        {
             Resolve();
         }
 
         private void Resolve()
         {
-            _resolveText(TranslateText(_text));
+            var translateText = TranslateText(_text);
+            _resolveText(translateText);
         }
 
         private string TranslateText(string text)
         {
             var matches = Regex.Matches(text, @"{i18n:\w+:\w+}");
 
-            for (int i = matches.Count - 1; i >= 0; i--)
+            for (var i = matches.Count - 1; i >= 0; i--)
             {
-                Match match = matches[i];
-                
-                string[] parts = match.Value.Trim('{', '}').Split(':');
-                string result = _translationProvider.GetTranslation(parts[1], parts[2]);
+                var match = matches[i];
+                var parts = match.Value.Trim('{', '}').Split(':');
+                var result = _translationProvider.GetTranslation(parts[1], parts[2]);
 
                 text = text.Remove(match.Index, match.Length);
 
