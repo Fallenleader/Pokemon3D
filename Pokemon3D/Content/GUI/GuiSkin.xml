@@ -10,4 +10,10 @@
   <CheckBox NormalRectangle="0,32,20,20"
             HoverRectangle="20,32,20,20"
             CheckmarkRectangle="40,32,20,20"/>
+  <ComboBox NormalRectangle="64,32,20,20"
+            HoverRectangle="84,32,20,20"
+            ToggleButtonRectangle="104,32,20,20"
+            Border="2"
+            PopupBorder="2"
+            PopupRectangle="64,32,20,20"/>
 </GuiSkin>

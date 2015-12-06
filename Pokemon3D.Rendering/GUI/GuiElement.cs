@@ -41,23 +41,7 @@ namespace Pokemon3D.Rendering.GUI
 
         protected GuiSystem GuiSystem { get; private set; }
 
-        public static GuiElement CreateFromXmlType(GuiSystem guiSystem, XmlElement element)
-        {
-            switch (element.LocalName)
-            {
-                case "Frame": return new Frame(guiSystem, element);
-                case "TextBlock": return new TextBlock(guiSystem, element);
-                case "StackPanel": return new StackPanel(guiSystem, element);
-                case "Image": return new Image(guiSystem, element);
-                case "Grid": return new Grid(guiSystem, element);
-                case "Button": return new Button(guiSystem, element);
-                case "TextBox": return new TextBox(guiSystem, element);
-                case "ScrollViewer": return new ScrollViewer(guiSystem, element);
-                case "CheckBox": return new CheckBox(guiSystem, element);
-            }
-
-            throw new ArgumentException("Invalid Element Type", "element");
-        }
+        
 
         protected GuiElement(GuiSystem guiSystem)
         {
@@ -107,7 +91,7 @@ namespace Pokemon3D.Rendering.GUI
             return null;
         }
 
-        protected Rectangle ApplyMarginAndHandleSize(Rectangle rectangle)
+        protected Rectangle ApplyMargin(Rectangle rectangle)
         {
             rectangle.X -= Margin.Left;
             rectangle.Y -= Margin.Top;

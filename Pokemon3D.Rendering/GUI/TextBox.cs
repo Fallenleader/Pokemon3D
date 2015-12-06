@@ -77,7 +77,7 @@ namespace Pokemon3D.Rendering.GUI
             minSizeOfTextBlock.Width += _border.FixedBorder.Horizontal;
             minSizeOfTextBlock.Height += _border.FixedBorder.Vertical;
 
-            return ApplyMarginAndHandleSize(minSizeOfTextBlock);
+            return ApplyMargin(minSizeOfTextBlock);
         }
 
         public override void Arrange(Rectangle target)

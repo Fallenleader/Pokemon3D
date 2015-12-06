@@ -7,7 +7,7 @@ namespace Pokemon3D.Rendering.GUI.ItemDescriptors
 {
     public class ButtonSkinItemDescriptor : SkinItemDescriptor
     {
-        public string NodeName { get { return "Button"; } }
+        public string NodeName => "Button";
 
         public Texture2D SkinTexture { get; set; }
         public SpriteFont BigFont { get; set; }

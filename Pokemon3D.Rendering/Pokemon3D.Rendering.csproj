@@ -74,6 +74,7 @@
     <Compile Include="Data\Primitives.cs" />
     <Compile Include="GUI\Button.cs" />
     <Compile Include="GUI\CheckBox.cs" />
+    <Compile Include="GUI\ComboBox.cs" />
     <Compile Include="GUI\ContentControl.cs" />
     <Compile Include="GUI\Frame.cs" />
     <Compile Include="GUI\Grid.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="GUI\Image.cs" />
     <Compile Include="GUI\ItemDescriptors\ButtonSkinItemDescriptor.cs" />
     <Compile Include="GUI\ItemDescriptors\CheckBoxSkinItemDescriptor.cs" />
+    <Compile Include="GUI\ItemDescriptors\ComboBoxItemDescriptor.cs" />
     <Compile Include="GUI\ItemDescriptors\FrameSkinItemDescriptor.cs" />
     <Compile Include="GUI\ItemDescriptors\TextBlockSkinItemDescriptor.cs" />
     <Compile Include="GUI\ItemDescriptors\TextBoxSkinItemDescriptor.cs" />

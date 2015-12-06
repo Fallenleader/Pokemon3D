@@ -37,7 +37,7 @@ namespace Pokemon3D.Rendering.GUI
         {
             if (element.HasChildNodes)
             {
-                Child = CreateFromXmlType(guiSystem, (XmlElement)element.FirstChild);
+                Child = guiSystem.CreateFromXmlType((XmlElement)element.FirstChild);
             }
         }
 

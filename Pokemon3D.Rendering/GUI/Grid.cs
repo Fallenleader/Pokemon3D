@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,7 +58,7 @@ namespace Pokemon3D.Rendering.GUI
 
                 var gridRow = Math.Min(_rowDefinitions.Count-1, GetAttachedRow(childElement));
                 var gridColumn = Math.Min(_columnDefinitions.Count-1, GetAttachedColumn(childElement));
-                var childGuiElement = CreateFromXmlType(GuiSystem, childElement);
+                var childGuiElement = GuiSystem.CreateFromXmlType(childElement);
 
                 AddChild(gridColumn, gridRow, childGuiElement);
             }
@@ -114,7 +113,7 @@ namespace Pokemon3D.Rendering.GUI
             var totalHeight = maxHeightOfRow.Sum(r => r.Value);
             var totalWidth = maxWidthOfColumn.Sum(r => r.Value);
 
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, totalWidth, totalHeight));
+            return ApplyMargin(new Rectangle(0, 0, totalWidth, totalHeight));
         }
 
         public override void Arrange(Rectangle target)

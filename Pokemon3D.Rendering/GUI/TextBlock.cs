@@ -58,10 +58,10 @@ namespace Pokemon3D.Rendering.GUI
         {
             if (string.IsNullOrEmpty(Text))
             {
-                return ApplyMarginAndHandleSize(includeHeightForEmptyText ? new Rectangle(0,0,0,_spriteText.LineSpacing) : new Rectangle());
+                return ApplyMargin(includeHeightForEmptyText ? new Rectangle(0,0,0,_spriteText.LineSpacing) : new Rectangle());
             }
 
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, (int)Math.Round(_spriteText.TextSize.X), (int)Math.Round(_spriteText.TextSize.Y)));
+            return ApplyMargin(new Rectangle(0, 0, (int)Math.Round(_spriteText.TextSize.X), (int)Math.Round(_spriteText.TextSize.Y)));
         }
 
         public override Rectangle GetMinSize()

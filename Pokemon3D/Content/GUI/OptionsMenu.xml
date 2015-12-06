@@ -17,6 +17,8 @@
                HorizontalAlignment="Left" />
   </CheckBox>
 
+  <ComboBox Id="ShadowQualityComboBox" HorizontalAlignment="Left" Margin="10" />
+
   <Button Margin="10" Id="BackToMainMenuButton" HorizontalAlignment="Left">
     <TextBlock Text="{i18n:System:Back}" />
   </Button>

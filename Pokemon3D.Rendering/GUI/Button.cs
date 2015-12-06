@@ -34,10 +34,10 @@ namespace Pokemon3D.Rendering.GUI
 
         public override Rectangle GetMinSize()
         {
-            if (Child == null) return ApplyMarginAndHandleSize(_normalSprite.MinSize);
+            if (Child == null) return ApplyMargin(_normalSprite.MinSize);
 
             var childMinSize = Child.GetMinSize();
-            return ApplyMarginAndHandleSize(new Rectangle(0, 0, childMinSize.Width + _normalSprite.FixedBorder.Horizontal, childMinSize.Height + _normalSprite.FixedBorder.Vertical));
+            return ApplyMargin(new Rectangle(0, 0, childMinSize.Width + _normalSprite.FixedBorder.Horizontal, childMinSize.Height + _normalSprite.FixedBorder.Vertical));
         }
 
         public override void Arrange(Rectangle target)

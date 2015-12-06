@@ -45,7 +45,7 @@ namespace Pokemon3D.Rendering.GUI
             contentSize.Width += (int)_normalBorder.Width;
             contentSize.Height = (int) Math.Max(contentSize.Height, _normalBorder.Width);
 
-            return ApplyMarginAndHandleSize(contentSize);
+            return ApplyMargin(contentSize);
         }
 
         public override void Arrange(Rectangle target)

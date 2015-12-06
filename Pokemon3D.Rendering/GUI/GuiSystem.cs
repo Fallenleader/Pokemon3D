@@ -20,7 +20,8 @@ namespace Pokemon3D.Rendering.GUI
                 new TextBlockSkinItemDescriptor(),
                 new ButtonSkinItemDescriptor(),
                 new TextBoxSkinItemDescriptor(),
-                new CheckBoxSkinItemDescriptor()
+                new CheckBoxSkinItemDescriptor(),
+                new ComboBoxItemDescriptor()
             };
         }
 
@@ -55,12 +56,31 @@ namespace Pokemon3D.Rendering.GUI
             });
         }
 
+        internal GuiElement CreateFromXmlType(XmlElement element)
+        {
+            switch (element.LocalName)
+            {
+                case "Frame": return new Frame(this, element);
+                case "TextBlock": return new TextBlock(this, element);
+                case "StackPanel": return new StackPanel(this, element);
+                case "Image": return new Image(this, element);
+                case "Grid": return new Grid(this, element);
+                case "Button": return new Button(this, element);
+                case "TextBox": return new TextBox(this, element);
+                case "ScrollViewer": return new ScrollViewer(this, element);
+                case "CheckBox": return new CheckBox(this, element);
+                case "ComboBox": return new ComboBox(this, element);
+            }
+
+            throw new ArgumentException("Invalid Element Type", nameof(element));
+        }
+
         public TGuiElement CreateGuiHierarchyFromXml<TGuiElement>(string xmlFile) where TGuiElement : GuiElement
         {
             var document = new XmlDocument();
             document.Load(xmlFile);
 
-            return (TGuiElement)GuiElement.CreateFromXmlType(this, document.DocumentElement);
+            return (TGuiElement)CreateFromXmlType(document.DocumentElement);
         }
 
         internal TSkinItemDescriptor GetSkinItemDescriptor<TSkinItemDescriptor>()

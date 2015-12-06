@@ -31,7 +31,7 @@ namespace Pokemon3D.Rendering.GUI
             
             foreach (XmlElement childElement in element.ChildNodes)
             {
-                AddChild(CreateFromXmlType(guiSystem, childElement));
+                AddChild(guiSystem.CreateFromXmlType(childElement));
             }
         }
 
@@ -57,7 +57,7 @@ namespace Pokemon3D.Rendering.GUI
                 }
             }
 
-            return ApplyMarginAndHandleSize(size);
+            return ApplyMargin(size);
         }
 
         public override void Arrange(Rectangle target)

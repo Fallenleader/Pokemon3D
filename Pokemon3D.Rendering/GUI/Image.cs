@@ -39,7 +39,7 @@ namespace Pokemon3D.Rendering.GUI
 
         public override Rectangle GetMinSize()
         {
-            return ApplyMarginAndHandleSize(SourceRectangle.Scale(Scale));
+            return ApplyMargin(SourceRectangle.Scale(Scale));
         }
 
         public override void Arrange(Rectangle target)

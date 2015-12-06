@@ -67,7 +67,7 @@ namespace Pokemon3D.Rendering.GUI
                 Height = CanScrollVertically ? SliderSize : (childSize.Height + (CanScrollHorizontally ? SliderSize : 0))
             };
 
-            return ApplyMarginAndHandleSize(size);
+            return ApplyMargin(size);
         }
 
         public override void Arrange(Rectangle target)

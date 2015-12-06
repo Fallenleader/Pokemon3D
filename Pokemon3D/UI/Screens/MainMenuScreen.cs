@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Pokemon3D.Rendering.GUI;
 using Pokemon3D.UI.Transitions;
+using Button = Pokemon3D.Rendering.GUI.Button;
+using HorizontalAlignment = Pokemon3D.Rendering.GUI.HorizontalAlignment;
 
 namespace Pokemon3D.UI.Screens
 {
@@ -40,11 +42,14 @@ namespace Pokemon3D.UI.Screens
             root.FindGuiElementById<Button>("QuitButton").Click += OnQuitClick;
 
             root = Game.GuiSystem.CreateGuiHierarchyFromXml<GuiElement>("Content/Gui/OptionsMenu.xml");
-            _optionsMenuPanel = new GuiPanel(Game, root, guiSpace)
-            {
-                IsEnabled = false
-            };
             root.FindGuiElementById<Button>("BackToMainMenuButton").Click += OnBackToMainMenuButtonClick;
+            var shadowQualityComboBox = root.FindGuiElementById<ComboBox>("ShadowQualityComboBox");
+            shadowQualityComboBox.AddItem("Small");
+            shadowQualityComboBox.AddItem("Medium");
+            shadowQualityComboBox.AddItem("Large");
+            shadowQualityComboBox.SelectedIndex = 0;
+
+            _optionsMenuPanel = new GuiPanel(Game, root, guiSpace) { IsEnabled = false };
         }
 
         private void OnBackToMainMenuButtonClick()
