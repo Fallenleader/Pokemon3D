@@ -4,16 +4,16 @@
               HorizontalAlignment="Center"
               VerticalAlignment="Middle">
 
-  <Button Margin="10" Id="StartButton">
+  <Button Margin="10" Id="StartButton" HorizontalAlignment="Stretch">
     <TextBlock Text="{i18n:System:StartNewGame}" Margin="40,20" />
   </Button>
-  <Button Margin="10" Id="LoadButton">
+  <Button Margin="10" Id="LoadButton" HorizontalAlignment="Stretch">
     <TextBlock Text="{i18n:System:LoadGame}" Margin="40,20" />
   </Button>
-  <Button Margin="10" Id="OptionsButton">
+  <Button Margin="10" Id="OptionsButton" HorizontalAlignment="Stretch">
     <TextBlock Text="{i18n:System:Options}" Margin="40,20" />
   </Button>
-  <Button Margin="10" Id="QuitButton">
+  <Button Margin="10" Id="QuitButton" HorizontalAlignment="Stretch">
     <TextBlock Text="{i18n:System:QuitGame}" Margin="40,20" />
   </Button>
 </StackPanel>

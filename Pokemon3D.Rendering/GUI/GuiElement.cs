@@ -153,6 +153,10 @@ namespace Pokemon3D.Rendering.GUI
                 case HorizontalAlignment.Right:
                     finalRectangle.X = availableBounds.Right - elementBounds.Width;
                     break;
+                case HorizontalAlignment.Stretch:
+                    finalRectangle.X = availableBounds.X;
+                    finalRectangle.Width = availableBounds.Width;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -167,6 +171,10 @@ namespace Pokemon3D.Rendering.GUI
                     break;
                 case VerticalAlignment.Bottom:
                     finalRectangle.Y = availableBounds.Bottom - elementBounds.Height;
+                    break;
+                case VerticalAlignment.Stretch:
+                    finalRectangle.Y = availableBounds.Y;
+                    finalRectangle.Height = availableBounds.Height;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

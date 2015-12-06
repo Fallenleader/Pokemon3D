@@ -26,6 +26,10 @@
 			{
 				"Id" : "EnableShadows",
 				"Val" : "Enable Shadows"
+			},
+			{
+				"Id" : "EnableSoftShadows",
+				"Val" : "Soft Shadows"
 			}
 		]
 	},
@@ -56,6 +60,10 @@
 			{
 				"Id" : "EnableShadows",
 				"Val" : "Schatten verwenden"
+			},
+			{
+				"Id" : "EnableSoftShadows",
+				"Val" : "Weiche Schatten"
 			}
 		]
 	}

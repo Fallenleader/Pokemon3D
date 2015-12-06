@@ -10,7 +10,14 @@
                HorizontalAlignment="Left" />
   </CheckBox>
 
-  <Button Margin="10" Id="BackToMainMenuButton">
-    <TextBlock Text="{i18n:System:Back}" Margin="40,20" />
+  <CheckBox HorizontalAlignment="Left" Margin="10">
+    <TextBlock Margin="2,0,0,0"
+               Text="{i18n:System:EnableSoftShadows}"
+               Color="ffffffff"
+               HorizontalAlignment="Left" />
+  </CheckBox>
+
+  <Button Margin="10" Id="BackToMainMenuButton" HorizontalAlignment="Left">
+    <TextBlock Text="{i18n:System:Back}" />
   </Button>
 </StackPanel>

@@ -42,19 +42,23 @@ namespace Pokemon3D.Rendering.GUI
 
         public override void Arrange(Rectangle target)
         {
-            Bounds = RemoveMargin(target);
+            var targetWithoutMargin = RemoveMargin(target);
+            var minSizeOfContent = Child?.GetMinSize() ?? Rectangle.Empty;
 
+            var usedWidth = Math.Min(targetWithoutMargin.Width, _normalSprite.FixedBorder.Horizontal + minSizeOfContent.Width);
+            var usedHeight = Math.Min(targetWithoutMargin.Height, Math.Max(minSizeOfContent.Height, (int)_normalSprite.FixedBorder.Vertical + minSizeOfContent.Height));
+            var usedSize = new Rectangle(0, 0, usedWidth, usedHeight);
+
+            Bounds = ArrangeToAlignments(targetWithoutMargin, usedSize);
             _normalSprite.SetBounds(Bounds);
             _hoverSprite.SetBounds(Bounds);
 
             if (Child != null)
             {
-                var rectangle = Bounds;
-                rectangle.X += _normalSprite.FixedBorder.Top;
-                rectangle.Y += _normalSprite.FixedBorder.Left;
-                rectangle.Width -= _normalSprite.FixedBorder.Vertical;
-                rectangle.Height -= _normalSprite.FixedBorder.Vertical;
-                Child.Arrange(rectangle);
+                var boundsOfChild = Bounds;
+                boundsOfChild.X += _normalSprite.FixedBorder.Left;
+                boundsOfChild.Width -= _normalSprite.FixedBorder.Horizontal;
+                Child.Arrange(boundsOfChild);
             }
         }
 
