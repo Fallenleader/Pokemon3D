@@ -130,8 +130,13 @@ technique Default
 {
 	pass Pass1
 	{
-		VertexShader = compile vs_4_0 DefaultVertexShaderFunction();
-		PixelShader = compile ps_4_0 DefaultPixelShaderFunction();
+#if MACOSX
+		VertexShader = compile vs_3_0 DefaultVertexShaderFunction();
+		PixelShader = compile ps_3_0 DefaultPixelShaderFunction();
+#else
+		VertexShader = compile vs_3_0 DefaultVertexShaderFunction();
+		PixelShader = compile ps_3_0 DefaultPixelShaderFunction();
+#endif
 	}
 }
 
@@ -139,8 +144,13 @@ technique DefaultWithShadows
 {
 	pass Pass1
 	{
-		VertexShader = compile vs_4_0 DefaultVertexShaderShadowReceiverFunction();
-		PixelShader = compile ps_4_0 DefaultPixelShaderShadowReceiverFunction();
+#if MACOSX
+		VertexShader = compile vs_3_0 DefaultVertexShaderShadowReceiverFunction();
+		PixelShader = compile ps_3_0 DefaultPixelShaderShadowReceiverFunction();
+#else
+		VertexShader = compile vs_3_0 DefaultVertexShaderShadowReceiverFunction();
+		PixelShader = compile ps_3_0 DefaultPixelShaderShadowReceiverFunction();
+#endif
 	}
 }
 
@@ -180,8 +190,13 @@ technique ShadowCaster
 {
 	pass Pass1
 	{
-		VertexShader = compile vs_4_0 DepthVertexShader();
-		PixelShader = compile ps_4_0 DepthPixelShader();
+#ifdef MACOSX
+		VertexShader = compile vs_3_0 DepthVertexShader();
+		PixelShader = compile ps_3_0 DepthPixelShader();
+#else
+		VertexShader = compile vs_3_0 DepthVertexShader();
+		PixelShader = compile ps_3_0 DepthPixelShader();
+#endif
 	}
 }
 
@@ -252,8 +267,13 @@ technique DefaultBillboard
 {
 	pass Pass1
 	{
-		VertexShader = compile vs_4_0 VertexShaderBillboard();
-		PixelShader = compile ps_4_0 PixelShaderFunctionBillboard();
+#ifdef MACOSX
+		VertexShader = compile vs_3_0 VertexShaderBillboard();
+		PixelShader = compile ps_3_0 PixelShaderFunctionBillboard();
+#else
+		VertexShader = compile vs_3_0 VertexShaderBillboard();
+		PixelShader = compile ps_3_0 PixelShaderFunctionBillboard();
+#endif
 	}
 }
 
@@ -261,7 +281,12 @@ technique UnlitLinearSampled
 {
 	pass Pass1
 	{
-		VertexShader = compile vs_4_0 VertexShaderBillboard();
-		PixelShader = compile ps_4_0 PixelShaderUnlitLinearSampled();
+#ifdef MACOSX
+		VertexShader = compile vs_3_0 VertexShaderBillboard();
+		PixelShader = compile ps_3_0 PixelShaderUnlitLinearSampled();
+#else
+		VertexShader = compile vs_3_0 VertexShaderBillboard();
+		PixelShader = compile ps_3_0 PixelShaderUnlitLinearSampled();
+#endif
 	}
 }
