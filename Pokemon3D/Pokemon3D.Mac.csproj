@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{948B3504-5B70-4649-8FE4-BDE1FB46EC69};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{DB39FE88-5D0D-4C20-B639-C4144229D274}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Pokemon3D</RootNamespace>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <AssemblyName>Pokemon3D</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Profiling>false</Profiling>
+    <UseRefCounting>false</UseRefCounting>
+    <UseSGen>false</UseSGen>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <CreatePackage>false</CreatePackage>
+    <CodeSigningKey>Mac Developer</CodeSigningKey>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <EnablePackageSigning>false</EnablePackageSigning>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <LinkMode>SdkOnly</LinkMode>
+    <Profiling>false</Profiling>
+    <UseRefCounting>false</UseRefCounting>
+    <UseSGen>false</UseSGen>
+    <IncludeMonoRuntime>true</IncludeMonoRuntime>
+    <CreatePackage>true</CreatePackage>
+    <CodeSigningKey>Developer ID Application</CodeSigningKey>
+    <EnableCodeSigning>true</EnableCodeSigning>
+    <EnablePackageSigning>false</EnablePackageSigning>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="MonoMac" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceNames.cs" />
+    <Compile Include="FileSystem\FileProvider.cs" />
+    <Compile Include="FileSystem\GameModeFileProvider.cs" />
+    <Compile Include="FileSystem\StaticFileProvider.cs" />
+    <Compile Include="FileSystem\i18nFileProvider.cs" />
+    <Compile Include="GameCore\GameConfiguration.cs" />
+    <Compile Include="GameCore\GameController.cs" />
+    <Compile Include="GameCore\GameObject.cs" />
+    <Compile Include="GameCore\Program.cs" />
+    <Compile Include="GameModes\GameMode.cs" />
+    <Compile Include="GameModes\GameModeInfo.cs" />
+    <Compile Include="GameModes\GameModeManager.cs" />
+    <Compile Include="GameModes\GameMode_Definitions.cs" />
+    <Compile Include="GameModes\IGameModeComponent.cs" />
+    <Compile Include="GameModes\Maps\Entity.cs" />
+    <Compile Include="GameModes\Maps\EntityFaceDirection.cs" />
+    <Compile Include="GameModes\Maps\Map.cs" />
+    <Compile Include="GameModes\Maps\MapManager.cs" />
+    <Compile Include="GameModes\Maps\Player.cs" />
+    <Compile Include="GameModes\Maps\PlayerMovementMode.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponentDataCreation.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponentFactory.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponentTypeConverter.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\EntityComponent_IDs.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\FunctionResponse.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\RenderResultType.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\AnimateTexturesEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\BillboardEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\DataStorageEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\FloorEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\NoCollisionEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\EntityComponents\Components\StaticEntityComponent.cs" />
+    <Compile Include="GameModes\Maps\Generators\EntityGenerator.cs" />
+    <Compile Include="GameModes\Maps\Generators\EntityGeneratorSupplier.cs" />
+    <Compile Include="GameModes\Maps\Generators\SimpleEntityGenerator.cs" />
+    <Compile Include="GameModes\Maps\Generators\TexturedCubeEntityGenerator.cs" />
+    <Compile Include="GameModes\Resources\GameModei18nManager.cs" />
+    <Compile Include="GameModes\Resources\PrimitiveManager.cs" />
+    <Compile Include="UI\NotificationBar.cs" />
+    <Compile Include="UI\NotificationItem.cs" />
+    <Compile Include="UI\NotificationKind.cs" />
+    <Compile Include="UI\WindowsSceneEffect.cs" />
+    <Compile Include="UI\Localization\CoreTranslationManager.cs" />
+    <Compile Include="UI\Localization\TranslationManager.cs" />
+    <Compile Include="UI\Screens\InitializeableScreen.cs" />
+    <Compile Include="UI\Screens\IntroScreen.cs" />
+    <Compile Include="UI\Screens\MainMenuScreen.cs" />
+    <Compile Include="UI\Screens\OverworldScreen.cs" />
+    <Compile Include="UI\Screens\Screen.cs" />
+    <Compile Include="UI\Screens\ScreenManager.cs" />
+    <Compile Include="UI\Transitions\BlendTransition.cs" />
+    <Compile Include="UI\Transitions\ScreenTransition.cs" />
+    <Compile Include="UI\Transitions\SlideTransition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Content\Content.mgcb" />
+    <None Include="ResourceNames.tt" />
+    <None Include="Content\Content.Mac.mgcb" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Pokemon3D.Common\Pokemon3D.Common.Mac.csproj">
+      <Project>{B29DC7F0-2A16-4585-80A2-B4030558EC35}</Project>
+      <Name>Pokemon3D.Common.Mac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon3D.DataModel\Pokemon3D.DataModel.Mac.csproj">
+      <Project>{261CF093-E9DB-48EC-BADE-1FA70EF36E3C}</Project>
+      <Name>Pokemon3D.DataModel.Mac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pokemon3D.Rendering\Pokemon3D.Rendering.Mac.csproj">
+      <Project>{D3C6EA8F-1A82-4885-849E-D83747CD8EBC}</Project>
+      <Name>Pokemon3D.Rendering.Mac</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

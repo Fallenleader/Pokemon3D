@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{261CF093-E9DB-48EC-BADE-1FA70EF36E3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pokemon3D.DataModel</RootNamespace>
+    <AssemblyName>Pokemon3D.DataModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugRendering|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugRendering\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IDataModelContainer.cs" />
+    <Compile Include="Json\ColorModel.cs" />
+    <Compile Include="Json\GameCore\ConfigurationModel.cs" />
+    <Compile Include="Json\GameCore\ShadowQuality.cs" />
+    <Compile Include="Json\GameMode\Battle\MoveCategory.cs" />
+    <Compile Include="Json\GameMode\Battle\MoveModel.cs" />
+    <Compile Include="Json\GameMode\Battle\TargetType.cs" />
+    <Compile Include="Json\GameMode\Definitions\BadgeModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\BodyStyleModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\PrimitiveModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\TypeModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\VertexModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\CityModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\CitySize.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\EnvironmentMapObjectModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\FlyToModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\MapObjectModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\PlaceModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\PlaceSize.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\RegionModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\RouteDirection.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\RouteModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\RouteType.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\WeatherModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\WeatherType.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\WorldmapModel.cs" />
+    <Compile Include="Json\GameMode\Definitions\World\ZoneModel.cs" />
+    <Compile Include="Json\GameMode\GameModeModel.cs" />
+    <Compile Include="Json\GameMode\GameModeStartConfigurationModel.cs" />
+    <Compile Include="Json\GameMode\GameRuleModel.cs" />
+    <Compile Include="Json\GameMode\Items\BattleItemCategory.cs" />
+    <Compile Include="Json\GameMode\Items\BerryFlavour.cs" />
+    <Compile Include="Json\GameMode\Items\InventoryDefinitionModel.cs" />
+    <Compile Include="Json\GameMode\Items\ItemCategory.cs" />
+    <Compile Include="Json\GameMode\Items\ItemClassificationModel.cs" />
+    <Compile Include="Json\GameMode\Items\ItemModel.cs" />
+    <Compile Include="Json\GameMode\Items\ItemUsageModel.cs" />
+    <Compile Include="Json\GameMode\Items\SpecialItems\BerryModel.cs" />
+    <Compile Include="Json\GameMode\Items\SpecialItems\MegaStoneModel.cs" />
+    <Compile Include="Json\GameMode\Items\SpecialItems\PlateModel.cs" />
+    <Compile Include="Json\GameMode\Items\SpecialItems\TechnicalMachineModel.cs" />
+    <Compile Include="Json\GameMode\Map\BattleMapDataModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntityComponentModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntityFieldModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntityFieldPositionModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapFragmentImportModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapFragmentModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntityModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntityRenderModeModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\EntitySeasonConfigurationModel.cs" />
+    <Compile Include="Json\GameMode\Map\Entities\RenderMethod.cs" />
+    <Compile Include="Json\GameMode\Map\MapEnvironmentModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapModel.cs" />
+    <Compile Include="Json\GameMode\Map\MapPokemonModel.cs" />
+    <Compile Include="Json\GameMode\Map\OffsetMapModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\EvolutionConditionModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\EvolutionConditionType.cs" />
+    <Compile Include="Json\GameMode\Pokemon\EvolutionTrigger.cs" />
+    <Compile Include="Json\GameMode\Pokemon\ExperienceType.cs" />
+    <Compile Include="Json\GameMode\Pokemon\HeldItemModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\LevelUpMoveModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\PokedexEntryModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\PokemonFormActivationModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\PokemonFormModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\PokemonModel.cs" />
+    <Compile Include="Json\GameMode\Pokemon\PokemonStatSetModel.cs" />
+    <Compile Include="Json\i18n\SectionModel.cs" />
+    <Compile Include="Json\i18n\TokenModel.cs" />
+    <Compile Include="Json\JsonDataLoadException.cs" />
+    <Compile Include="Json\JsonDataModel.cs" />
+    <Compile Include="Json\RangeModel.cs" />
+    <Compile Include="Json\RectangleModel.cs" />
+    <Compile Include="Json\SizeModel.cs" />
+    <Compile Include="Json\TextureSourceModel.cs" />
+    <Compile Include="Json\Vector2Model.cs" />
+    <Compile Include="Json\Vector3Model.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\Tao.Sdl.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\packages\MonoGame.Framework.MacOS.3.4.0.459\lib\net45\OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
