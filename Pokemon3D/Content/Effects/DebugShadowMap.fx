@@ -16,6 +16,6 @@ technique Default
 {
 	pass Pass1
 	{
-		PixelShader = compile ps_3_0 DebugShadowMapPixelShader();
+		PixelShader = compile ps_4_0 DebugShadowMapPixelShader();
 	}
 }
